@@ -5,11 +5,13 @@ POST detection board asks "did it fail" in hindsight; LIVE asks "can you tell ea
 quarter or half of the run. Scored by ROC-AUC at each prefix fraction (the early-warning curve) and
 time-to-detection (the earliest prefix that clears a useful bar).
 
-The board is supervised: seed-averaged 5-fold stratified cross-validation on the prefix features, the
-same machinery as the POST detection board. It measures whether the dependency STRUCTURE is early
-predictive of failure, not an online detector firing in real time (the running-keystone / replay
-online baselines are a separate, later board). The pipeline reuses GRADE's verified code unchanged:
-``build_graph`` over the first ``k`` steps, the nested feature layers, and the cross-validation. The
+The board has three method families. (1) Supervised: seed-averaged 5-fold stratified cross-validation
+on the prefix feature layers, the same machinery as POST detection, measuring whether the dependency
+STRUCTURE is early predictive of failure. (2) Batch-unsupervised: ECOD over the run population's prefix
+flat vectors, no labels. (3) Strict per-run online: a single scalar from a run's own prefix, no labels
+and no other runs (the closest stand-in for a running detector). The supervised pipeline reuses GRADE's
+verified code unchanged: ``build_graph`` over the first ``k`` steps, the nested feature layers, and the
+cross-validation. The
 full prefix (100%) runs that machinery on the whole trace, so the 100% column reproduces the POST
 detection board wherever the LIVE ``>=4``-step filter leaves the POST population unchanged (exact on
 SWE-Gym; off by one run on tau-bench, whose POST board keeps ``>=2``-step runs). It is a built-in
