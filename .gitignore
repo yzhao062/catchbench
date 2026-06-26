@@ -15,6 +15,11 @@ venv/
 .vscode/
 
 # Datasets and model caches are pulled from the Hugging Face Hub at run time; never vendor them here.
-data/
+# Use data/* (not data/) so a specific subdirectory can be re-included; git will not descend into a
+# directory excluded by a trailing-slash rule, which would make the negation below a no-op.
+data/*
+# Exception: the committed LLM-judge prediction caches ARE the benchmark's reproducibility anchor.
+# The board scores them deterministically with no API call, so they must ship with the repo.
+!data/llm_judge/
 *.parquet
 *.jsonl

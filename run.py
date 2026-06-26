@@ -37,6 +37,7 @@ from auditablebench.live import (  # noqa: E402
     live_stale_robustness,
     live_streaming_methods,
 )
+from auditablebench.llm_judge import discovered_llm_judge_methods  # noqa: E402  cached LLM-judge panel
 from auditablebench.post import PostLocalization, post_localization_methods  # noqa: E402
 from auditablebench.pyod_extra import pyod_extra_methods  # noqa: E402  more PyOD tabular detectors
 from auditablebench.pygod_extra import pygod_extra_methods  # noqa: E402  more PyGOD graph detectors
@@ -45,7 +46,7 @@ from auditablebench.pygod_extra import pygod_extra_methods  # noqa: E402  more P
 def main() -> None:
     tasks = [PostLocalization(), PostDetection("swegym"), PostDetection("tau"), GoldLocalization(),
              GoldAttribution(), LiveStreaming("swegym"), LiveStreaming("tau"), LiveStaleState()]
-    methods = (post_localization_methods() + post_detection_methods()
+    methods = (post_localization_methods() + discovered_llm_judge_methods() + post_detection_methods()
                + pyod_extra_methods() + pygod_extra_methods()
                + gold_localization_methods() + gold_attribution_methods()
                + live_streaming_methods() + live_stale_methods())
@@ -79,10 +80,13 @@ def main() -> None:
 
     print(
         "\nReading:"
-        "\n- Localization (Who&When): position is the honest floor; auditable's blast coincides "
-        "with it because Who&When assumes full-context dependencies, and GRADE's supervised "
-        "execution-structure ranker localizes beyond the prior. A long-range gold-edge corpus is "
-        "the next data lever."
+        "\n- Localization (Who&When): the LLM-judge panel is the strongest post-hoc localizer here "
+        "(GPT-5.5 0.452 Top-1 from the committed all-at-once cache), the expected result with the "
+        "full trace in hand; a clear capability gradient runs down to small models below the "
+        "position prior. Among methods that use no LLM, position is the honest floor, auditable's "
+        "blast coincides with it because Who&When assumes full-context dependencies, and GRADE's "
+        "supervised execution-structure ranker localizes beyond the prior. A long-range gold-edge "
+        "corpus is the next data lever."
         "\n- Detection (SWE-Gym, tau-bench): the question is whether the dependency structure "
         "predicts failure beyond run size; compare 'auditable (structure)' against 'size (flat)'. "
         "The lift holds in the same direction on both corpora (large on SWE-Gym, modest on tau)."

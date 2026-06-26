@@ -83,24 +83,41 @@ Rank the steps of a failed run by how likely each is the fault, scored against t
 
 | Method | Top-1 | Top-3 | MRR |
 |---|---|---|---|
-| random | 0.119 | 0.346 | 0.324 |
+| **LLM-judge panel (all-at-once)** | | | |
+| GPT-5.5 | **0.452** | 0.667 | **0.618** |
+| Claude-Opus-4.8 | 0.421 | 0.698 | 0.605 |
+| GPT-5.4 | 0.413 | 0.714 | 0.601 |
+| DeepSeek-R1 | 0.405 | **0.754** | 0.606 |
+| Gemini | 0.357 | 0.722 | 0.572 |
+| Qwen3-32B | 0.349 | 0.659 | 0.541 |
+| GPT-oss-20B | 0.333 | 0.595 | 0.521 |
+| Llama-3.3-70B | 0.333 | 0.579 | 0.515 |
+| Gemma-3-12B | 0.206 | 0.524 | 0.427 |
+| Mistral-Small | 0.135 | 0.421 | 0.363 |
+| Nova-Micro | 0.127 | 0.397 | 0.342 |
+| **Structural / baseline (no LLM)** | | | |
+| structure (supervised) | 0.211 | 0.614 | 0.454 |
 | `auditable` (blast share) | 0.159 | 0.516 | 0.407 |
 | position prior | 0.159 | 0.516 | 0.407 |
 | PyGOD (graph AD, DOMINANT) | 0.151 | 0.492 | 0.394 |
-| structure (supervised) | **0.211** | **0.614** | **0.454** |
+| random | 0.119 | 0.346 | 0.324 |
 
-How to read it. The early-fault prior (faults cluster early in a run) is the honest floor, well
-above random. `auditable`'s public structural signal, the blast share (how much of the run rests
-on a step, via `downstream_reach` over the dependency graph), lands exactly on that prior here.
-That is expected: this corpus assumes every step depends on all prior steps, so blast is monotone
-in position and the two rankings coincide. An off-the-shelf graph anomaly detector (PyGOD's
-DOMINANT, scoring each step by graph-autoencoder reconstruction error) beats random but trails the
-position prior: structural anomaly is not the same as fault, so naive graph-AD does not localize
-the mistake on its own. The supervised execution-structure ranker (agent activity and handoff
-centrality) is what localizes beyond the prior. To separate a dependency
-signal from raw position the benchmark needs traces where the two diverge, runs with real
-long-range dependencies rather than a full-context assumption. That gold-edge corpus is the
-planned next dataset.
+How to read it. The field-standard control is to ask a strong LLM directly: show it the failed
+trace and have it name the decisive step. We benchmark that as an 11-model panel, frontier models
+through the NAIRR gateway and open-weights plus small proprietary models through AWS Bedrock, each prompted once (Who&When's
+all-at-once protocol); predictions are cached and committed, so the board scores them with no API
+call. A frontier LLM judge is the strongest localizer here (GPT-5.5 at 0.452), which is expected
+with the full trace in hand. The capability gradient is clean: frontier judges at 0.41 to 0.45,
+strong open models (Llama, Qwen) at 0.33 to 0.35, down to small models that fall below the trivial
+position prior (Mistral, Nova near 0.13), so "just ask an LLM" is only as good as the LLM. Among
+methods that use no LLM, the supervised execution-structure ranker beats the position prior cheaply
+and deterministically; `auditable`'s blast share lands on the prior because this corpus assumes every
+step depends on all prior steps, and an off-the-shelf graph-AD (PyGOD DOMINANT) trails it. The
+structural methods are not built to win this board, and a third-party method topping it is the
+benchmark working as intended. Their value is that they need no model call and they apply in the LIVE
+and online settings where a post-hoc full-trace judge cannot run. (Separating a dependency signal
+from raw position needs traces where the two diverge: real long-range dependencies rather than a
+full-context assumption, the planned gold-edge corpus.)
 
 ### Failure Detection on SWE-Gym and tau-bench
 
