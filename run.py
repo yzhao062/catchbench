@@ -2,11 +2,13 @@
 
     python run.py
 
-v1 ships the POST pillar: a localization board (Who&When, human labels), detection boards (SWE-Gym
-and tau-bench outcome labels), and a Gold board (faults injected into clean SWE-Gym runs, with
-injection-site labels: the benchmark's own data contribution). LIVE and PRE pillars plug into the
-same RunPipeline as they land. The boards download their corpora from the Hugging Face Hub on first
-run; the PyGOD baseline needs torch + pygod + a pyg-lib / torch-sparse backend.
+POST and LIVE pillars run here. POST: a localization board (Who&When, human labels), detection boards
+(SWE-Gym and tau-bench outcome labels), and a Gold board (faults injected into clean SWE-Gym runs,
+with injection-site labels: the benchmark's own data contribution). LIVE: streaming early-warning
+(SWE-Gym and tau-bench prefixes) and online stale-state detection over the Gold injection. The PRE
+pillar plugs into the same RunPipeline as it lands. The boards download their corpora from the
+Hugging Face Hub on first run; the PyGOD baseline needs torch + pygod + a pyg-lib / torch-sparse
+backend.
 """
 import os
 import sys
@@ -26,6 +28,7 @@ from auditablebench.live import (  # noqa: E402
     LiveStaleState,
     LiveStreaming,
     live_breakdown,
+    live_stale_breakdown,
     live_stale_methods,
     live_streaming_methods,
 )
@@ -38,7 +41,7 @@ def main() -> None:
     methods = (post_localization_methods() + post_detection_methods()
                + gold_localization_methods() + live_streaming_methods() + live_stale_methods())
 
-    print("AuditableBench :: POST v1 board(s)\n")
+    print("AuditableBench :: POST + LIVE board(s)\n")
     for task in tasks:
         if hasattr(task, "corpus_line"):
             print(task.corpus_line())
@@ -56,6 +59,10 @@ def main() -> None:
     for live in (t for t in tasks if isinstance(t, LiveStreaming)):  # early-warning curve per corpus
         print(live_breakdown(live, live_streaming_methods()))
 
+    stale = next((t for t in tasks if isinstance(t, LiveStaleState)), None)
+    if stale is not None:  # online detection: TPR with the realized FPR beside it
+        print(live_stale_breakdown(stale, live_stale_methods()))
+
     print(
         "\nReading:"
         "\n- Localization (Who&When): position is the honest floor; auditable's blast coincides "
@@ -71,26 +78,30 @@ def main() -> None:
         "is not enough; the task-aware structural features are what work. (G-Safeguard is a "
         "supervised attack detector, for the future fault-injection scenarios, not these boards.)"
         "\n- Gold (injected dependency faults): READ PER FAULT KIND, not in aggregate. Stale-state "
-        "is found by the dependency-span detector (dep-anomaly keyed to max-span, ~0.67 Top-1 stale); "
-        "dropped-grounding is NOT localized by any baseline yet (~0 Top-1), an open problem. "
-        "dep-anomaly is keyed to the stale-span mechanism (shown beside the max-span control). Leak "
-        "check (gold_matched_breakdown): ranking only within the injector's eligible pool, has-dep and "
-        "degree fall to the matched random floor (stale has-dep 0.238 = floor 0.238) while the "
-        "dependency-span signal survives (stale max-span 0.676 vs floor 0.238), so the stale-state "
-        "lift is leakage-controlled rather than a selection artifact. See gold_breakdown / "
+        "(redirect a dependency to an earlier superseded event on the SAME file) is found by the "
+        "dependency-span detector (dep-anomaly keyed to max-span, ~0.71 Top-1 stale); dropped-grounding "
+        "is NOT localized by any baseline yet (~0 Top-1), an open problem. dep-anomaly is keyed to the "
+        "stale-span mechanism (shown beside the max-span control). Leak check (gold_matched_breakdown): "
+        "ranking only within the injector's eligible pool, the eligibility baselines sit at the matched "
+        "random floor (stale has-dep 0.350 = floor 0.350, degree 0.394 just above) while the "
+        "dependency-span signal clears it by far (stale max-span 0.805 vs floor 0.350), so the "
+        "stale-state lift is leakage-controlled rather than a selection artifact. See gold_breakdown / "
         "gold_matched_breakdown / gold_report below."
-        "\n- LIVE streaming (early warning): can a method flag a failing run from a PREFIX, not the "
-        "finished trace? On SWE-Gym the dependency-structure signal clears a useful bar (ROC-AUC 0.74) "
-        "at the first 25% (time-to-detection 25%) while run size never clears it; on tau-bench the "
-        "structure is a weak LATE signal (peaks ~0.61 at 75%, no early lift), the same domain split "
-        "the detection board shows. The 100% column reproduces the POST detection board on each "
-        "corpus. See live_breakdown below."
+        "\n- LIVE streaming (early warning): under seed-averaged supervised CV, can prefix features "
+        "separate failing from resolved runs before the trace is complete? On SWE-Gym the "
+        "dependency-structure feature block clears ROC-AUC 0.74 at the 25% prefix while run size does "
+        "not; on tau-bench it is weak and late (peaks ~0.61 at 75%, no early lift), the same domain "
+        "split the detection board shows. This validates the dependency STRUCTURE's early "
+        "predictiveness, not an online detector (the running-keystone / replay baselines are next). "
+        "The 100% column is the POST-style detection check on the LIVE-filtered population (exact on "
+        "SWE-Gym; off by one run on tau). See live_breakdown below."
         "\n- LIVE stale-state (online detection): the SAME Gold stale-state injection, but detected "
-        "online at a fixed false-positive rate instead of localized post-hoc. It is HARD: the causal "
-        "span signal catches only ~11% of stale reads at 5% FPR (~27% at 10%), far below the 0.67 "
-        "WITHIN-run localization on Gold. Spotting one stale read against clean runs' natural "
-        "long-range dependencies, without false-alarming, is an open challenge; per-run normalization "
-        "barely helps (raw-span ~= z-score)."
+        "online at a fixed false-positive rate instead of localized post-hoc. It is HARD: at a realized "
+        "~6% FPR the causal span z-score catches only ~6% of stale reads (~11% at ~11% FPR), and the "
+        "raw span does a little better (~12% / ~16%), both far below the ~0.71 WITHIN-run localization "
+        "on Gold. Spotting one superseded same-file read online, against clean runs' natural long-range "
+        "dependencies and without false-alarming, is an open challenge; per-run normalization does not "
+        "help here (the raw span edges out the z-score)."
     )
 
 

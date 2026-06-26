@@ -5,8 +5,8 @@ synthesis must be defensible, not a convenient artifact) and reported honestly, 
 does not yet clear the bar.
 
 Faults are documented agent failure modes, realized on the inferred dependency layer:
-  - stale-state read  : redirect one dependency from its true source to an EARLIER (superseded)
-                        prior step. Signature: an unusually long dependency span.
+  - stale-state read  : redirect one dependency from the latest event on a file to an EARLIER
+                        (superseded) event on the SAME file. Signature: an unusually long span.
   - dropped grounding : remove one required dependency, so the step acts ungrounded. Intended
                         signature: an unusually low dependency count.
 
@@ -102,14 +102,21 @@ def _inject(runs: List[list], seed: int = 0):
             rng.shuffle(positions)
             for p in positions:
                 deps = [d for d in steps[p]["deps"] if d in idx_of and idx_of[d] < p]
-                if stale:  # redirect a dependency to an earlier (superseded) prior step
-                    cand = [d for d in deps if idx_of[d] >= 1]
+                if stale:  # redirect a dependency to an EARLIER event on the SAME file/resource
+                    target_resource = steps[p].get("file")  # the file this tool step touches
+                    cand = []  # (true dep idx, earlier same-file idxs that supersede it)
+                    for d in deps:
+                        d_pos = idx_of[d]
+                        if target_resource is None or steps[d_pos].get("file") != target_resource:
+                            continue  # only redirect a genuine same-file dependency
+                        prior_same = [s["idx"] for s in steps[:d_pos]
+                                      if s.get("file") == target_resource and s["idx"] not in steps[p]["deps"]]
+                        if prior_same:
+                            cand.append((d, prior_same))
                     if not cand:
-                        continue
-                    d = int(rng.choice(cand))
-                    new_d = steps[int(rng.randint(0, idx_of[d]))]["idx"]  # an earlier step
-                    if new_d == d or new_d in steps[p]["deps"]:
-                        continue
+                        continue  # no superseded same-file version exists; try the other fault
+                    d, prior_same = cand[int(rng.randint(0, len(cand)))]
+                    new_d = int(rng.choice(prior_same))  # an older version of the same state (stale read)
                     steps[p]["deps"] = [new_d if x == d else x for x in steps[p]["deps"]]
                     hit = (p, "stale")
                     break
@@ -287,17 +294,37 @@ def _row(label: str, o: tuple, s: tuple, d: tuple) -> str:
         + f"{d[0]:.3f}/{d[1]:.3f}/{d[2]:.3f}".rjust(22))
 
 
+def _has_stale_target(steps: list, idx_of: dict, i: int) -> bool:
+    """True if step ``i`` has a same-file dependency with an EARLIER superseded same-file event to
+    redirect to: the exact precondition ``_inject`` uses to place a stale-state fault. Kept in lockstep
+    with the injection so the matched pool is the injector's real eligible set, not an approximation."""
+    s = steps[i]
+    target_resource = s.get("file")
+    if target_resource is None:
+        return False
+    for d in s.get("deps", ()):
+        if d not in idx_of or idx_of[d] >= i:
+            continue
+        d_pos = idx_of[d]
+        if steps[d_pos].get("file") != target_resource:
+            continue
+        if any(t.get("file") == target_resource and t["idx"] not in s.get("deps", ())
+               for t in steps[:d_pos]):
+            return True
+    return False
+
+
 def _eligible_positions(clean_steps: list, kind: str) -> List[int]:
     """Within-run step positions the injector could have targeted for ``kind``, read off the CLEAN
     structure (the a-priori eligible set, nothing a detector observes). dropped-grounding needs a
-    prior dependency to remove; stale-state needs a prior dependency it can redirect earlier (a dep
-    at position >= 1, so an earlier slot exists). This is a necessary condition for selection, so the
-    true injected step is always inside the returned set."""
+    prior dependency to remove; stale-state needs a same-file dependency with an earlier superseded
+    same-file event to redirect to (mirroring ``_inject`` via ``_has_stale_target``). This is a
+    necessary condition for selection, so the true injected step is always inside the returned set."""
     idx_of = {s["idx"]: i for i, s in enumerate(clean_steps)}
     elig = []
     for i, s in enumerate(clean_steps):
         dep_pos = [idx_of[d] for d in s.get("deps", ()) if d in idx_of and idx_of[d] < i]
-        ok = (len(dep_pos) >= 1) if kind == "dropped" else any(dp >= 1 for dp in dep_pos)
+        ok = (len(dep_pos) >= 1) if kind == "dropped" else _has_stale_target(clean_steps, idx_of, i)
         if ok:
             elig.append(i)
     return elig

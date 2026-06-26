@@ -5,10 +5,15 @@ POST detection board asks "did it fail" in hindsight; LIVE asks "can you tell ea
 quarter or half of the run. Scored by ROC-AUC at each prefix fraction (the early-warning curve) and
 time-to-detection (the earliest prefix that clears a useful bar).
 
-The pipeline reuses GRADE's verified detection machinery unchanged: ``build_graph`` over the first
-``k`` steps, the nested feature layers, and seed-averaged 5-fold stratified cross-validation. Because
-the full prefix (100%) is the whole run, the 100% column reproduces the POST detection board, which
-is a built-in validity check rather than a separate number to reconcile.
+The board is supervised: seed-averaged 5-fold stratified cross-validation on the prefix features, the
+same machinery as the POST detection board. It measures whether the dependency STRUCTURE is early
+predictive of failure, not an online detector firing in real time (the running-keystone / replay
+online baselines are a separate, later board). The pipeline reuses GRADE's verified code unchanged:
+``build_graph`` over the first ``k`` steps, the nested feature layers, and the cross-validation. The
+full prefix (100%) runs that machinery on the whole trace, so the 100% column reproduces the POST
+detection board wherever the LIVE ``>=4``-step filter leaves the POST population unchanged (exact on
+SWE-Gym; off by one run on tau-bench, whose POST board keeps ``>=2``-step runs). It is a built-in
+validity check, not a separate number to reconcile.
 
   - random              : floor (~0.5 at every prefix).
   - size (flat)          : prefix size and counts only, the trivial baseline.
@@ -159,7 +164,7 @@ def live_streaming_methods() -> list:
 def live_breakdown(task: LiveStreaming, methods: list) -> str:
     """The early-warning view: ROC-AUC by prefix plus time-to-detection. Read the curve left to right,
     because the LIVE question is whether a method separates failing runs from a SHORT prefix, not only
-    from the finished run (the 100% column, which reproduces the POST detection board)."""
+    from the finished run (the 100% column, the POST-style detection check on the LIVE population)."""
     task.setup()
     ps = task.prefixes
     header = (f"  {'method':24s}" + "".join(f"{str(int(p * 100)) + '%':>8s}" for p in ps)
@@ -178,7 +183,8 @@ def live_breakdown(task: LiveStreaming, methods: list) -> str:
 
 # --- LIVE stale-state: online detection of the Gold stale-state injection -------------------------
 
-_FPR_LEVELS = (0.05, 0.10)  # clean-run false-positive rates the per-step threshold is calibrated to
+_FPR_LEVELS = (0.05, 0.10)  # target clean-run FPRs the run-level peak threshold aims at (n is small,
+#                             so the realized rate is reported beside the TPR, not assumed exact)
 
 
 def _span_series(steps: list) -> np.ndarray:
@@ -208,8 +214,9 @@ class LiveStaleState:
     """LIVE / stale-state Task: detect the Gold stale-state injection ONLINE, with false-positive
     control.
 
-    Same injection as Gold (redirect one dependency to an earlier superseded step, inflating that
-    step's dependency span), scored as FPR-calibrated detection rather than post-hoc localization. A
+    Same injection as Gold (redirect one dependency to an earlier superseded event on the same file,
+    inflating that step's dependency span), scored as FPR-calibrated detection rather than post-hoc
+    localization. A
     causal per-step score (step t sees only steps < t, so an online detector could compute it) is
     reduced to the run's peak; the threshold is calibrated on the paired CLEAN runs to a fixed
     false-positive rate; a run is flagged when its peak crosses it. Because the injection only adds a
@@ -252,15 +259,20 @@ class _OnlineDetector:
         self._score_fn = score_fn
         self.supports = {"live_stale_state"}
 
-    def evaluate(self, task: "LiveStaleState") -> Mapping[str, float]:
+    def detail(self, task: "LiveStaleState") -> Mapping[float, tuple]:
+        """Per target FPR: (TPR on injected runs, REALIZED FPR on the paired clean runs). The realized
+        rate is reported because n is small, so the empirical FPR cannot match the target exactly."""
         task.setup()
         clean_max = np.array([self._score_fn(s).max() if len(s) else 0.0 for s in task.clean])
         inj_max = np.array([self._score_fn(s).max() if len(s) else 0.0 for s in task.injected])
         out = {}
         for fpr in task.fprs:
-            tau = float(np.quantile(clean_max, 1.0 - fpr))  # clean runs flag at ~fpr by construction
-            out[f"tpr@{int(fpr * 100)}fpr"] = float(np.mean(inj_max > tau))  # paired: lift over fpr = injection
+            tau = float(np.quantile(clean_max, 1.0 - fpr))  # run-level peak threshold over clean runs
+            out[fpr] = (float(np.mean(inj_max > tau)), float(np.mean(clean_max > tau)))  # paired
         return out
+
+    def evaluate(self, task: "LiveStaleState") -> Mapping[str, float]:
+        return {f"tpr@{int(fpr * 100)}fpr": tpr for fpr, (tpr, _) in self.detail(task).items()}
 
 
 class RandomOnline:
@@ -269,10 +281,16 @@ class RandomOnline:
     method_id = "random"
     supports = {"live_stale_state"}
 
+    @staticmethod
+    def _det() -> _OnlineDetector:
+        rng = np.random.RandomState(0)  # fresh seed per call so detail / evaluate see the same stream
+        return _OnlineDetector("random", lambda s: rng.rand(len(s)))
+
+    def detail(self, task: "LiveStaleState") -> Mapping[float, tuple]:
+        return self._det().detail(task)
+
     def evaluate(self, task: "LiveStaleState") -> Mapping[str, float]:
-        task.setup()
-        rng = np.random.RandomState(0)
-        return _OnlineDetector("random", lambda s: rng.rand(len(s))).evaluate(task)
+        return self._det().evaluate(task)
 
 
 def live_stale_methods() -> list:
@@ -283,3 +301,21 @@ def live_stale_methods() -> list:
         _OnlineDetector("raw-span", _span_series),
         _OnlineDetector("auditable (span z-score)", lambda s: _online_z(_span_series(s))),
     ]
+
+
+def live_stale_breakdown(task: LiveStaleState, methods: list) -> str:
+    """Per-method TPR at each target FPR, with the REALIZED clean-flag rate beside it. On a paired set
+    this small the empirical FPR cannot hit the target exactly, so it is reported, not assumed."""
+    task.setup()
+    fprs = task.fprs
+    header = ("  " + f"{'method':26s}"
+              + "".join(f"{'tpr@' + str(int(f * 100)) + '% (real fpr)':>22s}" for f in fprs))
+    lines = [f"\nLIVE stale-state online detection (n={len(task.injected)} paired runs; TPR at target "
+             f"FPR, realized clean-flag rate in parens):", header]
+    for m in methods:
+        if not hasattr(m, "detail"):
+            continue
+        d = m.detail(task)
+        cells = "".join(f"{tpr:.3f} ({rf * 100:.1f}%)".rjust(22) for tpr, rf in (d[f] for f in fprs))
+        lines.append(f"  {m.method_id:26s}{cells}")
+    return "\n".join(lines)
