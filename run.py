@@ -38,12 +38,15 @@ from auditablebench.live import (  # noqa: E402
     live_streaming_methods,
 )
 from auditablebench.post import PostLocalization, post_localization_methods  # noqa: E402
+from auditablebench.pyod_extra import pyod_extra_methods  # noqa: E402  more PyOD tabular detectors
+from auditablebench.pygod_extra import pygod_extra_methods  # noqa: E402  more PyGOD graph detectors
 
 
 def main() -> None:
     tasks = [PostLocalization(), PostDetection("swegym"), PostDetection("tau"), GoldLocalization(),
              GoldAttribution(), LiveStreaming("swegym"), LiveStreaming("tau"), LiveStaleState()]
     methods = (post_localization_methods() + post_detection_methods()
+               + pyod_extra_methods() + pygod_extra_methods()
                + gold_localization_methods() + gold_attribution_methods()
                + live_streaming_methods() + live_stale_methods())
 
