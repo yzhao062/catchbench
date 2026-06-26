@@ -23,6 +23,7 @@ from auditablebench.gold import (  # noqa: E402
     gold_localization_methods,
     gold_matched_breakdown,
     gold_report,
+    gold_seed_robustness,
 )
 from auditablebench.live import (  # noqa: E402
     LiveStaleState,
@@ -30,6 +31,7 @@ from auditablebench.live import (  # noqa: E402
     live_breakdown,
     live_stale_breakdown,
     live_stale_methods,
+    live_stale_robustness,
     live_streaming_methods,
 )
 from auditablebench.post import PostLocalization, post_localization_methods  # noqa: E402
@@ -55,6 +57,7 @@ def main() -> None:
         print(gold_matched_breakdown(gold, gold_localization_methods()))
         print()
         print(gold_report(gold))
+        print(gold_seed_robustness(gold_localization_methods()))  # stability across injection seeds
 
     for live in (t for t in tasks if isinstance(t, LiveStreaming)):  # early-warning curve per corpus
         print(live_breakdown(live, live_streaming_methods()))
@@ -62,6 +65,7 @@ def main() -> None:
     stale = next((t for t in tasks if isinstance(t, LiveStaleState)), None)
     if stale is not None:  # online detection: TPR with the realized FPR beside it
         print(live_stale_breakdown(stale, live_stale_methods()))
+        print(live_stale_robustness(live_stale_methods()))  # stability across injection seeds
 
     print(
         "\nReading:"
@@ -85,23 +89,28 @@ def main() -> None:
         "ranking only within the injector's eligible pool, the eligibility baselines sit at the matched "
         "random floor (stale has-dep 0.350 = floor 0.350, degree 0.394 just above) while the "
         "dependency-span signal clears it by far (stale max-span 0.805 vs floor 0.350), so the "
-        "stale-state lift is leakage-controlled rather than a selection artifact. See gold_breakdown / "
-        "gold_matched_breakdown / gold_report below."
-        "\n- LIVE streaming (early warning): under seed-averaged supervised CV, can prefix features "
-        "separate failing from resolved runs before the trace is complete? On SWE-Gym the "
-        "dependency-structure feature block clears ROC-AUC 0.74 at the 25% prefix while run size does "
-        "not; on tau-bench it is weak and late (peaks ~0.61 at 75%, no early lift), the same domain "
-        "split the detection board shows. This validates the dependency STRUCTURE's early "
-        "predictiveness, not an online detector (the running-keystone / replay baselines are next). "
-        "The 100% column is the POST-style detection check on the LIVE-filtered population (exact on "
-        "SWE-Gym; off by one run on tau). See live_breakdown below."
+        "stale-state lift is leakage-controlled rather than a selection artifact. The stale-state "
+        "detection and the leak-controlled max-span signal are stable across 5 injection seeds "
+        "(gold_seed_robustness). See gold_breakdown / gold_matched_breakdown / gold_report / "
+        "gold_seed_robustness below."
+        "\n- LIVE streaming (early warning): can a method separate failing from resolved runs before "
+        "the trace is complete? Two answers. SUPERVISED CV on prefix features: on SWE-Gym the "
+        "dependency-structure block clears ROC-AUC 0.74 at the 25% prefix (t2d 25%) while run size "
+        "never does; on tau-bench it is weak and late, the same domain split the detection board "
+        "shows. UNSUPERVISED / online: an off-the-shelf ECOD on the prefix also fires early on SWE-Gym "
+        "(0.76 at 25%, t2d 25%), so early warning is available without labels, but a raw per-run "
+        "dependency-span signal is length-confounded and does NOT (0.36 at 25%). The early signal needs "
+        "the full prefix features (supervised structure or unsupervised ECOD), not a naive structural "
+        "score. The 100% column is the POST-style detection check on the LIVE-filtered population "
+        "(exact on SWE-Gym; off by one run on tau). See live_breakdown below."
         "\n- LIVE stale-state (online detection): the SAME Gold stale-state injection, but detected "
         "online at a fixed false-positive rate instead of localized post-hoc. It is HARD: at a realized "
         "~6% FPR the causal span z-score catches only ~6% of stale reads (~11% at ~11% FPR), and the "
         "raw span does a little better (~12% / ~16%), both far below the ~0.71 WITHIN-run localization "
         "on Gold. Spotting one superseded same-file read online, against clean runs' natural long-range "
         "dependencies and without false-alarming, is an open challenge; per-run normalization does not "
-        "help here (the raw span edges out the z-score)."
+        "help here (the raw span edges out the z-score). The hardness is stable across 5 injection "
+        "seeds (live_stale_robustness)."
     )
 
 

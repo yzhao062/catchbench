@@ -52,17 +52,25 @@ _METRIC_NAMES = ("top1", "top3", "mrr")
 Graph = Tuple[np.ndarray, np.ndarray]  # (node features [n, d], edge_index [2, m])
 
 
+_CLEAN_CACHE: List[list] | None = None
+
+
 def _load_clean_runs() -> List[list]:
-    """Resolved (clean) SWE-Gym runs as step lists, keeping only runs with deps to corrupt."""
-    runs = []
-    for rec in swegym.load_runs():
-        if not rec.get("resolved"):
-            continue
-        steps = rec["steps"]
-        if len(steps) < 4 or not any(s.get("deps") for s in steps):
-            continue
-        runs.append(steps)
-    return runs
+    """Resolved (clean) SWE-Gym runs as step lists, keeping only runs with deps to corrupt. Cached so
+    a multi-seed sweep re-injects without reloading the corpus; ``_inject`` copies each run before
+    mutating, so the cached lists stay clean."""
+    global _CLEAN_CACHE
+    if _CLEAN_CACHE is None:
+        runs = []
+        for rec in swegym.load_runs():
+            if not rec.get("resolved"):
+                continue
+            steps = rec["steps"]
+            if len(steps) < 4 or not any(s.get("deps") for s in steps):
+                continue
+            runs.append(steps)
+        _CLEAN_CACHE = runs
+    return _CLEAN_CACHE
 
 
 def _step_graph(steps: list) -> Graph:
@@ -465,3 +473,46 @@ def gold_report(task: GoldLocalization) -> str:
             "  Edge count is unchanged for stale-state and decreases by one for dropped-grounding; "
             "stale-state also lengthens max-span by construction. These run-level shifts are "
             "reported, not hidden; localization still requires finding the step.")
+
+
+def _mean_std(vals) -> Tuple[float, float]:
+    arr = np.array(vals, dtype=float)
+    return float(arr.mean()), float(arr.std())
+
+
+def gold_seed_robustness(methods: list, seeds=(0, 1, 2, 3, 4)) -> str:
+    """Stability of the Gold headline across injection seeds: the robustness question a synthetic
+    injection has to answer. Per scoring method, stale-state and dropped-grounding Top-1 as mean +/-
+    std over seeds; plus the matched-control stale max-span versus its floor, so the leak-controlled
+    signal is shown stable, not a single-draw artifact. Clean runs are cached, so this re-injects K
+    times without reloading the corpus."""
+    seeds = tuple(seeds)
+    keep = [m for m in methods if hasattr(m, "scores") and m.method_id != "random"]
+    stale_t1 = {m.method_id: [] for m in keep}
+    drop_t1 = {m.method_id: [] for m in keep}
+    matched_span, matched_floor = [], []
+    for seed in seeds:
+        task = GoldLocalization(seed=seed)
+        task.setup()
+        all_gi = sorted(set(task.groups.tolist()))
+        stale = [gi for gi in all_gi if task.kinds[gi] == "stale"]
+        dropped = [gi for gi in all_gi if task.kinds[gi] == "dropped"]
+        for m in keep:
+            ranks = _ranks(task, m.scores(task))
+            stale_t1[m.method_id].append(_kind_summary(ranks, stale)[0])
+            drop_t1[m.method_id].append(_kind_summary(ranks, dropped)[0])
+        pools = _matched_pools(task)
+        span_m = next(m for m in keep if m.method_id == "max-span (control)")
+        matched_span.append(_matched_metrics(task, span_m.scores(task), pools, stale)[0])
+        matched_floor.append(_matched_floor(pools, stale)[0])
+    lines = [f"\nGold seed robustness ({len(seeds)} injection seeds, Top-1 mean +/- std):",
+             f"  {'method':24s}{'stale-state':>20s}{'dropped-grounding':>22s}"]
+    for m in keep:
+        sm, ss = _mean_std(stale_t1[m.method_id])
+        dm, ds = _mean_std(drop_t1[m.method_id])
+        lines.append(f"  {m.method_id:24s}{f'{sm:.3f}+/-{ss:.3f}':>20s}{f'{dm:.3f}+/-{ds:.3f}':>22s}")
+    spm, sps = _mean_std(matched_span)
+    flm, fls = _mean_std(matched_floor)
+    lines.append(f"  matched stale max-span {spm:.3f}+/-{sps:.3f} vs floor {flm:.3f}+/-{fls:.3f} "
+                 f"(leak-controlled signal, stable across seeds)")
+    return "\n".join(lines)

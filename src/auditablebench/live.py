@@ -98,6 +98,7 @@ class LiveStreaming:
             return
         runs, labels = _load_runs(self.corpus)
         self.y = np.array(labels)
+        self.runs = runs  # raw step lists, so an online method can score each run from its own prefix
         # One {layer: matrix} bundle per prefix fraction; rows aligned with self.y.
         self.layers_at = {
             p: _layer_matrices([build_graph(_prefix_steps(s, p), dependency="explicit",
@@ -150,14 +151,76 @@ class RandomLive:
         return {"prefix_auc": float(np.mean(list(self.auc_curve(task).values())))}
 
 
+class _PrefixECOD:
+    """Unsupervised online baseline: PyOD (ECOD) on the prefix flat features at each prefix, the online
+    sibling of the POST detection ECOD baseline. Batch-unsupervised (no failure labels, but fit over
+    the run population at that prefix), so it tests whether an off-the-shelf tabular detector gives
+    early warning from prefix size and counts alone."""
+
+    method_id = "pyod (ECOD)"
+    supports = {"live_streaming"}
+
+    def auc_curve(self, task: LiveStreaming) -> dict:
+        from pyod.models.ecod import ECOD
+        from sklearn.metrics import roc_auc_score
+        from sklearn.preprocessing import StandardScaler
+
+        task.setup()
+        out = {}
+        for p in task.prefixes:
+            features = StandardScaler().fit_transform(task.layers_at[p]["flat"])
+            detector = ECOD()
+            detector.fit(features)
+            out[p] = float(roc_auc_score(task.y, detector.decision_scores_))
+        return out
+
+    def evaluate(self, task: LiveStreaming) -> Mapping[str, float]:
+        return {"prefix_auc": float(np.mean(list(self.auc_curve(task).values())))}
+
+
+class _OnlineScore:
+    """A truly online baseline: score each run from its OWN prefix by a raw structural statistic, with
+    no labels, no training, and no other runs. ROC-AUC against failure at each prefix measures whether
+    an unsupervised signal a running detector could compute gives early warning, the online complement
+    to the supervised-CV feature layers."""
+
+    def __init__(self, method_id: str, run_score_fn) -> None:
+        self.method_id = method_id
+        self._fn = run_score_fn
+        self.supports = {"live_streaming"}
+
+    def auc_curve(self, task: LiveStreaming) -> dict:
+        from sklearn.metrics import roc_auc_score
+
+        task.setup()
+        out = {}
+        for p in task.prefixes:
+            scores = np.array([self._fn(_prefix_steps(s, p)) for s in task.runs])
+            out[p] = float(roc_auc_score(task.y, scores))
+        return out
+
+    def evaluate(self, task: LiveStreaming) -> Mapping[str, float]:
+        return {"prefix_auc": float(np.mean(list(self.auc_curve(task).values())))}
+
+
+def _mean_span(steps: list) -> float:
+    """Mean per-step dependency span over a prefix, the raw online signal (length-confounded, reported
+    next to the size baseline so the confound is visible)."""
+    series = _span_series(steps)
+    return float(series.mean()) if len(series) else 0.0
+
+
 def live_streaming_methods() -> list:
-    """The LIVE board: a random floor, the size baseline, the structural signal, and a full reference,
-    each scored over the growing prefix (the running-keystone / replay online baselines are next)."""
+    """The LIVE streaming board: a random floor; the supervised feature layers (size, structure, full)
+    scored by cross-validation; and two unsupervised online baselines (off-the-shelf ECOD on the
+    prefix, and a raw per-run dependency-span signal a running detector could compute without labels)."""
     return [
         RandomLive(),
         _PrefixLayerAUC("size (flat)", "flat"),
         _PrefixLayerAUC("auditable (structure)", "flatdep"),
         _PrefixLayerAUC("full", "full"),
+        _PrefixECOD(),
+        _OnlineScore("dep-span (online)", _mean_span),
     ]
 
 
@@ -195,6 +258,18 @@ def _span_series(steps: list) -> np.ndarray:
     for i, s in enumerate(steps):
         dep_pos = [idx_of[d] for d in s.get("deps", ()) if d in idx_of and idx_of[d] < i]
         out[i] = float(i - min(dep_pos)) if dep_pos else 0.0
+    return out
+
+
+def _count_series(steps: list) -> np.ndarray:
+    """Per-step dependency count: a NEGATIVE control. The stale-state injection redirects one edge
+    without changing any step's edge count, so the count series is identical clean versus injected and
+    an online detector on it sits exactly at the false-positive floor. That the span detector lifts
+    while this one does not shows the signal is the span, not generic structural change."""
+    idx_of = {s["idx"]: i for i, s in enumerate(steps)}
+    out = np.zeros(len(steps))
+    for i, s in enumerate(steps):
+        out[i] = float(sum(1 for d in s.get("deps", ()) if d in idx_of and idx_of[d] < i))
     return out
 
 
@@ -298,6 +373,7 @@ def live_stale_methods() -> list:
     and the causal span z-score (per-run normalized, the signal auditable surfaces over the stream)."""
     return [
         RandomOnline(),
+        _OnlineDetector("dep-count (control)", lambda s: _online_z(_count_series(s))),
         _OnlineDetector("raw-span", _span_series),
         _OnlineDetector("auditable (span z-score)", lambda s: _online_z(_span_series(s))),
     ]
@@ -317,5 +393,31 @@ def live_stale_breakdown(task: LiveStaleState, methods: list) -> str:
             continue
         d = m.detail(task)
         cells = "".join(f"{tpr:.3f} ({rf * 100:.1f}%)".rjust(22) for tpr, rf in (d[f] for f in fprs))
+        lines.append(f"  {m.method_id:26s}{cells}")
+    return "\n".join(lines)
+
+
+def live_stale_robustness(methods: list, seeds=(0, 1, 2, 3, 4)) -> str:
+    """Stability of the online stale-state TPR across injection seeds (the synthetic-injection
+    robustness question for the LIVE board): per method, TPR at each target FPR as mean +/- std over
+    seeds. Clean runs are cached in gold.py, so this re-injects K times without reloading the corpus."""
+    seeds = tuple(seeds)
+    keep = [m for m in methods if hasattr(m, "detail")]
+    acc = {m.method_id: {f: [] for f in _FPR_LEVELS} for m in keep}
+    for seed in seeds:
+        task = LiveStaleState(seed=seed)
+        task.setup()
+        for m in keep:
+            d = m.detail(task)
+            for f in _FPR_LEVELS:
+                acc[m.method_id][f].append(d[f][0])  # TPR at target FPR f
+    header = ("  " + f"{'method':26s}"
+              + "".join(f"{'tpr@' + str(int(f * 100)) + '%':>20s}" for f in _FPR_LEVELS))
+    lines = [f"\nLIVE stale-state seed robustness ({len(seeds)} injection seeds, TPR mean +/- std):",
+             header]
+    for m in keep:
+        cells = "".join(
+            f"{np.mean(acc[m.method_id][f]):.3f}+/-{np.std(acc[m.method_id][f]):.3f}".rjust(20)
+            for f in _FPR_LEVELS)
         lines.append(f"  {m.method_id:26s}{cells}")
     return "\n".join(lines)
