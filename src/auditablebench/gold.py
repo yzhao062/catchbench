@@ -475,6 +475,131 @@ def gold_report(task: GoldLocalization) -> str:
             "reported, not hidden; localization still requires finding the step.")
 
 
+def _redirect_stale(steps: list, idx_of: dict, p: int, rng) -> bool:
+    """Apply the same-file stale redirect at position ``p`` (the same operation ``_inject`` uses for a
+    stale-state fault); return True if a redirect was made. Mutates ``steps`` in place."""
+    target_resource = steps[p].get("file")
+    for d in [x for x in steps[p]["deps"] if x in idx_of and idx_of[x] < p]:
+        d_pos = idx_of[d]
+        if target_resource is None or steps[d_pos].get("file") != target_resource:
+            continue
+        prior_same = [s["idx"] for s in steps[:d_pos]
+                      if s.get("file") == target_resource and s["idx"] not in steps[p]["deps"]]
+        if prior_same:
+            new_d = int(rng.choice(prior_same))
+            steps[p]["deps"] = [new_d if x == d else x for x in steps[p]["deps"]]
+            return True
+    return False
+
+
+def _inject_paired(runs: List[list], seed: int = 0):
+    """Cause-attribution substrate: for each run that affords BOTH faults, return a stale-injected copy
+    and a dropped-injected copy of the SAME run. Because the two classes are drawn from identical runs,
+    a classifier cannot separate them on run identity, only on the fault signature, so there is no
+    eligibility leak (the run-level analogue of the localization degree-matched control)."""
+    rng = np.random.RandomState(seed)
+    stale_steps, dropped_steps = [], []
+    for original in runs:
+        idx_of = {s["idx"]: i for i, s in enumerate(original)}
+        stale_pos = [i for i in range(len(original)) if _has_stale_target(original, idx_of, i)]
+        drop_pos = [i for i in range(len(original))
+                    if any(d in idx_of and idx_of[d] < i for d in original[i].get("deps", ()))]
+        if not stale_pos or not drop_pos:
+            continue  # need both faults from the same run
+        stale_copy = [dict(s, deps=list(s.get("deps", ()))) for s in original]
+        if not _redirect_stale(stale_copy, idx_of, int(rng.choice(stale_pos)), rng):
+            continue
+        drop_copy = [dict(s, deps=list(s.get("deps", ()))) for s in original]
+        dp = int(rng.choice(drop_pos))
+        removable = [d for d in drop_copy[dp]["deps"] if d in idx_of and idx_of[d] < dp]
+        drop_copy[dp]["deps"] = [x for x in drop_copy[dp]["deps"] if x != int(rng.choice(removable))]
+        stale_steps.append(stale_copy)
+        dropped_steps.append(drop_copy)
+    return stale_steps, dropped_steps
+
+
+def _run_maxspan(steps: list) -> float:
+    X, _ = _step_graph(steps)
+    return float(X[:, 3].max()) if len(X) else 0.0
+
+
+def _run_edges(steps: list) -> float:
+    _, e = _step_graph(steps)
+    return float(e.shape[1])
+
+
+class GoldAttribution:
+    """POST / attribution Task: given a faulty run, attribute the CAUSE (stale-state vs
+    dropped-grounding), scored as ROC-AUC for stale = 1. Paired design (``_inject_paired``): each run
+    affording both faults contributes a stale copy and a dropped copy, so the label is the fault, not
+    the run. The third POST task after localization and prediction."""
+
+    task_id = "gold_attribution"
+    pillar = "POST"
+    granularity = "run"
+    dataset = "swegym-gold"
+
+    def __init__(self, seed: int = 0) -> None:
+        self.seed = seed
+        self._loaded = False
+
+    def setup(self) -> None:
+        if self._loaded:
+            return
+        stale_steps, dropped_steps = _inject_paired(_load_clean_runs(), seed=self.seed)
+        self.runs = stale_steps + dropped_steps
+        self.y = np.array([1] * len(stale_steps) + [0] * len(dropped_steps))  # 1 = stale-state
+        self.n_pairs = len(stale_steps)
+        self._loaded = True
+
+    def corpus_line(self) -> str:
+        self.setup()
+        return (f"{self.dataset}: {self.n_pairs} runs affording both faults, each injected with a "
+                f"stale-state and a dropped-grounding copy (paired), cause attribution by ROC-AUC.")
+
+
+class _AttribScore:
+    """An attribution method: a run-level score, ROC-AUC for separating stale (1) from dropped (0)."""
+
+    def __init__(self, method_id: str, score_fn) -> None:
+        self.method_id = method_id
+        self._fn = score_fn
+        self.supports = {"gold_attribution"}
+
+    def evaluate(self, task: GoldAttribution) -> Mapping[str, float]:
+        from sklearn.metrics import roc_auc_score
+
+        task.setup()
+        scores = np.array([self._fn(s) for s in task.runs])
+        return {"roc_auc": float(roc_auc_score(task.y, scores))}
+
+
+class _AttribRandom:
+    """The attribution ROC-AUC floor (seed-averaged random scores)."""
+
+    method_id = "random"
+    supports = {"gold_attribution"}
+
+    def evaluate(self, task: GoldAttribution) -> Mapping[str, float]:
+        from sklearn.metrics import roc_auc_score
+
+        task.setup()
+        aucs = [roc_auc_score(task.y, np.random.RandomState(s).rand(len(task.y))) for s in range(5)]
+        return {"roc_auc": float(np.mean(aucs))}
+
+
+def gold_attribution_methods() -> list:
+    """The attribution board: a random floor and the two mechanism-keyed run-level signals. A
+    stale-state read lengthens the run's max dependency span; dropped grounding removes one edge. Each
+    feature is keyed to one fault (the same caveat as the localization detectors), so they read the two
+    faults as opposite, separable structural traces rather than detect one in the wild."""
+    return [
+        _AttribRandom(),
+        _AttribScore("max-span (higher=stale)", _run_maxspan),
+        _AttribScore("edge-count (higher=stale)", _run_edges),
+    ]
+
+
 def _mean_std(vals) -> Tuple[float, float]:
     arr = np.array(vals, dtype=float)
     return float(arr.mean()), float(arr.std())

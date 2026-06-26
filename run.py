@@ -18,7 +18,9 @@ sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), "src
 from auditablebench.core import RunPipeline  # noqa: E402
 from auditablebench.detection import PostDetection, post_detection_methods  # noqa: E402
 from auditablebench.gold import (  # noqa: E402
+    GoldAttribution,
     GoldLocalization,
+    gold_attribution_methods,
     gold_breakdown,
     gold_localization_methods,
     gold_matched_breakdown,
@@ -39,9 +41,10 @@ from auditablebench.post import PostLocalization, post_localization_methods  # n
 
 def main() -> None:
     tasks = [PostLocalization(), PostDetection("swegym"), PostDetection("tau"), GoldLocalization(),
-             LiveStreaming("swegym"), LiveStreaming("tau"), LiveStaleState()]
+             GoldAttribution(), LiveStreaming("swegym"), LiveStreaming("tau"), LiveStaleState()]
     methods = (post_localization_methods() + post_detection_methods()
-               + gold_localization_methods() + live_streaming_methods() + live_stale_methods())
+               + gold_localization_methods() + gold_attribution_methods()
+               + live_streaming_methods() + live_stale_methods())
 
     print("AuditableBench :: POST + LIVE board(s)\n")
     for task in tasks:
@@ -93,6 +96,13 @@ def main() -> None:
         "detection and the leak-controlled max-span signal are stable across 5 injection seeds "
         "(gold_seed_robustness). See gold_breakdown / gold_matched_breakdown / gold_report / "
         "gold_seed_robustness below."
+        "\n- Gold attribution (cause): given a faulty run, is the cause stale-state or "
+        "dropped-grounding? Paired design (the same run is injected both ways, so the label is the "
+        "fault, not the run, no eligibility leak). The two faults leave opposite traces: a stale read "
+        "lengthens the max dependency span (ROC-AUC 0.675 for stale), dropped grounding removes an edge "
+        "(edge-count 0.566), against a 0.498 random floor. The structure separates the two causes, each "
+        "feature keyed to one mechanism, completing the POST localization / prediction / attribution "
+        "triad."
         "\n- LIVE streaming (early warning): can a method separate failing from resolved runs before "
         "the trace is complete? Three settings. SUPERVISED CV on the prefix feature layers: on SWE-Gym "
         "the dependency-structure block clears ROC-AUC 0.74 at the 25% prefix (t2d 25%) while run size "
