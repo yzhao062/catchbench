@@ -21,6 +21,7 @@ from auditablebench.gold import (  # noqa: E402
     GoldAttribution,
     GoldLocalization,
     gold_attribution_methods,
+    gold_attribution_robustness,
     gold_breakdown,
     gold_localization_methods,
     gold_matched_breakdown,
@@ -61,6 +62,9 @@ def main() -> None:
         print()
         print(gold_report(gold))
         print(gold_seed_robustness(gold_localization_methods()))  # stability across injection seeds
+
+    if any(isinstance(t, GoldAttribution) for t in tasks):  # cause-attribution stability across seeds
+        print(gold_attribution_robustness(gold_attribution_methods()))
 
     for live in (t for t in tasks if isinstance(t, LiveStreaming)):  # early-warning curve per corpus
         print(live_breakdown(live, live_streaming_methods()))

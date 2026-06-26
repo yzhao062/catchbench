@@ -600,6 +600,28 @@ def gold_attribution_methods() -> list:
     ]
 
 
+def gold_attribution_robustness(methods: list, seeds=(0, 1, 2, 3, 4)) -> str:
+    """Stability of the cause-attribution ROC-AUC across paired-injection seeds, matching the other
+    Gold boards' robustness reporting so a reader does not have to trust a single draw."""
+    from sklearn.metrics import roc_auc_score
+
+    seeds = tuple(seeds)
+    keep = [m for m in methods if hasattr(m, "_fn")]  # the scored features (the random floor is ~0.5)
+    acc = {m.method_id: [] for m in keep}
+    for seed in seeds:
+        task = GoldAttribution(seed=seed)
+        task.setup()
+        for m in keep:
+            scores = np.array([m._fn(s) for s in task.runs])
+            acc[m.method_id].append(float(roc_auc_score(task.y, scores)))
+    lines = [f"\nGold attribution seed robustness ({len(seeds)} paired-injection seeds, "
+             f"ROC-AUC mean +/- std):"]
+    for m in keep:
+        mn, sd = _mean_std(acc[m.method_id])
+        lines.append(f"  {m.method_id:28s}{mn:.3f}+/-{sd:.3f}")
+    return "\n".join(lines)
+
+
 def _mean_std(vals) -> Tuple[float, float]:
     arr = np.array(vals, dtype=float)
     return float(arr.mean()), float(arr.std())
