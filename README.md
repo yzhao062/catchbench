@@ -2,11 +2,14 @@
 
 The benchmark for finding and attributing agent failures over real agent traces.
 
-Given a multi-agent run, two questions decide whether you can trust it: did it fail, and which
-step broke it. AuditableBench scores both against labels the field already accepts, so a method
-earns its place on the board instead of grading its own homework. Agent auditing has the tools
-and the methods; it has not had its own benchmark. This is that benchmark, in the spirit of
-ADBench for tabular anomaly detection and BOND for graph anomaly detection.
+A run is audited at one of three moments, and what you can even ask is fixed by what you can see at
+each: before it runs you have only the plan and harness (is it over-privileged?); while it runs you
+have a growing prefix (is it about to fail?); after it runs you have the whole trace (which step broke
+it, did it fail, what kind of fault was it). AuditableBench is built around those three information
+states, and scores each question against labels the field already accepts, so a method earns its place
+on the board instead of grading its own homework. Agent auditing has the tools and the methods; it has
+not had its own benchmark. This is that benchmark, in the spirit of ADBench for tabular anomaly
+detection and BOND for graph anomaly detection.
 
 ## The Dataset Is the Asset
 
@@ -46,21 +49,32 @@ branded name and pays the credibility back in the content:
   a supervised reference, and a full-feature ceiling. It wins or loses in public, and it has no
   obligation to win.
 
-## Pillars: PRE, LIVE, POST
+## Why PRE / LIVE / POST
 
-AuditableBench is organized along the three windows of an agent run, mirroring `auditable`:
+The pillars are not three convenient buckets; they are the three information states a run passes
+through, and the evidence available at each fixes which audit is possible. A method built for one
+state cannot read another's evidence, so the pillars are separate tracks, not interchangeable views of
+one dataset.
 
-- **PRE** (before the run): audit the harness and the plan. Over-privileged tools, missing
+- **PRE** (only the plan and harness exist): the audit is static, for over-privilege and missing
   guardrails. *(planned)*
-- **LIVE** (during the run): catch failure early from a streaming prefix of the trace.
-  Time-to-detection, early-warning AUC. *(planned)*
-- **POST** (after the run): forensics on the finished trace. Did it fail, and which step broke it.
-  **This is what v1 ships.**
+- **LIVE** (a growing prefix is visible, the outcome is not): the audit is predictive and runs under a
+  false-alarm budget, for early warning from a streaming prefix and online detection. **Shipped.**
+- **POST** (the complete trace and outcome are in hand): the audit is forensic, answering which step
+  failed, whether it failed, and what kind of fault it was. **Shipped.**
 
-## The v1 Boards
+Within a pillar, each board is the specific question an auditor asks at that state, paired with the
+label that answers it and the metric the question implies (ranking questions use Top-k / MRR; a
+yes-or-no question uses ROC-AUC; an online question uses true-positive rate at a fixed false-positive
+budget, because a live detector is only useful if it does not flood the operator with false alarms).
 
-POST ships three task families (localization, detection, and Gold). Run `python run.py` to reproduce
-every number below.
+## The Boards
+
+POST answers its three forensic questions (which step, did it fail, what kind) plus the Gold injection
+board, and LIVE answers its two real-time questions (early warning from a prefix, online detection).
+Run `python run.py` to reproduce every number. The POST localization, detection, and Gold boards are
+shown in full below; the cause-attribution board and the two LIVE boards are summarized at the end and
+detailed in the paper.
 
 ### Fault Localization on Who&When
 
@@ -147,42 +161,46 @@ scenarios (where there is an attack to detect), not these outcome-label boards.
 
 The boards above borrow labels (human attribution, run outcomes). Gold is the benchmark's own data
 contribution: plant a known fault in a real run and ask whether a method points to it. 188 clean
-SWE-Gym runs, one injected fault each, half stale-state and half dropped-grounding; the label is the
-injection site. Read the board PER FAULT KIND, because the two fault types behave completely
-differently and the aggregate hides it.
+SWE-Gym runs, one injected fault each, 82 stale-state and 106 dropped-grounding (a run affords a
+stale-state fault only when it has an earlier same-file read to redirect to); the label is the
+injection site. The numbers below are a representative seed and are stable across five injection seeds
+(`run.py` prints the mean and standard deviation). Read the board PER FAULT KIND, because the two fault
+types behave completely differently and the aggregate hides it.
 
 | Method | overall Top-1 | stale-state Top-1 | dropped-grounding Top-1 |
 |---|---|---|---|
-| random (seed-averaged) | 0.034 | -- | -- |
+| random (seed-averaged) | 0.032 | -- | -- |
 | position (leak check) | 0.000 | 0.000 | 0.000 |
-| degree (leak check) | 0.106 | 0.181 | 0.032 |
-| has-dep (control) | 0.096 | 0.191 | 0.000 |
-| max-span (control) | 0.335 | 0.670 | 0.000 |
-| `auditable` (dep-anomaly) | 0.335 | **0.670** | 0.000 |
+| degree (leak check) | 0.016 | 0.000 | 0.028 |
+| has-dep (control) | 0.000 | 0.000 | 0.000 |
+| max-span (control) | 0.309 | 0.707 | 0.000 |
+| `auditable` (dep-anomaly) | 0.309 | **0.707** | 0.000 |
 | PyGOD (graph AD) | 0.000 | 0.000 | 0.000 |
 
 The injector can only target a step that has a dependency, so the injected step always carries one.
 That makes the full-pool table leak-prone: any detect-the-eligible baseline lifts for free. The
 degree-matched control re-ranks every method within only the steps the injector could have picked for
-that run's fault kind (mean 8.5 candidates per run), holding eligibility and degree constant. The
+that run's fault kind (mean 7.4 candidates per run, mirroring the injector's precondition exactly),
+holding eligibility and degree constant. The
 random floor rises accordingly, and ties are broken in expectation so a constant-score baseline lands
 on the floor instead of winning on sort order.
 
 | Method (degree-matched pool) | overall Top-1 | stale-state Top-1 | dropped-grounding Top-1 |
 |---|---|---|---|
-| random (matched floor) | 0.232 | 0.238 | 0.225 |
-| position | 0.218 | 0.191 | 0.245 |
-| degree | 0.168 | 0.268 | 0.067 |
-| has-dep | 0.135 | 0.238 | 0.032 |
-| max-span | 0.354 | 0.676 | 0.032 |
-| `auditable` (dep-anomaly) | 0.354 | **0.676** | 0.032 |
-| PyGOD (graph AD) | 0.235 | 0.247 | 0.223 |
+| random (matched floor) | 0.308 | 0.350 | 0.277 |
+| position | 0.330 | 0.341 | 0.321 |
+| degree | 0.225 | 0.394 | 0.095 |
+| has-dep | 0.195 | 0.350 | 0.075 |
+| max-span | 0.394 | **0.805** | 0.075 |
+| `auditable` (dep-anomaly) | 0.391 | 0.799 | 0.075 |
+| PyGOD (graph AD) | 0.311 | 0.359 | 0.274 |
 
 How to read it. Stale-state faults are detectable: in the full pool a dependency-span detector
-localizes them at 0.670 Top-1, far above the 0.034 random floor. The degree-matched control shows
-that lift is the fault, not an artifact: `has-dep` falls to exactly the matched floor (0.238 stale, a
-constant score over an all-eligible pool), `degree` drops to the floor too (0.268 stale, 0.168
-overall), and the dependency-span signal survives at 0.676 stale against a 0.238 floor. The
+localizes them at 0.707 Top-1, far above the 0.032 random floor. The degree-matched control shows
+that lift is the fault, not an artifact: `has-dep` falls to exactly the matched floor (0.350 stale, a
+constant score over an all-eligible pool), `degree` sits below the floor overall (0.225 against 0.308)
+with only a small stale-state residual (0.394 against 0.350) that a Monte-Carlo check reads as seed
+noise, and the dependency-span signal clears the floor by far (0.805 stale against 0.350). The
 eligibility lift was target selection; the span signal is the fault signature. Dropped-grounding is a
 different story: no baseline localizes it in either pool (about the floor), because removing one
 dependency among many leaves no signal the current detectors catch, an honest open problem rather
@@ -196,21 +214,23 @@ autoencoder (PyGOD) sits at the matched floor for both fault types.
 The injection is the contribution, so its checks are reported as first-class results, including the
 open ones, following BOND's discipline that the synthesis must be defensible:
 
-- **Grounded faults, one strong half.** Stale-state (redirect a dependency to a superseded earlier
-  step) is localized at 0.670 Top-1. Dropped-grounding (remove a required dependency) is realized but
-  not yet localized by any baseline; it needs a better detector or a stronger substrate.
+- **Grounded faults, one strong half.** Stale-state (redirect a dependency to an earlier superseded
+  event on the same file) is localized at 0.707 Top-1, and 0.671 +/- 0.022 across five injection seeds.
+  Dropped-grounding (remove a required dependency) is realized but not yet localized by any baseline; it
+  needs a better detector or a stronger substrate.
 - **Leakage check, controlled for stale-state.** `position` stays at the random floor. In the full
   pool `degree` and a `has-dep` eligibility baseline both lift above it, but that is target selection:
   the injector only corrupts steps that have dependencies. Ranking within the degree-matched eligible
-  pool removes the artifact. `has-dep` lands on the matched floor (0.238 stale) and `degree` falls to
-  it (0.268 stale, 0.168 overall), while the dependency-span detector holds at 0.676 stale against a
-  0.238 floor. The stale-state lift survives the control, so it is the fault signature rather than the
-  construction. dropped-grounding stays at the floor in both pools, which is the open detection
-  problem, not a leak.
+  pool removes the artifact. `has-dep` lands exactly on the matched floor (0.350 stale) and `degree`
+  sits below it overall (0.225 against 0.308) with a small stale residual (0.394) that a Monte-Carlo
+  check reads as seed noise, while the dependency-span detector clears the floor by far (0.805 stale
+  against 0.350, and 0.795 +/- 0.020 across seeds). The stale-state lift survives the control, so it is
+  the fault signature rather than the construction. dropped-grounding stays at the floor in both pools,
+  which is the open detection problem, not a leak.
 - **Distributional validity, reported honestly.** Stale-state preserves the valid dependency-edge
-  count, but dropped-grounding removes exactly one valid dependency edge, so the aggregate mean shifts
-  from 8.5 to 8.0; treat edge count as a reported run-level shift for the dropped half, not as matched.
-  Stale-state lengthens the run-level max dependency span by construction (mean 8.6 to 11.1, 63 of 188
+  count (mean 9.2, unchanged); dropped-grounding removes exactly one valid dependency edge (mean 7.9 to
+  6.9), so treat edge count as a reported run-level shift for the dropped half, not as matched.
+  Stale-state lengthens the run-level max dependency span by construction (mean 8.6 to 9.4, 53 of 188
   runs increased). These shifts are reported, not hidden, and localization still requires finding the
   step.
 - **Labels are the injection site**, correct by construction and independent of any detector.
@@ -219,16 +239,54 @@ open ones, following BOND's discipline that the synthesis must be defensible:
   dropped-grounding detector; the airtight substrate is a named-value corpus where writes and reads
   are explicit, with a human-audited validation slice (Cohen's kappa).
 
-## Tasks
+### Cause Attribution and the LIVE Boards
 
-- **Fault localization** (step level, shipped): name the faulting step. Top-1, Top-3, MRR
+Three more boards complete the POST and LIVE pillars; the paper carries the full tables.
+
+**Cause attribution (POST, what kind).** Given a faulty run, is it stale-state or dropped-grounding?
+The substrate is paired, the same run injected both ways, so the label is the fault, not the run, with
+no eligibility leak (the run-level analogue of the degree-matched control). On 166 paired runs the two
+faults leave opposite traces: a stale read lengthens the max dependency span (ROC-AUC 0.675, and
+0.671 +/- 0.005 across seeds), dropped grounding removes an edge (edge-count 0.566), against a 0.498
+floor. Each feature is keyed to one mechanism, so this measures whether the structure carries
+cause-discriminative information, not a general attribution model.
+
+**LIVE streaming early warning (can you tell early).** Can a method separate failing from resolved
+runs from a growing prefix? On SWE-Gym the dependency-structure block clears ROC-AUC 0.74 at the 25%
+prefix (time-to-detection 25%) while run size never does; an unsupervised ECOD on the prefix also
+fires early (0.76), but a raw per-run span signal does not (0.36, length-confounded). The early signal
+needs the full prefix features, supervised or unsupervised, not a single online scalar. On tau-bench
+every method is weak and late, the same domain split as detection.
+
+**LIVE online stale-state detection (catch it live).** The same Gold stale-state injection, detected
+online at a fixed false-positive rate instead of localized post-hoc. It is hard: the causal span
+z-score catches about 6% of stale reads at a realized 6% false-positive rate (0.054 +/- 0.012 across
+seeds), far below the 0.71 within-run localization. A dep-count control sits exactly at the floor,
+confirming the span, not generic structural change, is the signal. Spotting one stale read online
+without false-alarming is an open problem.
+
+## The Full Task List
+
+Each task is one auditor question at one information state, with the label that answers it, not a
+list chosen for coverage. Shipped in v1:
+
+- **Fault localization** (POST, *which step*): rank the steps of a failed run. Top-1 / Top-3 / MRR
   against Who&When human attribution.
-- **Failure detection** (run level, shipped): predict whether a run fails. ROC-AUC against
-  SWE-Gym and tau-bench resolved / unresolved outcomes.
-- **Gold fault injection** (step level, shipped): plant a known fault in a real run and localize
-  it. Top-1, Top-3, MRR against injection-site labels; the benchmark's own data contribution.
-- **Live early warning** (run level, planned): flag a failing run from a streaming prefix.
-- **Harness and plan audit** (PRE, planned): flag over-privilege and missing guardrails.
+- **Failure detection** (POST, *did it fail*): predict run failure. ROC-AUC against SWE-Gym and
+  tau-bench resolved / unresolved outcomes.
+- **Cause attribution** (POST, *what kind*): tell stale-state from dropped-grounding on a paired Gold
+  injection (the same run injected both ways). ROC-AUC.
+- **Gold fault localization** (POST, the data contribution): plant a known fault in a real run and
+  localize it. Top-1 / Top-3 / MRR against injection-site labels.
+- **Streaming early warning** (LIVE, *can you tell early*): flag a failing run from a growing prefix.
+  Prefix-AUC and time to detection.
+- **Online stale-state detection** (LIVE, *catch it live*): detect the Gold stale-state injection
+  online. True-positive rate at a fixed false-positive budget.
+
+Planned:
+
+- **Harness and plan audit** (PRE, *is it safe before the run*): flag over-privilege and missing
+  guardrails.
 
 ## Run It
 
@@ -268,10 +326,12 @@ the method, is the fixed point. See `src/auditablebench/core.py` for the contrac
 
 ## Status and Release
 
-v1 is a local working build of the POST pillar: localization, detection, and the Gold injection
-board. The repository goes public together with the benchmark paper, so the framing and the
-leaderboard arrive at once and the angle is established in print before it is copied. That is a release-timing choice, not a secrecy one: nothing here is
-withheld. GRADE is public on arXiv, `auditable`'s kernel is public, and the labels are public.
+v1 is a local working build of the POST and LIVE pillars: POST localization, detection, cause
+attribution, and the Gold injection board; LIVE streaming early-warning and online stale-state
+detection. The repository goes public together with the benchmark paper, so the framing and the
+leaderboard arrive at once and the angle is established in print before it is copied. That is a
+release-timing choice, not a secrecy one: nothing here is withheld. GRADE is public on arXiv,
+`auditable`'s kernel is public, and the labels are public.
 
 The benchmark's own data contribution, the Gold board, now ships its first slice: faults injected
 into real runs with injection-site labels (the standard move when real labels are scarce; BOND
