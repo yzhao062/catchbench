@@ -1,0 +1,20 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.eggs/
+build/
+dist/
+.pytest_cache/
+.ipynb_checkpoints/
+
+# Local environment / editor
+.venv/
+venv/
+.idea/
+.vscode/
+
+# Datasets and model caches are pulled from the Hugging Face Hub at run time; never vendor them here.
+data/
+*.parquet
+*.jsonl
