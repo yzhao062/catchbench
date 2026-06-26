@@ -102,21 +102,42 @@ def guardian_run_scores(graphs: Sequence[Graph], *, seed: int = 0, hid: int = 16
     return np.mean(per_seed, axis=0)
 
 
+def _to_data(graph: Graph, scaler):
+    """One PyG Data from a raw graph, node features transformed by an already-fit scaler, isolated
+    nodes self-looped (matching ``_batched``) so message passing is defined."""
+    import torch
+    from torch_geometric.data import Data
+
+    x, edges = graph
+    node_x = torch.tensor(scaler.transform(np.asarray(x, dtype=float)), dtype=torch.float)
+    n = node_x.shape[0]
+    e = np.asarray(edges, dtype=np.int64).reshape(2, -1)
+    touched = set(e.flatten().tolist()) if e.shape[1] else set()
+    isolated = [v for v in range(n) if v not in touched]
+    if isolated:
+        loops = np.array(isolated, dtype=np.int64)
+        e = np.concatenate([e, np.stack([loops, loops])], axis=1)
+    return Data(x=node_x, edge_index=torch.tensor(e, dtype=torch.long))
+
+
 def gsafeguard_cv_auc(graphs: Sequence[Graph], y: np.ndarray, *, seed: int = 0, hid: int = 32,
                       epochs: int = 60, n_splits: int = 5) -> float:
     """G-Safeguard's supervised-GNN detector: a graph-classification GCN trained with seed-averaged
     stratified K-fold cross-validation to predict run failure, returning the mean held-out ROC-AUC.
-    Grouped at the run, since each run is one graph and one label."""
+    Grouped at the run, since each run is one graph and one label. The feature scaler is fit on each
+    fold's training graphs only, so the held-out fold never informs preprocessing (no train/test leak)."""
     import torch
     from torch_geometric.data import Batch
     from torch_geometric.nn import GCNConv, global_mean_pool
     from sklearn.metrics import roc_auc_score
     from sklearn.model_selection import StratifiedKFold
+    from sklearn.preprocessing import StandardScaler
 
-    batch, n_runs = _batched(graphs)
-    datas = batch.to_data_list()
-    in_dim = batch.x.shape[1]
     y = np.asarray(y)
+    n_runs = len(graphs)
+    if n_runs < n_splits or len(set(y.tolist())) < 2:
+        return 0.5
+    in_dim = np.asarray(graphs[0][0]).shape[1]
 
     class _GNN(torch.nn.Module):
         def __init__(self) -> None:
@@ -134,12 +155,18 @@ def gsafeguard_cv_auc(graphs: Sequence[Graph], y: np.ndarray, *, seed: int = 0, 
     for s in range(3):  # seed-average for a stable held-out estimate
         skf = StratifiedKFold(n_splits=n_splits, shuffle=True, random_state=seed + s)
         for tr, te in skf.split(np.zeros(n_runs), y):
+            if len(set(y[tr].tolist())) < 2 or len(set(y[te].tolist())) < 2:
+                continue  # skip degenerate single-class folds
+            scaler = StandardScaler().fit(  # train folds only: no held-out stats leak in
+                np.vstack([np.asarray(graphs[int(i)][0], dtype=float) for i in tr]))
+            train_batch = Batch.from_data_list([_to_data(graphs[int(i)], scaler) for i in tr])
+            test_batch = Batch.from_data_list([_to_data(graphs[int(i)], scaler) for i in te])
+            train_y = torch.tensor(y[tr], dtype=torch.float)
+
             torch.manual_seed(seed + s)
             model = _GNN()
             opt = torch.optim.Adam(model.parameters(), lr=0.01, weight_decay=5e-4)
             loss_fn = torch.nn.BCEWithLogitsLoss()
-            train_batch = Batch.from_data_list([datas[i] for i in tr])
-            train_y = torch.tensor(y[tr], dtype=torch.float)
             model.train()
             for _ in range(epochs):
                 opt.zero_grad()
@@ -148,8 +175,6 @@ def gsafeguard_cv_auc(graphs: Sequence[Graph], y: np.ndarray, *, seed: int = 0, 
                 opt.step()
             model.eval()
             with torch.no_grad():
-                test_batch = Batch.from_data_list([datas[i] for i in te])
                 prob = torch.sigmoid(model(test_batch)).numpy()
-            if len(set(y[te].tolist())) > 1:
-                aucs.append(roc_auc_score(y[te], prob))
+            aucs.append(roc_auc_score(y[te], prob))
     return float(np.mean(aucs)) if aucs else 0.5

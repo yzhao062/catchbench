@@ -1,17 +1,24 @@
 """POST pillar (forensics): run-level failure prediction (detection).
 
-Predict whether a run failed, scored by ROC-AUC, on trusted outcome labels. Reuses GRADE's
-verified detection eval: typed-graph feature layers plus seed-averaged 5-fold stratified
-cross-validation over runs (standardized logistic regression; each run is one row). The supervised "methods" on this board are feature layers,
-which is GRADE's keystone question posed as a leaderboard: does dependency structure predict
-failure beyond run size? PyOD (the shallow tabular path) and a random floor round out the board.
+Predict whether a run failed, scored by ROC-AUC, on trusted outcome labels. The keystone question,
+posed as a leaderboard: does the dependency structure predict failure beyond run size? The board
+answers it across four method families. A random floor and a size-only baseline bound the trivial
+end. Unsupervised anomaly detectors read the run without labels: PyOD on the flat features (shallow
+tabular AD), PyGOD's DOMINANT over the typed graph, and GUARDIAN's reconstruction autoencoder (the
+agent-specific graph sibling). The supervised feature layers reuse GRADE's verified eval (typed-graph
+layers, seed-averaged 5-fold stratified CV, standardized logistic regression, each run one row), and
+G-Safeguard adds a supervised graph-classification GNN. The wider PyOD / PyGOD detector arena plugs in
+through ``pyod_extra`` and ``pygod_extra`` via ``run.py``.
 
-  - random              : a floor (random scores; ROC-AUC ~ 0.5).
+  - random               : a floor (random scores; ROC-AUC ~ 0.5).
   - size (flat)          : run size and counts only, the honest trivial baseline.
   - pyod-flatten (ECOD)  : unsupervised PyOD on the flat per-run features (shallow tabular AD).
+  - pygod (graph AD)     : unsupervised DOMINANT over the typed graph (generic graph AD).
+  - guardian (recon-AE)  : GUARDIAN's unsupervised reconstruction autoencoder (agent-specific graph AD).
   - auditable (structure): size plus the size-normalized dependency block (the structural signal
-                          auditable surfaces). Beating "size (flat)" is the benchmark's point.
+                           auditable surfaces). Beating "size (flat)" is the benchmark's point.
   - full                 : flat plus execution plus raw dependency features (reference).
+  - g-safeguard (sup GNN): G-Safeguard's supervised graph-classification GNN over the dependency graph.
 
 `auditable` is one entry on the board, not the referee. A method runs across every detection
 dataset (the same Task contract over a different corpus), which is the dataset-as-the-asset point.
