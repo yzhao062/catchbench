@@ -115,9 +115,11 @@ SWE-Gym, 376 runs (188 failed, 188 resolved):
 | random | 0.483 |
 | size (flat) | 0.663 |
 | PyOD-flatten (ECOD) | 0.765 |
-| PyGOD (graph AD, DOMINANT) | 0.487 |
+| PyGOD-DOMINANT (graph AD) | 0.487 |
+| GUARDIAN (recon-AE) | 0.767 |
 | `auditable` (structure) | 0.804 |
-| full (reference) | **0.819** |
+| full (reference) | 0.819 |
+| G-Safeguard (supervised GNN) | **0.828** |
 
 tau-bench (MIT), 660 runs (380 failed, 280 resolved):
 
@@ -126,9 +128,11 @@ tau-bench (MIT), 660 runs (380 failed, 280 resolved):
 | random | 0.501 |
 | size (flat) | 0.583 |
 | PyOD-flatten (ECOD) | 0.571 |
-| PyGOD (graph AD, DOMINANT) | 0.507 |
+| PyGOD-DOMINANT (graph AD) | 0.507 |
+| GUARDIAN (recon-AE) | 0.555 |
 | `auditable` (structure) | 0.614 |
 | full (reference) | **0.627** |
+| G-Safeguard (supervised GNN) | 0.578 |
 
 How to read it. The size-normalized dependency block beats the size-only baseline on both
 corpora (+0.141 on SWE-Gym, +0.031 on tau-bench), so the structural signal predicts failure
@@ -139,23 +143,30 @@ beating the linear size model on SWE-Gym (0.765 over 0.663) is its own signal: f
 non-monotone in run length there (both very short and very long runs fail), which a tail-based
 detector catches and a linear one misses. The dependency structure still adds on top of it.
 
-The two unsupervised detectors split sharply. PyOD on flat size features is moderate, and strong on
-SWE-Gym. PyGOD's graph autoencoder on structure-only node features sits near or below random on both
-corpora, and its weak correlation with failure even flips sign between them. Reading the typed graph
-with an off-the-shelf graph anomaly detector does not, by itself, find failures; the task-aware
-dependency features do. That gap is the benchmark's point: the structure has to be used, not merely
-be present.
+The unsupervised anomaly detectors split sharply from the task-aware ones. AuditableBench runs a
+wider arena behind the headline table: the PyOD tabular family (Isolation Forest, KNN, LOF, COPOD,
+HBOS) and the PyGOD graph family (DOMINANT, CONAD, AnomalyDAE, GAAN). On SWE-Gym the tabular
+detectors span ROC-AUC 0.32 to 0.63 and the graph detectors cluster near 0.49, all below the size
+baseline; on tau-bench they sit near the floor. GUARDIAN, the agent-specific reconstruction
+autoencoder, reaches the ECOD level (0.767) but no higher. Reading the typed graph with an
+off-the-shelf detector does not, by itself, find failures; the task-aware dependency features do, and
+a supervised network trained on them (G-Safeguard) tops SWE-Gym. That gap is the benchmark's point:
+the structure has to be used, not merely be present.
 
 ### Baselines and Lineage
 
-The graph-AD baseline is PyGOD's DOMINANT (Ding et al., 2019, *Deep Anomaly Detection on Attributed
-Networks*, SDM), an unsupervised graph autoencoder that scores nodes by reconstruction error. That
-is the same mechanism as GUARDIAN (arXiv:2505.19234), which safeguards multi-agent collaborations
-with a reconstruction-error temporal graph autoencoder, so this board represents that family rather
-than reimplementing it. G-Safeguard (Wang et al., 2025, arXiv:2502.11127) is a different design: a
-supervised GNN trained to detect injected adversarial agents on the multi-agent utterance graph. Its
-threat model is attack, not task failure, so it joins the benchmark with the fault-injection
-scenarios (where there is an attack to detect), not these outcome-label boards.
+The graph-AD baselines are ports of published methods onto the dependency graph, in the ADBench /
+BOND tradition of running a method on the benchmark's representation rather than gesturing at it.
+PyGOD's DOMINANT (Ding et al., 2019, *Deep Anomaly Detection on Attributed Networks*, SDM) is an
+unsupervised graph autoencoder that scores nodes by reconstruction error. GUARDIAN (Zhou et al.,
+2025, arXiv:2505.19234), which safeguards multi-agent collaborations with a reconstruction-error
+temporal graph autoencoder, is implemented here as a directed-GCN attribute-reconstruction
+autoencoder over the per-run graph; the explicit adjacency-reconstruction term and the
+information-bottleneck compression are simplified, as the code documents. G-Safeguard (Wang et al.,
+2025, arXiv:2502.11127) is a supervised GNN; its original threat model is injected adversarial agents
+on the utterance graph, and here it is a supervised graph-classification GNN over the dependency
+graph, the benchmark's first learned-over-the-graph detector. It tops the SWE-Gym detection board at
+0.828, a third-party method leading one domain, which is the benchmark working as intended.
 
 ### Gold: Injected Faults on Real Runs
 
