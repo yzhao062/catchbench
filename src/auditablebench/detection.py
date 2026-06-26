@@ -123,6 +123,42 @@ class PyGODDetection:
         return {"roc_auc": float(roc_auc_score(task.y, run_scores))}
 
 
+class GuardianDetection:
+    """GUARDIAN (Zhou et al., 2025): an UNSUPERVISED reconstruction autoencoder over the typed graph,
+    the agent-specific sibling of PyGOD's generic DOMINANT. A run's failure score is the mean per-node
+    reconstruction error. See ``agent_detectors`` for what is implemented versus simplified."""
+
+    method_id = "guardian (recon-AE)"
+    supports = {"post_detection"}
+
+    def evaluate(self, task: PostDetection) -> Mapping[str, float]:
+        from sklearn.metrics import roc_auc_score
+
+        from auditablebench.agent_detectors import guardian_run_scores
+        from auditablebench.graph_ad import nx_to_graph
+
+        task.setup()
+        scores = guardian_run_scores([nx_to_graph(graph) for graph in task.graphs])
+        return {"roc_auc": float(roc_auc_score(task.y, scores))}
+
+
+class GSafeguardDetection:
+    """G-Safeguard (Wang et al., 2025): a SUPERVISED graph-classification GNN, trained with
+    seed-averaged stratified cross-validation to predict run failure from the dependency graph. The
+    benchmark's first supervised GNN, so it tests whether learning over the graph beats the
+    feature-layer logistic models."""
+
+    method_id = "g-safeguard (sup GNN)"
+    supports = {"post_detection"}
+
+    def evaluate(self, task: PostDetection) -> Mapping[str, float]:
+        from auditablebench.agent_detectors import gsafeguard_cv_auc
+        from auditablebench.graph_ad import nx_to_graph
+
+        task.setup()
+        return {"roc_auc": gsafeguard_cv_auc([nx_to_graph(graph) for graph in task.graphs], task.y)}
+
+
 class RandomDetection:
     """The ROC-AUC floor: random run scores (averages to ~0.5)."""
 
@@ -139,12 +175,16 @@ class RandomDetection:
 
 
 def post_detection_methods() -> list:
-    """The detection board's baseline set, in display order."""
+    """The detection board's baseline set, in display order: a floor and a size baseline; the
+    unsupervised anomaly detectors (PyOD tabular, PyGOD graph, GUARDIAN recon-AE); the supervised
+    feature layers and the G-Safeguard GNN."""
     return [
         RandomDetection(),
         _LayerAUC("size (flat)", "flat"),
         PyODFlatten(),
         PyGODDetection(),
+        GuardianDetection(),
         _LayerAUC("auditable (structure)", "flatdep"),
         _LayerAUC("full", "full"),
+        GSafeguardDetection(),
     ]
