@@ -21,6 +21,7 @@ from __future__ import annotations
 
 import glob
 import hashlib
+import inspect
 import json
 import os
 import re
@@ -114,9 +115,6 @@ def all_at_once_prompt(run: dict) -> str:
     )
 
 
-_PROMPTS: Mapping[str, Callable[[dict], str]] = {"all_at_once": all_at_once_prompt}
-
-
 # --- response parsing -------------------------------------------------------------
 
 def parse_prediction(text: str, n_steps: int) -> dict:
@@ -159,6 +157,140 @@ def _score_vector(pred: dict, n_steps: int) -> np.ndarray:
     if top is not None and 0 <= top < n_steps:
         scores[top] = float(n_steps + 1)  # the single decisive step outranks the shortlist
     return scores
+
+
+# --- query protocols: how the trace is shown and how many calls per run -----------
+# Who&When defines three. all-at-once shows the whole trace once. step-by-step walks the prefix and
+# stops at the first step judged to be the mistake. binary-search halves the suspect interval each
+# query. step-by-step and binary-search are stopping / search rules that return one step, so the
+# board's Top-3 and MRR credit only that single prediction (Top-1 is their natural metric); all-at-once
+# also returns a ranked shortlist. Each driver takes (run, complete) and returns (prediction, raw-log).
+
+def _all_at_once(run: dict, complete: Callable[[str], str]):
+    raw = complete(all_at_once_prompt(run))
+    return parse_prediction(raw, len(run["steps"])), raw
+
+
+def _step_prompt(run: dict, upto: int, max_chars: int = 1200) -> str:
+    lines = []
+    for s, text in list(zip(run["steps"], run["texts"]))[:upto + 1]:
+        body = " ".join(str(text).split())
+        if len(body) > max_chars:
+            body = body[:max_chars] + " ...[truncated]"
+        lines.append(f"[step {s['idx']}] ({s['agent']}, {s['kind']}): {body}")
+    return (
+        "You are auditing a failed multi-agent run, examined incrementally. The decisive mistake is the "
+        "FIRST step whose error caused the run to fail. You are shown steps 0 through "
+        f"{upto}; all later steps are hidden. Has the decisive mistake ALREADY occurred within steps 0 "
+        f"to {upto}?\n\nSTEPS:\n" + "\n".join(lines) +
+        f"\n\nEnd your reply with one line in exactly this format: 'VERDICT: <index>', where <index> is "
+        f"an integer 0 to {upto} if the decisive mistake has occurred, or 'VERDICT: NO' if it has not.")
+
+
+def _parse_step_answer(raw: str, upto: int):
+    """Read one step-by-step reply via the required ``VERDICT:`` line and return an in-range step index,
+    or None when the verdict is NO or absent (treated as not-yet). The structured verdict makes parsing
+    immune to verbose reasoning ("the mistake has not occurred yet, the error in step 4 is ...") that a
+    free-form scan would misread. A bare integer reply is accepted as a fallback for non-compliant
+    models; anything else is None."""
+    low = raw.strip().lower()
+    if not low:
+        return None
+    verdicts = re.findall(r"verdict\s*[:=]\s*(no|\d+)", low)  # last match = the final-line answer
+    if verdicts:
+        tok = verdicts[-1]
+        if tok == "no":
+            return None
+        v = int(tok)
+        return v if 0 <= v <= upto else None
+    if re.fullmatch(r"\d+", low):  # non-compliant fallback: a bare index
+        v = int(low)
+        return v if 0 <= v <= upto else None
+    return None
+
+
+def _step_by_step(run: dict, complete: Callable[[str], str]):
+    """Walk the growing prefix; the first prefix where the judge says the mistake has occurred yields
+    the step it names (which may be earlier than the current step). If no prefix flags a mistake,
+    default to the last step (the failure has surfaced by the end)."""
+    n = len(run["steps"])
+    log = []
+    for i in range(n):
+        raw = complete(_step_prompt(run, i)).strip()
+        log.append(f"[0..{i}] {raw[:120]}")
+        ans = _parse_step_answer(raw, i)
+        if not isinstance(ans, int):
+            continue  # no step named (mistake not yet visible, or reply unparseable); extend prefix
+        return {"top": ans, "ranking": [ans]}, "\n".join(log)
+    return {"top": n - 1, "ranking": [n - 1]}, "\n".join(log)
+
+
+def _interval_prompt(run: dict, lo: int, hi: int, mid: int, max_chars: int = 900) -> str:
+    lines = []
+    for s, text in zip(run["steps"], run["texts"]):
+        body = " ".join(str(text).split())
+        if len(body) > max_chars:
+            body = body[:max_chars] + " ...[truncated]"
+        lines.append(f"[step {s['idx']}] ({s['agent']}, {s['kind']}): {body}")
+    return (
+        "You are auditing a failed multi-agent run (full trace below). The decisive mistake, the first "
+        f"step whose error caused the failure, is within steps {lo} to {hi}. Is it in the FIRST half "
+        f"(steps {lo} to {mid}) or the SECOND half (steps {mid + 1} to {hi})?\n\nTRACE:\n"
+        + "\n".join(lines) +
+        f"\n\nEnd your reply with one line in exactly this format: 'VERDICT: FIRST' (steps {lo}-{mid}) "
+        f"or 'VERDICT: SECOND' (steps {mid + 1}-{hi}).")
+
+
+def _parse_half(ans: str) -> Optional[str]:
+    """Read an interval reply via the required ``VERDICT:`` line: ``"first"``, ``"second"``, or None
+    when absent. The structured verdict avoids misreading verbose replies that name both halves ("not
+    in the first half; it is in the second"). Fallback for a non-compliant reply: a single unambiguous
+    half token, else None (the caller defaults to the first half)."""
+    low = ans.lower()
+    verdicts = re.findall(r"verdict\s*[:=]\s*(first|second)", low)  # last match = the final answer
+    if verdicts:
+        return verdicts[-1]
+    has_f, has_s = "first" in low, "second" in low  # non-compliant fallback: only if unambiguous
+    if has_f and not has_s:
+        return "first"
+    if has_s and not has_f:
+        return "second"
+    return None
+
+
+def _binary_search(run: dict, complete: Callable[[str], str]):
+    """Halve the suspect interval each query until one step remains (about log2(n) calls). An
+    unparseable reply defaults to the first half, keeping the search total."""
+    n = len(run["steps"])
+    lo, hi, log = 0, n - 1, []
+    while lo < hi:
+        mid = (lo + hi) // 2
+        raw = complete(_interval_prompt(run, lo, hi, mid)).strip()
+        go_second = _parse_half(raw) == "second"
+        log.append(f"[{lo}-{hi} mid{mid}] {'SECOND' if go_second else 'FIRST'} :: {raw[:120]}")
+        lo, hi = (mid + 1, hi) if go_second else (lo, mid)
+    return {"top": lo, "ranking": [lo]}, "\n".join(log)
+
+
+_PROTOCOLS: Mapping[str, Callable] = {
+    "all_at_once": _all_at_once,
+    "step_by_step": _step_by_step,
+    "binary_search": _binary_search,
+}
+
+# step-by-step and binary-search name ONE step, so the board credits Top-1 == Top-3 == MRR for them
+# (no ranked shortlist); all_at_once returns a ranking scored by GRADE's _rank_metrics.
+_SINGLE_STEP_PROTOCOLS = frozenset({"step_by_step", "binary_search"})
+
+
+def _protocol_prompt_sha(method: str) -> str:
+    """Provenance tag that changes when the protocol driver or its prompt wording changes, so a
+    regenerated cache's metadata tracks the code that produced it rather than only the method name."""
+    fns = {"all_at_once": (_all_at_once, all_at_once_prompt),
+           "step_by_step": (_step_by_step, _step_prompt),
+           "binary_search": (_binary_search, _interval_prompt)}.get(method, ())
+    src = "".join(inspect.getsource(fn) for fn in fns) or method
+    return hashlib.md5(src.encode("utf-8")).hexdigest()[:12]
 
 
 # --- cache I/O --------------------------------------------------------------------
@@ -251,8 +383,15 @@ class LLMJudgeLocalization:
             raise ValueError(f"unscoreable LLM-judge cache for {self.method}/{self.model}: "
                              + "; ".join(errors))
         preds = cache["predictions"]
+        runs = load_judge_runs()
+        if self.method in _SINGLE_STEP_PROTOCOLS:
+            # One named step, so there is no second or third guess: Top-1, Top-3, and MRR all equal the
+            # rate at which that step is the gold mistake. Scoring the one-item ranking through
+            # _rank_metrics would let zero-scored steps fill ranks 2..n and inflate Top-3 / MRR.
+            hit = float(np.mean([float(preds[run_key(r)]["top"] == r["mistake"]) for r in runs]))
+            return dict(zip(_METRIC_NAMES, (hit, hit, hit)))
         score_chunks = []
-        for run in load_judge_runs():  # same order as PostLocalization, so pooled scores align
+        for run in runs:  # same order as PostLocalization, so pooled scores align
             score_chunks.append(_score_vector(preds[run_key(run)], len(run["steps"])))
         scores = np.concatenate(score_chunks)
         metrics = _rank_metrics(scores, task.groups, task.mistake_row)
@@ -280,7 +419,7 @@ def discovered_llm_judge_methods() -> list:
         if len(parts) != 3:
             continue
         _, method, model = parts
-        if method not in _PROMPTS and method not in ("step_by_step", "binary_search"):
+        if method not in _PROTOCOLS:
             continue
         candidate = LLMJudgeLocalization(method, model)
         if candidate.available():
@@ -301,13 +440,13 @@ def regenerate_cache(method: str, model: str, complete: Callable[[str], str],
     failed (``top`` is None, e.g. a timeout). It flushes the cache every ``checkpoint_every`` new
     predictions and once at the end. ``max_workers`` > 1 runs the (I/O-bound) API calls concurrently;
     the predictions dict is mutated and flushed only from the main thread, so checkpointing is safe."""
-    if method not in _PROMPTS:
-        raise ValueError(f"prompt for method {method!r} not implemented yet")
+    if method not in _PROTOCOLS:
+        raise ValueError(f"unknown protocol {method!r}; known: {sorted(_PROTOCOLS)}")
     runs = load_judge_runs()
     if limit is not None:
         runs = runs[:limit]
-    build = _PROMPTS[method]
-    prompt_sha = hashlib.md5(build(runs[0]).encode("utf-8")).hexdigest()[:12] if runs else ""
+    protocol = _PROTOCOLS[method]
+    prompt_sha = _protocol_prompt_sha(method)  # changes with the driver / prompt wording, not just name
     path = cache_path(method, model)
 
     predictions = {}
@@ -334,8 +473,8 @@ def regenerate_cache(method: str, model: str, complete: Callable[[str], str],
               f"(workers={max_workers})", flush=True)
 
     def _work(run: dict):
-        raw = complete(build(run))
-        return run_key(run), parse_prediction(raw, len(run["steps"])), raw, run["mistake"]
+        pred, raw = protocol(run, complete)  # one call for all_at_once, several for step/binary
+        return run_key(run), pred, raw, run["mistake"]
 
     def _record(result, done: int) -> None:
         key, pred, raw, gold = result
