@@ -23,3 +23,12 @@ data/*
 !data/llm_judge/
 *.parquet
 *.jsonl
+
+# Secrets and local-only credentials. API keys are env-injected from files kept
+# outside the repo; these patterns are defense-in-depth so a stray key or env
+# file (e.g., copied onto a travel machine) cannot be committed by accident.
+.env
+.env.*
+*.local.*
+*.pem
+*.key
