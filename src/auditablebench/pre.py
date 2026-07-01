@@ -130,6 +130,18 @@ class PreOverPrivilege:
             bys[o.source] = bys.get(o.source, 0) + 1
         return f"PRE over_privilege: {len(self.instances)} configs across {len(bys)} sources {dict(bys)}"
 
+    def method_view(self) -> list[dict]:
+        self.setup()
+        return [
+            {
+                "instance_id": o.instance_id,
+                "source": o.source,
+                "task_or_role_spec": o.task_or_role_spec,
+                "declared_capabilities": o.declared_capabilities,
+            }
+            for o in self.instances
+        ]
+
 
 class FlagAllMethod:
     method_id = "flag_all"
@@ -151,4 +163,6 @@ class FlagNoneMethod:
 
 
 def pre_methods() -> list:
-    return [FlagAllMethod(), FlagNoneMethod()]
+    from .pre_baselines import pre_baseline_methods
+
+    return [FlagAllMethod(), FlagNoneMethod()] + pre_baseline_methods()
