@@ -1,0 +1,2832 @@
+{
+  "mcp-0005-ai-borealhost-mcp": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "a425a67044fd4697c90b7e919601778fc22aca13bce17ea8c51189bc2d482ba4",
+    "raw_response": "Needed capabilities are the core actions directly matching the stated purpose: deploying sites, managing DNS, registering domains, and scaling infrastructure.\n\nNEEDED: deploy, manage_dns, register_domain, scale",
+    "attempts": 1,
+    "created_at": "2026-07-01T05:05:49.524536+00:00",
+    "needed": [
+      "deploy",
+      "manage_dns",
+      "register_domain",
+      "scale"
+    ],
+    "status": "ok"
+  },
+  "mcp-0006-ai-bowmark-bowmark": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "625af2c3e8b20dab228565d8970c1e95a78a90f9f91efb4ab9fcbc2333dbcdd4",
+    "raw_response": "The purpose is to provide pre-computed navigation guidance. It does not inherently require executing actions, asking via a special capability, or reporting through a separate execution capability.\n\nNEEDED:",
+    "attempts": 1,
+    "created_at": "2026-07-01T05:05:49.939529+00:00",
+    "needed": [],
+    "status": "ok"
+  },
+  "mcp-0001-ai-boolsai-scan": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "53ffa93b231c790169205ed7fad9ae64a43645265f4bbfbdf04bce52f171e816",
+    "raw_response": "Both capabilities are directly related to performing live public-site technology scans, including scanning specific paths for scripts, vendors, account IDs, and JSON-LD.\n\nNEEDED: boolsai_scan, boolsai_scan_paths",
+    "attempts": 1,
+    "created_at": "2026-07-01T05:05:50.096532+00:00",
+    "needed": [
+      "boolsai_scan",
+      "boolsai_scan_paths"
+    ],
+    "status": "ok"
+  },
+  "mcp-0003-ai-compeller-compel": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "5876bce4a46d6219396de020282ca8542d32821de997b3fc870513ede63e2b6d",
+    "raw_response": "Brief reasoning: Core needs are creating compels from song/media inputs, starting renders, and reading compel/render status. Search/upload are needed input paths for songs. Webhooks, pricing, account credits, lighting cues, cancellation, and admin/secret operations are excess for the stated purpose.\n\nNEEDED: upload_media, search_music, create_compel_from_music, create_compel, get_compel, start_render, list_compels, list_renderings, get_rendering",
+    "attempts": 1,
+    "created_at": "2026-07-01T05:05:50.188529+00:00",
+    "needed": [
+      "upload_media",
+      "search_music",
+      "create_compel_from_music",
+      "create_compel",
+      "get_compel",
+      "start_render",
+      "list_compels",
+      "list_renderings",
+      "get_rendering"
+    ],
+    "status": "ok"
+  },
+  "mcp-0007-ai-com-mcp-linkedin": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "f02b6474dd13bcbff2b188ccc888460aa46d9c687a6694ae547757cbaad67f24",
+    "raw_response": "createSharePost is needed to publish content. getPersonProfile is needed to retrieve profile data. getSharePosts is not required by the stated purpose.\n\nNEEDED: createSharePost, getPersonProfile",
+    "attempts": 1,
+    "created_at": "2026-07-01T05:05:53.168107+00:00",
+    "needed": [
+      "createSharePost",
+      "getPersonProfile"
+    ],
+    "status": "ok"
+  },
+  "mcp-0010-ai-com-mcp-petstore": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "fdaa6ac8fdc19cb2028ef7faa097556790857591b32e51c0f3217c80e207cb1d",
+    "raw_response": "All declared capabilities correspond to standard Swagger Petstore API operations and are needed to expose the Petstore API as an MCP server for testing/prototyping.\n\nNEEDED: updatePet, addPet, findPetsByStatus, findPetsByTags, getPetById, updatePetWithForm, deletePet, uploadFile, getInventory, placeOrder, getOrderById, deleteOrder, createUser, createUsersWithListInput, loginUser, logoutUser, getUserByName, updateUser, deleteUser",
+    "attempts": 1,
+    "created_at": "2026-07-01T05:05:56.365114+00:00",
+    "needed": [
+      "updatePet",
+      "addPet",
+      "findPetsByStatus",
+      "findPetsByTags",
+      "getPetById",
+      "updatePetWithForm",
+      "deletePet",
+      "uploadFile",
+      "getInventory",
+      "placeOrder",
+      "getOrderById",
+      "deleteOrder",
+      "createUser",
+      "createUsersWithListInput",
+      "loginUser",
+      "logoutUser",
+      "getUserByName",
+      "updateUser",
+      "deleteUser"
+    ],
+    "status": "ok"
+  },
+  "mcp-0004-ac-tandem-docs-mcp": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "db4b8ffdb794088dae6acf0750a82165a605309edceee9ab454dcbc242572d44",
+    "raw_response": "Core docs lookup/help functions are needed; cache/index refresh, invalidation, comparison, and optional recommendation/status utilities are excess.\n\nNEEDED: search_docs, get_doc, get_start_path, answer_how_to, get_tandem_guide",
+    "attempts": 1,
+    "created_at": "2026-07-01T05:05:58.487293+00:00",
+    "needed": [
+      "search_docs",
+      "get_doc",
+      "get_start_path",
+      "answer_how_to",
+      "get_tandem_guide"
+    ],
+    "status": "ok"
+  },
+  "mcp-0008-ai-com-mcp-registry": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "a37e2b8830cba0c7c400db7cdaa504dd8dc1851be289420f92007b2db9a806d2",
+    "raw_response": "getV01Servers is needed to discover MCP servers. Version listing/details support discovery of registered server versions.\n\nNEEDED: getV01Servers, getV01ServersServerNameVersions, getV01ServersServerNameVersionsVersion",
+    "attempts": 1,
+    "created_at": "2026-07-01T05:06:00.324753+00:00",
+    "needed": [
+      "getV01Servers",
+      "getV01ServersServerNameVersions",
+      "getV01ServersServerNameVersionsVersion"
+    ],
+    "status": "ok"
+  },
+  "mcp-0013-ai-exa-exa": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "b01c4c052a6d3c2605dc67c94daa108591918e6847bb67c5dad96313fdff5869",
+    "raw_response": "Both capabilities directly support the stated purpose of web search and web crawling.\n\nNEEDED: web_search_exa, web_fetch_exa",
+    "attempts": 1,
+    "created_at": "2026-07-01T05:06:00.905686+00:00",
+    "needed": [
+      "web_search_exa",
+      "web_fetch_exa"
+    ],
+    "status": "ok"
+  },
+  "mcp-0009-ai-com-mcp-lenny-rachitsky-podcast": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "c260199da7e312fef7ee786bbec94decfceeafa1d7e0cdaaa965ac4342bbe674",
+    "raw_response": "Brief reasoning: Read-only transcript discovery and retrieval capabilities are needed. Search/network capabilities are not strictly required and grant broader network access.\n\nNEEDED: getEpisodes, getEpisodesGuest, getEpisodesGuestMetadatajson, getEpisodesGuestTranscriptformat, getEpisodesGuestChunks, getEpisodesGuestChunksChunkIdtxt",
+    "attempts": 1,
+    "created_at": "2026-07-01T05:06:00.911686+00:00",
+    "needed": [
+      "getEpisodes",
+      "getEpisodesGuest",
+      "getEpisodesGuestMetadatajson",
+      "getEpisodesGuestTranscriptformat",
+      "getEpisodesGuestChunks",
+      "getEpisodesGuestChunksChunkIdtxt"
+    ],
+    "status": "ok"
+  },
+  "mcp-0011-ai-com-mcp-strava": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "a0cc9efa9095c83f77d8cdd9961df9c690675bad0455a2f068418d07c1cb6ad7",
+    "raw_response": "getGearById is excess because gear is not included in the stated purpose. The rest align with athletes, activities, segments, clubs, or routes.\n\nNEEDED: getStats, getLoggedInAthlete, getLoggedInAthleteStarredSegments, getEffortsBySegmentId, exploreSegments, getSegmentEffortById, getClubById, getClubMembersById, getClubAdminsById, getClubActivitiesById, getLoggedInAthleteClubs, getRoutesByAthleteId",
+    "attempts": 1,
+    "created_at": "2026-07-01T05:06:01.542638+00:00",
+    "needed": [
+      "getStats",
+      "getLoggedInAthlete",
+      "getLoggedInAthleteStarredSegments",
+      "getEffortsBySegmentId",
+      "exploreSegments",
+      "getSegmentEffortById",
+      "getClubById",
+      "getClubMembersById",
+      "getClubAdminsById",
+      "getClubActivitiesById",
+      "getLoggedInAthleteClubs",
+      "getRoutesByAthleteId"
+    ],
+    "status": "ok"
+  },
+  "mcp-0014-ai-helixar-mcp": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "79787eda061f9eb9e70806af7239adc1fac23e7a294e46018c6ce24af42aa1bf",
+    "raw_response": "Both declared capabilities directly support the stated purpose: scanning MCP servers and validating HDP delegation chains.\n\nNEEDED: helixar_inspect_mcp, helixar_hdp_validate",
+    "attempts": 1,
+    "created_at": "2026-07-01T05:06:02.641632+00:00",
+    "needed": [
+      "helixar_inspect_mcp",
+      "helixar_hdp_validate"
+    ],
+    "status": "ok"
+  },
+  "mcp-0017-ai-keenable-web-search": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "e0a010269a415eead2ff492ebe0039521268c3ad10021cdc12e3578d303dc552",
+    "raw_response": "Both capabilities directly match the stated purpose: live web search requires `search_web_pages`, and clean-markdown page fetching requires `fetch_page_content`.\n\nNEEDED: search_web_pages, fetch_page_content",
+    "attempts": 1,
+    "created_at": "2026-07-01T05:06:04.130632+00:00",
+    "needed": [
+      "search_web_pages",
+      "fetch_page_content"
+    ],
+    "status": "ok"
+  },
+  "mcp-0016-ai-justpublish-just-publish": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "9bf5302b5292bb414c6e6d575e904cc9c6aabf1540dacf145bf8d26e5ebc33fe",
+    "raw_response": "`deploy` is needed to publish the static website to a live public URL. `get_site_files` is needed to retrieve the static site content for deployment. `update_site_file` is excess because editing files is not required for just publishing.\n\nNEEDED: deploy, get_site_files",
+    "attempts": 1,
+    "created_at": "2026-07-01T05:06:07.931745+00:00",
+    "needed": [
+      "deploy",
+      "get_site_files"
+    ],
+    "status": "ok"
+  },
+  "mcp-0019-ai-law-mcp-lawyer-search": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "17189bb0bfd31d80c0bfcb2b2116e120fe619cb236e2c6ac3f1599e8cb4052b0",
+    "raw_response": "All capabilities support lawyer search, discovery, matching, profile lookup, and filtering by practice area or jurisdiction.\n\nNEEDED: search_lawyers, get_lawyer_profile, find_lawyer_by_name, get_practice_areas, get_jurisdictions",
+    "attempts": 1,
+    "created_at": "2026-07-01T05:06:09.014840+00:00",
+    "needed": [
+      "search_lawyers",
+      "get_lawyer_profile",
+      "find_lawyer_by_name",
+      "get_practice_areas",
+      "get_jurisdictions"
+    ],
+    "status": "ok"
+  },
+  "mcp-0015-ai-byteask-embedded-docs": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "eadeec79cbc13219ae900225262977866aff2dff32383611bf70e418cbaaa146",
+    "raw_response": "search_docs is needed to locate relevant embedded documentation. get_context is needed to retrieve cited passages/page context. request_document appears optional/broader than retrieval.\n\nNEEDED: search_docs, get_context",
+    "attempts": 1,
+    "created_at": "2026-07-01T05:06:09.266422+00:00",
+    "needed": [
+      "search_docs",
+      "get_context"
+    ],
+    "status": "ok"
+  },
+  "mcp-0002-ai-boolsai-signals": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "0114c109a6cba4fe267c02d6600ff2fbe662d5e974805e36b4aa2717b110a1ce",
+    "raw_response": "The core purpose requires read-only research access to covered companies, signal/event discovery, details, company/domain history, and historical backtesting. Network-scanning/farming and extra comparison/landscape/filter utilities are optional or broader than necessary.\n\nNEEDED: universe_summary, find_signals, recent_events, event_dossier, ticker_history, wayback_backtest, domain_timeline",
+    "attempts": 1,
+    "created_at": "2026-07-01T05:06:09.799033+00:00",
+    "needed": [
+      "universe_summary",
+      "find_signals",
+      "recent_events",
+      "event_dossier",
+      "ticker_history",
+      "wayback_backtest",
+      "domain_timeline"
+    ],
+    "status": "ok"
+  },
+  "mcp-0018-ai-inxy-seo-audit": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "26534e97cde4ff8ebce739601a4022e0f793437f26a42730ad40f927cfdfd99e",
+    "raw_response": "`ai_search_diagnostic` is directly aligned with scoring AI-search/AEO/GEO/LLMO readiness. `full_seo_audit` is broader than necessary, and `get_my_store_audit` is only specific to a Shopify store subset.\n\nNEEDED: ai_search_diagnostic",
+    "attempts": 1,
+    "created_at": "2026-07-01T05:06:10.139655+00:00",
+    "needed": [
+      "ai_search_diagnostic"
+    ],
+    "status": "ok"
+  },
+  "mcp-0012-ai-dreamlit-mcp": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "0b0defa4be648274bbeba713a4aa396ab9687778386b1a349aaf87753f85dc91",
+    "raw_response": "get_status is not necessary for creating/testing/publishing/managing workflows. Core workflow lifecycle and discovery capabilities are needed; analytics and brand styles are useful for management/design.\n\nNEEDED: create_or_update_workflow, list_projects, list_workflows, list_brand_styles, get_workflow_and_preview_url, get_analytics, send_workflow_test, prepare_publish, confirm_publish, unpublish_workflow",
+    "attempts": 1,
+    "created_at": "2026-07-01T05:06:10.247702+00:00",
+    "needed": [
+      "create_or_update_workflow",
+      "list_projects",
+      "list_workflows",
+      "list_brand_styles",
+      "get_workflow_and_preview_url",
+      "get_analytics",
+      "send_workflow_test",
+      "prepare_publish",
+      "confirm_publish",
+      "unpublish_workflow"
+    ],
+    "status": "ok"
+  },
+  "mcp-0021-ai-presentations-presentations-ai": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "7b3cd4b6a0b586df15b0f5c4bbbbec6adc891fddd352047a70ddc766df0f1c28",
+    "raw_response": "The server’s purpose is to create designed slide decks from a topic, text/content, or document. The three corresponding creation tools are needed, and job status checking is needed if generation is asynchronous. Creating a single slide is narrower/optional and not required for the stated slide-deck purpose.\n\nNEEDED: create_presentation_from_topic, create_presentation_from_content, create_presentation_from_file, check_job_status",
+    "attempts": 1,
+    "created_at": "2026-07-01T05:06:14.124205+00:00",
+    "needed": [
+      "create_presentation_from_topic",
+      "create_presentation_from_content",
+      "create_presentation_from_file",
+      "check_job_status"
+    ],
+    "status": "ok"
+  },
+  "mcp-0022-ai-mrmarket-mrmarket-mcp": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "e107063377ec2da8c42e4f8c6d95944c93989305b0827cd18fe5555673e2aca6",
+    "raw_response": "Needed: core market data querying and dataset/symbol discovery to support screens, rankings, and event studies.\n\nExcess: onboarding, generic page fetching, account/support/history/ticket functions are not required for the stated analytical purpose.\n\nNEEDED: query_data, describe_data, get_symbols",
+    "attempts": 1,
+    "created_at": "2026-07-01T05:06:14.651204+00:00",
+    "needed": [
+      "query_data",
+      "describe_data",
+      "get_symbols"
+    ],
+    "status": "ok"
+  },
+  "mcp-0023-ai-preclick-preclick-mcp": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "19e9f71c1b029b31db9d2c59c322d8c15342550c51eb7a597de3eb49e86847bd",
+    "raw_response": "Brief reasoning: The service’s core purpose is to scan URLs for threats and verify intent match before clicking. The synchronous intent-aware scan capability directly satisfies that. Async variants and task status/result are optional implementation choices, and plain scanning without intent does not fully satisfy the stated purpose.\n\nNEEDED: url_scanner_scan_with_intent",
+    "attempts": 1,
+    "created_at": "2026-07-01T05:06:15.485212+00:00",
+    "needed": [
+      "url_scanner_scan_with_intent"
+    ],
+    "status": "ok"
+  },
+  "mcp-0026-ai-joinmultiplayer-gpu": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "673ae351320c971489764cc3372291de7e1dc716b64574fb5931e4fd0b434384",
+    "raw_response": "The purpose requires agent-to-agent communication and “who-knows-X” routing. `check_answers` is not part of the stated networking/routing purpose.\n\nNEEDED: ask_network, who_knows",
+    "attempts": 1,
+    "created_at": "2026-07-01T05:06:17.154838+00:00",
+    "needed": [
+      "ask_network",
+      "who_knows"
+    ],
+    "status": "ok"
+  },
+  "mcp-0020-ai-example4-xmp4": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "bb42d485e08a549d7673029d3c83b571a96941e820331f58373c454e083d26cb",
+    "raw_response": "Brief reasoning: The stated purpose specifically requires knowledge of OSS dependencies in the stack and what is really used via source, tests, and callers. Other tools are useful but optional or broader than necessary.\n\nNEEDED: xmp4_deps, xmp4_source, xmp4_tests_for, xmp4_callers",
+    "attempts": 1,
+    "created_at": "2026-07-01T05:06:18.429726+00:00",
+    "needed": [
+      "xmp4_deps",
+      "xmp4_source",
+      "xmp4_tests_for",
+      "xmp4_callers"
+    ],
+    "status": "ok"
+  },
+  "mcp-0025-ai-sitepulsar-mcp": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "f60cc8c2861718911b3a6a696bc020a1d15519d11382653069830710698cef66",
+    "raw_response": "check_agent_readiness, run_audit, get_audit, and get_audit_detail are needed to initiate/fetch AEO agent-readiness audit scores for arbitrary websites. Other capabilities are optional or outside the stated purpose.\n\nNEEDED: check_agent_readiness, run_audit, get_audit, get_audit_detail",
+    "attempts": 1,
+    "created_at": "2026-07-01T05:06:18.454753+00:00",
+    "needed": [
+      "check_agent_readiness",
+      "run_audit",
+      "get_audit",
+      "get_audit_detail"
+    ],
+    "status": "ok"
+  },
+  "mcp-0024-ai-pyrimid-pyrimid": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "a3ffec9cdc735f0255a54b46833907fc6f4b4457db828487079584865010e7b2",
+    "raw_response": "Core payment and affiliate-split functions are needed; product discovery and vendor analytics are optional/excess.\n\nNEEDED: pyrimid_buy, pyrimid_register_affiliate, pyrimid_commission_check",
+    "attempts": 1,
+    "created_at": "2026-07-01T05:06:19.428488+00:00",
+    "needed": [
+      "pyrimid_buy",
+      "pyrimid_register_affiliate",
+      "pyrimid_commission_check"
+    ],
+    "status": "ok"
+  },
+  "mcp-0028-ai-nefesh-human-state": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "9cdde5f1884b4979a639bca6924d8247466d452d2881a5970f6e4205825dbfd2",
+    "raw_response": "Needed: ingest biometric signals and expose the computed human/stress state.\n\nExcess: trigger memory, session history, and API key management are not required for the core stated purpose.\n\nNEEDED: get_human_state, ingest",
+    "attempts": 1,
+    "created_at": "2026-07-01T05:06:20.846996+00:00",
+    "needed": [
+      "get_human_state",
+      "ingest"
+    ],
+    "status": "ok"
+  },
+  "mcp-0032-ai-roopslaw-legalsearch": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "a8ec42d553febbb8910533e84a322eb8832566bd2b1a2f0f14435d92b4acf01a",
+    "raw_response": "The LegalSearch purpose requires searching and retrieving public judgments and statutes. Corpus status is useful operationally but not strictly required for legal search or grounding.\n\nNEEDED: roop.public.judgments.search, roop.public.judgments.get_packet, roop.public.statutes.search, roop.public.statutes.get_packet",
+    "attempts": 1,
+    "created_at": "2026-07-01T05:06:24.650794+00:00",
+    "needed": [
+      "roop.public.judgments.search",
+      "roop.public.judgments.get_packet",
+      "roop.public.statutes.search",
+      "roop.public.statutes.get_packet"
+    ],
+    "status": "ok"
+  },
+  "mcp-0027-ai-masnavi-masnavi": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "35dd09fbef9cbd4484eb797286e9225055e5f5f7e44481a7dcc4c9cdf2b6cd88",
+    "raw_response": "Needed for the stated purpose: searching, retrieving/quoting text, verifying quotations, and explaining content. Random selection and table/navigation helpers are optional.\n\nNEEDED: search, lookup, verify, get_range, explain",
+    "attempts": 1,
+    "created_at": "2026-07-01T05:06:25.187946+00:00",
+    "needed": [
+      "search",
+      "lookup",
+      "verify",
+      "get_range",
+      "explain"
+    ],
+    "status": "ok"
+  },
+  "mcp-0033-ai-sugra-api-mcp": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "bd3bde27a764e8f1f162752e34a9836dc110912ab60910bf2671f425e27d2305",
+    "raw_response": "The stated purpose is specifically to provide the Sugra API gateway through its eight tools and endpoint catalog. The eight Sugra-related network tools are needed; the additional database/commerce/workflow capabilities are not part of the stated eight-tool gateway.\n\nNEEDED: sugra_entity_screen, sugra_entity_lookup, search_endpoints, describe_endpoint, call_endpoint, list_toolsets, fetch_data, list_sources",
+    "attempts": 1,
+    "created_at": "2026-07-01T05:06:27.074843+00:00",
+    "needed": [
+      "sugra_entity_screen",
+      "sugra_entity_lookup",
+      "search_endpoints",
+      "describe_endpoint",
+      "call_endpoint",
+      "list_toolsets",
+      "fetch_data",
+      "list_sources"
+    ],
+    "status": "ok"
+  },
+  "mcp-0029-ai-proxygate-mcp": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "28398b0306184196cfa5622da91cfca9d16ae3acd8c2c200a2626f258b5f34e3",
+    "raw_response": "Needed for the marketplace core: discovering APIs, understanding endpoints, viewing prices, checking payment balance, and calling APIs.\n\nRating sellers is optional, and usage reporting is not strictly required to fulfill the stated purpose.\n\nNEEDED: browse_apis, get_pricing, check_balance, call_api, describe_endpoint",
+    "attempts": 1,
+    "created_at": "2026-07-01T05:06:28.424980+00:00",
+    "needed": [
+      "browse_apis",
+      "get_pricing",
+      "check_balance",
+      "call_api",
+      "describe_endpoint"
+    ],
+    "status": "ok"
+  },
+  "mcp-0034-ai-thinkneo-control-plane": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "4b6d0a126679c5c3b93f0a3c72f355a7a51f0dda8e7c8d04118f8d6fa74a710a",
+    "raw_response": "Reasonable core capabilities are the read/status checks directly matching the stated governance scope: spend, guardrails, policy, budgets, compliance, and provider health. Exclude write/admin, registry, tracing, demos, installs, secrets, alert mutation, and unrelated observability/ROI/benchmark tools.\n\nNEEDED: thinkneo_check_spend, thinkneo_evaluate_guardrail, thinkneo_check_policy, thinkneo_get_budget_status, thinkneo_get_compliance_status, thinkneo_provider_status",
+    "attempts": 1,
+    "created_at": "2026-07-01T05:06:35.101793+00:00",
+    "needed": [
+      "thinkneo_check_spend",
+      "thinkneo_evaluate_guardrail",
+      "thinkneo_check_policy",
+      "thinkneo_get_budget_status",
+      "thinkneo_get_compliance_status",
+      "thinkneo_provider_status"
+    ],
+    "status": "ok"
+  },
+  "mcp-0036-ai-unulu-unulu": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "5f4f74a1e3e4c55b8138aa96c4b0cb130a10888abfa3666d039fb46d099e38a6",
+    "raw_response": "Creating/publishing a link-in-bio site requires the ability to create a site, and a website builder reasonably needs the ability to update site content/settings. State retrieval and handle checking are optional conveniences.\n\nNEEDED: unulu_create_site, unulu_update_site",
+    "attempts": 1,
+    "created_at": "2026-07-01T05:06:36.358836+00:00",
+    "needed": [
+      "unulu_create_site",
+      "unulu_update_site"
+    ],
+    "status": "ok"
+  },
+  "mcp-0030-ai-tensorfeed-mcp-server": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "594665fbb731d89d81bf44d69de31780a6c3a6acd10c09d052bbc04751e09478",
+    "raw_response": "Core functions needed are AI news, model pricing, and service status. The rest are unrelated external/security/finance/health/weather/agent-directory tools or optional premium-style capabilities not required by the stated purpose.\n\nNEEDED: get_news_articles, get_status_summary, get_models",
+    "attempts": 1,
+    "created_at": "2026-07-01T05:06:37.626838+00:00",
+    "needed": [
+      "get_news_articles",
+      "get_status_summary",
+      "get_models"
+    ],
+    "status": "ok"
+  },
+  "mcp-0037-ai-urlcheck-urlcheck-mcp": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "a71b1916e7b31905b217f48c813c358b69674d271a51762447d11d0d34ccd40c",
+    "raw_response": "The core purpose is to scan URLs for threats and verify they match the agent’s intended action. The synchronous intent-aware scan directly satisfies this. Async variants and separate status/result polling are optional implementation choices, and plain scanning is redundant if intent-aware scanning covers the stated purpose.\n\nNEEDED: url_scanner_scan_with_intent",
+    "attempts": 1,
+    "created_at": "2026-07-01T05:06:38.100827+00:00",
+    "needed": [
+      "url_scanner_scan_with_intent"
+    ],
+    "status": "ok"
+  },
+  "mcp-0039-app-flaim-mcp": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "69dea94a1dc6b66f55fd72678e96a3e0c80e682672f158c4a51a05df2a40160d",
+    "raw_response": "Most declared capabilities support read-only fantasy league analysis. `get_ancient_history` appears optional/historical and not necessary for the stated purpose.\n\nNEEDED: get_user_session, get_league_info, get_standings, get_matchups, get_roster, get_free_agents, get_players, get_transactions",
+    "attempts": 1,
+    "created_at": "2026-07-01T05:11:32.106123+00:00",
+    "needed": [
+      "get_user_session",
+      "get_league_info",
+      "get_standings",
+      "get_matchups",
+      "get_roster",
+      "get_free_agents",
+      "get_players",
+      "get_transactions"
+    ],
+    "status": "ok"
+  },
+  "mcp-0040-app-himalayas-mcp": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "fc81402fed71fe5ce2f2e05927af85ed9bb8875f2ee4e5a9f4b22e93be635f41",
+    "raw_response": "Brief reasoning: Needed capabilities are those directly supporting searching/viewing jobs, posting jobs, browsing/searching companies, checking salary data, and finding/viewing talent. Profile edits, saved jobs, messaging, payments/extras, company/admin updates, deletes, and optional statistics are excess.\n\nNEEDED: get_jobs, search_jobs, get_job_details, get_companies, search_companies, get_company_details, get_salary_data, search_talent, get_talent_profile, create_company_job, post_job_public",
+    "attempts": 1,
+    "created_at": "2026-07-01T05:11:32.263012+00:00",
+    "needed": [
+      "get_jobs",
+      "search_jobs",
+      "get_job_details",
+      "get_companies",
+      "search_companies",
+      "get_company_details",
+      "get_salary_data",
+      "search_talent",
+      "get_talent_profile",
+      "create_company_job",
+      "post_job_public"
+    ],
+    "status": "ok"
+  },
+  "mcp-0041-app-humantaste-taste-mcp": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "c6eeef34b5ff44702b3bdb70a43c09db335b21d2e48c6e55eb3c118200d10147",
+    "raw_response": "Brief reasoning: Core to the stated purpose are obtaining expert/human review of AI-agent-related work and verifying the resulting human-review proof/certificate. Revision, ordering sessions, audience prediction, dispute arbitration, illustrations, and broad source checks are optional or unrelated.\n\nNEEDED: review_content, verify_reasoning_chain, request_human_approval, verify_certificate, consult_domain_expert",
+    "attempts": 1,
+    "created_at": "2026-07-01T05:11:32.807250+00:00",
+    "needed": [
+      "review_content",
+      "verify_reasoning_chain",
+      "request_human_approval",
+      "verify_certificate",
+      "consult_domain_expert"
+    ],
+    "status": "ok"
+  },
+  "mcp-0042-app-pulltrader-seller-economics": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "015a273237078f670dfdc2185e2d9db3bb3325ceea5f252652f887a7749bf2d6",
+    "raw_response": "compare_selling_costs is needed to compare seller net proceeds across eBay, Pulltrader, and other card marketplaces. The other capabilities are optional or unrelated to fee/net economics.\n\nNEEDED: compare_selling_costs",
+    "attempts": 1,
+    "created_at": "2026-07-01T05:11:36.334635+00:00",
+    "needed": [
+      "compare_selling_costs"
+    ],
+    "status": "ok"
+  },
+  "mcp-0038-app-cnvs-whiteboard": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "4bfaa4da09eac174ff48c69302cd688f7dc8cfb9559a1147c6d1cc30091afea5",
+    "raw_response": "Brief reasoning: The core purpose requires opening/viewing a shared board, receiving live updates, and performing ordinary whiteboard edits. Kanban/task-management and layout/admin-style capabilities are excess for the stated whiteboard purpose.\n\nNEEDED: open_board, get_board, add_text, add_link, add_image, draw_stroke, move, erase, wait_for_update",
+    "attempts": 1,
+    "created_at": "2026-07-01T05:11:37.178822+00:00",
+    "needed": [
+      "open_board",
+      "get_board",
+      "add_text",
+      "add_link",
+      "add_image",
+      "draw_stroke",
+      "move",
+      "erase",
+      "wait_for_update"
+    ],
+    "status": "ok"
+  },
+  "mcp-0043-ai-tunnelmind-scry": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "5b5ed0103fcf802b1c067e473d4db5fc62b6921bc856646b31f609af48f07204",
+    "raw_response": "The stated purpose is basic IPv4 lookup against the Scry observation corpus. The only essential capability is the direct IP check tool. Other tools provide broader analytics, metadata, bulk/network access, campaigns, trends, or execution power and are not strictly required.\n\nNEEDED: scry_check",
+    "attempts": 1,
+    "created_at": "2026-07-01T05:11:38.864504+00:00",
+    "needed": [
+      "scry_check"
+    ],
+    "status": "ok"
+  },
+  "mcp-0044-app-ganty-mcp-server": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "0de0cd469d5feffaaf306443b69b38aece01e8b53e3bdaf80bd7b5a2ceed7e92",
+    "raw_response": "All declared capabilities support the stated Gantt chart SaaS purpose, including CRUD, dependency management, critical path analysis, and dependency-aware rescheduling.\n\nNEEDED: list_workspaces, list_projects, create_project, delete_project, list_tasks, get_task, list_milestones, create_milestone, create_task, update_task, set_task_progress, add_dependency, delete_task, get_critical_path, reschedule_and_propagate",
+    "attempts": 1,
+    "created_at": "2026-07-01T05:11:41.206419+00:00",
+    "needed": [
+      "list_workspaces",
+      "list_projects",
+      "create_project",
+      "delete_project",
+      "list_tasks",
+      "get_task",
+      "list_milestones",
+      "create_milestone",
+      "create_task",
+      "update_task",
+      "set_task_progress",
+      "add_dependency",
+      "delete_task",
+      "get_critical_path",
+      "reschedule_and_propagate"
+    ],
+    "status": "ok"
+  },
+  "mcp-0046-art-travel-mcp": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "249818cb3b33718e53d34e40d26a008666f46583063a4cefa92e3d8fec140b36",
+    "raw_response": "The needed capabilities align directly with art events, museum information, and layover itineraries using current/networked facts. The trip recommendation tool is broader and not strictly required by the stated data-focused purpose.\n\nNEEDED: find_art_events, find_museum_guide, find_layover_itinerary",
+    "attempts": 1,
+    "created_at": "2026-07-01T05:11:45.001087+00:00",
+    "needed": [
+      "find_art_events",
+      "find_museum_guide",
+      "find_layover_itinerary"
+    ],
+    "status": "ok"
+  },
+  "mcp-0048-bid-scope-claims": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "80e3bdf57a1d7ed35d87da4af209e6221c1b1bd914585fa3ac58495507b8f329",
+    "raw_response": "Needed capabilities are limited to read-only preview/status information. Operational procurement, vendor health, routing, deliverables, messaging, and network capabilities are excess for a preview purpose.\n\nNEEDED: scope_claims_status, scope_briefing",
+    "attempts": 1,
+    "created_at": "2026-07-01T05:11:47.591365+00:00",
+    "needed": [
+      "scope_claims_status",
+      "scope_briefing"
+    ],
+    "status": "ok"
+  },
+  "mcp-0047-bid-scope-aec": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "0828e6787941329659a80a1d46f3ce5edd4bdfff5812776e60a92d91e64deb02",
+    "raw_response": "Read-only preview/procurement discovery capabilities are needed; messaging, dispatch, and award actions are excess for a preview scope.\n\nNEEDED: scope_aec_status, scope_list_aec_categories, scope_list_aec_vendors, scope_verify_prequal, scope_check_bonding, scope_pull_safety_record, scope_briefing",
+    "attempts": 1,
+    "created_at": "2026-07-01T05:11:47.948023+00:00",
+    "needed": [
+      "scope_aec_status",
+      "scope_list_aec_categories",
+      "scope_list_aec_vendors",
+      "scope_verify_prequal",
+      "scope_check_bonding",
+      "scope_pull_safety_record",
+      "scope_briefing"
+    ],
+    "status": "ok"
+  },
+  "mcp-0051-bot-yeehaw-events": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "7489b5cd4463eabc7819d9cdcc2f8d8632c6da00730976ae327634270ba9c6f7",
+    "raw_response": "`find_events` is needed to retrieve fresh, sourced Austin event information. `overview` is not clearly necessary for the stated concierge purpose.\n\nNEEDED: find_events",
+    "attempts": 1,
+    "created_at": "2026-07-01T05:11:50.628016+00:00",
+    "needed": [
+      "find_events"
+    ],
+    "status": "ok"
+  },
+  "mcp-0050-bot-myagi-openagent-registry": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "ce915b0e8473860016e80f4e86f1c95ceacbce9bf544e92fc104626c9a72c5b7",
+    "raw_response": "Needed: `query_platform` for platform/scanner data access; `registry_lookup` for Open Agent Registry lookups. `submit_inquiry` is messaging/write-oriented and not necessary for scoring readiness.\n\nNEEDED: query_platform, registry_lookup",
+    "attempts": 1,
+    "created_at": "2026-07-01T05:11:54.183652+00:00",
+    "needed": [
+      "query_platform",
+      "registry_lookup"
+    ],
+    "status": "ok"
+  },
+  "mcp-0045-app-toolsnap-toolsnap-mcp": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "b42dc053a7c39d0161eb7e08ee616ab8974a7a23d50c318fc428001a5ddc91f1",
+    "raw_response": "Only the specifically advertised extraction function and pricing information are needed. Payment/account/wallet actions and the other microtools are not required by the stated purpose.\n\nNEEDED: pricing, fetch_extract",
+    "attempts": 1,
+    "created_at": "2026-07-01T05:11:54.443133+00:00",
+    "needed": [
+      "pricing",
+      "fetch_extract"
+    ],
+    "status": "ok"
+  },
+  "mcp-0049-bid-scope-legal": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "009a0069fa3cdbe2efe45bbaee41ada23db1bf98cb446c9b0488be94942315e1",
+    "raw_response": "Brief reasoning: The core purpose is to route/dispatch litigation matters to legal-services vendors. This reasonably requires discovering eligible vendors/roster and performing the dispatch. Most other capabilities are optional management, auditing, deliverables, service proof, declarations, negotiation, or administrative actions beyond dispatch.\n\nNEEDED: scope_list_vendors, scope_list_roster, scope_dispatch_matter",
+    "attempts": 1,
+    "created_at": "2026-07-01T05:11:56.135265+00:00",
+    "needed": [
+      "scope_list_vendors",
+      "scope_list_roster",
+      "scope_dispatch_matter"
+    ],
+    "status": "ok"
+  },
+  "mcp-0052-ch-fedlex-connector-fedlex-connector": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "6cee8d5028194f0ed4391744234a97299e201bf73fc8baf20da10e80442b969d",
+    "raw_response": "All declared capabilities directly support searching or retrieving Swiss federal laws, articles, or amendments via Fedlex.\n\nNEEDED: search_by_title, get_article, get_law_text, list_amendments",
+    "attempts": 1,
+    "created_at": "2026-07-01T05:11:56.194266+00:00",
+    "needed": [
+      "search_by_title",
+      "get_article",
+      "get_law_text",
+      "list_amendments"
+    ],
+    "status": "ok"
+  },
+  "mcp-0035-ai-trydock-dock": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "05a9bc20d1db123c19ef585264b8c1d60b0063dc055acc9c7e9acb256506d163",
+    "raw_response": "Core workspace, table, doc/media, collaboration, and formula capabilities are relevant. Billing, plan changes, API keys, webhooks, support, messaging, destructive workspace deletion, and unrelated surface/admin operations are excess.\n\nNEEDED: list_workspaces, get_workspace, list_rows, create_row, get_row, update_row, delete_row, move_rows, get_doc, get_workspace_schema, add_column, list_workspace_members, update_workspace, share_workspace, update_workspace_member, update_doc, validate_doc_markdown, update_doc_section, append_doc_section, create_workspace, search, list_sheet_functions, validate_formula, evaluate_formula, add_comment, list_comments, get_comment_thread, reply_to_comment, resolve_comment, unresolve_comment, react_to_comment, list_files, get_file, list_recent_files",
+    "attempts": 1,
+    "created_at": "2026-07-01T05:12:02.880664+00:00",
+    "needed": [
+      "list_workspaces",
+      "get_workspace",
+      "list_rows",
+      "create_row",
+      "get_row",
+      "update_row",
+      "delete_row",
+      "move_rows",
+      "get_doc",
+      "get_workspace_schema",
+      "add_column",
+      "list_workspace_members",
+      "update_workspace",
+      "share_workspace",
+      "update_workspace_member",
+      "update_doc",
+      "validate_doc_markdown",
+      "update_doc_section",
+      "append_doc_section",
+      "create_workspace",
+      "search",
+      "list_sheet_functions",
+      "validate_formula",
+      "evaluate_formula",
+      "add_comment",
+      "list_comments",
+      "get_comment_thread",
+      "reply_to_comment",
+      "resolve_comment",
+      "unresolve_comment",
+      "react_to_comment",
+      "list_files",
+      "get_file",
+      "list_recent_files"
+    ],
+    "status": "ok"
+  },
+  "mcp-0054-ca-swiftsign-mcp": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "45158c95173825019375fbc71ac73beb74cf617e5b78794092d774008ba2fcdb",
+    "raw_response": "swiftsign_send_envelope, swiftsign_check_status, and swiftsign_download_signed_pdf are needed. Template sending, voiding, upgrading, embedded URLs, and listing are optional or outside the stated purpose.\n\nNEEDED: swiftsign_send_envelope, swiftsign_check_status, swiftsign_download_signed_pdf",
+    "attempts": 1,
+    "created_at": "2026-07-01T05:12:04.492802+00:00",
+    "needed": [
+      "swiftsign_send_envelope",
+      "swiftsign_check_status",
+      "swiftsign_download_signed_pdf"
+    ],
+    "status": "ok"
+  },
+  "mcp-0031-ai-tunnelmind-sigil": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "4de62b6ccb772634f247ffc5b957671746da5c80088916b45005c9d74a1ff3e4",
+    "raw_response": "The core needs are the explicit verification surfaces: ads.txt, schain/supply-chain verification, ATAP receipt support, and cross-lens verification. Scoring, IP/app-bundle checks, broader traversal, and supply-path tooling are not strictly required by the stated purpose.\n\nNEEDED: cross_lens_verify, sigil_verify_ads_txt, sigil_verify_supply_chain, sigil_atap_witness, sigil_generate_receipt",
+    "attempts": 1,
+    "created_at": "2026-07-01T05:12:06.073799+00:00",
+    "needed": [
+      "cross_lens_verify",
+      "sigil_verify_ads_txt",
+      "sigil_verify_supply_chain",
+      "sigil_atap_witness",
+      "sigil_generate_receipt"
+    ],
+    "status": "ok"
+  },
+  "mcp-0055-app-nausika-mcp": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "78f77e0abb6d01d72e760203fb1996b3ae7f480579b4e580b3b821627aa8d94c",
+    "raw_response": "Marine forecasts, tides, sea routes, anchorages, and POIs are core to the stated purpose. Write/user-management capabilities and unrelated optional utilities are excess.\n\nNEEDED: nausika_marine_forecast, nausika_seasonal_forecast, nausika_tides, nausika_search_places, nausika_get_place, nausika_sea_route",
+    "attempts": 1,
+    "created_at": "2026-07-01T05:12:07.076675+00:00",
+    "needed": [
+      "nausika_marine_forecast",
+      "nausika_seasonal_forecast",
+      "nausika_tides",
+      "nausika_search_places",
+      "nausika_get_place",
+      "nausika_sea_route"
+    ],
+    "status": "ok"
+  },
+  "mcp-0053-app-evlek-mcp-server": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "452e73dd6991e2661f375023b5b2001e439a8541189e3a430e8047666c2290f8",
+    "raw_response": "search_listings, get_price_index, get_market_overview, get_legal_info, get_listing_detail are directly needed for listings, prices, legal, and market data. Generic web search/fetch and narrower optional tools like student housing or payment plans are excess.\n\nNEEDED: search_listings, get_price_index, get_market_overview, get_legal_info, get_listing_detail",
+    "attempts": 1,
+    "created_at": "2026-07-01T05:12:07.528909+00:00",
+    "needed": [
+      "search_listings",
+      "get_price_index",
+      "get_market_overview",
+      "get_legal_info",
+      "get_listing_detail"
+    ],
+    "status": "ok"
+  },
+  "mcp-0060-ca-netgrant-canadian-grants": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "de8aaca4e95177d0049812ebb6564f8208915d2156f10066628b69d1713d84e0",
+    "raw_response": "search_opportunities is needed to search live Canadian funding opportunities. The others are optional extensions not required by the stated purpose.\n\nNEEDED: search_opportunities",
+    "attempts": 1,
+    "created_at": "2026-07-01T05:12:10.700429+00:00",
+    "needed": [
+      "search_opportunities"
+    ],
+    "status": "ok"
+  },
+  "mcp-0059-app-cardog-mcp": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "60864f31b0d6de3699466921dce1d87e6c904f4bceea5788221b74edd41dbd1b",
+    "raw_response": "Needed capabilities match the stated Cardog purposes: listings, market analysis, VIN decoding, recalls, and EV charging data. Gas stations, lineups/model-year lookup, and pulse/health checks are not required by the stated purpose.\n\nNEEDED: search_listings, get_vin_analysis, overview, price_distribution, get_odometer_analysis, get_geographic_analysis, get_market_trends, get_listing_market_position, search_electric_stations, search_recalls",
+    "attempts": 1,
+    "created_at": "2026-07-01T05:12:11.442649+00:00",
+    "needed": [
+      "search_listings",
+      "get_vin_analysis",
+      "overview",
+      "price_distribution",
+      "get_odometer_analysis",
+      "get_geographic_analysis",
+      "get_market_trends",
+      "get_listing_market_position",
+      "search_electric_stations",
+      "search_recalls"
+    ],
+    "status": "ok"
+  },
+  "mcp-0058-co-launchtrust-launchtrust": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "7825aa8170c626feb501a0ae0813f1cf5d94f588b8950d658120875fe463933e",
+    "raw_response": "scan_url is needed to inspect the app for exposed files, headers, secrets, and other security/privacy signals. get_compliance_rules is needed to evaluate privacy and AI-disclosure compliance requirements.\n\nNEEDED: scan_url, get_compliance_rules",
+    "attempts": 1,
+    "created_at": "2026-07-01T05:12:14.727381+00:00",
+    "needed": [
+      "scan_url",
+      "get_compliance_rules"
+    ],
+    "status": "ok"
+  },
+  "mcp-0061-co-bizverify-mcp": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "4099e25b28e6f582b5c356e4673f6b185efa2c392b51c6c596133d2b90bcab1f",
+    "raw_response": "`verify_business` is the core capability required to verify business registrations. Other capabilities are optional, account/admin-related, or broader than the stated purpose.\n\nNEEDED: verify_business",
+    "attempts": 1,
+    "created_at": "2026-07-01T05:12:15.350242+00:00",
+    "needed": [
+      "verify_business"
+    ],
+    "status": "ok"
+  },
+  "mcp-0064-cn-whylingxi-insurance": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "8b000ab39499249b2d4374e583f1615da6c30b2f5e591a830e3d6a281d50d62d",
+    "raw_response": "Needed capabilities align with product search, product details for informed advice, recommendations, premium estimates, and underwriting pre-checks. General chat/Q&A, comparison, and network schema access are not strictly required.\n\nNEEDED: search_products, get_product_detail, recommend, get_premium, check_underwriting",
+    "attempts": 1,
+    "created_at": "2026-07-01T05:12:22.172273+00:00",
+    "needed": [
+      "search_products",
+      "get_product_detail",
+      "recommend",
+      "get_premium",
+      "check_underwriting"
+    ],
+    "status": "ok"
+  },
+  "mcp-0062-ai-xpoz-social-insights": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "252fbf8ebf5adb665828438bd18c7ea4fa4c6db93c30dea75ea48d4680fba9c2",
+    "raw_response": "The needed capabilities are the read/search social-media data endpoints for Twitter/X, Instagram, Reddit, and TikTok. Account management, access-key, credits, tracking mutation, and cancellation features are excess for the stated search/data purpose.\n\nNEEDED: getTwitterUsers, getTwitterUser, searchTwitterUsers, getTwitterUserConnections, getTwitterUsersByKeywords, getTwitterPostsByIds, getTwitterPostsByAuthor, getTwitterPostsByKeywords, getTwitterPostRetweets, getTwitterPostQuotes, getTwitterPostComments, countTweets, getTwitterPostInteractingUsers, getInstagramPostsByIds, getInstagramPostsByUser, getInstagramPostsByKeywords, getInstagramUser, searchInstagramUsers, getInstagramUserConnections, getInstagramPostInteractingUsers, getInstagramUsersByKeywords, getInstagramCommentsByPostId, getRedditUser, searchRedditUsers, getRedditUsersByKeywords, getRedditPostsByKeywords, getRedditPostWithCommentsById, getRedditCommentsByKeywords, searchRedditSubreddits, getRedditSubredditWithPostsByName, getRedditSubredditsByKeywords, getTiktokUser, searchTiktokUsers, getTiktokUsersByKeywords, getTiktokUsersByHashtags, getTiktokPostsByIds, getTiktokPostsByUser, getTiktokPostsByKeywords, getTiktokPostsByHashtags, searchTiktokSounds, getTiktokPostsBySound, getTiktokCommentsByPostId",
+    "attempts": 1,
+    "created_at": "2026-07-01T05:12:29.411419+00:00",
+    "needed": [
+      "getTwitterUsers",
+      "getTwitterUser",
+      "searchTwitterUsers",
+      "getTwitterUserConnections",
+      "getTwitterUsersByKeywords",
+      "getTwitterPostsByIds",
+      "getTwitterPostsByAuthor",
+      "getTwitterPostsByKeywords",
+      "getTwitterPostRetweets",
+      "getTwitterPostQuotes",
+      "getTwitterPostComments",
+      "countTweets",
+      "getTwitterPostInteractingUsers",
+      "getInstagramPostsByIds",
+      "getInstagramPostsByUser",
+      "getInstagramPostsByKeywords",
+      "getInstagramUser",
+      "searchInstagramUsers",
+      "getInstagramUserConnections",
+      "getInstagramPostInteractingUsers",
+      "getInstagramUsersByKeywords",
+      "getInstagramCommentsByPostId",
+      "getRedditUser",
+      "searchRedditUsers",
+      "getRedditUsersByKeywords",
+      "getRedditPostsByKeywords",
+      "getRedditPostWithCommentsById",
+      "getRedditCommentsByKeywords",
+      "searchRedditSubreddits",
+      "getRedditSubredditWithPostsByName",
+      "getRedditSubredditsByKeywords",
+      "getTiktokUser",
+      "searchTiktokUsers",
+      "getTiktokUsersByKeywords",
+      "getTiktokUsersByHashtags",
+      "getTiktokPostsByIds",
+      "getTiktokPostsByUser",
+      "getTiktokPostsByKeywords",
+      "getTiktokPostsByHashtags",
+      "searchTiktokSounds",
+      "getTiktokPostsBySound",
+      "getTiktokCommentsByPostId"
+    ],
+    "status": "ok"
+  },
+  "mcp-0066-co-tempguru-event-staffing": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "b69599a121b10224dc04ce215185e35fb2bf89da287fed05a4c9c8cdc94c222b",
+    "raw_response": "get_cities, get_roles, get_role_pricing, get_compliance_by_state, and check_availability align with the stated data needs: markets, roles, rates, compliance, and likely lead times/availability. request_quote is transactional and not needed. plan_staffing and get_rate_benchmark are broader/optional.\n\nNEEDED: get_cities, get_roles, check_availability, get_role_pricing, get_compliance_by_state",
+    "attempts": 1,
+    "created_at": "2026-07-01T05:12:32.258734+00:00",
+    "needed": [
+      "get_cities",
+      "get_roles",
+      "check_availability",
+      "get_role_pricing",
+      "get_compliance_by_state"
+    ],
+    "status": "ok"
+  },
+  "mcp-0057-co-ainumbers-tools": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "0c03f77160945637a8225810ea39acad35c186a758a59d8f0439fcd47268b58a",
+    "raw_response": "Network-granted capabilities are not needed for a “client-side / Zero PII” suite. The needed capabilities are the local execution tools directly tied to the stated fintech/MCP widget scope: ISO 20022/payment readiness, AML/fraud/sanctions-style screening, DORA/ICT resilience, and agentic payments/MCP conformance.\n\nNEEDED: find_tool, compose_ap2_prompt, validate_ap2_mandate_chain, simulate_spend_policy, model_x402_settlement, check_agent_attestation, classify_dora_incident, run_dora_readiness_diagnostic, score_aml_typologies, simulate_vop_matching, validate_acp_checkout, simulate_app_fraud_graph, detect_transaction_anomalies, assess_psd3_readiness, select_agentic_checkout_protocol, audit_acp_ucp_product_feed, build_agent_traffic_policy, compare_agentic_rail_protocols, inspect_visa_trusted_agent_protocol, build_mastercard_agentic_token, verify_a2a_agent_card, simulate_x402_flow, run_agentic_readiness_diagnostic, run_mcp_deployability_diagnostic, validate_agent_commerce_conformance, validate_a2a_x402_mandate, validate_a2a_trust_chain, aggregate_execution_receipts, attest_mcp_server, decode_mpp_session, validate_tempo_token_compliance, screen_tip20_transfer_batch, reconcile_x402_batch_settlement, verify_ap2_payment_receipt, model_agent_service_metering, check_iso20022_pqc_readiness, run_sanctions_screening_fit, aggregate_ownership_50pct, check_screening_list_coverage, score_fuzzy_match_calibration, assess_circumvention_diligence, score_sanctions_screening_quality, validate_tfr_travel_rule_batch, reconcile_mpp_subscription, verify_webbotauth_signature, validate_signature_agent_card, audit_agent_key_rotation, crosswalk_agent_payment_rail_trust, validate_mcp_server_identity, validate_mcp_authorization_metadata, check_mcp_registry_entry, audit_mcp_tool_scope_revocation, validate_agent_obo_mandate, validate_mcp_task_lifecycle",
+    "attempts": 1,
+    "created_at": "2026-07-01T05:12:38.351014+00:00",
+    "needed": [
+      "find_tool",
+      "compose_ap2_prompt",
+      "validate_ap2_mandate_chain",
+      "simulate_spend_policy",
+      "model_x402_settlement",
+      "check_agent_attestation",
+      "classify_dora_incident",
+      "run_dora_readiness_diagnostic",
+      "score_aml_typologies",
+      "simulate_vop_matching",
+      "validate_acp_checkout",
+      "simulate_app_fraud_graph",
+      "detect_transaction_anomalies",
+      "assess_psd3_readiness",
+      "select_agentic_checkout_protocol",
+      "audit_acp_ucp_product_feed",
+      "build_agent_traffic_policy",
+      "compare_agentic_rail_protocols",
+      "inspect_visa_trusted_agent_protocol",
+      "build_mastercard_agentic_token",
+      "verify_a2a_agent_card",
+      "simulate_x402_flow",
+      "run_agentic_readiness_diagnostic",
+      "run_mcp_deployability_diagnostic",
+      "validate_agent_commerce_conformance",
+      "validate_a2a_x402_mandate",
+      "validate_a2a_trust_chain",
+      "aggregate_execution_receipts",
+      "attest_mcp_server",
+      "decode_mpp_session",
+      "validate_tempo_token_compliance",
+      "screen_tip20_transfer_batch",
+      "reconcile_x402_batch_settlement",
+      "verify_ap2_payment_receipt",
+      "model_agent_service_metering",
+      "check_iso20022_pqc_readiness",
+      "run_sanctions_screening_fit",
+      "aggregate_ownership_50pct",
+      "check_screening_list_coverage",
+      "score_fuzzy_match_calibration",
+      "assess_circumvention_diligence",
+      "score_sanctions_screening_quality",
+      "validate_tfr_travel_rule_batch",
+      "reconcile_mpp_subscription",
+      "verify_webbotauth_signature",
+      "validate_signature_agent_card",
+      "audit_agent_key_rotation",
+      "crosswalk_agent_payment_rail_trust",
+      "validate_mcp_server_identity",
+      "validate_mcp_authorization_metadata",
+      "check_mcp_registry_entry",
+      "audit_mcp_tool_scope_revocation",
+      "validate_agent_obo_mandate",
+      "validate_mcp_task_lifecycle"
+    ],
+    "status": "ok"
+  },
+  "mcp-0067-app-zooza-mcp-server": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "22f7d5dc78699908d927fe990319186ccdbb181da3e8a59ede2546144252bd5a",
+    "raw_response": "Brief reasoning: Needed capabilities are those directly supporting class scheduling, attendance management, and booking lookup. Communication, reporting, feedback, terminology negotiation, and general metadata helpers are not strictly required for the stated purpose.\n\nNEEDED: classes_list_schedule_patterns, classes_find_courses, classes_find_classes, bookings_find, classes_find_billing_periods, trainers_find, classes_find_places, sessions_find_events, sessions_get_attendance, sessions_mark_attendance, classes_preview_schedule, classes_preview_events, classes_commit_class",
+    "attempts": 1,
+    "created_at": "2026-07-01T05:12:41.123593+00:00",
+    "needed": [
+      "classes_list_schedule_patterns",
+      "classes_find_courses",
+      "classes_find_classes",
+      "bookings_find",
+      "classes_find_billing_periods",
+      "trainers_find",
+      "classes_find_places",
+      "sessions_find_events",
+      "sessions_get_attendance",
+      "sessions_mark_attendance",
+      "classes_preview_schedule",
+      "classes_preview_events",
+      "classes_commit_class"
+    ],
+    "status": "ok"
+  },
+  "mcp-0065-co-heista-api": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "b191977743e4a3fe57e65c36d1154987406c134c25563619f6f9fed3e87fe512",
+    "raw_response": "Needed: core video-ad decoding/retrieval, read-only brand intelligence loading, and ad script generation. Write/delete, broad research, presets, saved assets, and unrelated creative-world tools are excess.\n\nNEEDED: decode_ad, get_decode, list_brands, get_brand, list_brand_documents, read_brand_document, generate_adscript",
+    "attempts": 1,
+    "created_at": "2026-07-01T05:12:42.034062+00:00",
+    "needed": [
+      "decode_ad",
+      "get_decode",
+      "list_brands",
+      "get_brand",
+      "list_brand_documents",
+      "read_brand_document",
+      "generate_adscript"
+    ],
+    "status": "ok"
+  },
+  "mcp-0068-ch-entscheidsuche-mcp": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "f1201ab1182f1099553f64c3af5e0c857dec329a889809ccf626ba3cf02b0b70",
+    "raw_response": "search and fetch_document are core to searching and retrieving Swiss court decisions. search_by_case_number is also directly relevant for legal decision lookup by docket/case number. Hierarchy/facet/server metadata tools are useful but not strictly required.\n\nNEEDED: search, search_by_case_number, fetch_document",
+    "attempts": 1,
+    "created_at": "2026-07-01T05:12:45.846582+00:00",
+    "needed": [
+      "search",
+      "search_by_case_number",
+      "fetch_document"
+    ],
+    "status": "ok"
+  },
+  "mcp-0069-com-agent-tune-agenttune": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "af697facf8d83c670dbc1f3f02234758f94571c4c36c729da80a8769aff231b1",
+    "raw_response": "list_tunings is needed to discover available tunings. get_tuning is needed to retrieve tuning files. get_test_spec is needed to retrieve the inline personality tests.\n\nNEEDED: list_tunings, get_tuning, get_test_spec",
+    "attempts": 1,
+    "created_at": "2026-07-01T05:12:46.952236+00:00",
+    "needed": [
+      "list_tunings",
+      "get_tuning",
+      "get_test_spec"
+    ],
+    "status": "ok"
+  },
+  "mcp-0073-com-apple-rag-mcp-server": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "dd907e38f598255977da365c9b2871befd9504f63b5c6e84e0071f920914e875",
+    "raw_response": "Both capabilities are needed: `search` for semantic documentation discovery and `fetch` for retrieving Apple Developer Documentation content.\n\nNEEDED: search, fetch",
+    "attempts": 1,
+    "created_at": "2026-07-01T05:12:49.273072+00:00",
+    "needed": [
+      "search",
+      "fetch"
+    ],
+    "status": "ok"
+  },
+  "mcp-0056-cloud-dchub-mcp-server": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "2590686f1d629526f5c049643f119ac22615077c75fd029acf5ea0e922f0b2f5",
+    "raw_response": "Needed are read/query capabilities for live data-center facilities/markets, grid/power, gas, fiber, news/changes, and M&A/deals. Write, alerting, subscription, account/key, export, and optional site-selection/planning/recommendation tools are excess.\n\nNEEDED: search, fetch, search_facilities, get_facility, get_market_intel, get_market_dcpi_rank, get_gas_index, get_gas_economics, get_grid_scoreboard, compare_isos, get_intelligence_index, list_transactions, get_news, get_pipeline, get_power_pipeline, get_interconnection_queue, get_grid_data, get_changes, get_infrastructure, get_fiber_intel, get_fiber_readiness, get_energy_prices, get_renewable_energy, get_grid_intelligence, get_gas_intelligence, hyperscaler_deals, grid_transition_radar, deal_autopsy",
+    "attempts": 1,
+    "created_at": "2026-07-01T05:12:51.356586+00:00",
+    "needed": [
+      "search",
+      "fetch",
+      "search_facilities",
+      "get_facility",
+      "get_market_intel",
+      "get_market_dcpi_rank",
+      "get_gas_index",
+      "get_gas_economics",
+      "get_grid_scoreboard",
+      "compare_isos",
+      "get_intelligence_index",
+      "list_transactions",
+      "get_news",
+      "get_pipeline",
+      "get_power_pipeline",
+      "get_interconnection_queue",
+      "get_grid_data",
+      "get_changes",
+      "get_infrastructure",
+      "get_fiber_intel",
+      "get_fiber_readiness",
+      "get_energy_prices",
+      "get_renewable_energy",
+      "get_grid_intelligence",
+      "get_gas_intelligence",
+      "hyperscaler_deals",
+      "grid_transition_radar",
+      "deal_autopsy"
+    ],
+    "status": "ok"
+  },
+  "mcp-0070-com-appendix-appendix": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "bf10e7617f8f4d81d64b526fa11b03e2f73beb86fc1d072c82634f5871a81099",
+    "raw_response": "search_knowledge_base may be needed to retrieve physician-reviewed medical opinions/prescription guidance. submit_encounter is write access and not necessary for an appendix/reference purpose. list_conditions is optional unless the task specifically requires enumerating conditions.\n\nNEEDED: search_knowledge_base",
+    "attempts": 1,
+    "created_at": "2026-07-01T05:12:52.339051+00:00",
+    "needed": [
+      "search_knowledge_base"
+    ],
+    "status": "ok"
+  },
+  "mcp-0072-com-advocatemcp-advocate": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "a076b31f549e1414caeebaefee1109e4c9273d0b5cc5c73a15756badfa255b37",
+    "raw_response": "search_businesses, query_business_agent, get_availability, get_quote, reserve_slot, initiate_handoff are needed for discovering, querying, booking, and transacting with SMB agents. Callback, subscriptions, cancellation policies, and credentials are optional or broader than required.\n\nNEEDED: search_businesses, query_business_agent, get_availability, get_quote, reserve_slot, initiate_handoff",
+    "attempts": 1,
+    "created_at": "2026-07-01T05:12:55.535933+00:00",
+    "needed": [
+      "search_businesses",
+      "query_business_agent",
+      "get_availability",
+      "get_quote",
+      "reserve_slot",
+      "initiate_handoff"
+    ],
+    "status": "ok"
+  },
+  "mcp-0076-com-arzbin-market-data": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "4e04862fbc1df79ccbf8b02f4f1129d2be64cbdf4cd90c4d90afd8244d1bf9ee",
+    "raw_response": "Needed for live exchange, gold, crypto, and Toman-related market data. History and source metadata are optional/broader than stated.\n\nNEEDED: convert_to_toman, get_latest_gold_rates, get_latest_crypto_rates, get_latest_fiat_rates",
+    "attempts": 1,
+    "created_at": "2026-07-01T05:12:58.527740+00:00",
+    "needed": [
+      "convert_to_toman",
+      "get_latest_gold_rates",
+      "get_latest_crypto_rates",
+      "get_latest_fiat_rates"
+    ],
+    "status": "ok"
+  },
+  "mcp-0075-br-com-brasilnfe-fiscal": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "654e741c978adf0b733f43eceabd054a5909d7a36d160d26acf4e1377681f0aa",
+    "raw_response": "The stated purpose is to issue the listed Brazilian fiscal documents via SEFAZ. The genuinely required capabilities are the emit/issue operations for those document types. Consultation, cancellation, correction, file download, customer/product/tax maintenance, health checks, and other optional workflows are excess for this purpose.\n\nNEEDED: nfe_emitir, nfse_emitir, cte_emitir, mdfe_emitir, dce_emitir",
+    "attempts": 1,
+    "created_at": "2026-07-01T05:13:03.693307+00:00",
+    "needed": [
+      "nfe_emitir",
+      "nfse_emitir",
+      "cte_emitir",
+      "mdfe_emitir",
+      "dce_emitir"
+    ],
+    "status": "ok"
+  },
+  "mcp-0078-com-cityparity-cityparity": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "88ceecbb1f1b65814176d691c61d0b4b93d341f7586414b25947a192d7a35147",
+    "raw_response": "compare_cities is needed for cost-of-living and quality-of-life comparisons, including equivalent salary. get_inbound_tax_regime is needed to compute take-home pay. get_safety_net is needed for safety-net deltas. Other capabilities are optional or broader than required.\n\nNEEDED: compare_cities, get_safety_net, get_inbound_tax_regime",
+    "attempts": 1,
+    "created_at": "2026-07-01T05:13:06.357993+00:00",
+    "needed": [
+      "compare_cities",
+      "get_safety_net",
+      "get_inbound_tax_regime"
+    ],
+    "status": "ok"
+  },
+  "mcp-0079-com-anots-directory": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "90e06e8e857c930ff92436633577ffc9ebed439eef48b03338f55a15394434da",
+    "raw_response": "These capabilities directly match the stated purpose: searching businesses, asking a business, and performing find-and-ask workflows.\n\nNEEDED: search_businesses, ask_business, find_and_ask",
+    "attempts": 1,
+    "created_at": "2026-07-01T05:13:07.152395+00:00",
+    "needed": [
+      "search_businesses",
+      "ask_business",
+      "find_and_ask"
+    ],
+    "status": "ok"
+  },
+  "mcp-0081-com-checkrecall-vehicle-recalls": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "02cebe41e5b05c37176c076da13752c5a8512168dd445dbe0af31314cd55c611",
+    "raw_response": "The task requires accessing live official NHTSA recall data, so the network capability for checking vehicle recalls is needed.\n\nNEEDED: check_vehicle_recalls",
+    "attempts": 1,
+    "created_at": "2026-07-01T05:13:09.675417+00:00",
+    "needed": [
+      "check_vehicle_recalls"
+    ],
+    "status": "ok"
+  },
+  "mcp-0080-com-changethisfile-mcp": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "c498dcd98ef6a4e0f0f5b74b3070e4606bae738d56f8e6f4e4dcc365bb618605",
+    "raw_response": "convert_file is needed to perform file conversions. list_conversions is optional for discovery and not strictly required.\n\nNEEDED: convert_file",
+    "attempts": 1,
+    "created_at": "2026-07-01T05:13:10.195119+00:00",
+    "needed": [
+      "convert_file"
+    ],
+    "status": "ok"
+  },
+  "mcp-0074-com-babyblueviper-invinoveritas": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "49cfeeebb45c4756e537632afb6e53c475c0dc708cb2f66486f58a75ebd070aa",
+    "raw_response": "ledger, verify_proof\n\nNEEDED: ledger, verify_proof",
+    "attempts": 1,
+    "created_at": "2026-07-01T05:13:11.185714+00:00",
+    "needed": [
+      "ledger",
+      "verify_proof"
+    ],
+    "status": "ok"
+  },
+  "mcp-0085-com-cloudflare-mcp-mcp": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "fa0e67b4ec30af295dabc9a72ed5be1906ffe4d7abb1a704a6310818da94fbe0",
+    "raw_response": "The stated purpose is too broad and does not require documentation search or migration-guide network access specifically.\n\nNEEDED:",
+    "attempts": 1,
+    "created_at": "2026-07-01T05:13:16.844686+00:00",
+    "needed": [],
+    "status": "ok"
+  },
+  "mcp-0086-com-commonlands-optics-mcp": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "bda227376e6022b6e78bf2d1d5c68b292528691175807c223033dad157f6e1ad",
+    "raw_response": "Core capabilities needed are the lens catalog search, sensor matching, sensor specs lookup, and field-of-view calculation. Purchase/cart/Shopify/admin/readiness/product handoff capabilities are excess.\n\nNEEDED: calculate_field_of_view, match_lens_to_sensor, search_lens_catalog, get_sensor_specs",
+    "attempts": 1,
+    "created_at": "2026-07-01T05:13:21.062748+00:00",
+    "needed": [
+      "calculate_field_of_view",
+      "match_lens_to_sensor",
+      "search_lens_catalog",
+      "get_sensor_specs"
+    ],
+    "status": "ok"
+  },
+  "mcp-0071-com-adbutler-mcp-server": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "cf2341eddcbb023ba00e86f5b46f68a7446efa82870dce37b14f07abc6faea74",
+    "raw_response": "Capabilities needed are those directly supporting management of AdButler campaigns, zones, ad items, VAST resources, and reporting. Unrelated admin/account, contracts, audiences, demand sources, product catalogs, SFTP, roles/managers, and generic API/trial setup capabilities are excess.\n\nNEEDED: list_all_campaigns, list_campaigns, get_campaign, create_campaign, update_campaign, delete_campaign, archive_campaign, list_archived_campaigns, get_archived_campaign, delete_archived_campaign, unarchive_campaign, get_campaign_conversion_tag, get_campaign_eligible_zones, campaign_bulk_create_catalog_ad_items, campaign_bulk_delete_catalog_ad_items, list_campaign_assignments, get_campaign_assignment, create_campaign_assignment, update_campaign_assignment, delete_campaign_assignment, list_all_zones, list_zones, get_zone, create_zone, update_zone, delete_zone, get_zone_tag, get_zone_conversion_tag, generate_bulk_zone_tags, archive_zone, list_archived_zones, get_archived_zone, unarchive_zone, list_email_zones, get_email_zone, create_email_zone, update_email_zone, delete_email_zone, get_email_zone_tag, get_email_zone_conversion_tag, archive_email_zone, list_archived_email_zones, get_archived_email_zone, unarchive_email_zone, list_catalog_zones, get_catalog_zone, create_catalog_zone, update_catalog_zone, delete_catalog_zone, get_catalog_zone_tag, list_ad_items, list_image_ad_items, get_image_ad_item, create_image_ad_item, update_image_ad_item, delete_image_ad_item, get_image_ad_item_conversion_tag, list_custom_html_ad_items, get_custom_html_ad_item, create_custom_html_ad_item, update_custom_html_ad_item, delete_custom_html_ad_item, get_custom_html_ad_item_conversion_tag, list_rich_media_ad_items, get_rich_media_ad_item, create_rich_media_ad_item, update_rich_media_ad_item, delete_rich_media_ad_item, get_rich_media_ad_item_conversion_tag, list_native_ad_items, get_native_ad_item, create_native_ad_item, update_native_ad_item, delete_native_ad_item, get_native_ad_item_conversion_tag, list_catalog_ad_items, get_catalog_ad_item, create_catalog_ad_item, update_catalog_ad_item, delete_catalog_ad_item, convert_native_to_image, list_placements, get_placement, create_placement, update_placement, delete_placement, get_placement_conversion_tag, list_schedules, get_schedule, create_schedule, update_schedule, delete_schedule, get_display_report, get_vast_report, get_event_logs, get_click_details_report, get_conversion_details_report, get_demand_source_report, get_display_platform_estimate, get_vast_platform_estimate, get_geo_summary_report, get_auction_placements_report, get_placement_forecast, get_display_forecast, get_display_channel_forecast, get_vast_forecast, get_vast_channel_forecast, get_vast_auction_placements_report, get_vast_geo_summary_report, list_custom_reports, get_custom_report, create_custom_report, update_custom_report, delete_custom_report, list_vast_custom_reports, get_vast_custom_report, create_vast_custom_report, list_all_generated_reports, list_all_report_schedules, list_report_generated, get_report_generated, list_report_schedules, get_report_schedule, create_report_schedule, update_report_schedule, delete_report_schedule, list_report_schedule_generated, get_report_schedule_generated, revoke_report_schedule_historical_access, vast_list_ad_items, vast_get_ad_item, vast_create_ad_item, vast_update_ad_item, vast_delete_ad_item, vast_list_campaigns, vast_get_campaign, vast_create_campaign, vast_update_campaign, vast_delete_campaign, vast_archive_campaign, vast_list_archived_campaigns, vast_get_archived_campaign, vast_delete_archived_campaign, vast_unarchive_campaign, vast_list_channels, vast_get_channel, vast_create_channel, vast_update_channel, vast_delete_channel, vast_archive_channel, vast_list_archived_channels, vast_get_archived_channel, vast_delete_archived_channel, vast_unarchive_channel, vast_list_channel_zone_assignments, vast_get_channel_zone_assignment, vast_create_channel_zone_assignment, vast_update_channel_zone_assignment, vast_delete_channel_zone_assignment, vast_list_zones, vast_get_zone, vast_create_zone, vast_update_zone, vast_delete_zone, vast_archive_zone, vast_list_archived_zones, vast_get_archived_zone, vast_delete_archived_zone, vast_unarchive_zone, vast_list_placements, vast_get_placement, vast_create_placement, vast_update_placement, vast_delete_placement, vast_list_campaign_assignments, vast_get_campaign_assignment, vast_create_campaign_assignment, vast_update_campaign_assignment, vast_delete_campaign_assignment, vast_list_schedules, vast_get_schedule, vast_create_schedule, vast_update_schedule, vast_delete_schedule, vast_list_companions, vast_get_companion, vast_create_companion, vast_update_companion, vast_delete_companion, vast_list_media, vast_list_linear_media, vast_get_linear_media, vast_create_linear_media, vast_update_linear_media, vast_delete_linear_media, vast_list_non_linear_media, vast_get_non_linear_media, vast_create_non_linear_media, vast_update_non_linear_media, vast_delete_non_linear_media, vast_list_tracking, vast_get_tracking, vast_create_tracking, vast_update_tracking, vast_delete_tracking, get_vast_zone_tags, get_vast_zone_conversion_tag, get_vast_ad_item_conversion_tag, get_vast_campaign_conversion_tag, get_vast_placement_conversion_tag, vast42_list_ads, vast42_get_ad, vast42_create_ad, vast42_update_ad, vast42_delete_ad, vast42_list_creatives, vast42_get_creative, vast42_create_creative, vast42_update_creative, vast42_delete_creative, vast42_list_linears, vast42_get_linear, vast42_create_linear, vast42_update_linear, vast42_delete_linear, vast42_list_non_linears, vast42_get_non_linear, vast42_create_non_linear, vast42_update_non_linear, vast42_delete_non_linear, vast42_list_companions, vast42_get_companion, vast42_create_companion, vast42_update_companion, vast42_delete_companion, vast42_list_media_files, vast42_get_media_file, vast42_create_media_file, vast42_update_media_file, vast42_delete_media_file, vast42_list_mezzanines, vast42_get_mezzanine, vast42_create_mezzanine, vast42_update_mezzanine, vast42_delete_mezzanine, vast42_list_resources, vast42_get_resource, vast42_create_resource, vast42_update_resource, vast42_delete_resource, vast42_list_icons, vast42_get_icon, vast42_create_icon, vast42_update_icon, vast42_delete_icon, vast42_list_icon_click_fallback_images, vast42_get_icon_click_fallback_image, vast42_create_icon_click_fallback_image, vast42_update_icon_click_fallback_image, vast42_delete_icon_click_fallback_image, vast42_list_closed_caption_files, vast42_get_closed_caption_file, vast42_create_closed_caption_file, vast42_update_closed_caption_file, vast42_delete_closed_caption_file, vast42_list_interactive_creative_files, vast42_get_interactive_creative_file, vast42_create_interactive_creative_file, vast42_update_interactive_creative_file, vast42_delete_interactive_creative_file, vast42_list_universal_ad_ids, vast42_get_universal_ad_id, vast42_create_universal_ad_id, vast42_update_universal_ad_id, vast42_delete_universal_ad_id, vast42_list_placements, vast42_get_placement, vast42_create_placement, vast42_update_placement, vast42_delete_placement, vast42_list_campaign_assignments, vast42_get_campaign_assignment, vast42_create_campaign_assignment, vast42_update_campaign_assignment, vast42_delete_campaign_assignment",
+    "attempts": 1,
+    "created_at": "2026-07-01T05:13:22.528184+00:00",
+    "needed": [
+      "list_all_campaigns",
+      "list_campaigns",
+      "get_campaign",
+      "create_campaign",
+      "update_campaign",
+      "delete_campaign",
+      "archive_campaign",
+      "list_archived_campaigns",
+      "get_archived_campaign",
+      "delete_archived_campaign",
+      "unarchive_campaign",
+      "get_campaign_conversion_tag",
+      "get_campaign_eligible_zones",
+      "campaign_bulk_create_catalog_ad_items",
+      "campaign_bulk_delete_catalog_ad_items",
+      "list_campaign_assignments",
+      "get_campaign_assignment",
+      "create_campaign_assignment",
+      "update_campaign_assignment",
+      "delete_campaign_assignment",
+      "list_all_zones",
+      "list_zones",
+      "get_zone",
+      "create_zone",
+      "update_zone",
+      "delete_zone",
+      "get_zone_tag",
+      "get_zone_conversion_tag",
+      "generate_bulk_zone_tags",
+      "archive_zone",
+      "list_archived_zones",
+      "get_archived_zone",
+      "unarchive_zone",
+      "list_email_zones",
+      "get_email_zone",
+      "create_email_zone",
+      "update_email_zone",
+      "delete_email_zone",
+      "get_email_zone_tag",
+      "get_email_zone_conversion_tag",
+      "archive_email_zone",
+      "list_archived_email_zones",
+      "get_archived_email_zone",
+      "unarchive_email_zone",
+      "list_catalog_zones",
+      "get_catalog_zone",
+      "create_catalog_zone",
+      "update_catalog_zone",
+      "delete_catalog_zone",
+      "get_catalog_zone_tag",
+      "list_ad_items",
+      "list_image_ad_items",
+      "get_image_ad_item",
+      "create_image_ad_item",
+      "update_image_ad_item",
+      "delete_image_ad_item",
+      "get_image_ad_item_conversion_tag",
+      "list_custom_html_ad_items",
+      "get_custom_html_ad_item",
+      "create_custom_html_ad_item",
+      "update_custom_html_ad_item",
+      "delete_custom_html_ad_item",
+      "get_custom_html_ad_item_conversion_tag",
+      "list_rich_media_ad_items",
+      "get_rich_media_ad_item",
+      "create_rich_media_ad_item",
+      "update_rich_media_ad_item",
+      "delete_rich_media_ad_item",
+      "get_rich_media_ad_item_conversion_tag",
+      "list_native_ad_items",
+      "get_native_ad_item",
+      "create_native_ad_item",
+      "update_native_ad_item",
+      "delete_native_ad_item",
+      "get_native_ad_item_conversion_tag",
+      "list_catalog_ad_items",
+      "get_catalog_ad_item",
+      "create_catalog_ad_item",
+      "update_catalog_ad_item",
+      "delete_catalog_ad_item",
+      "convert_native_to_image",
+      "list_placements",
+      "get_placement",
+      "create_placement",
+      "update_placement",
+      "delete_placement",
+      "get_placement_conversion_tag",
+      "list_schedules",
+      "get_schedule",
+      "create_schedule",
+      "update_schedule",
+      "delete_schedule",
+      "get_display_report",
+      "get_vast_report",
+      "get_event_logs",
+      "get_click_details_report",
+      "get_conversion_details_report",
+      "get_demand_source_report",
+      "get_display_platform_estimate",
+      "get_vast_platform_estimate",
+      "get_geo_summary_report",
+      "get_auction_placements_report",
+      "get_placement_forecast",
+      "get_display_forecast",
+      "get_display_channel_forecast",
+      "get_vast_forecast",
+      "get_vast_channel_forecast",
+      "get_vast_auction_placements_report",
+      "get_vast_geo_summary_report",
+      "list_custom_reports",
+      "get_custom_report",
+      "create_custom_report",
+      "update_custom_report",
+      "delete_custom_report",
+      "list_vast_custom_reports",
+      "get_vast_custom_report",
+      "create_vast_custom_report",
+      "list_all_generated_reports",
+      "list_all_report_schedules",
+      "list_report_generated",
+      "get_report_generated",
+      "list_report_schedules",
+      "get_report_schedule",
+      "create_report_schedule",
+      "update_report_schedule",
+      "delete_report_schedule",
+      "list_report_schedule_generated",
+      "get_report_schedule_generated",
+      "revoke_report_schedule_historical_access",
+      "vast_list_ad_items",
+      "vast_get_ad_item",
+      "vast_create_ad_item",
+      "vast_update_ad_item",
+      "vast_delete_ad_item",
+      "vast_list_campaigns",
+      "vast_get_campaign",
+      "vast_create_campaign",
+      "vast_update_campaign",
+      "vast_delete_campaign",
+      "vast_archive_campaign",
+      "vast_list_archived_campaigns",
+      "vast_get_archived_campaign",
+      "vast_delete_archived_campaign",
+      "vast_unarchive_campaign",
+      "vast_list_channels",
+      "vast_get_channel",
+      "vast_create_channel",
+      "vast_update_channel",
+      "vast_delete_channel",
+      "vast_archive_channel",
+      "vast_list_archived_channels",
+      "vast_get_archived_channel",
+      "vast_delete_archived_channel",
+      "vast_unarchive_channel",
+      "vast_list_channel_zone_assignments",
+      "vast_get_channel_zone_assignment",
+      "vast_create_channel_zone_assignment",
+      "vast_update_channel_zone_assignment",
+      "vast_delete_channel_zone_assignment",
+      "vast_list_zones",
+      "vast_get_zone",
+      "vast_create_zone",
+      "vast_update_zone",
+      "vast_delete_zone",
+      "vast_archive_zone",
+      "vast_list_archived_zones",
+      "vast_get_archived_zone",
+      "vast_delete_archived_zone",
+      "vast_unarchive_zone",
+      "vast_list_placements",
+      "vast_get_placement",
+      "vast_create_placement",
+      "vast_update_placement",
+      "vast_delete_placement",
+      "vast_list_campaign_assignments",
+      "vast_get_campaign_assignment",
+      "vast_create_campaign_assignment",
+      "vast_update_campaign_assignment",
+      "vast_delete_campaign_assignment",
+      "vast_list_schedules",
+      "vast_get_schedule",
+      "vast_create_schedule",
+      "vast_update_schedule",
+      "vast_delete_schedule",
+      "vast_list_companions",
+      "vast_get_companion",
+      "vast_create_companion",
+      "vast_update_companion",
+      "vast_delete_companion",
+      "vast_list_media",
+      "vast_list_linear_media",
+      "vast_get_linear_media",
+      "vast_create_linear_media",
+      "vast_update_linear_media",
+      "vast_delete_linear_media",
+      "vast_list_non_linear_media",
+      "vast_get_non_linear_media",
+      "vast_create_non_linear_media",
+      "vast_update_non_linear_media",
+      "vast_delete_non_linear_media",
+      "vast_list_tracking",
+      "vast_get_tracking",
+      "vast_create_tracking",
+      "vast_update_tracking",
+      "vast_delete_tracking",
+      "get_vast_zone_tags",
+      "get_vast_zone_conversion_tag",
+      "get_vast_ad_item_conversion_tag",
+      "get_vast_campaign_conversion_tag",
+      "get_vast_placement_conversion_tag",
+      "vast42_list_ads",
+      "vast42_get_ad",
+      "vast42_create_ad",
+      "vast42_update_ad",
+      "vast42_delete_ad",
+      "vast42_list_creatives",
+      "vast42_get_creative",
+      "vast42_create_creative",
+      "vast42_update_creative",
+      "vast42_delete_creative",
+      "vast42_list_linears",
+      "vast42_get_linear",
+      "vast42_create_linear",
+      "vast42_update_linear",
+      "vast42_delete_linear",
+      "vast42_list_non_linears",
+      "vast42_get_non_linear",
+      "vast42_create_non_linear",
+      "vast42_update_non_linear",
+      "vast42_delete_non_linear",
+      "vast42_list_companions",
+      "vast42_get_companion",
+      "vast42_create_companion",
+      "vast42_update_companion",
+      "vast42_delete_companion",
+      "vast42_list_media_files",
+      "vast42_get_media_file",
+      "vast42_create_media_file",
+      "vast42_update_media_file",
+      "vast42_delete_media_file",
+      "vast42_list_mezzanines",
+      "vast42_get_mezzanine",
+      "vast42_create_mezzanine",
+      "vast42_update_mezzanine",
+      "vast42_delete_mezzanine",
+      "vast42_list_resources",
+      "vast42_get_resource",
+      "vast42_create_resource",
+      "vast42_update_resource",
+      "vast42_delete_resource",
+      "vast42_list_icons",
+      "vast42_get_icon",
+      "vast42_create_icon",
+      "vast42_update_icon",
+      "vast42_delete_icon",
+      "vast42_list_icon_click_fallback_images",
+      "vast42_get_icon_click_fallback_image",
+      "vast42_create_icon_click_fallback_image",
+      "vast42_update_icon_click_fallback_image",
+      "vast42_delete_icon_click_fallback_image",
+      "vast42_list_closed_caption_files",
+      "vast42_get_closed_caption_file",
+      "vast42_create_closed_caption_file",
+      "vast42_update_closed_caption_file",
+      "vast42_delete_closed_caption_file",
+      "vast42_list_interactive_creative_files",
+      "vast42_get_interactive_creative_file",
+      "vast42_create_interactive_creative_file",
+      "vast42_update_interactive_creative_file",
+      "vast42_delete_interactive_creative_file",
+      "vast42_list_universal_ad_ids",
+      "vast42_get_universal_ad_id",
+      "vast42_create_universal_ad_id",
+      "vast42_update_universal_ad_id",
+      "vast42_delete_universal_ad_id",
+      "vast42_list_placements",
+      "vast42_get_placement",
+      "vast42_create_placement",
+      "vast42_update_placement",
+      "vast42_delete_placement",
+      "vast42_list_campaign_assignments",
+      "vast42_get_campaign_assignment",
+      "vast42_create_campaign_assignment",
+      "vast42_update_campaign_assignment",
+      "vast42_delete_campaign_assignment"
+    ],
+    "status": "ok"
+  },
+  "mcp-0077-com-bankruptcyobserver-mcp": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "5f2b3524f5a4d9a62bd7f06308da9ef5152504e996fa05791b2c916cb5390606",
+    "raw_response": "Core bankruptcy lookup/retrieval tools are needed for filings, dockets, documents, and summaries. Subscription status/plan visibility is also relevant, but write-like actions such as purchasing a plan or adding monitored cases are not strictly required.\n\nNEEDED: search_bankruptcy_cases_tool, get_case_by_ein_tool, get_case_by_case_number_tool, get_cases_by_industry_tool, get_cases_by_naics_tool, get_cases_by_state_tool, get_cases_by_date_range_tool, get_docket_entries_tool, get_case_summary_tool, get_document_cost_tool, get_document_tool, get_recent_developments_tool, list_plans_tool, check_subscription_tool",
+    "attempts": 1,
+    "created_at": "2026-07-01T05:13:26.509708+00:00",
+    "needed": [
+      "search_bankruptcy_cases_tool",
+      "get_case_by_ein_tool",
+      "get_case_by_case_number_tool",
+      "get_cases_by_industry_tool",
+      "get_cases_by_naics_tool",
+      "get_cases_by_state_tool",
+      "get_cases_by_date_range_tool",
+      "get_docket_entries_tool",
+      "get_case_summary_tool",
+      "get_document_cost_tool",
+      "get_document_tool",
+      "get_recent_developments_tool",
+      "list_plans_tool",
+      "check_subscription_tool"
+    ],
+    "status": "ok"
+  },
+  "mcp-0088-com-bikefuchs-bikefuchs": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "c219a79c0fe0230645e3bec10298fc943e9a0a8451e92dbdc94e32679c4211fd",
+    "raw_response": "Needed: search, compare best prices, optimize multi-shop carts, account for shipping, and resolve product identity across shops.\n\nExcess: shop info and alternatives are useful extras but not strictly required for price comparison/cart optimization.\n\nNEEDED: search_product, get_best_price, optimize_cart, get_shipping_breakdown, resolve_product",
+    "attempts": 1,
+    "created_at": "2026-07-01T05:13:29.456624+00:00",
+    "needed": [
+      "search_product",
+      "get_best_price",
+      "optimize_cart",
+      "get_shipping_breakdown",
+      "resolve_product"
+    ],
+    "status": "ok"
+  },
+  "mcp-0090-com-daedalmap-county-map": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "ecc94c75e974cf1886e9c75195892f672d158087beea335a7cd794a5f1bfbed0",
+    "raw_response": "All declared capabilities align with the stated purpose of serving geospatial, disaster, earthquake, tsunami, volcano, and FX data queries.\n\nNEEDED: get_catalog, get_pack, get_disaster_links_for_event, get_disaster_link_chain, search_disaster_links, resolve_point, get_boundary, loc_id_hierarchy, loc_id_info, get_earthquake_events, get_live_earthquake_events, get_volcanic_activity, get_live_volcano_events, get_tsunami_events, get_fx_rates, query_dataset",
+    "attempts": 1,
+    "created_at": "2026-07-01T05:13:32.429877+00:00",
+    "needed": [
+      "get_catalog",
+      "get_pack",
+      "get_disaster_links_for_event",
+      "get_disaster_link_chain",
+      "search_disaster_links",
+      "resolve_point",
+      "get_boundary",
+      "loc_id_hierarchy",
+      "loc_id_info",
+      "get_earthquake_events",
+      "get_live_earthquake_events",
+      "get_volcanic_activity",
+      "get_live_volcano_events",
+      "get_tsunami_events",
+      "get_fx_rates",
+      "query_dataset"
+    ],
+    "status": "ok"
+  },
+  "mcp-0091-com-daedalmap-earthquakes": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "29e56e5bb87143e2c42128f19918588a95e4bb835e202a31245deaa3be5575b4",
+    "raw_response": "get_earthquake_events is needed for retrieving the stated global earthquake event data. Live earthquake data and disaster-link tools are optional or unrelated.\n\nNEEDED: get_earthquake_events",
+    "attempts": 1,
+    "created_at": "2026-07-01T05:13:37.208296+00:00",
+    "needed": [
+      "get_earthquake_events"
+    ],
+    "status": "ok"
+  },
+  "mcp-0092-com-daedalmap-hurricanes": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "3d09ebe6eeea64704ad07ca73da97433204c206aaac16b4a5bcf16b895b4f339",
+    "raw_response": "get_pack is needed to access the hurricane/tropical cyclone data pack. Catalog lookup may be helpful but not strictly required if the task is tied to this specific dataset. Network/search capabilities are excessive.\n\nNEEDED: get_pack",
+    "attempts": 1,
+    "created_at": "2026-07-01T05:13:40.187355+00:00",
+    "needed": [
+      "get_pack"
+    ],
+    "status": "ok"
+  },
+  "mcp-0093-com-daedalmap-tsunamis": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "22de7be157cc58145f289f0bdfc06efeea3e6627fd7131ef2123e7a1ac95bc31",
+    "raw_response": "Only `get_tsunami_events` is directly needed to retrieve tsunami event data with wave height, runups, and counts. The disaster link tools and generic catalog/pack reads are unnecessary for the stated purpose.\n\nNEEDED: get_tsunami_events",
+    "attempts": 1,
+    "created_at": "2026-07-01T05:13:40.267977+00:00",
+    "needed": [
+      "get_tsunami_events"
+    ],
+    "status": "ok"
+  },
+  "mcp-0095-com-crosswire-api-crosswire-polymarket-kalshi-arbitrage": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "1f3d9f6f8f7339bb1a16161aa12873b1a70151ef2e55b0342bc98a4ec81d72aa",
+    "raw_response": "Both capabilities align with the stated arbitrage risk-assessment purpose: identifying covered events and checking resolution/void/settlement divergence risk.\n\nNEEDED: check_resolution_risk, list_covered_events",
+    "attempts": 1,
+    "created_at": "2026-07-01T05:13:44.015664+00:00",
+    "needed": [
+      "check_resolution_risk",
+      "list_covered_events"
+    ],
+    "status": "ok"
+  },
+  "mcp-0096-com-daedalmap-boundaries": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "f1a19d8429b22e0cbc01dd773f31e46262ec48f86f2d99a00dfd20c2c26581b8",
+    "raw_response": "get_boundary is needed to retrieve the polygon/bounding geometry. loc_id_info is needed for associated metadata such as name and admin level. get_catalog and get_pack are not necessary for the stated purpose.\n\nNEEDED: get_boundary, loc_id_info",
+    "attempts": 1,
+    "created_at": "2026-07-01T05:13:46.872982+00:00",
+    "needed": [
+      "get_boundary",
+      "loc_id_info"
+    ],
+    "status": "ok"
+  },
+  "mcp-0094-com-craftedtrust-mcp-shield": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "8d3b286c5ee63bfacc6490d2a2d8fc4a3ee698e1e863bcafab19cf25dfc9bcdb",
+    "raw_response": "check_trust, scan_server, and search_registry directly support checking trust scores, scanning servers for security issues, and searching the MCP server registry. get_stats is not required by the stated purpose.\n\nNEEDED: check_trust, scan_server, search_registry",
+    "attempts": 1,
+    "created_at": "2026-07-01T05:13:50.145231+00:00",
+    "needed": [
+      "check_trust",
+      "scan_server",
+      "search_registry"
+    ],
+    "status": "ok"
+  },
+  "mcp-0097-com-daedalmap-currency": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "01407637b2de0ad34b198bb0b24558aa4a5195d23d322f25c49a4b294f380b4c",
+    "raw_response": "The purpose is specifically to retrieve historical FX rates, so only the FX-rate retrieval capability is necessary. Catalog or pack access is optional/broader than needed.\n\nNEEDED: get_fx_rates",
+    "attempts": 1,
+    "created_at": "2026-07-01T05:13:51.361297+00:00",
+    "needed": [
+      "get_fx_rates"
+    ],
+    "status": "ok"
+  },
+  "mcp-0099-com-daedalmap-geocoding": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "9b6791a245c980ab51d98d5a440cd291f1c37ceb7d6011d096161eb2594c4d0b",
+    "raw_response": "Needed to reverse geocode coordinates and resolve loc_ids to boundaries, centroids, and hierarchy.\n\nExcess: `get_catalog`, `get_pack` are discovery/data-pack access and not required for the stated geocoding operations.\n\nNEEDED: resolve_point, get_boundary, loc_id_hierarchy, loc_id_info",
+    "attempts": 1,
+    "created_at": "2026-07-01T05:13:54.830532+00:00",
+    "needed": [
+      "resolve_point",
+      "get_boundary",
+      "loc_id_hierarchy",
+      "loc_id_info"
+    ],
+    "status": "ok"
+  },
+  "mcp-0100-com-daedalmap-population": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "6f57c604fcb4d61fd851cf9ba78fee6c3723e59c7b312d03de3c852df47954af",
+    "raw_response": "`get_pack` is needed to read the specified population estimates data pack. `get_catalog` is only for discovery and `query_dataset` grants network access, which is not necessary for this stated purpose.\n\nNEEDED: get_pack",
+    "attempts": 1,
+    "created_at": "2026-07-01T05:13:59.000246+00:00",
+    "needed": [
+      "get_pack"
+    ],
+    "status": "ok"
+  },
+  "mcp-0101-com-daedalmap-reverse-geocoding": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "7308fcaabf67ce84f746c1edf8b924b939c9487eb4ba39a22322e5e9f2fb34b7",
+    "raw_response": "resolve_point is directly needed to convert coordinates to a loc_id and parent chain. get_catalog and get_pack are not strictly required for the stated reverse-geocoding operation.\n\nNEEDED: resolve_point",
+    "attempts": 1,
+    "created_at": "2026-07-01T05:14:04.793407+00:00",
+    "needed": [
+      "resolve_point"
+    ],
+    "status": "ok"
+  },
+  "mcp-0102-com-daedalmap-tornadoes": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "d5c74fcd4ab291ba9fba9031cad90a92f4f9b3e74cebe4daa0499503d4ac73be",
+    "raw_response": "get_pack and query_dataset are needed to access and retrieve/query the specified tornado events dataset. get_catalog is optional because the target dataset is already specified. search_disaster_links is unrelated.\n\nNEEDED: get_pack, query_dataset",
+    "attempts": 1,
+    "created_at": "2026-07-01T05:14:09.270963+00:00",
+    "needed": [
+      "get_pack",
+      "query_dataset"
+    ],
+    "status": "ok"
+  },
+  "mcp-0087-com-100hires-100hires": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "6a83f24b8e9f190cc4cdea285e65dd8686183c322f91743950b349c111bbaa85",
+    "raw_response": "Direct candidate, job, application, and interview management capabilities are needed. Broader admin/configuration, billing, webhooks, templates, campaigns, companies, users, bulk convenience actions, and unrelated reference-data tools are excess for the stated purpose.\n\nNEEDED: hires_list_candidates, hires_create_candidate, hires_get_candidate, hires_update_candidate, hires_delete_candidate, hires_list_candidate_files, hires_upload_candidate_file, hires_get_candidate_resume, hires_disqualify_candidate, hires_list_candidate_interviews, hires_list_applications, hires_create_application, hires_get_application, hires_update_application, hires_delete_application, hires_move_application, hires_advance_application, hires_hire_application, hires_reject_application, hires_unreject_application, hires_transfer_application, hires_get_ai_score, hires_list_application_stage_history, hires_list_application_attachments, hires_upload_application_attachment, hires_list_application_evaluations, hires_create_interview, hires_list_jobs, hires_create_job, hires_get_job, hires_update_job, hires_delete_job, hires_set_job_status, hires_list_interviews, hires_get_interview",
+    "attempts": 1,
+    "created_at": "2026-07-01T05:14:13.040073+00:00",
+    "needed": [
+      "hires_list_candidates",
+      "hires_create_candidate",
+      "hires_get_candidate",
+      "hires_update_candidate",
+      "hires_delete_candidate",
+      "hires_list_candidate_files",
+      "hires_upload_candidate_file",
+      "hires_get_candidate_resume",
+      "hires_disqualify_candidate",
+      "hires_list_candidate_interviews",
+      "hires_list_applications",
+      "hires_create_application",
+      "hires_get_application",
+      "hires_update_application",
+      "hires_delete_application",
+      "hires_move_application",
+      "hires_advance_application",
+      "hires_hire_application",
+      "hires_reject_application",
+      "hires_unreject_application",
+      "hires_transfer_application",
+      "hires_get_ai_score",
+      "hires_list_application_stage_history",
+      "hires_list_application_attachments",
+      "hires_upload_application_attachment",
+      "hires_list_application_evaluations",
+      "hires_create_interview",
+      "hires_list_jobs",
+      "hires_create_job",
+      "hires_get_job",
+      "hires_update_job",
+      "hires_delete_job",
+      "hires_set_job_status",
+      "hires_list_interviews",
+      "hires_get_interview"
+    ],
+    "status": "ok"
+  },
+  "mcp-0104-com-daedalmap-volcanoes": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "8a582781c72e80ad88914e24015e6766377ca7f1cb5c0795a6fde6009444df28",
+    "raw_response": "`get_volcanic_activity` is needed to retrieve global volcanic eruption data including VEI, location, and dates. The other capabilities are unrelated, broader than necessary, or only optional.\n\nNEEDED: get_volcanic_activity",
+    "attempts": 1,
+    "created_at": "2026-07-01T05:14:14.196945+00:00",
+    "needed": [
+      "get_volcanic_activity"
+    ],
+    "status": "ok"
+  },
+  "mcp-0103-com-daedalmap-un-sdg": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "aea51cdb0292c216516bfec3f0d18d2dbb4c2e943e03e48abcbf42844503a41b",
+    "raw_response": "The stated purpose is to provide a specific dataset pack for UN SDG indicators. Reading the relevant pack is needed. Catalog lookup may be helpful but is optional if the pack is already specified. Network querying is broader than necessary.\n\nNEEDED: get_pack",
+    "attempts": 1,
+    "created_at": "2026-07-01T05:14:16.343448+00:00",
+    "needed": [
+      "get_pack"
+    ],
+    "status": "ok"
+  },
+  "mcp-0106-com-daedalmap-world-factbook": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "e316d35081026a92501c44d1de819ec3085c0f48b9b8634ba0e6600d6aeed175",
+    "raw_response": "The purpose is to access a specific CIA World Factbook indicators dataset. Reading the relevant data pack is needed; catalog discovery is optional, and network querying is broader than necessary.\n\nNEEDED: get_pack",
+    "attempts": 1,
+    "created_at": "2026-07-01T05:14:19.712567+00:00",
+    "needed": [
+      "get_pack"
+    ],
+    "status": "ok"
+  },
+  "mcp-0107-com-defaultverifier-settlement-witness": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "8b4e04bab771a00d6037b237ed0545ed8ee1659ae4694a9bf08a1c09799f3620",
+    "raw_response": "The `settlement_witness` capability directly matches the stated purpose of acting as a deterministic verification gate for agent execution and x402 settlement.\n\nNEEDED: settlement_witness",
+    "attempts": 1,
+    "created_at": "2026-07-01T05:14:20.918235+00:00",
+    "needed": [
+      "settlement_witness"
+    ],
+    "status": "ok"
+  },
+  "mcp-0098-com-daedalmap-floods": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "cca1de5d64ea12b7c68e172677ab5597e86636f3b56d5a84a032164725987c5a",
+    "raw_response": "The purpose is to provide/query a specific flood events dataset. Dataset querying is needed; catalog browsing, pack retrieval, and disaster-link search are not strictly required.\n\nNEEDED: query_dataset",
+    "attempts": 1,
+    "created_at": "2026-07-01T05:14:23.976001+00:00",
+    "needed": [
+      "query_dataset"
+    ],
+    "status": "ok"
+  },
+  "mcp-0105-com-daedalmap-wildfires": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "a58dc8b80ea4bfbc46e4120ae4b1f39789bca20b0e27eb6973721cf67a676f31",
+    "raw_response": "get_catalog, get_pack, and query_dataset are needed to discover and retrieve/query wildfire event datasets and aggregates. The disaster link tools are broader/ancillary and not required for the stated wildfire events/aggregates purpose.\n\nNEEDED: get_catalog, get_pack, query_dataset",
+    "attempts": 1,
+    "created_at": "2026-07-01T05:14:25.532221+00:00",
+    "needed": [
+      "get_catalog",
+      "get_pack",
+      "query_dataset"
+    ],
+    "status": "ok"
+  },
+  "mcp-0109-com-compoid-mcp-server": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "2ebe48664adf3f4cdf7f58925e0a400379da5282327b212db84815f902d155ea",
+    "raw_response": "All listed capabilities align with operating a collaborative repository: searching/browsing content and communities, retrieving/downloading shared files, and creating/updating records, files, and communities for sharing and collaboration.\n\nNEEDED: Compoid_search_records, Compoid_search_communities, Compoid_get_record_details, Compoid_get_community_details, Compoid_download_files, Compoid_upload_file, Compoid_create_record, Compoid_update_record, Compoid_create_community, Compoid_update_community",
+    "attempts": 1,
+    "created_at": "2026-07-01T05:14:28.505237+00:00",
+    "needed": [
+      "Compoid_search_records",
+      "Compoid_search_communities",
+      "Compoid_get_record_details",
+      "Compoid_get_community_details",
+      "Compoid_download_files",
+      "Compoid_upload_file",
+      "Compoid_create_record",
+      "Compoid_update_record",
+      "Compoid_create_community",
+      "Compoid_update_community"
+    ],
+    "status": "ok"
+  },
+  "mcp-0108-com-boostermage-mtg-prices": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "2f758ab2f3cbb9594df9d6663260f6e3ce1d6d21f435d93b36176c842f3b2b7a",
+    "raw_response": "search_products, compare_prices, find_deals, and get_price_drops are needed to support searching products, comparing live prices, and tracking deals/price drops. Other capabilities are optional, redundant, or outside the stated purpose.\n\nNEEDED: search_products, compare_prices, find_deals, get_price_drops",
+    "attempts": 1,
+    "created_at": "2026-07-01T05:14:32.514505+00:00",
+    "needed": [
+      "search_products",
+      "compare_prices",
+      "find_deals",
+      "get_price_drops"
+    ],
+    "status": "ok"
+  },
+  "mcp-0089-com-blackveilsecurity-dns": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "152b05c84a827a6236b246fd85eaaab4b54c9634db6966780e40e5888ff826fc",
+    "raw_response": "Core DNS/email posture checks, SSL/DNSSEC checks, domain/brand discovery, and brand audit reporting are needed. Broad OSINT, cloud bucket scanning, tenant sign-in/audit-log queries, persistent watch mutation, and generic optional/meta tools are excess.\n\nNEEDED: check_mx, check_spf, check_dmarc, check_dkim, check_dnssec, check_ssl, check_mta_sts, check_ns, check_caa, check_bimi, check_tlsrpt, check_http_security, check_dane, check_ptr, check_dane_https, check_svcb_https, check_lookalikes, check_subdomailing, scan_domain, batch_scan, compare_domains, compare_baseline, check_shadow_domains, check_txt_hygiene, check_mx_reputation, check_srv, check_zone_hygiene, get_provider_insights, assess_spoofability, check_resolver_consistency, explain_finding, map_supply_chain, analyze_drift, validate_fix, resolve_spf_chain, discover_subdomains, check_dbl, check_rbl, cymru_asn, rdap_lookup, check_realtime_threat_feed, check_nsec_walkability, check_dnssec_chain, check_dnskey_strength, check_fast_flux, check_subdomain_takeover, check_authoritative_dns_infra, check_root_server_set, discover_brand_domains, discover_brand_domains_start, discover_brand_domains_status, discover_brand_domains_findings, brand_audit_single, brand_audit_batch_start, brand_audit_status, brand_audit_get_report, get_ca_policies",
+    "attempts": 1,
+    "created_at": "2026-07-01T05:14:38.261844+00:00",
+    "needed": [
+      "check_mx",
+      "check_spf",
+      "check_dmarc",
+      "check_dkim",
+      "check_dnssec",
+      "check_ssl",
+      "check_mta_sts",
+      "check_ns",
+      "check_caa",
+      "check_bimi",
+      "check_tlsrpt",
+      "check_http_security",
+      "check_dane",
+      "check_ptr",
+      "check_dane_https",
+      "check_svcb_https",
+      "check_lookalikes",
+      "check_subdomailing",
+      "scan_domain",
+      "batch_scan",
+      "compare_domains",
+      "compare_baseline",
+      "check_shadow_domains",
+      "check_txt_hygiene",
+      "check_mx_reputation",
+      "check_srv",
+      "check_zone_hygiene",
+      "get_provider_insights",
+      "assess_spoofability",
+      "check_resolver_consistency",
+      "explain_finding",
+      "map_supply_chain",
+      "analyze_drift",
+      "validate_fix",
+      "resolve_spf_chain",
+      "discover_subdomains",
+      "check_dbl",
+      "check_rbl",
+      "cymru_asn",
+      "rdap_lookup",
+      "check_realtime_threat_feed",
+      "check_nsec_walkability",
+      "check_dnssec_chain",
+      "check_dnskey_strength",
+      "check_fast_flux",
+      "check_subdomain_takeover",
+      "check_authoritative_dns_infra",
+      "check_root_server_set",
+      "discover_brand_domains",
+      "discover_brand_domains_start",
+      "discover_brand_domains_status",
+      "discover_brand_domains_findings",
+      "brand_audit_single",
+      "brand_audit_batch_start",
+      "brand_audit_status",
+      "brand_audit_get_report",
+      "get_ca_policies"
+    ],
+    "status": "ok"
+  },
+  "mcp-0112-com-decision-anchor-da": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "5dfe82087af718f3f3d6556d4be4ec60510c59bf55ec379884dea742d99ff107",
+    "raw_response": "create_decision and confirm_decision are needed to record and mutually confirm accountability boundary anchors. Other capabilities are unrelated, optional, or expose content/environment/market/admin functionality beyond a content-blind anchoring role.\n\nNEEDED: create_decision, confirm_decision",
+    "attempts": 1,
+    "created_at": "2026-07-01T05:14:38.870844+00:00",
+    "needed": [
+      "create_decision",
+      "confirm_decision"
+    ],
+    "status": "ok"
+  },
+  "mcp-0110-com-blockscout-mcp-server": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "9138ad52dee6ad8bb1ea86a101bbcc67299757e509a77819cb598b423f24df33",
+    "raw_response": "Specific read/query tools for Blockscout blockchain explorer functionality are needed. The hidden unlock capability and arbitrary direct API call are broader than necessary.\n\nNEEDED: get_block_info, get_block_number, get_address_by_ens_name, get_transactions_by_address, get_token_transfers_by_address, lookup_token_by_symbol, get_contract_abi, inspect_contract_code, read_contract, get_address_info, get_tokens_by_address, nft_tokens_by_address, get_transaction_info, get_chains_list",
+    "attempts": 1,
+    "created_at": "2026-07-01T05:14:39.243046+00:00",
+    "needed": [
+      "get_block_info",
+      "get_block_number",
+      "get_address_by_ens_name",
+      "get_transactions_by_address",
+      "get_token_transfers_by_address",
+      "lookup_token_by_symbol",
+      "get_contract_abi",
+      "inspect_contract_code",
+      "read_contract",
+      "get_address_info",
+      "get_tokens_by_address",
+      "nft_tokens_by_address",
+      "get_transaction_info",
+      "get_chains_list"
+    ],
+    "status": "ok"
+  },
+  "mcp-0113-com-feode-feode-mcp": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "8fc17b0814b4033dd744c74436ca090f3280c189f6552294b37ea03f16de4f67",
+    "raw_response": "Needed capabilities are those for FEODE product/spec/certification lookup and NOV Grant Prideco drill-pipe specs. Broader search/guidance capabilities are excess.\n\nNEEDED: list_products, get_product_specs, get_certifications, list_drill_pipe, get_drill_pipe_specs",
+    "attempts": 1,
+    "created_at": "2026-07-01T05:14:42.723920+00:00",
+    "needed": [
+      "list_products",
+      "get_product_specs",
+      "get_certifications",
+      "list_drill_pipe",
+      "get_drill_pipe_specs"
+    ],
+    "status": "ok"
+  },
+  "mcp-0116-com-eveoy-mcp": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "f017cc141af7e5d1d305c2c58a7753e2a62df52090dcb7ab4510fcb045458a35",
+    "raw_response": "Needed for the stated purpose:\n- `ask_eveoy` — learn how Eveoy works / answer product questions\n- `get_pricing` — get the price\n- `start_checkout` — order real in-store visits\n\nOther capabilities are optional or outside the core purpose.\n\nNEEDED: ask_eveoy, get_pricing, start_checkout",
+    "attempts": 1,
+    "created_at": "2026-07-01T05:14:44.572347+00:00",
+    "needed": [
+      "ask_eveoy",
+      "get_pricing",
+      "start_checkout"
+    ],
+    "status": "ok"
+  },
+  "mcp-0115-com-gettreatmenthelp-gettreatmenthelp": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "9d773deb16eeb1b2ffc952b1f84ea1378826c726ad482be6d7062bfee6f93c04",
+    "raw_response": "The core purpose is to search addiction treatment facilities. The only indispensable capability is the search function itself; details, state lists, and treatment-type lists are useful optional filters or follow-up features.\n\nNEEDED: search_facilities",
+    "attempts": 1,
+    "created_at": "2026-07-01T05:14:46.192701+00:00",
+    "needed": [
+      "search_facilities"
+    ],
+    "status": "ok"
+  },
+  "mcp-0114-com-geiant-mcp-agentcore": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "32d6c0cd50ce06935df6112db35225dfb7f1ec12841ec35e29b81c3c579c3ebb",
+    "raw_response": "verify_jurisdiction and generate_audit_proof align directly with jurisdiction verification and EU AI Act compliance evidence. check_delegation_chain may support governance/compliance but is not explicitly required by the stated purpose.\n\nNEEDED: verify_jurisdiction, generate_audit_proof",
+    "attempts": 1,
+    "created_at": "2026-07-01T05:14:47.630878+00:00",
+    "needed": [
+      "verify_jurisdiction",
+      "generate_audit_proof"
+    ],
+    "status": "ok"
+  },
+  "mcp-0118-com-filingfirehose-firehose": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "1d1d0667c5b8bd4c5761c7e7d68ee69e82292925681aca696fd5e90521e02c0c",
+    "raw_response": "All declared capabilities align with retrieving and processing relevant SEC filings for 8-K classification, 13D activist tagging, and S-3 ATM detection.\n\nNEEDED: search_8k_filings, search_13d_filings, search_atm_offerings, get_filing",
+    "attempts": 1,
+    "created_at": "2026-07-01T05:14:49.931361+00:00",
+    "needed": [
+      "search_8k_filings",
+      "search_13d_filings",
+      "search_atm_offerings",
+      "get_filing"
+    ],
+    "status": "ok"
+  },
+  "mcp-0117-com-geiant-mcp-perception": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "b7bd90db122636be5c38cfeeeb27ba8d6c093c0e3f663aa16e3befc6d45e9e3e",
+    "raw_response": "All declared capabilities align with the stated purpose: geospatial imagery access, AI perception/classification, embeddings, weather data, and GNS governance operations.\n\nNEEDED: perception_fetch_tile, perception_classify, perception_embed, perception_weather, gns_get_trust_score, gns_verify_chain, gns_roll_epoch, gns_get_compliance_report",
+    "attempts": 1,
+    "created_at": "2026-07-01T05:14:52.085820+00:00",
+    "needed": [
+      "perception_fetch_tile",
+      "perception_classify",
+      "perception_embed",
+      "perception_weather",
+      "gns_get_trust_score",
+      "gns_verify_chain",
+      "gns_roll_epoch",
+      "gns_get_compliance_report"
+    ],
+    "status": "ok"
+  },
+  "mcp-0063-bio-atlarium-habitat-database": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "0cd8f0dd2a9a516c2726d8d3ebd9e227d4ad123aada9fcac1c99f840eeccd28c",
+    "raw_response": "Database/search/profile retrieval capabilities are needed; calculators, dosing/planning tools, and recommendation/diagnostic matching tools are excess for the stated database purpose.\n\nNEEDED: search_fish, get_fish_profile, search_plants, get_plant_profile, search_products, get_product_profile, check_species_compatibility, get_water_parameters, search_guides, get_guide, search_algae, get_algae_profile, search_diseases, get_disease_profile, search_plant_problems, get_plant_problem_profile, search_medicines, get_medicine_profile, list_product_categories, list_product_brands, search_equipment, get_equipment_profile, search_fertilizers, get_fertilizer_profile, search_fertilization_regimes, get_fertilization_regime",
+    "attempts": 1,
+    "created_at": "2026-07-01T05:14:56.566705+00:00",
+    "needed": [
+      "search_fish",
+      "get_fish_profile",
+      "search_plants",
+      "get_plant_profile",
+      "search_products",
+      "get_product_profile",
+      "check_species_compatibility",
+      "get_water_parameters",
+      "search_guides",
+      "get_guide",
+      "search_algae",
+      "get_algae_profile",
+      "search_diseases",
+      "get_disease_profile",
+      "search_plant_problems",
+      "get_plant_problem_profile",
+      "search_medicines",
+      "get_medicine_profile",
+      "list_product_categories",
+      "list_product_brands",
+      "search_equipment",
+      "get_equipment_profile",
+      "search_fertilizers",
+      "get_fertilizer_profile",
+      "search_fertilization_regimes",
+      "get_fertilization_regime"
+    ],
+    "status": "ok"
+  },
+  "mcp-0119-com-gotfreefax-mcp": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "99e54405442110941cd17ec9aa1eb1b430ca3cd1480310a8cff32c5623bd26ab",
+    "raw_response": "send_fax is needed because the core purpose is to send faxes. send_free_fax is also needed if the service specifically supports free fax sending as part of the stated purpose. Other capabilities are account/status/history/payment or informational features and are not strictly required to send a fax.\n\nNEEDED: send_fax, send_free_fax",
+    "attempts": 1,
+    "created_at": "2026-07-01T05:14:56.675704+00:00",
+    "needed": [
+      "send_fax",
+      "send_free_fax"
+    ],
+    "status": "ok"
+  },
+  "mcp-0120-com-gribstream-mcp": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "3a5fddb389f66f4a44b1803e8cb84ae1f5d6a16508679d398f2a208a6490db5f",
+    "raw_response": "Brief reasoning: The stated purpose includes discovery of GribStream weather data, request validation, and supporting GribStream query construction. The listed dataset/parameter discovery, shared-parameter resolution, expression reference, request-building, and validation capabilities all directly support that purpose.\n\nNEEDED: gribstream_list_datasets, gribstream_get_dataset, gribstream_list_parameters, gribstream_get_parameter, gribstream_list_shared_parameters, gribstream_resolve_shared_parameter, gribstream_get_expression_reference, gribstream_build_timeseries_request, gribstream_build_runs_request, gribstream_validate_request",
+    "attempts": 1,
+    "created_at": "2026-07-01T05:14:57.655677+00:00",
+    "needed": [
+      "gribstream_list_datasets",
+      "gribstream_get_dataset",
+      "gribstream_list_parameters",
+      "gribstream_get_parameter",
+      "gribstream_list_shared_parameters",
+      "gribstream_resolve_shared_parameter",
+      "gribstream_get_expression_reference",
+      "gribstream_build_timeseries_request",
+      "gribstream_build_runs_request",
+      "gribstream_validate_request"
+    ],
+    "status": "ok"
+  },
+  "mcp-0122-com-hydrata-hydrata-mcp-server": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "36ea3e09240939311a62303fd7e3432c797346eb6a6e1ae38f89e9830d373655",
+    "raw_response": "Needed to run simulations, track their progress, and retrieve run results. Discovery, cancel, and retry capabilities are optional or broader than stated.\n\nNEEDED: start_simulation, get_run_status, get_run",
+    "attempts": 1,
+    "created_at": "2026-07-01T05:14:58.226097+00:00",
+    "needed": [
+      "start_simulation",
+      "get_run_status",
+      "get_run"
+    ],
+    "status": "ok"
+  },
+  "mcp-0124-com-joinsandwich-directory": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "d2597e3b323daf660a0de9f93fd9af042916e0f0b43f0db0b8dfe9db91e42a73",
+    "raw_response": "search_care_resources is needed to find aging-parent care resources. calculate_long_term_care_cost is needed for long-term care cost data. get_channel is unrelated to the stated care directory purpose.\n\nNEEDED: search_care_resources, calculate_long_term_care_cost",
+    "attempts": 1,
+    "created_at": "2026-07-01T05:15:02.390526+00:00",
+    "needed": [
+      "search_care_resources",
+      "calculate_long_term_care_cost"
+    ],
+    "status": "ok"
+  },
+  "mcp-0125-com-kaicalls-kaicalls": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "9b96d6fc8bcb3c038bfdf111f21c1962f6e2e83caa475e7a23e756a45a9185cc",
+    "raw_response": "Needed capabilities are those directly supporting: placing calls, reading transcripts, listing calls, listing agents, and viewing stats.\n\nExcess capabilities include recordings, settings/configuration changes, leads, SMS, campaigns, voicemails, and update/request tools.\n\nNEEDED: make_call, list_recent_calls, get_transcript, list_agents, get_analytics",
+    "attempts": 1,
+    "created_at": "2026-07-01T05:15:03.332519+00:00",
+    "needed": [
+      "make_call",
+      "list_recent_calls",
+      "get_transcript",
+      "list_agents",
+      "get_analytics"
+    ],
+    "status": "ok"
+  },
+  "mcp-0123-com-htagai-htag-docs": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "df14f5681b0c0b71a9e1e4ffc3679e055364bbbe4f7514abdc9aff5cb58d1e21",
+    "raw_response": "Needed for public discovery of MCP tools, API endpoints/OpenAPI operation details, and agents. `list_mcp_servers` is not explicitly required because the purpose is tool discovery, not server discovery.\n\nNEEDED: list_mcp_tools, list_api_endpoints, get_api_endpoint, list_micro_agents",
+    "attempts": 1,
+    "created_at": "2026-07-01T05:15:03.452519+00:00",
+    "needed": [
+      "list_mcp_tools",
+      "list_api_endpoints",
+      "get_api_endpoint",
+      "list_micro_agents"
+    ],
+    "status": "ok"
+  },
+  "mcp-0126-com-lifescored-mcp": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "e755641d17fc098897bd15a78b438f3f1246e6e6d7d12054cfcec3d65829a4e1",
+    "raw_response": "The purpose requires access to the scoring rules, required inputs, and methodology to transparently rebuild credit/actuarial/lending scores. Feedback instructions are optional and not necessary.\n\nNEEDED: get_rulebook, get_input_schema, get_methodology",
+    "attempts": 1,
+    "created_at": "2026-07-01T05:15:05.112205+00:00",
+    "needed": [
+      "get_rulebook",
+      "get_input_schema",
+      "get_methodology"
+    ],
+    "status": "ok"
+  },
+  "mcp-0127-com-fiatdock-fiatdock-mcp": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "40a155a5def16cbd9eefe3bc999c078d715d6649de6ba51937e44e7d2c55cfc1",
+    "raw_response": "Needed for fiat ↔ USDC ramping: session creation, quotes, and order tracking. Other token intelligence or generic service-calling capabilities are broader/optional.\n\nNEEDED: create_offramp_session, create_onramp_session, get_quote, get_order_status",
+    "attempts": 1,
+    "created_at": "2026-07-01T05:15:06.147220+00:00",
+    "needed": [
+      "create_offramp_session",
+      "create_onramp_session",
+      "get_quote",
+      "get_order_status"
+    ],
+    "status": "ok"
+  },
+  "mcp-0121-com-hemmabo-hemmabo-mcp-server": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "6d947d472c52551b2b5cbb278f51eb8f65b3600fffa6cb0a1e15b5f0315a8f4f",
+    "raw_response": "Needed capabilities are those required for direct vacation-rental booking with verified/signed stay offers. Search/compare/similar, host onboarding, cancellation/reschedule, and negotiation are optional or broader than required.\n\nNEEDED: hemmabo_search_availability, hemmabo_booking_quote, hemmabo_booking_create, hemmabo_booking_checkout, verify_vacation_rental_node, get_verified_stay_offer",
+    "attempts": 1,
+    "created_at": "2026-07-01T05:15:08.647408+00:00",
+    "needed": [
+      "hemmabo_search_availability",
+      "hemmabo_booking_quote",
+      "hemmabo_booking_create",
+      "hemmabo_booking_checkout",
+      "verify_vacation_rental_node",
+      "get_verified_stay_offer"
+    ],
+    "status": "ok"
+  },
+  "mcp-0130-com-getvaletparking-valet-parking-directory": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "594ead4504e5c83ef7ef15dc81d385bea1e7eb8ce3f1f4fe47831147fd46830b",
+    "raw_response": "All declared capabilities are read/query functions directly supporting a valet parking directory service.\n\nNEEDED: valet_list_services, valet_get_operator, valet_search_cities, valet_find_operators_in_city, valet_search_by_service_and_city, valet_find_nearest_operators, valet_find_operators_near",
+    "attempts": 1,
+    "created_at": "2026-07-01T05:15:09.658979+00:00",
+    "needed": [
+      "valet_list_services",
+      "valet_get_operator",
+      "valet_search_cities",
+      "valet_find_operators_in_city",
+      "valet_search_by_service_and_city",
+      "valet_find_nearest_operators",
+      "valet_find_operators_near"
+    ],
+    "status": "ok"
+  },
+  "mcp-0128-com-joinplexa-plexa": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "48960b095ab9be3d46c7e31546fb56c79b4bbeced762fe87658b161b7fe410ad",
+    "raw_response": "The directory needs capabilities to discover verticals, search businesses by vertical/city, and retrieve business details. Contacting businesses or fetching richer optional sub-resources like hours, services, or FAQs is not strictly required.\n\nNEEDED: search_businesses, get_business, list_verticals",
+    "attempts": 1,
+    "created_at": "2026-07-01T05:15:11.087246+00:00",
+    "needed": [
+      "search_businesses",
+      "get_business",
+      "list_verticals"
+    ],
+    "status": "ok"
+  },
+  "mcp-0129-com-kettlelogic-mcp-kettlelogic": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "7c7ff22b63d189899bbddf077b1236a63b02e77d3929e61ca2efd0b830c9c1dd",
+    "raw_response": "search_articles is optional because listing and fetching articles can expose article content without search.\n\nNEEDED: get_industry_overview, list_articles, list_industries, get_article",
+    "attempts": 1,
+    "created_at": "2026-07-01T05:15:13.477220+00:00",
+    "needed": [
+      "get_industry_overview",
+      "list_articles",
+      "list_industries",
+      "get_article"
+    ],
+    "status": "ok"
+  },
+  "mcp-0132-com-ifthenpay-payments": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "8282bbbdf782db85b1508d73e80e162ded02c172b7dfe4c541f264b26e64f2e7",
+    "raw_response": "The stated purpose is specifically to support ifthenpay payments for Multibanco, MB WAY, and Payshop. Capabilities for other payment methods or general payment listing are excess.\n\nNEEDED: multibanco_create_reference, mbway_request_payment, mbway_check_status, payshop_create_reference",
+    "attempts": 1,
+    "created_at": "2026-07-01T05:15:13.677794+00:00",
+    "needed": [
+      "multibanco_create_reference",
+      "mbway_request_payment",
+      "mbway_check_status",
+      "payshop_create_reference"
+    ],
+    "status": "ok"
+  },
+  "mcp-0111-com-contrastcyber-api": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "33daf1bb2379df3084485c5989cfe355bf97b7ae2d23d8df40c36f159ce27fd4",
+    "raw_response": "Relevant capabilities are limited to the explicitly stated functions: Sigma rules, SPF/DMARC posture, MITRE references, CVE/KEV lookup, and risk scoring. Broad domain scanning, SEO, phishing, execution, bulk lookup, and unrelated OSINT tools are excess.\n\nNEEDED: email_security_posture, calculate_risk_score, cve_lookup, kev_detail, atlas_technique_lookup, d3fend_defense_lookup, sigma_rule_lookup",
+    "attempts": 1,
+    "created_at": "2026-07-01T05:15:14.171340+00:00",
+    "needed": [
+      "email_security_posture",
+      "calculate_risk_score",
+      "cve_lookup",
+      "kev_detail",
+      "atlas_technique_lookup",
+      "d3fend_defense_lookup",
+      "sigma_rule_lookup"
+    ],
+    "status": "ok"
+  },
+  "mcp-0131-com-hauntapi-haunt": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "f87696e6cf5fc8770c70b4201305a87fc3c16a4e1a52eaf06274b2029c33cb54",
+    "raw_response": "Reasoning: Extraction to JSON/Markdown requires the core extraction and Markdown extraction tools, and the no-key demo is explicitly part of the stated purpose. Usage/billing inspection and specialized article/metadata/URL-specific variants are optional or narrower alternatives rather than strictly required.\n\nNEEDED: try_demo_extract, extract, extract_markdown",
+    "attempts": 1,
+    "created_at": "2026-07-01T05:15:15.606312+00:00",
+    "needed": [
+      "try_demo_extract",
+      "extract",
+      "extract_markdown"
+    ],
+    "status": "ok"
+  },
+  "mcp-0136-com-lowtoxgear-scanner": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "f3d169c040c3f161f8c9e10c7fcb64ac61ce3bf52e409fca687178c5d1b812fd",
+    "raw_response": "The core purpose is scanning Australian products/ingredients against chemical rules and condition tags. Only barcode scanning is essential; stats, samples, missing-product submission, and resources are optional or broader than required.\n\nNEEDED: scan_barcode",
+    "attempts": 1,
+    "created_at": "2026-07-01T05:15:16.935249+00:00",
+    "needed": [
+      "scan_barcode"
+    ],
+    "status": "ok"
+  },
+  "mcp-0137-com-lowtoxgear-storefront": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "0ee098af56de06fa93d30f5eea43cf4c6d90b79f43c1b57e6da327827f238a00",
+    "raw_response": "Read-only catalogue functionality needs product discovery, product detail retrieval, collection browsing, and certification-based filtering. Store policies are not necessary for a catalogue-only purpose.\n\nNEEDED: search_products, get_product, list_collections, filter_by_certification",
+    "attempts": 1,
+    "created_at": "2026-07-01T05:15:19.279755+00:00",
+    "needed": [
+      "search_products",
+      "get_product",
+      "list_collections",
+      "filter_by_certification"
+    ],
+    "status": "ok"
+  },
+  "mcp-0135-com-loopxxi-loop-mcp": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "b7dd70f188fb332d59951f3ba4e751496f27b258a12f1f458997491aebd6d357",
+    "raw_response": "All five declared capabilities align with the stated purpose of providing “5 paid BTC/Lightning tools.”\n\nNEEDED: btc_price, btc_send_decision, lightning_address_resolve, tx_decode_explain, optimal_send_window",
+    "attempts": 1,
+    "created_at": "2026-07-01T05:15:21.705520+00:00",
+    "needed": [
+      "btc_price",
+      "btc_send_decision",
+      "lightning_address_resolve",
+      "tx_decode_explain",
+      "optimal_send_window"
+    ],
+    "status": "ok"
+  },
+  "mcp-0141-com-makometrics-mako-metrics": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "84dbc769580ba5dd363d12a1ebf55d7ffa8e88394bf8802cec7c693aa698bcb9",
+    "raw_response": "Both capabilities are directly required by the stated purpose: listing plans and creating orders.\n\nNEEDED: list_plans, create_order",
+    "attempts": 1,
+    "created_at": "2026-07-01T05:15:24.775658+00:00",
+    "needed": [
+      "list_plans",
+      "create_order"
+    ],
+    "status": "ok"
+  },
+  "mcp-0134-com-kapruka-kapruka-mcp": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "a7d95c37fa2255d6f21ffe95583950ea340da9089e9716133955b29295aca4c8",
+    "raw_response": "Brief reasoning: All declared capabilities align with operating an MCP server for an e-commerce platform: browsing categories/products, checking delivery availability, creating orders, and tracking orders are core Kapruka.com functions.\n\nNEEDED: kapruka_list_categories, kapruka_get_product, kapruka_search_products, kapruka_list_delivery_cities, kapruka_check_delivery, kapruka_create_order, kapruka_track_order",
+    "attempts": 1,
+    "created_at": "2026-07-01T05:15:27.767298+00:00",
+    "needed": [
+      "kapruka_list_categories",
+      "kapruka_get_product",
+      "kapruka_search_products",
+      "kapruka_list_delivery_cities",
+      "kapruka_check_delivery",
+      "kapruka_create_order",
+      "kapruka_track_order"
+    ],
+    "status": "ok"
+  },
+  "mcp-0140-com-luthersystems-insideout-mcp": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "88312b8adab80748314e1d8c2b82821463e39458a593ddaadc649b12ab35899b",
+    "raw_response": "awsinspect and gcpinspect are needed for designing/pricing AWS/GCP infrastructure. tfgenerate, tfplan, and tfdeploy are needed to generate Terraform, plan it, and deploy it. Other capabilities are optional, operational extras, destructive, or unrelated.\n\nNEEDED: awsinspect, gcpinspect, tfdeploy, tfgenerate, tfplan",
+    "attempts": 1,
+    "created_at": "2026-07-01T05:15:29.912948+00:00",
+    "needed": [
+      "awsinspect",
+      "gcpinspect",
+      "tfdeploy",
+      "tfgenerate",
+      "tfplan"
+    ],
+    "status": "ok"
+  },
+  "mcp-0142-com-memxus-memxus": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "826a75cdbec78961fe58ac47b192388e77d6f8fbdfbb664594b811d641a915b6",
+    "raw_response": "Core purpose is saving and recalling memories across platforms. Other capabilities are management, metadata, deletion, update, or optional retrieval variants.\n\nNEEDED: remember, recall",
+    "attempts": 1,
+    "created_at": "2026-07-01T05:15:30.276001+00:00",
+    "needed": [
+      "remember",
+      "recall"
+    ],
+    "status": "ok"
+  },
+  "mcp-0143-com-mux-mcp": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "60b3ef72044e645bd725062325aed8bf39707b1d660b8e424a7c2170d06cf15e",
+    "raw_response": "The Mux API MCP server needs the ability to execute API operations. Documentation search is helpful but not strictly required for the stated purpose.\n\nNEEDED: execute",
+    "attempts": 1,
+    "created_at": "2026-07-01T05:15:32.765182+00:00",
+    "needed": [
+      "execute"
+    ],
+    "status": "ok"
+  },
+  "mcp-0144-com-nursinghomedatabase-mcp": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "b6c7ad901e65300c128736af1ba0199ab38d2a7868692983c22b2b0b8f77db5d",
+    "raw_response": "Needed: facility search, facility detail lookup, and ownership/owner lookup capabilities. Data freshness is optional metadata, not required for the stated purpose.\n\nNEEDED: search_facilities, get_facility, get_facility_ownership, search_owners, get_owner",
+    "attempts": 1,
+    "created_at": "2026-07-01T05:15:35.081308+00:00",
+    "needed": [
+      "search_facilities",
+      "get_facility",
+      "get_facility_ownership",
+      "search_owners",
+      "get_owner"
+    ],
+    "status": "ok"
+  },
+  "mcp-0145-com-olympus-bets-olympus-bets-analytics": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "e643784e09898abb1c43e015c7236be8a29576085d191e9667c4f5672f273390",
+    "raw_response": "Needed: projections, live track record, and methodology match the stated purpose. Other capabilities are optional or unrelated.\n\nNEEDED: get_todays_projections, get_track_record, get_methodology",
+    "attempts": 1,
+    "created_at": "2026-07-01T05:15:36.142362+00:00",
+    "needed": [
+      "get_todays_projections",
+      "get_track_record",
+      "get_methodology"
+    ],
+    "status": "ok"
+  },
+  "mcp-0146-com-microsoft-microsoft-learn-mcp": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "a1917cfe207ab53afe7e2b8f30f7cb3d2b9eb9e2421084ac4d2c166fc5b1f3b2",
+    "raw_response": "All declared capabilities directly support searching/fetching Microsoft Learn documentation and finding code samples.\n\nNEEDED: microsoft_docs_search, microsoft_code_sample_search, microsoft_docs_fetch",
+    "attempts": 1,
+    "created_at": "2026-07-01T05:15:37.182358+00:00",
+    "needed": [
+      "microsoft_docs_search",
+      "microsoft_code_sample_search",
+      "microsoft_docs_fetch"
+    ],
+    "status": "ok"
+  },
+  "mcp-0133-com-linklyhq-linkly": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "7deeca79318c0a4c4025fd59eb4c5988d1b891b76c564ac09455804bbeded4fd",
+    "raw_response": "Core link CRUD/discovery and click-read access are needed. Workspace/domain/webhook/admin/batch/export/auth utilities are optional or broader than necessary.\n\nNEEDED: list_links, create_link, update_link, delete_link, get_link, get_clicks, search_links",
+    "attempts": 1,
+    "created_at": "2026-07-01T05:15:43.153897+00:00",
+    "needed": [
+      "list_links",
+      "create_link",
+      "update_link",
+      "delete_link",
+      "get_link",
+      "get_clicks",
+      "search_links"
+    ],
+    "status": "ok"
+  },
+  "mcp-0148-com-nicheangle-niche": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "15ba335780c938e5bc142a2557eacfc87bc9cb4ffd8ec0ab15301ed522019ae6",
+    "raw_response": "Needed: signal scanning, intelligence querying, angle proposal/ranking, and draft creation from sources. Excess: publishing, brand/profile management, asset rendering, session controls, identity, export, and other optional workflow utilities.\n\nNEEDED: niche_signal_scan, niche_intelligence_query, niche_angle_propose, niche_draft_create",
+    "attempts": 1,
+    "created_at": "2026-07-01T05:15:44.481073+00:00",
+    "needed": [
+      "niche_signal_scan",
+      "niche_intelligence_query",
+      "niche_angle_propose",
+      "niche_draft_create"
+    ],
+    "status": "ok"
+  },
+  "mcp-0150-com-onchaindiligence-compliance": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "c35c4ebc5c7d37fcffa992addc80244e20826dc2a670c813dc828739b66e64e6",
+    "raw_response": "The stated purpose requires wallet sanctions screening, OFAC/name screening, and UK/US company verification. The aggregate `diligence` capability appears broader or optional given the specific capabilities already cover the required functions.\n\nNEEDED: screen_wallet, screen_name, verify_uk_company, verify_us_company",
+    "attempts": 1,
+    "created_at": "2026-07-01T05:15:47.072966+00:00",
+    "needed": [
+      "screen_wallet",
+      "screen_name",
+      "verify_uk_company",
+      "verify_us_company"
+    ],
+    "status": "ok"
+  },
+  "mcp-0149-com-metricspot-seo-mcp": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "ebfd095eb74bf000a4c064ea674a448b7695d8461124c50f8aa03b1ee71cebae",
+    "raw_response": "All declared capabilities align with providing SEO/AI-readability audit functionality, including running audits, retrieving/listing results, exporting PDFs, and checking organic traffic.\n\nNEEDED: run_audit_anonymous, run_audit, get_audit, list_audits, get_audit_pdf, get_organic_traffic",
+    "attempts": 1,
+    "created_at": "2026-07-01T05:15:52.710440+00:00",
+    "needed": [
+      "run_audit_anonymous",
+      "run_audit",
+      "get_audit",
+      "list_audits",
+      "get_audit_pdf",
+      "get_organic_traffic"
+    ],
+    "status": "ok"
+  },
+  "mcp-0138-com-kernelcad-kernelcad": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "97a67ffe2753bf97462cd79b4eda30dc9ae7da157cd5e07897fdabcc0f1c69ff",
+    "raw_response": "Relevant core capabilities are those for retrieving the CAD project/source, evaluating the `.kcad.ts` model through the kernel, making basic source/model edits, and performing deterministic review/validation. Rendering, studio UI, part libraries, image tracing, animation, commerce/database/unknown tools, and specialized optional authoring helpers are excess.\n\nNEEDED: get_project, evaluate_script, diff_scripts, inspect, verify, set_param, add_feature, remove_feature, review_cad",
+    "attempts": 1,
+    "created_at": "2026-07-01T05:15:59.631454+00:00",
+    "needed": [
+      "get_project",
+      "evaluate_script",
+      "diff_scripts",
+      "inspect",
+      "verify",
+      "set_param",
+      "add_feature",
+      "remove_feature",
+      "review_cad"
+    ],
+    "status": "ok"
+  },
+  "mcp-0139-com-local-mcp-local-mcp": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "9d4585a0dc8a24f56966bd3922b742fb79dda6805769f9ebc4caa793516abbd9",
+    "raw_response": "The stated purpose centers on enabling access to Mac email, calendar, iMessage, Teams, and local files. Needed capabilities are the core read/search/list/send/manage actions for those surfaces; browser automation, cloud drives, Slack/WhatsApp/Signal/Notion/ServiceNow/VPN/stocks/Zoom, diagnostics, setup/update, and unrelated productivity tools are excess.\n\nNEEDED: create_calendar_event, delete_calendar_event, excel_read, fs_list, fs_read, fs_search, list_calendar_events, list_calendar_names, list_email_accounts, list_email_folders, list_emails, list_message_chats, pdf_read, ppt_read, read_email, read_messages, reply_email, search_emails, search_messages, send_email, send_message, teams_list_channels, teams_list_chats, teams_list_teams, teams_read_channel_messages, teams_read_chat_messages, teams_send_channel_message, teams_send_message, update_calendar_event, word_read",
+    "attempts": 1,
+    "created_at": "2026-07-01T05:16:21.700421+00:00",
+    "needed": [
+      "create_calendar_event",
+      "delete_calendar_event",
+      "excel_read",
+      "fs_list",
+      "fs_read",
+      "fs_search",
+      "list_calendar_events",
+      "list_calendar_names",
+      "list_email_accounts",
+      "list_email_folders",
+      "list_emails",
+      "list_message_chats",
+      "pdf_read",
+      "ppt_read",
+      "read_email",
+      "read_messages",
+      "reply_email",
+      "search_emails",
+      "search_messages",
+      "send_email",
+      "send_message",
+      "teams_list_channels",
+      "teams_list_chats",
+      "teams_list_teams",
+      "teams_read_channel_messages",
+      "teams_read_chat_messages",
+      "teams_send_channel_message",
+      "teams_send_message",
+      "update_calendar_event",
+      "word_read"
+    ],
+    "status": "ok"
+  },
+  "mcp-0147-com-moltravel-travel": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "534a6a8ce3bb581b32da230265e328e33dd7ec95ce8474d2ea86951cd0b237c7",
+    "raw_response": "Read/search/check capabilities for travel planning are needed. Side-effecting booking/contact/brochure tools, diagnostics, database access, and nonessential rendering/current-date/FAQ support are excess.\n\nNEEDED: restcountries_country_info, fcdo_travel_advice, fcdo_list_countries, airports_lookup, airports_search, airports_near, airlines_lookup, airlines_search, visa_check, visa_summary, navifare_flight_pricecheck, navifare_format_flight_pricecheck_request, peek_experience_availability, peek_experience_details, peek_list_tags, peek_search_experiences, peek_search_regions, tourradar_b2b-operator-details, tourradar_b2b-cities-search, tourradar_b2b-continents-list, tourradar_b2b-countries-list, tourradar_b2b-currencies-list, tourradar_b2b-languages-list, tourradar_b2b-tour-types-list, tourradar_b2b-tour-departures, tourradar_b2b-tour-details, tourradar_b2b-tour-faq, tourradar_b2b-tour-map, tourradar_vertex-tour-search, tourradar_vertex-tour-title-search, tourradar_vertex-review-search, tourradar_algolia-operator-search, trivago_trivago-accommodation-radius-search, trivago_trivago-accommodation-search, skiplagged_sk_flights_search, skiplagged_sk_destinations_anywhere, skiplagged_sk_flex_departure_calendar, skiplagged_sk_flex_return_calendar, skiplagged_sk_hotels_search, skiplagged_sk_cars_search, skiplagged_sk_hotel_details, skiplagged_sk_resolve_location, skiplagged_sk_resolve_iata, ferryhopper_get_ports, ferryhopper_get_disruptions, ferryhopper_get_direct_connections_for_ports, ferryhopper_search_trips",
+    "attempts": 1,
+    "created_at": "2026-07-01T05:16:44.002228+00:00",
+    "needed": [
+      "restcountries_country_info",
+      "fcdo_travel_advice",
+      "fcdo_list_countries",
+      "airports_lookup",
+      "airports_search",
+      "airports_near",
+      "airlines_lookup",
+      "airlines_search",
+      "visa_check",
+      "visa_summary",
+      "navifare_flight_pricecheck",
+      "navifare_format_flight_pricecheck_request",
+      "peek_experience_availability",
+      "peek_experience_details",
+      "peek_list_tags",
+      "peek_search_experiences",
+      "peek_search_regions",
+      "tourradar_b2b-operator-details",
+      "tourradar_b2b-cities-search",
+      "tourradar_b2b-continents-list",
+      "tourradar_b2b-countries-list",
+      "tourradar_b2b-currencies-list",
+      "tourradar_b2b-languages-list",
+      "tourradar_b2b-tour-types-list",
+      "tourradar_b2b-tour-departures",
+      "tourradar_b2b-tour-details",
+      "tourradar_b2b-tour-faq",
+      "tourradar_b2b-tour-map",
+      "tourradar_vertex-tour-search",
+      "tourradar_vertex-tour-title-search",
+      "tourradar_vertex-review-search",
+      "tourradar_algolia-operator-search",
+      "trivago_trivago-accommodation-radius-search",
+      "trivago_trivago-accommodation-search",
+      "skiplagged_sk_flights_search",
+      "skiplagged_sk_destinations_anywhere",
+      "skiplagged_sk_flex_departure_calendar",
+      "skiplagged_sk_flex_return_calendar",
+      "skiplagged_sk_hotels_search",
+      "skiplagged_sk_cars_search",
+      "skiplagged_sk_hotel_details",
+      "skiplagged_sk_resolve_location",
+      "skiplagged_sk_resolve_iata",
+      "ferryhopper_get_ports",
+      "ferryhopper_get_disruptions",
+      "ferryhopper_get_direct_connections_for_ports",
+      "ferryhopper_search_trips"
+    ],
+    "status": "ok"
+  }
+}

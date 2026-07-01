@@ -1,0 +1,2445 @@
+[
+{
+"instance_id": "mcp-0001-ai-boolsai-scan",
+"needed": [
+"boolsai_scan",
+"boolsai_scan_paths"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "mcp-0002-ai-boolsai-signals",
+"needed": [
+"universe_summary",
+"find_signals",
+"test_filter",
+"recent_events",
+"event_dossier",
+"scan_at_date",
+"ticker_history",
+"wayback_backtest",
+"domain_timeline",
+"signal_landscape",
+"signal_diff",
+"farm_domain"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "mcp-0003-ai-compeller-compel",
+"needed": [
+"upload_media",
+"create_compel_from_music",
+"create_compel",
+"start_render",
+"get_compel",
+"list_compels",
+"list_renderings",
+"get_rendering"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "mcp-0004-ac-tandem-docs-mcp",
+"needed": [
+"search_docs",
+"get_doc",
+"get_start_path",
+"recommend_next_docs",
+"answer_how_to",
+"get_tandem_guide"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "mcp-0005-ai-borealhost-mcp",
+"needed": [
+"register",
+"set_api_key",
+"deploy",
+"manage_dns",
+"register_domain",
+"scale"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "mcp-0006-ai-bowmark-bowmark",
+"needed": [
+"ask"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "mcp-0007-ai-com-mcp-linkedin",
+"needed": [
+"getPersonProfile",
+"createSharePost"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "mcp-0008-ai-com-mcp-registry",
+"needed": [
+"getV01Servers",
+"getV01ServersServerNameVersions",
+"getV01ServersServerNameVersionsVersion"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "mcp-0009-ai-com-mcp-lenny-rachitsky-podcast",
+"needed": [
+"getEpisodes",
+"getEpisodesGuest",
+"getEpisodesGuestMetadatajson",
+"getEpisodesGuestTranscriptformat",
+"getEpisodesGuestChunks",
+"getEpisodesGuestChunksChunkIdtxt",
+"getSearch"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "mcp-0010-ai-com-mcp-petstore",
+"needed": [
+"updatePet",
+"addPet",
+"findPetsByStatus",
+"findPetsByTags",
+"getPetById",
+"updatePetWithForm",
+"deletePet",
+"uploadFile",
+"getInventory",
+"placeOrder",
+"getOrderById",
+"deleteOrder",
+"createUser",
+"createUsersWithListInput",
+"loginUser",
+"logoutUser",
+"getUserByName",
+"updateUser",
+"deleteUser"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "mcp-0011-ai-com-mcp-strava",
+"needed": [
+"getStats",
+"getLoggedInAthlete",
+"getLoggedInAthleteStarredSegments",
+"getEffortsBySegmentId",
+"exploreSegments",
+"getSegmentEffortById",
+"getClubById",
+"getClubMembersById",
+"getClubAdminsById",
+"getClubActivitiesById",
+"getLoggedInAthleteClubs",
+"getGearById",
+"getRoutesByAthleteId"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "mcp-0012-ai-dreamlit-mcp",
+"needed": [
+"get_status",
+"create_or_update_workflow",
+"list_projects",
+"list_workflows",
+"get_workflow_and_preview_url",
+"send_workflow_test",
+"prepare_publish",
+"confirm_publish",
+"unpublish_workflow"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "mcp-0013-ai-exa-exa",
+"needed": [
+"web_search_exa",
+"web_fetch_exa"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "mcp-0014-ai-helixar-mcp",
+"needed": [
+"helixar_inspect_mcp",
+"helixar_hdp_validate"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "mcp-0015-ai-byteask-embedded-docs",
+"needed": [
+"search_docs",
+"get_context"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "mcp-0016-ai-justpublish-just-publish",
+"needed": [
+"deploy"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "mcp-0017-ai-keenable-web-search",
+"needed": [
+"search_web_pages",
+"fetch_page_content"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "mcp-0018-ai-inxy-seo-audit",
+"needed": [
+"ai_search_diagnostic",
+"full_seo_audit",
+"get_my_store_audit"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "mcp-0019-ai-law-mcp-lawyer-search",
+"needed": [
+"search_lawyers",
+"get_lawyer_profile",
+"find_lawyer_by_name",
+"get_practice_areas",
+"get_jurisdictions"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "mcp-0020-ai-example4-xmp4",
+"needed": [
+"xmp4_callees",
+"xmp4_callers",
+"xmp4_deps",
+"xmp4_grep",
+"xmp4_hierarchy",
+"xmp4_info",
+"xmp4_outline",
+"xmp4_projects",
+"xmp4_search",
+"xmp4_source",
+"xmp4_symbol_at",
+"xmp4_tests_for",
+"xmp4_usages",
+"xmp4_view"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "mcp-0021-ai-presentations-presentations-ai",
+"needed": [
+"create_presentation_from_topic",
+"create_presentation_from_content",
+"create_presentation_from_file",
+"check_job_status"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "mcp-0022-ai-mrmarket-mrmarket-mcp",
+"needed": [
+"query_data",
+"describe_data",
+"get_symbols",
+"fetch_page"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "mcp-0023-ai-preclick-preclick-mcp",
+"needed": [
+"url_scanner_async_scan",
+"url_scanner_async_scan_with_intent",
+"url_scanner_async_task_result",
+"url_scanner_async_task_status",
+"url_scanner_scan",
+"url_scanner_scan_with_intent"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "mcp-0024-ai-pyrimid-pyrimid",
+"needed": [
+"pyrimid_browse",
+"pyrimid_buy",
+"pyrimid_preview",
+"pyrimid_register_affiliate",
+"pyrimid_commission_check"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "mcp-0025-ai-sitepulsar-mcp",
+"needed": [
+"check_agent_readiness",
+"run_audit",
+"get_audit",
+"get_audit_detail",
+"get_audit_full",
+"probe_agent_discovery",
+"probe_ucp_readiness",
+"probe_mcp_functional",
+"scan_product_page",
+"scan_visibility"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "mcp-0026-ai-joinmultiplayer-gpu",
+"needed": [
+"ask_network",
+"check_answers",
+"who_knows"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "mcp-0027-ai-masnavi-masnavi",
+"needed": [
+"search",
+"lookup",
+"verify",
+"get_section",
+"table_of_contents",
+"get_range",
+"find_sections",
+"explain"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "mcp-0028-ai-nefesh-human-state",
+"needed": [
+"get_human_state",
+"ingest"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "mcp-0029-ai-proxygate-mcp",
+"needed": [
+"browse_apis",
+"get_pricing",
+"call_api",
+"describe_endpoint"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "mcp-0030-ai-tensorfeed-mcp-server",
+"needed": [
+"get_news_articles",
+"get_status_summary",
+"get_models"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "mcp-0031-ai-tunnelmind-sigil",
+"needed": [
+"cross_lens_verify",
+"sigil_verify_supply_path",
+"sigil_verify_ads_txt",
+"sigil_verify_supply_chain",
+"traverse_supply_chain",
+"sigil_atap_register_ait",
+"sigil_atap_witness",
+"sigil_generate_receipt"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "mcp-0032-ai-roopslaw-legalsearch",
+"needed": [
+"roop.public.judgments.search",
+"roop.public.judgments.get_packet",
+"roop.public.statutes.search",
+"roop.public.statutes.get_packet",
+"roop.public.corpus.status"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "mcp-0034-ai-thinkneo-control-plane",
+"needed": [
+"thinkneo_check_spend",
+"thinkneo_get_budget_status",
+"thinkneo_evaluate_guardrail",
+"thinkneo_check_policy",
+"thinkneo_get_compliance_status",
+"thinkneo_provider_status"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "mcp-0035-ai-trydock-dock",
+"needed": [
+"list_workspaces",
+"get_workspace",
+"create_workspace",
+"update_workspace",
+"get_workspace_schema",
+"list_rows",
+"get_row",
+"create_row",
+"update_row",
+"delete_row",
+"add_column",
+"move_rows",
+"get_doc",
+"update_doc",
+"update_doc_section",
+"append_doc_section",
+"validate_doc_markdown",
+"list_sheet_functions",
+"validate_formula",
+"evaluate_formula"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "mcp-0036-ai-unulu-unulu",
+"needed": [
+"unulu_create_site",
+"unulu_update_site",
+"unulu_get_state"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "mcp-0037-ai-urlcheck-urlcheck-mcp",
+"needed": [
+"url_scanner_async_scan",
+"url_scanner_async_scan_with_intent",
+"url_scanner_async_task_result",
+"url_scanner_async_task_status",
+"url_scanner_scan",
+"url_scanner_scan_with_intent"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "mcp-0038-app-cnvs-whiteboard",
+"needed": [
+"open_board",
+"get_board",
+"add_text",
+"add_link",
+"add_image",
+"draw_stroke",
+"move",
+"erase",
+"wait_for_update"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "mcp-0039-app-flaim-mcp",
+"needed": [
+"get_user_session",
+"get_ancient_history",
+"get_league_info",
+"get_standings",
+"get_matchups",
+"get_roster",
+"get_free_agents",
+"get_players",
+"get_transactions"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "mcp-0041-app-humantaste-taste-mcp",
+"needed": [
+"review_content",
+"consult_domain_expert",
+"ask_a_human",
+"verify_certificate"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "mcp-0042-app-pulltrader-seller-economics",
+"needed": [
+"compare_selling_costs"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "mcp-0043-ai-tunnelmind-scry",
+"needed": [
+"scry_check"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "mcp-0044-app-ganty-mcp-server",
+"needed": [
+"list_workspaces",
+"list_projects",
+"create_project",
+"delete_project",
+"list_tasks",
+"get_task",
+"list_milestones",
+"create_milestone",
+"create_task",
+"update_task",
+"set_task_progress",
+"add_dependency",
+"delete_task",
+"get_critical_path",
+"reschedule_and_propagate"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "mcp-0045-app-toolsnap-toolsnap-mcp",
+"needed": [
+"fetch_extract"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "mcp-0046-art-travel-mcp",
+"needed": [
+"find_art_events",
+"find_museum_guide",
+"find_layover_itinerary"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "mcp-0047-bid-scope-aec",
+"needed": [
+"scope_list_aec_categories",
+"scope_list_aec_vendors",
+"scope_dispatch_subcontractor",
+"scope_award_subcontractor"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "mcp-0048-bid-scope-claims",
+"needed": [
+"scope_list_deliverables_for_scope",
+"scope_get_deliverable",
+"scope_search_deliverables"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "mcp-0049-bid-scope-legal",
+"needed": [
+"scope_list_categories",
+"scope_list_vendors",
+"scope_list_roster",
+"scope_dispatch_matter",
+"scope_award_matter",
+"scope_get_matter",
+"scope_list_matters"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "mcp-0050-bot-myagi-openagent-registry",
+"needed": [
+"query_platform",
+"registry_lookup"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "mcp-0051-bot-yeehaw-events",
+"needed": [
+"find_events"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "mcp-0052-ch-fedlex-connector-fedlex-connector",
+"needed": [
+"search_by_title",
+"get_article",
+"get_law_text",
+"list_amendments"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "mcp-0053-app-evlek-mcp-server",
+"needed": [
+"search_listings",
+"get_price_index",
+"get_market_overview",
+"get_legal_info",
+"get_listing_detail"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "mcp-0054-ca-swiftsign-mcp",
+"needed": [
+"swiftsign_send_envelope",
+"swiftsign_confirm_send",
+"swiftsign_check_status",
+"swiftsign_download_signed_pdf"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "mcp-0055-app-nausika-mcp",
+"needed": [
+"nausika_marine_forecast",
+"nausika_seasonal_forecast",
+"nausika_tides",
+"nausika_search_places",
+"nausika_get_place",
+"nausika_sea_route"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "mcp-0056-cloud-dchub-mcp-server",
+"needed": [
+"search",
+"fetch",
+"search_facilities",
+"get_facility",
+"get_market_intel",
+"get_market_dcpi_rank",
+"get_gas_index",
+"get_gas_economics",
+"get_grid_scoreboard",
+"get_intelligence_index",
+"list_transactions",
+"get_news",
+"get_pipeline",
+"get_power_pipeline",
+"get_interconnection_queue",
+"get_grid_data",
+"get_changes",
+"get_infrastructure",
+"get_fiber_intel",
+"get_fiber_readiness",
+"get_energy_prices",
+"get_renewable_energy",
+"get_grid_intelligence",
+"get_gas_intelligence",
+"ai_capacity_index",
+"hyperscaler_deals"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "mcp-0057-co-ainumbers-tools",
+"needed": [
+"build_chaingraph",
+"run_chain",
+"emit_chaingraph_artifact",
+"export_artifact",
+"find_chain",
+"find_tool",
+"compose_ap2_prompt",
+"validate_ap2_mandate_chain",
+"simulate_spend_policy",
+"model_x402_settlement",
+"check_agent_attestation",
+"assess_ai_act_conformity",
+"precheck_reserve_attestation",
+"compute_basel31_delta",
+"validate_einvoice_batch",
+"classify_dora_incident",
+"run_dora_readiness_diagnostic",
+"score_aml_typologies",
+"simulate_vop_matching",
+"validate_acp_checkout",
+"check_eudi_readiness",
+"generate_zk_compliance_proof",
+"compute_portfolio_var",
+"verify_address_migration_batch",
+"run_liquidity_stress_test",
+"compute_rwa_scenarios",
+"simulate_stablecoin_reserve",
+"simulate_ict_cascade",
+"verify_merkle_batch",
+"compute_options_greeks",
+"simulate_app_fraud_graph",
+"calculate_xva",
+"simulate_frtb_es",
+"detect_transaction_anomalies",
+"simulate_consent_stress",
+"compute_stress_test_scenarios",
+"score_credit_default_risk",
+"detect_timeseries_anomalies",
+"assess_psd3_readiness",
+"select_agentic_checkout_protocol",
+"audit_acp_ucp_product_feed",
+"build_agent_traffic_policy",
+"compare_agentic_rail_protocols",
+"inspect_visa_trusted_agent_protocol",
+"build_mastercard_agentic_token",
+"verify_a2a_agent_card",
+"simulate_x402_flow",
+"run_agentic_readiness_diagnostic",
+"run_mcp_deployability_diagnostic",
+"validate_agent_commerce_conformance",
+"validate_a2a_x402_mandate",
+"validate_a2a_trust_chain",
+"aggregate_execution_receipts",
+"attest_mcp_server",
+"run_tempo_fit_diagnostic",
+"model_tempo_payment_economics",
+"decode_mpp_session",
+"validate_tempo_token_compliance",
+"screen_tip20_transfer_batch",
+"validate_tempo_zone_disclosure",
+"map_tempo_settlement",
+"score_tempo_validator_readiness",
+"run_arc_fit_diagnostic",
+"model_arc_cpn_economics",
+"model_arc_stablefx_rfq",
+"lint_arc_xreserve_config",
+"model_arc_paymaster_economics",
+"validate_cctp_v2_transfer",
+"run_treasury_clearing_fit",
+"model_clearing_access_economics",
+"estimate_ficc_margin_netting",
+"estimate_cross_margin_benefit",
+"run_digital_trade_fit",
+"validate_mletr_record",
+"check_digital_trade_rules",
+"verify_trade_document_set",
+"run_tokenized_settlement_fit",
+"validate_deposit_token_compliance",
+"validate_cross_network_settlement",
+"classify_settlement_asset_finality",
+"run_agent_economy_fit",
+"reconcile_x402_batch_settlement",
+"verify_ap2_payment_receipt",
+"model_agent_service_metering",
+"diagnose_canton_readiness",
+"optimize_settlement_capital",
+"check_tokenized_collateral_eligibility",
+"check_cash_leg_finality",
+"validate_canton_dvp_atomicity",
+"calculate_repo_haircut",
+"validate_canton_party_allowlist",
+"classify_digital_asset_regulatory",
+"validate_pvp_settlement",
+"validate_tokenized_security_lifecycle",
+"mobilize_margin_collateral",
+"validate_fund_collateral",
+"validate_collateral_swap_eligibility",
+"run_ai_act_highrisk_fit",
+"build_ai_conformity_pack",
+"build_fria_monitoring_plan",
+"classify_agentic_ai_risk",
+"run_carbon_compliance_fit",
+"calculate_cbam_embedded_emissions",
+"resolve_cbam_default_value",
+"model_cbam_certificate_cost",
+"aggregate_cbam_precursor_emissions",
+"score_taxonomy_alignment",
+"aggregate_taxonomy_kpi_gar",
+"validate_eugb_factsheet",
+"apply_climate_scenario",
+"run_t1_readiness_diagnostic",
+"calculate_csdr_penalty",
+"predict_settlement_fail",
+"check_ssi_conformance",
+"check_allocation_affirmation",
+"lint_securities_settlement_message",
+"model_buy_in_exposure",
+"compute_settlement_efficiency_kpi",
+"run_pqc_timeline_fit",
+"plan_tls_pki_migration",
+"check_iso20022_pqc_readiness",
+"check_fido_pqc_conformance",
+"classify_blockchain_quantum_risk",
+"run_sanctions_screening_fit",
+"aggregate_ownership_50pct",
+"check_screening_list_coverage",
+"score_fuzzy_match_calibration",
+"classify_eccn_dual_use",
+"assess_circumvention_diligence",
+"build_no_russia_clause_pack",
+"score_sanctions_screening_quality",
+"run_mica_casp_fit",
+"route_mica_transitional_deadline",
+"assess_mica_casp_readiness",
+"calculate_mica_own_funds",
+"lint_crypto_asset_whitepaper",
+"assess_mar_crypto_surveillance",
+"validate_tfr_travel_rule_batch",
+"scope_mica_token_and_service",
+"reconcile_mpp_subscription",
+"model_tempo_gas_economics",
+"validate_canton_selective_disclosure",
+"validate_dtc_tokenized_treasury",
+"score_partner_stablecoin_readiness",
+"route_partner_stablecoin_jurisdiction",
+"verify_dscsa_transaction_statement",
+"verify_saleable_return",
+"assess_suspect_product_status",
+"validate_dpp_data_carrier",
+"build_product_lineage",
+"verify_product_authenticity",
+"validate_fsma204_cte",
+"link_traceability_lot_code",
+"resolve_recall_trace",
+"anchor_document_integrity",
+"verify_timestamp_attestation",
+"validate_c2pa_manifest",
+"verify_content_credential_signature",
+"resolve_provenance_ingredient_tree",
+"check_ai_act_art50_marking",
+"verify_dual_layer_disclosure",
+"validate_content_binding_assertion",
+"verify_webbotauth_signature",
+"validate_signature_directory",
+"validate_signature_agent_card",
+"audit_agent_key_rotation",
+"crosswalk_agent_payment_rail_trust",
+"assess_agent_directory_publish_readiness",
+"validate_cyclonedx_sbom",
+"verify_slsa_provenance",
+"validate_openvex_statement",
+"validate_spdx_sbom",
+"check_cra_annex1_completeness",
+"assess_cra_vuln_reporting_readiness",
+"classify_nis2_entity",
+"check_nis2_art21_measures",
+"calculate_nis2_penalty_exposure",
+"score_nis2_incident_significance",
+"score_nis2_supply_chain_diligence",
+"check_nis2_governance_readiness",
+"validate_mcp_server_identity",
+"validate_mcp_authorization_metadata",
+"check_mcp_registry_entry",
+"audit_mcp_tool_scope_revocation",
+"validate_agent_obo_mandate",
+"validate_mcp_task_lifecycle",
+"validate_emir_trade_report",
+"check_emir_uti_completeness",
+"validate_emir_upi",
+"reconcile_emir_pairing",
+"validate_emir_lifecycle_event",
+"run_emir_reporting_fit",
+"validate_vida_einvoice_conformance",
+"assess_vida_drr_reporting_obligation",
+"assess_vida_recapitulative_migration",
+"classify_vida_platform_deemed_supplier",
+"route_vida_oss_registration",
+"run_vida_readiness_diagnostic",
+"validate_eudr_due_diligence_statement",
+"validate_eudr_geolocation",
+"classify_eudr_commodity_scope",
+"score_eudr_country_risk",
+"link_eudr_supply_chain_traceability",
+"run_eudr_readiness_fit",
+"assess_iso42001_aims_conformance",
+"validate_ai_impact_assessment",
+"classify_ai_system_governance",
+"map_nist_ai_rmf_functions",
+"check_gpai_code_conformance",
+"run_ai_governance_fit",
+"classify_ifrs17_measurement_model",
+"validate_ifrs17_csm_rollforward",
+"check_ifrs17_risk_adjustment",
+"calculate_solvency2_scr_ratio",
+"reconcile_sii_ifrs17",
+"run_insurance_reporting_fit"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "mcp-0058-co-launchtrust-launchtrust",
+"needed": [
+"scan_url",
+"scan_app"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "mcp-0059-app-cardog-mcp",
+"needed": [
+"search_listings",
+"get_vin_analysis",
+"overview",
+"price_distribution",
+"get_odometer_analysis",
+"get_geographic_analysis",
+"get_market_trends",
+"get_listing_market_position",
+"pulse",
+"search_electric_stations",
+"search_recalls",
+"search_lineups",
+"get_model_year"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "mcp-0060-ca-netgrant-canadian-grants",
+"needed": [
+"search_opportunities",
+"get_opportunity_details"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "mcp-0061-co-bizverify-mcp",
+"needed": [
+"verify_business",
+"search_entities",
+"get_entity",
+"check_job_status"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "mcp-0062-ai-xpoz-social-insights",
+"needed": [
+"getTwitterUsers",
+"getTwitterUser",
+"searchTwitterUsers",
+"getTwitterUserConnections",
+"getTwitterUsersByKeywords",
+"getTwitterPostsByIds",
+"getTwitterPostsByAuthor",
+"getTwitterPostsByKeywords",
+"getTwitterPostRetweets",
+"getTwitterPostQuotes",
+"getTwitterPostComments",
+"countTweets",
+"getTwitterPostInteractingUsers",
+"checkOperationStatus",
+"getInstagramPostsByIds",
+"getInstagramPostsByUser",
+"getInstagramPostsByKeywords",
+"getInstagramUser",
+"searchInstagramUsers",
+"getInstagramUserConnections",
+"getInstagramPostInteractingUsers",
+"getInstagramUsersByKeywords",
+"getInstagramCommentsByPostId",
+"getRedditUser",
+"searchRedditUsers",
+"getRedditUsersByKeywords",
+"getRedditPostsByKeywords",
+"getRedditPostWithCommentsById",
+"getRedditCommentsByKeywords",
+"searchRedditSubreddits",
+"getRedditSubredditWithPostsByName",
+"getRedditSubredditsByKeywords",
+"getTiktokUser",
+"searchTiktokUsers",
+"getTiktokUsersByKeywords",
+"getTiktokUsersByHashtags",
+"getTiktokPostsByIds",
+"getTiktokPostsByUser",
+"getTiktokPostsByKeywords",
+"getTiktokPostsByHashtags",
+"searchTiktokSounds",
+"getTiktokPostsBySound",
+"getTiktokCommentsByPostId"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "mcp-0064-cn-whylingxi-insurance",
+"needed": [
+"search_products",
+"get_product_detail",
+"recommend",
+"get_premium",
+"check_underwriting"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "mcp-0065-co-heista-api",
+"needed": [
+"decode_ad",
+"get_decode",
+"list_brands",
+"get_brand",
+"generate_adscript"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "mcp-0066-co-tempguru-event-staffing",
+"needed": [
+"plan_staffing",
+"get_cities",
+"get_roles",
+"check_availability",
+"get_role_pricing",
+"get_compliance_by_state",
+"get_rate_benchmark"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "mcp-0067-app-zooza-mcp-server",
+"needed": [
+"classes_list_schedule_patterns",
+"classes_find_courses",
+"classes_find_classes",
+"bookings_find",
+"classes_find_places",
+"sessions_find_events",
+"sessions_get_attendance",
+"sessions_mark_attendance",
+"classes_preview_schedule",
+"classes_preview_events",
+"classes_commit_class"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "mcp-0068-ch-entscheidsuche-mcp",
+"needed": [
+"search",
+"search_by_case_number",
+"fetch_document"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "mcp-0069-com-agent-tune-agenttune",
+"needed": [
+"list_tunings",
+"get_tuning",
+"get_test_spec"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "mcp-0070-com-appendix-appendix",
+"needed": [
+"search_knowledge_base",
+"submit_encounter"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "mcp-0071-com-adbutler-mcp-server",
+"needed": [
+"list_all_campaigns",
+"list_campaigns",
+"get_campaign",
+"create_campaign",
+"update_campaign",
+"delete_campaign",
+"archive_campaign",
+"list_archived_campaigns",
+"get_archived_campaign",
+"delete_archived_campaign",
+"unarchive_campaign",
+"get_campaign_conversion_tag",
+"get_campaign_eligible_zones",
+"campaign_bulk_create_catalog_ad_items",
+"campaign_bulk_delete_catalog_ad_items",
+"list_campaign_assignments",
+"get_campaign_assignment",
+"create_campaign_assignment",
+"update_campaign_assignment",
+"delete_campaign_assignment",
+"list_all_zones",
+"list_zones",
+"get_zone",
+"create_zone",
+"update_zone",
+"delete_zone",
+"get_zone_tag",
+"get_zone_conversion_tag",
+"generate_bulk_zone_tags",
+"archive_zone",
+"list_archived_zones",
+"get_archived_zone",
+"unarchive_zone",
+"list_email_zones",
+"get_email_zone",
+"create_email_zone",
+"update_email_zone",
+"delete_email_zone",
+"get_email_zone_tag",
+"get_email_zone_conversion_tag",
+"archive_email_zone",
+"list_archived_email_zones",
+"get_archived_email_zone",
+"unarchive_email_zone",
+"list_catalog_zones",
+"get_catalog_zone",
+"create_catalog_zone",
+"update_catalog_zone",
+"delete_catalog_zone",
+"get_catalog_zone_tag",
+"list_ad_items",
+"list_image_ad_items",
+"get_image_ad_item",
+"create_image_ad_item",
+"update_image_ad_item",
+"delete_image_ad_item",
+"get_image_ad_item_conversion_tag",
+"list_custom_html_ad_items",
+"get_custom_html_ad_item",
+"create_custom_html_ad_item",
+"update_custom_html_ad_item",
+"delete_custom_html_ad_item",
+"get_custom_html_ad_item_conversion_tag",
+"list_rich_media_ad_items",
+"get_rich_media_ad_item",
+"create_rich_media_ad_item",
+"update_rich_media_ad_item",
+"delete_rich_media_ad_item",
+"get_rich_media_ad_item_conversion_tag",
+"list_native_ad_items",
+"get_native_ad_item",
+"create_native_ad_item",
+"update_native_ad_item",
+"delete_native_ad_item",
+"get_native_ad_item_conversion_tag",
+"list_catalog_ad_items",
+"get_catalog_ad_item",
+"create_catalog_ad_item",
+"update_catalog_ad_item",
+"delete_catalog_ad_item",
+"convert_native_to_image",
+"get_display_report",
+"get_vast_report",
+"get_event_logs",
+"get_click_details_report",
+"get_conversion_details_report",
+"get_demand_source_report",
+"get_display_platform_estimate",
+"get_vast_platform_estimate",
+"get_geo_summary_report",
+"get_auction_placements_report",
+"get_placement_forecast",
+"get_display_forecast",
+"get_display_channel_forecast",
+"get_vast_forecast",
+"get_vast_channel_forecast",
+"get_vast_auction_placements_report",
+"get_vast_geo_summary_report",
+"list_custom_reports",
+"get_custom_report",
+"create_custom_report",
+"update_custom_report",
+"delete_custom_report",
+"list_vast_custom_reports",
+"get_vast_custom_report",
+"create_vast_custom_report",
+"list_all_generated_reports",
+"list_all_report_schedules",
+"list_report_generated",
+"get_report_generated",
+"list_report_schedules",
+"get_report_schedule",
+"create_report_schedule",
+"update_report_schedule",
+"delete_report_schedule",
+"list_report_schedule_generated",
+"get_report_schedule_generated",
+"revoke_report_schedule_historical_access",
+"vast_list_ad_items",
+"vast_get_ad_item",
+"vast_create_ad_item",
+"vast_update_ad_item",
+"vast_delete_ad_item",
+"vast_list_campaigns",
+"vast_get_campaign",
+"vast_create_campaign",
+"vast_update_campaign",
+"vast_delete_campaign",
+"vast_archive_campaign",
+"vast_list_archived_campaigns",
+"vast_get_archived_campaign",
+"vast_delete_archived_campaign",
+"vast_unarchive_campaign",
+"vast_list_channels",
+"vast_get_channel",
+"vast_create_channel",
+"vast_update_channel",
+"vast_delete_channel",
+"vast_archive_channel",
+"vast_list_archived_channels",
+"vast_get_archived_channel",
+"vast_delete_archived_channel",
+"vast_unarchive_channel",
+"vast_list_channel_zone_assignments",
+"vast_get_channel_zone_assignment",
+"vast_create_channel_zone_assignment",
+"vast_update_channel_zone_assignment",
+"vast_delete_channel_zone_assignment",
+"vast_list_zones",
+"vast_get_zone",
+"vast_create_zone",
+"vast_update_zone",
+"vast_delete_zone",
+"vast_archive_zone",
+"vast_list_archived_zones",
+"vast_get_archived_zone",
+"vast_delete_archived_zone",
+"vast_unarchive_zone",
+"vast_list_placements",
+"vast_get_placement",
+"vast_create_placement",
+"vast_update_placement",
+"vast_delete_placement",
+"vast_list_campaign_assignments",
+"vast_get_campaign_assignment",
+"vast_create_campaign_assignment",
+"vast_update_campaign_assignment",
+"vast_delete_campaign_assignment",
+"vast_list_schedules",
+"vast_get_schedule",
+"vast_create_schedule",
+"vast_update_schedule",
+"vast_delete_schedule",
+"vast_list_companions",
+"vast_get_companion",
+"vast_create_companion",
+"vast_update_companion",
+"vast_delete_companion",
+"vast_list_media",
+"vast_list_linear_media",
+"vast_get_linear_media",
+"vast_create_linear_media",
+"vast_update_linear_media",
+"vast_delete_linear_media",
+"vast_list_non_linear_media",
+"vast_get_non_linear_media",
+"vast_create_non_linear_media",
+"vast_update_non_linear_media",
+"vast_delete_non_linear_media",
+"vast_list_tracking",
+"vast_get_tracking",
+"vast_create_tracking",
+"vast_update_tracking",
+"vast_delete_tracking",
+"get_vast_zone_tags",
+"get_vast_zone_conversion_tag",
+"get_vast_ad_item_conversion_tag",
+"get_vast_campaign_conversion_tag",
+"get_vast_placement_conversion_tag",
+"vast42_list_ads",
+"vast42_get_ad",
+"vast42_create_ad",
+"vast42_update_ad",
+"vast42_delete_ad",
+"vast42_list_creatives",
+"vast42_get_creative",
+"vast42_create_creative",
+"vast42_update_creative",
+"vast42_delete_creative",
+"vast42_list_linears",
+"vast42_get_linear",
+"vast42_create_linear",
+"vast42_update_linear",
+"vast42_delete_linear",
+"vast42_list_non_linears",
+"vast42_get_non_linear",
+"vast42_create_non_linear",
+"vast42_update_non_linear",
+"vast42_delete_non_linear",
+"vast42_list_companions",
+"vast42_get_companion",
+"vast42_create_companion",
+"vast42_update_companion",
+"vast42_delete_companion",
+"vast42_list_media_files",
+"vast42_get_media_file",
+"vast42_create_media_file",
+"vast42_update_media_file",
+"vast42_delete_media_file",
+"vast42_list_mezzanines",
+"vast42_get_mezzanine",
+"vast42_create_mezzanine",
+"vast42_update_mezzanine",
+"vast42_delete_mezzanine",
+"vast42_list_resources",
+"vast42_get_resource",
+"vast42_create_resource",
+"vast42_update_resource",
+"vast42_delete_resource",
+"vast42_list_icons",
+"vast42_get_icon",
+"vast42_create_icon",
+"vast42_update_icon",
+"vast42_delete_icon",
+"vast42_list_icon_click_fallback_images",
+"vast42_get_icon_click_fallback_image",
+"vast42_create_icon_click_fallback_image",
+"vast42_update_icon_click_fallback_image",
+"vast42_delete_icon_click_fallback_image",
+"vast42_list_closed_caption_files",
+"vast42_get_closed_caption_file",
+"vast42_create_closed_caption_file",
+"vast42_update_closed_caption_file",
+"vast42_delete_closed_caption_file",
+"vast42_list_interactive_creative_files",
+"vast42_get_interactive_creative_file",
+"vast42_create_interactive_creative_file",
+"vast42_update_interactive_creative_file",
+"vast42_delete_interactive_creative_file",
+"vast42_list_universal_ad_ids",
+"vast42_get_universal_ad_id",
+"vast42_create_universal_ad_id",
+"vast42_update_universal_ad_id",
+"vast42_delete_universal_ad_id",
+"vast42_list_placements",
+"vast42_get_placement",
+"vast42_create_placement",
+"vast42_update_placement",
+"vast42_delete_placement",
+"vast42_list_campaign_assignments",
+"vast42_get_campaign_assignment",
+"vast42_create_campaign_assignment",
+"vast42_update_campaign_assignment",
+"vast42_delete_campaign_assignment"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "mcp-0072-com-advocatemcp-advocate",
+"needed": [
+"search_businesses",
+"query_business_agent",
+"get_availability",
+"reserve_slot",
+"get_quote",
+"initiate_handoff"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "mcp-0073-com-apple-rag-mcp-server",
+"needed": [
+"search",
+"fetch"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "mcp-0074-com-babyblueviper-invinoveritas",
+"needed": [
+"verify_proof",
+"ledger"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "mcp-0075-br-com-brasilnfe-fiscal",
+"needed": [
+"nfe_emitir",
+"nfse_emitir",
+"cte_emitir",
+"mdfe_emitir",
+"dce_emitir"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "mcp-0076-com-arzbin-market-data",
+"needed": [
+"convert_to_toman",
+"get_latest_gold_rates",
+"get_market_history",
+"get_latest_crypto_rates",
+"get_latest_fiat_rates"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "mcp-0077-com-bankruptcyobserver-mcp",
+"needed": [
+"search_bankruptcy_cases_tool",
+"get_case_by_ein_tool",
+"get_case_by_case_number_tool",
+"get_cases_by_industry_tool",
+"get_cases_by_naics_tool",
+"get_cases_by_state_tool",
+"get_cases_by_date_range_tool",
+"get_docket_entries_tool",
+"get_case_summary_tool",
+"get_document_tool"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "mcp-0078-com-cityparity-cityparity",
+"needed": [
+"compare_cities",
+"get_city_summary",
+"rank_cities",
+"get_safety_net",
+"get_inbound_tax_regime"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "mcp-0079-com-anots-directory",
+"needed": [
+"search_businesses",
+"ask_business",
+"find_and_ask"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "mcp-0080-com-changethisfile-mcp",
+"needed": [
+"convert_file"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "mcp-0081-com-checkrecall-vehicle-recalls",
+"needed": [
+"check_vehicle_recalls"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "mcp-0085-com-cloudflare-mcp-mcp",
+"needed": [
+"search_cloudflare_documentation",
+"migrate_pages_to_workers_guide"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "mcp-0086-com-commonlands-optics-mcp",
+"needed": [
+"search_lens_catalog",
+"match_lens_to_sensor",
+"calculate_field_of_view",
+"get_sensor_specs"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "mcp-0087-com-100hires-100hires",
+"needed": [
+"hires_list_candidates",
+"hires_create_candidate",
+"hires_get_candidate",
+"hires_update_candidate",
+"hires_list_candidate_interviews",
+"hires_list_applications",
+"hires_create_application",
+"hires_get_application",
+"hires_update_application",
+"hires_move_application",
+"hires_advance_application",
+"hires_hire_application",
+"hires_reject_application",
+"hires_create_interview",
+"hires_list_jobs",
+"hires_create_job",
+"hires_get_job",
+"hires_update_job",
+"hires_set_job_status",
+"hires_list_interviews",
+"hires_get_interview"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "mcp-0088-com-bikefuchs-bikefuchs",
+"needed": [
+"search_product",
+"get_best_price",
+"optimize_cart"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "mcp-0089-com-blackveilsecurity-dns",
+"needed": [
+"check_mx",
+"check_spf",
+"check_dmarc",
+"check_dkim",
+"check_dnssec",
+"check_ssl",
+"check_mta_sts",
+"check_ns",
+"check_caa",
+"check_bimi",
+"check_tlsrpt",
+"check_http_security",
+"check_dane",
+"check_ptr",
+"check_dane_https",
+"check_svcb_https",
+"check_lookalikes",
+"check_subdomailing",
+"scan_domain",
+"check_shadow_domains",
+"check_txt_hygiene",
+"check_mx_reputation",
+"check_srv",
+"check_zone_hygiene",
+"assess_spoofability",
+"check_resolver_consistency",
+"resolve_spf_chain",
+"discover_subdomains",
+"check_dbl",
+"check_rbl",
+"cymru_asn",
+"rdap_lookup",
+"check_realtime_threat_feed",
+"check_nsec_walkability",
+"check_dnssec_chain",
+"check_dnskey_strength",
+"check_fast_flux",
+"check_subdomain_takeover",
+"check_authoritative_dns_infra",
+"check_root_server_set",
+"discover_brand_domains",
+"brand_audit_single",
+"get_ca_policies"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "mcp-0090-com-daedalmap-county-map",
+"needed": [
+"get_catalog",
+"get_pack",
+"get_disaster_links_for_event",
+"get_disaster_link_chain",
+"search_disaster_links",
+"resolve_point",
+"get_boundary",
+"loc_id_hierarchy",
+"loc_id_info",
+"get_earthquake_events",
+"get_live_earthquake_events",
+"get_volcanic_activity",
+"get_live_volcano_events",
+"get_tsunami_events",
+"get_fx_rates",
+"query_dataset"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "mcp-0091-com-daedalmap-earthquakes",
+"needed": [
+"get_catalog",
+"get_pack",
+"get_earthquake_events",
+"get_live_earthquake_events"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "mcp-0092-com-daedalmap-hurricanes",
+"needed": [
+"get_catalog",
+"get_pack",
+"query_dataset"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "mcp-0093-com-daedalmap-tsunamis",
+"needed": [
+"get_catalog",
+"get_pack",
+"get_tsunami_events"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "mcp-0094-com-craftedtrust-mcp-shield",
+"needed": [
+"check_trust",
+"scan_server",
+"search_registry"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "mcp-0095-com-crosswire-api-crosswire-polymarket-kalshi-arbitrage",
+"needed": [
+"check_resolution_risk",
+"list_covered_events"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "mcp-0096-com-daedalmap-boundaries",
+"needed": [
+"get_catalog",
+"get_pack",
+"get_boundary",
+"loc_id_info"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "mcp-0097-com-daedalmap-currency",
+"needed": [
+"get_catalog",
+"get_pack",
+"get_fx_rates"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "mcp-0098-com-daedalmap-floods",
+"needed": [
+"get_catalog",
+"get_pack",
+"query_dataset"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "mcp-0099-com-daedalmap-geocoding",
+"needed": [
+"get_catalog",
+"get_pack",
+"resolve_point",
+"get_boundary",
+"loc_id_hierarchy",
+"loc_id_info"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "mcp-0100-com-daedalmap-population",
+"needed": [
+"get_catalog",
+"get_pack",
+"query_dataset"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "mcp-0101-com-daedalmap-reverse-geocoding",
+"needed": [
+"get_catalog",
+"get_pack",
+"resolve_point"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "mcp-0102-com-daedalmap-tornadoes",
+"needed": [
+"get_catalog",
+"get_pack",
+"query_dataset"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "mcp-0103-com-daedalmap-un-sdg",
+"needed": [
+"get_catalog",
+"get_pack",
+"query_dataset"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "mcp-0104-com-daedalmap-volcanoes",
+"needed": [
+"get_catalog",
+"get_pack",
+"get_volcanic_activity",
+"get_live_volcano_events"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "mcp-0105-com-daedalmap-wildfires",
+"needed": [
+"get_catalog",
+"get_pack",
+"query_dataset"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "mcp-0106-com-daedalmap-world-factbook",
+"needed": [
+"get_catalog",
+"get_pack",
+"query_dataset"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "mcp-0107-com-defaultverifier-settlement-witness",
+"needed": [
+"settlement_witness"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "mcp-0108-com-boostermage-mtg-prices",
+"needed": [
+"get_price_history",
+"find_best_price",
+"compare_prices",
+"search_products",
+"get_retailer_list",
+"find_deals",
+"get_price_range",
+"get_set_products",
+"get_retailer_products",
+"get_price_drops",
+"find_overpriced",
+"get_product_details"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "mcp-0109-com-compoid-mcp-server",
+"needed": [
+"Compoid_search_records",
+"Compoid_search_communities",
+"Compoid_get_record_details",
+"Compoid_get_community_details",
+"Compoid_download_files",
+"Compoid_upload_file",
+"Compoid_create_record",
+"Compoid_update_record"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "mcp-0110-com-blockscout-mcp-server",
+"needed": [
+"__unlock_blockchain_analysis__",
+"get_block_info",
+"get_block_number",
+"get_address_by_ens_name",
+"get_transactions_by_address",
+"get_token_transfers_by_address",
+"lookup_token_by_symbol",
+"get_contract_abi",
+"inspect_contract_code",
+"read_contract",
+"get_address_info",
+"get_tokens_by_address",
+"nft_tokens_by_address",
+"get_transaction_info",
+"get_chains_list",
+"direct_api_call"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "mcp-0111-com-contrastcyber-api",
+"needed": [
+"domain_report",
+"audit_domain",
+"contrast_scan",
+"tech_stack_cve_audit",
+"threat_report",
+"dns_lookup",
+"whois_lookup",
+"ssl_check",
+"subdomain_enum",
+"tech_fingerprint",
+"threat_intel",
+"wayback_lookup",
+"scan_headers",
+"email_mx",
+"email_security_posture",
+"email_disposable",
+"email_verify",
+"robots_txt",
+"redirect_chain",
+"brand_assets",
+"seo_audit",
+"phone_lookup",
+"ip_lookup",
+"asn_lookup",
+"cve_lookup",
+"calculate_risk_score",
+"get_cvss_details",
+"cve_search",
+"cve_leading",
+"exploit_lookup",
+"bulk_cve_lookup",
+"kev_detail",
+"cwe_lookup",
+"atlas_technique_lookup",
+"bulk_atlas_technique_lookup",
+"atlas_technique_search",
+"atlas_case_study_lookup",
+"atlas_case_study_search",
+"d3fend_defense_lookup",
+"d3fend_defense_search",
+"d3fend_defense_for_attack",
+"d3fend_attack_coverage",
+"sigma_rule_lookup",
+"bulk_sigma_rule_lookup",
+"ioc_lookup",
+"hash_lookup",
+"password_check",
+"phishing_check",
+"bulk_ioc_lookup",
+"check_secrets",
+"check_injection",
+"check_dependencies",
+"username_lookup",
+"check_headers"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "mcp-0112-com-decision-anchor-da",
+"needed": [
+"register_agent",
+"get_agent_profile",
+"create_decision",
+"confirm_decision",
+"propose_bilateral",
+"get_decision",
+"list_decisions"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "mcp-0113-com-feode-feode-mcp",
+"needed": [
+"get_company_profile",
+"list_products",
+"get_product_specs",
+"get_certifications",
+"search_capabilities",
+"list_drill_pipe",
+"get_drill_pipe_specs",
+"search_drill_pipe",
+"get_drill_string_guidance"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "mcp-0114-com-geiant-mcp-agentcore",
+"needed": [
+"verify_jurisdiction",
+"generate_audit_proof",
+"check_delegation_chain"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "mcp-0115-com-gettreatmenthelp-gettreatmenthelp",
+"needed": [
+"search_facilities",
+"get_facility_detail"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "mcp-0116-com-eveoy-mcp",
+"needed": [
+"ask_eveoy",
+"get_pricing",
+"start_checkout"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "mcp-0117-com-geiant-mcp-perception",
+"needed": [
+"perception_fetch_tile",
+"perception_classify",
+"perception_embed",
+"perception_weather",
+"gns_get_trust_score",
+"gns_verify_chain",
+"gns_get_compliance_report"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "mcp-0118-com-filingfirehose-firehose",
+"needed": [
+"search_8k_filings",
+"search_13d_filings",
+"search_atm_offerings",
+"get_filing"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "mcp-0119-com-gotfreefax-mcp",
+"needed": [
+"send_fax",
+"send_free_fax"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "mcp-0120-com-gribstream-mcp",
+"needed": [
+"gribstream_list_datasets",
+"gribstream_get_dataset",
+"gribstream_list_parameters",
+"gribstream_get_parameter",
+"gribstream_list_shared_parameters",
+"gribstream_resolve_shared_parameter",
+"gribstream_get_expression_reference",
+"gribstream_build_timeseries_request",
+"gribstream_build_runs_request",
+"gribstream_validate_request"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "mcp-0121-com-hemmabo-hemmabo-mcp-server",
+"needed": [
+"hemmabo_search_properties",
+"hemmabo_search_availability",
+"hemmabo_booking_quote",
+"hemmabo_booking_create",
+"hemmabo_booking_checkout",
+"verify_vacation_rental_node",
+"get_verified_stay_offer"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "mcp-0122-com-hydrata-hydrata-mcp-server",
+"needed": [
+"list_projects",
+"get_project",
+"get_scenario",
+"start_simulation",
+"get_run_status",
+"get_run",
+"list_runs"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "mcp-0123-com-htagai-htag-docs",
+"needed": [
+"list_mcp_servers",
+"list_mcp_tools",
+"list_api_endpoints",
+"get_api_endpoint",
+"list_micro_agents"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "mcp-0124-com-joinsandwich-directory",
+"needed": [
+"search_care_resources",
+"calculate_long_term_care_cost"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "mcp-0125-com-kaicalls-kaicalls",
+"needed": [
+"make_call",
+"list_recent_calls",
+"get_transcript",
+"list_agents",
+"get_analytics"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "mcp-0126-com-lifescored-mcp",
+"needed": [
+"get_rulebook",
+"get_input_schema",
+"get_methodology"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "mcp-0127-com-fiatdock-fiatdock-mcp",
+"needed": [
+"create_offramp_session",
+"create_onramp_session",
+"get_quote",
+"get_order_status"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "mcp-0128-com-joinplexa-plexa",
+"needed": [
+"search_businesses",
+"get_business"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "mcp-0129-com-kettlelogic-mcp-kettlelogic",
+"needed": [
+"search_articles",
+"get_article",
+"get_industry_overview"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "mcp-0130-com-getvaletparking-valet-parking-directory",
+"needed": [
+"valet_get_operator",
+"valet_find_operators_in_city",
+"valet_search_by_service_and_city",
+"valet_find_nearest_operators",
+"valet_find_operators_near"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "mcp-0131-com-hauntapi-haunt",
+"needed": [
+"extract",
+"extract_markdown"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "mcp-0132-com-ifthenpay-payments",
+"needed": [
+"multibanco_create_reference",
+"mbway_request_payment",
+"mbway_check_status",
+"payshop_create_reference"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "mcp-0133-com-linklyhq-linkly",
+"needed": [
+"create_link",
+"get_link",
+"update_link",
+"delete_link",
+"list_links",
+"get_clicks",
+"get_analytics"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "mcp-0134-com-kapruka-kapruka-mcp",
+"needed": [
+"kapruka_list_categories",
+"kapruka_get_product",
+"kapruka_search_products",
+"kapruka_list_delivery_cities",
+"kapruka_check_delivery",
+"kapruka_create_order",
+"kapruka_track_order"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "mcp-0135-com-loopxxi-loop-mcp",
+"needed": [
+"btc_price",
+"btc_send_decision",
+"lightning_address_resolve",
+"tx_decode_explain",
+"optimal_send_window"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "mcp-0136-com-lowtoxgear-scanner",
+"needed": [
+"scan_barcode"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "mcp-0137-com-lowtoxgear-storefront",
+"needed": [
+"search_products",
+"get_product",
+"list_collections",
+"filter_by_certification",
+"get_policies"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "mcp-0138-com-kernelcad-kernelcad",
+"needed": [
+"review_paint_peek_latest",
+"get_project",
+"get_latest_render",
+"get_model_mesh",
+"mesh_summary",
+"evaluate_script",
+"diff_scripts",
+"inspect",
+"verify",
+"why_did_this_fail",
+"set_param",
+"add_feature",
+"add_surface",
+"add_curve",
+"add_path_segment",
+"add_text",
+"project_curve",
+"add_pattern_feature",
+"remove_feature",
+"query",
+"export",
+"solve_sketch",
+"add_constraint",
+"add_part",
+"add_connector",
+"add_mate",
+"solve_mates",
+"review_cad",
+"evaluate_sdf",
+"render_preview"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "mcp-0139-com-local-mcp-local-mcp",
+"needed": [
+"list_email_accounts",
+"list_email_folders",
+"list_emails",
+"read_email",
+"search_emails",
+"list_calendar_events",
+"list_calendar_names",
+"read_messages",
+"list_message_chats",
+"search_messages",
+"teams_list_channels",
+"teams_list_chats",
+"teams_list_teams",
+"teams_read_channel_messages",
+"teams_read_chat_messages",
+"fs_list",
+"fs_read",
+"fs_search",
+"finder_list",
+"finder_search"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "mcp-0140-com-luthersystems-insideout-mcp",
+"needed": [
+"tfgenerate",
+"tfplan",
+"tfdeploy"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "mcp-0141-com-makometrics-mako-metrics",
+"needed": [
+"list_plans",
+"create_order"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "mcp-0142-com-memxus-memxus",
+"needed": [
+"remember",
+"recall"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "mcp-0143-com-mux-mcp",
+"needed": [
+"execute"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "mcp-0144-com-nursinghomedatabase-mcp",
+"needed": [
+"search_facilities",
+"get_facility",
+"get_facility_ownership",
+"search_owners",
+"get_owner"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "mcp-0145-com-olympus-bets-olympus-bets-analytics",
+"needed": [
+"get_todays_projections",
+"get_track_record",
+"get_methodology"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "mcp-0146-com-microsoft-microsoft-learn-mcp",
+"needed": [
+"microsoft_docs_search",
+"microsoft_code_sample_search",
+"microsoft_docs_fetch"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "mcp-0147-com-moltravel-travel",
+"needed": [
+"restcountries_country_info",
+"fcdo_travel_advice",
+"fcdo_list_countries",
+"airports_lookup",
+"airports_search",
+"airports_near",
+"airlines_lookup",
+"airlines_search",
+"visa_check",
+"visa_summary",
+"navifare_flight_pricecheck",
+"navifare_format_flight_pricecheck_request",
+"peek_experience_availability",
+"peek_experience_details",
+"peek_list_tags",
+"peek_render_activity_tiles",
+"peek_search_experiences",
+"peek_search_regions",
+"tourradar_b2b-operator-details",
+"tourradar_b2b-cities-search",
+"tourradar_b2b-continents-list",
+"tourradar_b2b-countries-list",
+"tourradar_b2b-currencies-list",
+"tourradar_b2b-languages-list",
+"tourradar_b2b-tour-types-list",
+"tourradar_b2b-tour-departures",
+"tourradar_b2b-tour-details",
+"tourradar_b2b-tour-faq",
+"tourradar_b2b-tour-map",
+"tourradar_vertex-tour-search",
+"tourradar_vertex-tour-title-search",
+"tourradar_vertex-review-search",
+"tourradar_web-ask-question",
+"tourradar_web-tour-booking",
+"tourradar_algolia-operator-search",
+"trivago_trivago-accommodation-radius-search",
+"trivago_trivago-accommodation-search",
+"skiplagged_sk_flights_search",
+"skiplagged_sk_destinations_anywhere",
+"skiplagged_sk_flex_departure_calendar",
+"skiplagged_sk_flex_return_calendar",
+"skiplagged_sk_hotels_search",
+"skiplagged_sk_cars_search",
+"skiplagged_sk_hotel_details",
+"skiplagged_sk_faq_search",
+"skiplagged_sk_resolve_location",
+"skiplagged_sk_resolve_iata",
+"ferryhopper_get_ports",
+"ferryhopper_get_disruptions",
+"ferryhopper_get_direct_connections_for_ports",
+"ferryhopper_search_trips"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "mcp-0148-com-nicheangle-niche",
+"needed": [
+"niche_signal_scan",
+"niche_intelligence_query",
+"niche_angle_propose",
+"niche_draft_create"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "mcp-0149-com-metricspot-seo-mcp",
+"needed": [
+"run_audit",
+"get_audit"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "mcp-0150-com-onchaindiligence-compliance",
+"needed": [
+"screen_wallet",
+"screen_name",
+"verify_uk_company",
+"verify_us_company"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+}
+]

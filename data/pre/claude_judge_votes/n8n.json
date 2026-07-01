@@ -1,0 +1,2006 @@
+[
+{
+"instance_id": "n8n-10045",
+"needed": [
+"Access JD Files"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "n8n-10096",
+"needed": [
+"Qdrant Vector Store"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "n8n-10119",
+"needed": [
+"Bright Data MCP"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "n8n-10123",
+"needed": [
+"PO_DB",
+"Update_Row"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "n8n-10142",
+"needed": [
+"Qdrant Vector Store"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "n8n-10157",
+"needed": [
+"List Documents",
+"Get File Contents",
+"Query Document Rows",
+"Postgres PGVector Store1"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "n8n-10199",
+"needed": [
+"Tool: Get HubSpot Data",
+"Tool: Calculate Sentiment Score",
+"Tool: Get Feature Usage from Sheets"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "n8n-10214",
+"needed": [
+"Execute a SQL query in MySQL"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "n8n-10290",
+"needed": [
+"Read Sheet for Queries",
+"Append Transaction to Sheet"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "n8n-10665",
+"needed": [
+"BD_ESPOL"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "n8n-10666",
+"needed": [
+"Pinecone Vector Store12"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "n8n-10924",
+"needed": [
+"RAG"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "n8n-11204",
+"needed": [],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "n8n-12110",
+"needed": [
+"External Social Search & Enrichment Tool (MCP Client)"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "n8n-12497",
+"needed": [
+"Public Search & Social Intelligence Connector (MCP)"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "n8n-12599",
+"needed": [
+"Public Search & Social Intelligence Connector (MCP Client)"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "n8n-12600",
+"needed": [
+"External Social Search & Enrichment Tool (MCP Client)"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "n8n-13089",
+"needed": [
+"Reasoning / Prompt Logic"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "n8n-13182",
+"needed": [
+"Run text to video",
+"Run image to video",
+"Run video to video"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "n8n-13269",
+"needed": [
+"Get screen",
+"Get Project",
+"List screen",
+"List projects",
+"Create Project",
+"Generate Screen"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "n8n-13270",
+"needed": [
+"Get a File From GitHub",
+"List Files by Path Name"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "n8n-13271",
+"needed": [
+"Search"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "n8n-13409",
+"needed": [
+"Source Collector",
+"Source Retriever",
+"LinkedIn Publisher",
+"Instagram Publisher",
+"Infographic Generator",
+"Visual Asset Retriever",
+"Slideshow Video Generator"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "n8n-13503",
+"needed": [
+"database",
+"Get orders",
+"Send email",
+"Get products",
+"Update product"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "n8n-13526",
+"needed": [
+"Get source",
+"Get visual",
+"Create source",
+"Post to TikTok",
+"Post to Instagram",
+"Send notification",
+"Create visual - AI image video",
+"Create visual - tweet card carousel"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "n8n-14008",
+"needed": [
+"RAG Agent",
+"Calculator",
+"Escalation",
+"Gmail Agent",
+"Scraper Agent",
+"Websearch Agent",
+"Google Docs Agent",
+"Google Drive Agent",
+"Google Sheets Agent",
+"Google Slides Agent",
+"Google Calendar Agent",
+"Image and Video Grok Agent"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "n8n-14167",
+"needed": [
+"/scrape with Firecrawl",
+"/search with Firecrawl",
+"Interact context with Firecrawl",
+"Stop interaction with Firecrawl",
+"Execute interaction with Firecrawl"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "n8n-14321",
+"needed": [
+"Databox MCP Tool"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "n8n-14449",
+"needed": [
+"Get a campaign in Google Ads"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "n8n-15051",
+"needed": [
+"Mattermost",
+"Qdrant Vector Store"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "n8n-15369",
+"needed": [
+"Gmail Thread Tool",
+"Google Calendar Tool"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "n8n-15918",
+"needed": [
+"Get Skill File"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "n8n-15933",
+"needed": [
+"Date & Time1",
+"Get row(s) in Data table1",
+"Insert row in Data table1",
+"Delete row(s) in Data table1",
+"Update row(s) in Data table1"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "n8n-16251",
+"needed": [
+"Retrieve Relevant Documents"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "n8n-16439",
+"needed": [
+"Think Through Video Concept"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "n8n-1954",
+"needed": [
+"SerpAPI"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "n8n-2465",
+"needed": [
+"Vector Store Tool"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "n8n-2466",
+"needed": [
+"Wikipedia"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "n8n-2621",
+"needed": [
+"Vector Store Tool1"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "n8n-2703",
+"needed": [
+"Google Calendar - Get Events",
+"Google Calendar - Create events"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "n8n-2752",
+"needed": [
+"Answer questions with a vector store"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "n8n-2753",
+"needed": [
+"Vector Store Tool"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "n8n-2783",
+"needed": [
+"Meta_Ads",
+"Google_Ads",
+"Analytics_Domain_1",
+"Analytics_Domain_2",
+"Analytics_Domain_3",
+"Analytics_Domain_4",
+"Analytics_Domain_5"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "n8n-2786",
+"needed": [
+"Send Message",
+"Get Availability",
+"Make Appointment"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "n8n-2845",
+"needed": [
+"RAG"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "n8n-2859",
+"needed": [
+"Execute SQL Query",
+"Get Table Definition",
+"Get DB Schema and Tables List"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "n8n-2864",
+"needed": [
+"Save Long Term Memories"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "n8n-2872",
+"needed": [
+"Save Notes",
+"Save Long Term Memories"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "n8n-2982",
+"needed": [
+"Qdrant Vector Store Tool"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "n8n-2986",
+"needed": [
+"Save Memory",
+"Save Note Tool"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "n8n-3025",
+"needed": [
+"🧠Save Memories",
+"🔎Retrieve Memories",
+"📫Send Memories to Gmail",
+"📤Send Memories to Telegram"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "n8n-3050",
+"needed": [
+"Calculator",
+"Records by date",
+"Get all transactions",
+"Get transactions by status",
+"Get transactions by product name"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "n8n-3066",
+"needed": [
+"SerpAPI"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "n8n-3135",
+"needed": [
+"Short",
+"Facebook",
+"LinkedIn",
+"X-Twiter",
+"Instagram",
+"YouTube Short"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "n8n-3189",
+"needed": [
+"MCP Get Brave Tools",
+"MCP Execute Brave Search"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "n8n-3250",
+"needed": [
+"Retrieve and push documents"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "n8n-3303",
+"needed": [
+"n8n-assistant Tool Lookup",
+"n8n-assistant Execute Tool"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "n8n-3336",
+"needed": [
+"Notify Slack Channel",
+"Send Email Notification",
+"Insert Article in Notion",
+"Publish Article to WordPress"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "n8n-3348",
+"needed": [
+"Send Email",
+"Notion Run a Tool",
+"Publish Blog Post",
+"Notion List Available Tools"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "n8n-3350",
+"needed": [
+"Handoff Tool"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "n8n-3379",
+"needed": [
+"Read Product Sheet",
+"Log Customer Issues",
+"Update Product Sheet"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "n8n-3425",
+"needed": [
+"CoinMarketCap Crypto Agent Tool",
+"CoinMarketCap DEXScan Agent Tool",
+"CoinMarketCap Exchange and Community Agent Tool"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "n8n-3443",
+"needed": [
+"Tool - Crawl Business Website",
+"Fallback - Enrich with Google Search",
+"Tool - Scrape Google Maps Business Data"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "n8n-3514",
+"needed": [
+"Calendar MCP",
+"My Functions"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "n8n-3617",
+"needed": [],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "n8n-3656",
+"needed": [
+"MCP Client"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "n8n-3657",
+"needed": [
+"RAG"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "n8n-3686",
+"needed": [
+"mail_archiver",
+"mail_label_setter"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "n8n-3694",
+"needed": [
+"CallToHuman",
+"Google Tasks",
+"MCP CALENDAR",
+"MCP Google Calendar",
+"MCP Google Calendar2",
+"Enviar alerta de cancelamento"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "n8n-3770",
+"needed": [
+"MCP Client"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "n8n-3790",
+"needed": [
+"Trends Analysis Tool",
+"Technical Analysis Tool"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "n8n-3859",
+"needed": [
+"get_page",
+"list_links"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "n8n-3879",
+"needed": [
+"Airtable MCP Client"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "n8n-3905",
+"needed": [
+"MCP Client"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "n8n-3940",
+"needed": [
+"Answer questions with a vector store"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "n8n-3942",
+"needed": [
+"Call n8n Workflow Tool"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "n8n-3986",
+"needed": [
+"Get News Articles"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "n8n-4057",
+"needed": [
+"Send Email Response via Gmail",
+"Dumpling AI Agent – Search for Relevant Info"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "n8n-4083",
+"needed": [
+"CRM Agent",
+"Calendar Agent",
+"Calendar Agent1",
+"sales_technique_knowledge",
+"sales_technique_knowledge1"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "n8n-4086",
+"needed": [
+"Supabase Vector Store"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "n8n-4102",
+"needed": [
+"Get events",
+"Create Event",
+"Detele Event",
+"Update Calendar"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "n8n-4366",
+"needed": [
+"Get last emails",
+"Get calendar events",
+"Add an calender entry",
+"Create an New Email Draft",
+"Get an email by MessageID",
+"Determine the name of the day of the week",
+"Create an Email Draft as response to a thread",
+"Research context and infos in previous conversations"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "n8n-4368",
+"needed": [
+"SerpAPI",
+"Calculator"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "n8n-4399",
+"needed": [
+"Think",
+"Calculator",
+"web_search"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "n8n-4402",
+"needed": [
+"EightOS Expert",
+"Polysingularity Expert"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "n8n-4484",
+"needed": [
+"The Flow and the Notion Book",
+"Waves into Patterns Book Expert",
+"The Polysingularity Letters Book",
+"Special Agent's Manual Book Expert"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "n8n-4494",
+"needed": [
+"Airbnb MCP Client - List Tools",
+"Airbnb MCP Client - Execute Tools"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "n8n-4501",
+"needed": [
+"Pinecone Vector Store1"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "n8n-4526",
+"needed": [
+"MongoDB Vector Search"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "n8n-4551",
+"needed": [
+"Supabase Vector Store"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "n8n-4589",
+"needed": [
+"Bright Data MCP Client"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "n8n-4600",
+"needed": [
+"Tavily Internet Search"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "n8n-4630",
+"needed": [
+"searchAirtable"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "n8n-4638",
+"needed": [
+"Knowledge base"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "n8n-4641",
+"needed": [
+"Gmail"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "n8n-4674",
+"needed": [
+"Tavily"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "n8n-4689",
+"needed": [
+"Search Documentation",
+"Search Negative Interactions",
+"Search Positive Interactions"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "n8n-4694",
+"needed": [
+"Insert rule into database",
+"Execute query on rule database"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "n8n-4721",
+"needed": [
+"Perplexity tool",
+"Trigify knowledge hub",
+"Trigify knowledge hub2"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "n8n-4722",
+"needed": [
+"Get Email",
+"Check Sent"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "n8n-4723",
+"needed": [
+"Get User",
+"Get Email",
+"Check Sent",
+"Check Sent1",
+"Previous To Do",
+"Fetch FireFlies",
+"Google Calendar",
+"Unread Emails - FYI",
+"Check Slack Mentions",
+"Check Thread Mentions",
+"Unread Emails - To Respond"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "n8n-4735",
+"needed": [
+"Read Sheet",
+"Update Sheet",
+"Create Blog id",
+"Create Articles"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "n8n-4739",
+"needed": [
+"Binance SM Financial Analyst Tool",
+"News and Sentiment Analysis Request"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "n8n-4755",
+"needed": [
+"Knowledge Base GraphRAG"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "n8n-4766",
+"needed": [],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "n8n-4827",
+"needed": [
+"MongoDB Vector Search"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "n8n-4875",
+"needed": [
+"Google Docs"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "n8n-4910",
+"needed": [
+"brave_web_search",
+"brave_local_search",
+"jina_ai_web_page_scraper",
+"google_gemini_prospect_finder"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "n8n-4930",
+"needed": [
+"Answer questions with a vector store"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "n8n-4949",
+"needed": [
+"Fetch Available Time Slots",
+"Create New Prospect in Google Sheet",
+"Update Prospect with Booking Details"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "n8n-4967",
+"needed": [],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "n8n-4975",
+"needed": [
+"getrows",
+"read sheets",
+"policy_vector_store"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "n8n-5010",
+"needed": [
+"Query Data Tool"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "n8n-5011",
+"needed": [
+"Answer questions with a vector store"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "n8n-5012",
+"needed": [
+"CALL QUERY AGENT"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "n8n-5024",
+"needed": [
+"SerpAPI",
+"Pinecone Vector Store"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "n8n-5035",
+"needed": [],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "n8n-5042",
+"needed": [
+"Get Email",
+"Send Email",
+"Create Draft"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "n8n-5074",
+"needed": [
+"Google Sheets"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "n8n-5096",
+"needed": [
+"Create order in database",
+"Get Menu Items from Vector Store"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "n8n-5110",
+"needed": [],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "n8n-5128",
+"needed": [
+"HTTP Request1"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "n8n-5130",
+"needed": [
+"Pinecone Vector Store",
+"Pinecone Vector Store2"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "n8n-5148",
+"needed": [
+"Qdrant Vector Store1"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "n8n-5163",
+"needed": [
+"Get Chart"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "n8n-5164",
+"needed": [
+"Think"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "n8n-5202",
+"needed": [],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "n8n-5259",
+"needed": [
+"Balance report",
+"Register Transaction"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "n8n-5286",
+"needed": [
+"web_search",
+"get_current_date"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "n8n-5291",
+"needed": [
+"Google Sheets",
+"Google Sheets1",
+"Google Sheets2",
+"Google Sheets5"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "n8n-5294",
+"needed": [
+"Legal Contract Library"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "n8n-5296",
+"needed": [
+"Workflow - Youtube Search"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "n8n-5303",
+"needed": [
+"HTTP Request"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "n8n-5305",
+"needed": [
+"Gmail1"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "n8n-5338",
+"needed": [],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "n8n-5368",
+"needed": [
+"Create Event",
+"Delete Event",
+"Search Event",
+"Update Event"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "n8n-5374",
+"needed": [
+"Get Articles"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "n8n-5398",
+"needed": [
+"RAG MCP Server",
+"MCP_Search_List_Tools",
+"MCP_Search_Search_Engine"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "n8n-5431",
+"needed": [
+"sleep tool",
+"HTTP Request",
+"Fetch Snapshot Data",
+"Check Scraping Status"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "n8n-5435",
+"needed": [
+"DB Schema1",
+"Retrieve Data",
+"Get table definition"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "n8n-5454",
+"needed": [
+"Gmail",
+"court info",
+"Google Sheets"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "n8n-5508",
+"needed": [
+"Answer questions with a vector store"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "n8n-5521",
+"needed": [
+"SupaBase Query"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "n8n-5523",
+"needed": [
+"Search_db",
+"Calculator",
+"Summarizer",
+"Web search"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "n8n-5541",
+"needed": [],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "n8n-5552",
+"needed": [
+"Gmail",
+"Calendar",
+"Contacts",
+"Calculator",
+"Google Search"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "n8n-5614",
+"needed": [
+"SerpAPI",
+"SerpAPI2",
+"SerpAPI3",
+"SerpAPI4"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "n8n-5656",
+"needed": [
+"Get Info"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "n8n-5687",
+"needed": [
+"update_wallet"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "n8n-5734",
+"needed": [
+"VectorDB"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "n8n-5751",
+"needed": [
+"get comments",
+"search google",
+"get url mardown",
+"update result for user",
+"mark comment as processed",
+"instagram full profile scraper",
+"create a row for new search user"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "n8n-5757",
+"needed": [
+"Gmail",
+"send_mail",
+"Vectorstore Mails"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "n8n-5784",
+"needed": [
+"Get events",
+"Create Event",
+"Delete event",
+"Update Event"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "n8n-5789",
+"needed": [
+"Get spam list",
+"Get spam list1",
+"update spam list",
+"Get a message in Discord"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "n8n-5807",
+"needed": [
+"Answer questions with a vector store",
+"Answer questions with a vector store1"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "n8n-5808",
+"needed": [
+"DocProcess",
+"GetMetaData"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "n8n-5817",
+"needed": [
+"Weaviate Vector Store1"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "n8n-5819",
+"needed": [
+"wikipedia",
+"get_a_joke",
+"days_from_now",
+"create_password",
+"n8n_blog_rss_feed",
+"calculate_loan_payment"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "n8n-5821",
+"needed": [
+"Gmail",
+"Calendly"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "n8n-5828",
+"needed": [
+"Sales Letter Tool",
+"Cold Email Writer Tool"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "n8n-5832",
+"needed": [
+"Send a message in Gmail"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "n8n-5897",
+"needed": [
+"Tavily_Search_Tool"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "n8n-5908",
+"needed": [
+"Postgres PGVector Store"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "n8n-5918",
+"needed": [
+"Manual Knowledge Base"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "n8n-5923",
+"needed": [
+"Next song",
+"Pause player",
+"Resume player",
+"Play a playlist",
+"Get user playlists",
+"Create new playlist"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "n8n-5924",
+"needed": [
+"SerpAPI"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "n8n-5938",
+"needed": [
+"Search Internet1",
+"Search Internet2"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "n8n-5947",
+"needed": [
+"🕷️ MCP Scraper: 10times"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "n8n-5948",
+"needed": [
+"MCP Client to Scrape as markdown"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "n8n-5951",
+"needed": [
+"🌐 Bright Data Tool"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "n8n-5953",
+"needed": [
+"🌐 Bright Data MCP: Scrape Report"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "n8n-6018",
+"needed": [
+"Pinecone Vector Store2",
+"Get row(s) in sheet in Google Sheets"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "n8n-6020",
+"needed": [
+"Pinecone Vector Store2",
+"Get row(s) in sheet in Google Sheets"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "n8n-6153",
+"needed": [
+"get_availability",
+"create_appointment",
+"log_patient_details"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "n8n-6270",
+"needed": [
+"Get News",
+"Get Weather"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "n8n-6290",
+"needed": [
+"RAGagent",
+"ticketAgent",
+"calendarAgent"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "n8n-6500",
+"needed": [],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "n8n-6531",
+"needed": [
+"Perplexity Research"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "n8n-6532",
+"needed": [
+"leadResearch",
+"leadScraping"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "n8n-6537",
+"needed": [
+"get_events",
+"Knowledge Database"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "n8n-6538",
+"needed": [
+"MarketingLadder"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "n8n-6542",
+"needed": [
+"structured data",
+"General knowledge",
+"Message a model in Perplexity",
+"search  about any doc in google drive"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "n8n-6771",
+"needed": [
+"Retrieve Context from Supabase"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "n8n-6827",
+"needed": [
+"Tool: Inject Creativity"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "n8n-6841",
+"needed": [
+"Fetch Hollywood News (Tavily)",
+"Fetch Weekly Releases (Tavily)",
+"Fetch Must-Watch Movies (Tavily)",
+"Fetch Weekly Box Office (Tavily)"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "n8n-6844",
+"needed": [
+"CloudFlare tool"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "n8n-6906",
+"needed": [
+"Think",
+"Financial Analyst",
+"Accounting Specialist",
+"Investment & Risk Analyst",
+"Financial Planning Analyst",
+"Internal Audit & Controls Specialist",
+"Treasury & Cash Management Specialist"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "n8n-6993",
+"needed": [
+"scrape_as_markdown"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "n8n-7154",
+"needed": [],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "n8n-7215",
+"needed": [
+"Get row(s) in sheet in Google Sheets"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "n8n-7449",
+"needed": [
+"Analyze Data"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "n8n-7467",
+"needed": [
+"create_lead",
+"update_lead",
+"check_duplicate_lead",
+"send_notification_client",
+"send_notification_internal"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "n8n-7639",
+"needed": [
+"Analyze Data"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "n8n-7671",
+"needed": [
+"google"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "n8n-7756",
+"needed": [
+"Get Report",
+"Register User",
+"Append Meal Data",
+"Get Profile Data",
+"Update Profile Data"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "n8n-7957",
+"needed": [
+"ad details",
+"list accounts",
+"account details"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "n8n-7979",
+"needed": [
+"Vector Store Tool"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "n8n-8008",
+"needed": [
+"Supabase Vector Store"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "n8n-8237",
+"needed": [
+"Get Email",
+"Google Calendar",
+"Create a task in Google Tasks",
+"Get many tasks in Google Tasks"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "n8n-8326",
+"needed": [
+"Save Appointment Record",
+"Book Calendar Appointment",
+"Check Calendar Availability"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "n8n-8428",
+"needed": [],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "n8n-8500",
+"needed": [
+"Gmail MCP",
+"Calendar MCP",
+"Finance Tracker",
+"Google Contacts",
+"Google Tasks MCP"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "n8n-8562",
+"needed": [
+"Message a model in Perplexity",
+"Message a model in Perplexity1",
+"Append row in sheet in Google Sheets"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "n8n-8591",
+"needed": [],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "n8n-8597",
+"needed": [
+"Knowledgebase Lookup",
+"Send Booking Confirmation",
+"Calendar: Check Availability",
+"Calendar: Create Appointment"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "n8n-8604",
+"needed": [
+"24h Stats",
+"Best Bid/Ask",
+"Average Price",
+"Recent Trades",
+"Price (Latest)",
+"Klines (Candles)",
+"Order Book Depth"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "n8n-8654",
+"needed": [
+"Tavily search results"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "n8n-8724",
+"needed": [
+"Send Report via Gmail"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "n8n-9026",
+"needed": [
+"Checking History",
+"Get a document in Google Docs",
+"Check Calander & Book Meeting and send email",
+"Append or update row in sheet in Google Sheets"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "n8n-9100",
+"needed": [],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "n8n-9200",
+"needed": [],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "n8n-9277",
+"needed": [
+"Teacher agent",
+"Students Agent",
+"Course Post Agent",
+"Announcements Agent",
+"Course  Topic Agent",
+"Course Management Agent",
+"Coursework Management SubAgent"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "n8n-9383",
+"needed": [
+"Create an event",
+"Know about the user enquiry",
+"GET MANY EVENTS OF DAY THE USER ASKED"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "n8n-9429",
+"needed": [
+"Calendar: Check Availability",
+"Calendar: Create Appointment",
+"Update an event in Google Calendar"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "n8n-9455",
+"needed": [
+"Think1",
+"MCP Client1",
+"Date & Time1",
+"Search latest news1"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "n8n-9577",
+"needed": [
+"My Freelance Document"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "n8n-9592",
+"needed": [
+"Resolver Details Sheets tool",
+"Issue Resolver Allotment Logic Sheets tool"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "n8n-9764",
+"needed": [
+"Access JD Files"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "n8n-9850",
+"needed": [
+"Get an event in Google Calendar",
+"Get an event in Google Calendar1",
+"Create an event in Google Calendar"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+}
+]

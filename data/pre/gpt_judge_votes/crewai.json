@@ -1,0 +1,3515 @@
+{
+  "crewai-0001": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "239818fb6af626924e0b605b60620b7e76d5c54b94996027fecfd7f7420334a6",
+    "raw_response": "需要最新市场数据与行业趋势，通常必须进行网络搜索并访问网页内容以获取详细信息。\n\nNEEDED: SerperDevTool, ScrapeWebsiteTool",
+    "attempts": 1,
+    "created_at": "2026-07-01T04:56:30.654658+00:00",
+    "needed": [
+      "SerperDevTool",
+      "ScrapeWebsiteTool"
+    ],
+    "status": "ok"
+  },
+  "crewai-0004": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "f42b293a5c0461c73804f797558e5b1ef842eff03f30d42ca9ea366931378c03",
+    "raw_response": "data_validation_tool 与数据准确性、完整性验证的核心职责直接相关，可用于执行数据校验与质量检查，因此是需要的。\n\nNEEDED: data_validation_tool",
+    "attempts": 1,
+    "created_at": "2026-07-01T04:56:44.701485+00:00",
+    "needed": [
+      "data_validation_tool"
+    ],
+    "status": "ok"
+  },
+  "crewai-0006": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "ce274917637ea747543b71d523ba1f08eb6dadec525d123bca1118f97a8f0354",
+    "raw_response": "risk_assessment_tool 与“识别并全面评估投资风险”的目标直接相关，可用于支持风险识别、分析和评估。\n\nNEEDED: risk_assessment_tool",
+    "attempts": 1,
+    "created_at": "2026-07-01T04:56:46.480867+00:00",
+    "needed": [
+      "risk_assessment_tool"
+    ],
+    "status": "ok"
+  },
+  "crewai-0002": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "9d453755ff8d1f45f4af110358a98399d18d8e6a2978eb9a7e6b7d999dbc3a53",
+    "raw_response": "akshare_tool 用于获取公司财务报表和相关财务数据；financial_calculator_tool 用于计算和分析关键财务指标，二者均与任务直接相关。\n\nNEEDED: akshare_tool, financial_calculator_tool",
+    "attempts": 1,
+    "created_at": "2026-07-01T04:56:47.106396+00:00",
+    "needed": [
+      "akshare_tool",
+      "financial_calculator_tool"
+    ],
+    "status": "ok"
+  },
+  "crewai-0005": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "851c0e1827f2474bd4489b5bd875c7d8a46500f76a7e38a23265495756383154",
+    "raw_response": "该能力与角色目标直接相关，用于支持公司基本面价值与长期投资潜力分析。\n\nNEEDED: fundamental_analysis_tool",
+    "attempts": 1,
+    "created_at": "2026-07-01T04:56:47.949997+00:00",
+    "needed": [
+      "fundamental_analysis_tool"
+    ],
+    "status": "ok"
+  },
+  "crewai-0007": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "544947cb9584ab2483514d109ee51770b53cd75bed8c347c9d3b217daf9630c0",
+    "raw_response": "该能力与任务高度匹配：用于分析公司在行业中的地位、竞争格局、竞争优势和行业趋势，属于完成该角色目标所需的专业分析能力。\n\nNEEDED: industry_analysis_tool",
+    "attempts": 1,
+    "created_at": "2026-07-01T04:56:48.246994+00:00",
+    "needed": [
+      "industry_analysis_tool"
+    ],
+    "status": "ok"
+  },
+  "crewai-0003": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "3e4102284a354eb78f121a69d4058b4a90fe6b2c5459fdd1dc83b4e46872c6e1",
+    "raw_response": "technical_analysis_tool：需要，用于计算和分析技术指标、趋势、量价关系等。  \ncharting_tool：需要，用于图表分析、识别趋势线、支撑位和阻力位。  \n\nNEEDED: technical_analysis_tool, charting_tool",
+    "attempts": 1,
+    "created_at": "2026-07-01T04:56:48.496114+00:00",
+    "needed": [
+      "technical_analysis_tool",
+      "charting_tool"
+    ],
+    "status": "ok"
+  },
+  "crewai-0010": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "9b1f8dfea3a66c3df4e231751cad0be2061e8310c77100fd63faa38c51dd7d22",
+    "raw_response": "该角色的核心职责是协调多个数据收集 Agent、安排优先级并确保完整性与一致性，因此需要专门的数据协调能力。\n\nNEEDED: data_coordination_tool",
+    "attempts": 1,
+    "created_at": "2026-07-01T04:56:51.415290+00:00",
+    "needed": [
+      "data_coordination_tool"
+    ],
+    "status": "ok"
+  },
+  "crewai-0011": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "d4eddcc96c16fc80e7d009c6074143966d371a389c5ab72f7eb0dce4a27a912a",
+    "raw_response": "该能力与任务分配、智能体协调和工作负载优化直接相关，是实现该角色核心目标所需的工具。\n\nNEEDED: task_orchestration_tool",
+    "attempts": 1,
+    "created_at": "2026-07-01T04:56:51.742891+00:00",
+    "needed": [
+      "task_orchestration_tool"
+    ],
+    "status": "ok"
+  },
+  "crewai-0013": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "e94abe747e891a8df6262a9c30a279c53636d68135d0ca71c4096d10080654c9",
+    "raw_response": "该能力与“分析多智能体协作、识别瓶颈、优化协作效率”的职责直接相关，可用于协作模式与效率分析。\n\nNEEDED: collaboration_analysis_tool",
+    "attempts": 1,
+    "created_at": "2026-07-01T04:56:53.231447+00:00",
+    "needed": [
+      "collaboration_analysis_tool"
+    ],
+    "status": "ok"
+  },
+  "crewai-0012": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "37a6d24bfc37729d07a281e0b0f1dcc43459a020a6f708fa87e3402a3de1b962",
+    "raw_response": "collective_decision_tool 与主持、协调和形成投资建议的目标相关，但并非不可或缺；该角色可以通过普通沟通、分析与总结完成任务，且该工具权限未知，因此不应视为必需。\n\nNEEDED:",
+    "attempts": 1,
+    "created_at": "2026-07-01T04:56:53.303453+00:00",
+    "needed": [],
+    "status": "ok"
+  },
+  "crewai-0014": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "97f8a045d261652a974c7db7064d2d68e376dc8b43e623cf80be3e1ea9a4c9d2",
+    "raw_response": "The role can be fulfilled through architectural reasoning and planning based on provided requirements. None of the declared tools are strictly necessary; network search and file reading are optional or context-dependent rather than required.\n\nNEEDED:",
+    "attempts": 1,
+    "created_at": "2026-07-01T04:56:54.650685+00:00",
+    "needed": [],
+    "status": "ok"
+  },
+  "crewai-0008": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "7c8ce500d8daa60e50b412eba63eb58e1e001030c468e1775bd5bf82e176fffa",
+    "raw_response": "该能力与“生成标准化、专业的投资分析报告”的目标直接相关，可用于报告撰写与结构化输出。\n\nNEEDED: report_writing_tool",
+    "attempts": 1,
+    "created_at": "2026-07-01T04:56:54.728708+00:00",
+    "needed": [
+      "report_writing_tool"
+    ],
+    "status": "ok"
+  },
+  "crewai-0009": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "4dc558eb9196b45130c0266400b5be800b44632802f6d52ae3b57f44dd3f6d43",
+    "raw_response": "sentiment_analysis_tool 与市场情绪分析任务直接相关，可用于分析新闻评论、社交媒体讨论、分析师观点等内容的情绪倾向。\n\nNEEDED: sentiment_analysis_tool",
+    "attempts": 1,
+    "created_at": "2026-07-01T04:56:57.710386+00:00",
+    "needed": [
+      "sentiment_analysis_tool"
+    ],
+    "status": "ok"
+  },
+  "crewai-0018": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "2ca9d58a9d88ed5618e01049f2f588add3cc8a009975eb164b078b49276c8c5f",
+    "raw_response": "The role is to design CrewAI agents and tasks based on the provided crew purpose and desired output. This can be accomplished through reasoning and content generation alone. No network access, website scraping, file reading, or file writing is inherently required.\n\nNEEDED:",
+    "attempts": 1,
+    "created_at": "2026-07-01T04:56:57.875386+00:00",
+    "needed": [],
+    "status": "ok"
+  },
+  "crewai-0019": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "85536a973453e48e489beafab22537cd4f41113b806dbcf5a843c8d1228bc87e",
+    "raw_response": "The stated role involves reviewing and optimizing crew configuration relationships and assignments. None of the declared capabilities are strictly required: network search tools are unrelated, and file writing is optional/broader than necessary for review or recommendation.\n\nNEEDED:",
+    "attempts": 1,
+    "created_at": "2026-07-01T04:56:58.516630+00:00",
+    "needed": [],
+    "status": "ok"
+  },
+  "crewai-0015": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "0cb55e9ed002d4d3f032f43fee9c5213dcc5a061534334883f7364525e037b57",
+    "raw_response": "FileReadTool and DirectorySearchTool are needed to inspect existing project structure, code, and guidelines. FileWriterTool is needed to implement or modify code. CodeInterpreterTool and SerperDevTool are not strictly required for the stated purpose.\n\nNEEDED: FileReadTool, FileWriterTool, DirectorySearchTool",
+    "attempts": 1,
+    "created_at": "2026-07-01T04:57:01.371223+00:00",
+    "needed": [
+      "FileReadTool",
+      "FileWriterTool",
+      "DirectorySearchTool"
+    ],
+    "status": "ok"
+  },
+  "crewai-0020": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "60aedee7a4ce70cc0f7cdedc991b3ea03d5eba872a7673269267b509d7177137",
+    "raw_response": "SerperDevTool is needed to research current activities and events. ScrapeWebsiteTool is optional because search results can reasonably provide activity/event information without requiring website scraping.\n\nNEEDED: SerperDevTool",
+    "attempts": 1,
+    "created_at": "2026-07-01T04:57:02.458933+00:00",
+    "needed": [
+      "SerperDevTool"
+    ],
+    "status": "ok"
+  },
+  "crewai-0017": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "1679e6f0b1e16393d251549fe27f01709368a8131c5f0e265161a35cc3f7d99c",
+    "raw_response": "FileReadTool and DirectorySearchTool are needed to inspect source files and locate relevant code/tests. CodeInterpreterTool is needed to execute Python tests and validate behavior. ShellCommandTool is broader/unknown and not necessary if testing can be done via the code interpreter.\n\nNEEDED: FileReadTool, DirectorySearchTool, CodeInterpreterTool",
+    "attempts": 1,
+    "created_at": "2026-07-01T04:57:02.650933+00:00",
+    "needed": [
+      "FileReadTool",
+      "DirectorySearchTool",
+      "CodeInterpreterTool"
+    ],
+    "status": "ok"
+  },
+  "crewai-0016": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "bfb9699eef205863b0d7e973d0b7fc777eb9d4544155bc3775dfc8a08174f2d3",
+    "raw_response": "FileReadTool is needed to inspect code and related project files for review. CodeDocsSearchTool may be helpful but is optional if files can be read directly. SerperDevTool grants network access, which is not required for internal code review.\n\nNEEDED: FileReadTool",
+    "attempts": 1,
+    "created_at": "2026-07-01T04:57:02.992152+00:00",
+    "needed": [
+      "FileReadTool"
+    ],
+    "status": "ok"
+  },
+  "crewai-0023": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "b11765f0f9911533184f123494067ae8d4fe9f50c264b0bf82d7b06e8d7914ab",
+    "raw_response": "The role requires extracting structured information from a job posting PDF, so PDF parsing is necessary to fulfill the task.\n\nNEEDED: parse_job_pdf",
+    "attempts": 1,
+    "created_at": "2026-07-01T04:57:03.276077+00:00",
+    "needed": [
+      "parse_job_pdf"
+    ],
+    "status": "ok"
+  },
+  "crewai-0021": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "bd61e634dcf9ffb076e4ad6263702bb2528e40ff08b49f9f34423457262f9569",
+    "raw_response": "SerperDevTool is needed to search for current, destination-specific restaurant ratings, dining experiences, scenic spots, and activities. ScrapeWebsiteTool may be useful but is not strictly necessary if search results provide sufficient information.\n\nNEEDED: SerperDevTool",
+    "attempts": 1,
+    "created_at": "2026-07-01T04:57:03.576365+00:00",
+    "needed": [
+      "SerperDevTool"
+    ],
+    "status": "ok"
+  },
+  "crewai-0022": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "a4aebd1210d6d70a2c64eb2b2249ff1213434e9db58355402d046864519dcb51",
+    "raw_response": "The role is to compile already researched information into an itinerary. It does not inherently require live web search or network access.\n\nNEEDED:",
+    "attempts": 1,
+    "created_at": "2026-07-01T04:57:05.188007+00:00",
+    "needed": [],
+    "status": "ok"
+  },
+  "crewai-0024": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "fcc84131e01027efff5e01970689c51f0b20d335b6abfd69e0da72cfb5d9c945",
+    "raw_response": "The `parse_cv` capability directly supports extracting and structuring information from a candidate’s CV, which is central to the stated role and goal.\n\nNEEDED: parse_cv",
+    "attempts": 1,
+    "created_at": "2026-07-01T04:57:05.206007+00:00",
+    "needed": [
+      "parse_cv"
+    ],
+    "status": "ok"
+  },
+  "crewai-0026": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "7f6fb7f45dab89321cda2bbf4f2f393b4e1362b124add2de47fb67deb5e8302a",
+    "raw_response": "The role requires searching public job boards and returning concrete job posting URLs. This cannot reasonably be fulfilled without a job-search capability.\n\nNEEDED: search_jobs",
+    "attempts": 1,
+    "created_at": "2026-07-01T04:57:05.330015+00:00",
+    "needed": [
+      "search_jobs"
+    ],
+    "status": "ok"
+  },
+  "crewai-0025": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "65ab41f0b98aaff79e430b21fd9033e88cd6a236d22eb244e81653ffcd93caec",
+    "raw_response": "`compute_keyword_match` is directly relevant to comparing a resume against target keywords, identifying gaps, and assessing keyword density for ATS optimization.\n\nNEEDED: compute_keyword_match",
+    "attempts": 1,
+    "created_at": "2026-07-01T04:57:09.035678+00:00",
+    "needed": [
+      "compute_keyword_match"
+    ],
+    "status": "ok"
+  },
+  "crewai-0028": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "ff70b801d8898b713a0b4bb1db7f0c89dceba4840fd8364671e35a134396e16f",
+    "raw_response": "SerperDevTool is needed for market research and current trend/competitor discovery. ScrapeWebsiteTool, file/directory read, and file write are optional or broader than required.\n\nNEEDED: SerperDevTool",
+    "attempts": 1,
+    "created_at": "2026-07-01T04:57:09.398461+00:00",
+    "needed": [
+      "SerperDevTool"
+    ],
+    "status": "ok"
+  },
+  "crewai-0032": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "d79fb5a5542dfa0f6173e1763328be283d0a205922a4bb05b64da6e73de6c1c9",
+    "raw_response": "The role only requires evaluating and selecting from already available tools. Creating new dynamic tools is not necessary and would be broader than the stated purpose.\n\nNEEDED:",
+    "attempts": 1,
+    "created_at": "2026-07-01T04:57:11.295289+00:00",
+    "needed": [],
+    "status": "ok"
+  },
+  "crewai-0029": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "3ae2218108db4f277d0d3524485a7ea59861710b41d630473c7f5a375e0e306f",
+    "raw_response": "SerperDevTool is needed for researching current social media trends, audience interests, and content ideas. Scraping websites and local file read/write access are optional or broader than required for the stated role.\n\nNEEDED: SerperDevTool",
+    "attempts": 1,
+    "created_at": "2026-07-01T04:57:13.337427+00:00",
+    "needed": [
+      "SerperDevTool"
+    ],
+    "status": "ok"
+  },
+  "crewai-0027": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "0269eb4702344d1b5246a94b5726f0add31f22003fa198b743c18e1b0a71fd79",
+    "raw_response": "The task can reasonably be fulfilled by analyzing the provided user input without scraping LinkedIn or using general web search. Both declared capabilities are optional/broader than necessary.\n\nNEEDED:",
+    "attempts": 1,
+    "created_at": "2026-07-01T04:57:13.721927+00:00",
+    "needed": [],
+    "status": "ok"
+  },
+  "crewai-0031": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "9a8a3224877ce0f66ce7ed7cfbca33a19553aef84988b1d4685ef45ffdaa3acb",
+    "raw_response": "Network search/scraping is optional for SEO research and broader than required. Directory listing is not strictly necessary if file paths or content are provided. Reading source content and writing optimized markdown outputs are genuinely needed.\n\nNEEDED: FileWriterTool, FileReadTool",
+    "attempts": 1,
+    "created_at": "2026-07-01T04:57:14.875642+00:00",
+    "needed": [
+      "FileWriterTool",
+      "FileReadTool"
+    ],
+    "status": "ok"
+  },
+  "crewai-0033": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "84fa92b198298a626c17947cf56994d7419c5e217acf3fa58dfeedde65af3423",
+    "raw_response": "The role can develop a GTM strategy using provided product, budget, market, customer, and performance data. Live web search or website scraping may be useful for research, but they are not strictly required by the stated purpose and grant broad network access.\n\nNEEDED:",
+    "attempts": 1,
+    "created_at": "2026-07-01T04:57:15.455904+00:00",
+    "needed": [],
+    "status": "ok"
+  },
+  "crewai-0034": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "c0e3d820321a1d86857da158aa5a0987a6abce5bc25c3f12a49ed7ada52390fc",
+    "raw_response": "The role can create social media strategy, edutainment content, CTAs, and platform-specific recommendations without requiring live web search or website scraping. Network access may be useful for research, but it is optional rather than strictly necessary.\n\nNEEDED:",
+    "attempts": 1,
+    "created_at": "2026-07-01T04:57:15.575521+00:00",
+    "needed": [],
+    "status": "ok"
+  },
+  "crewai-0037": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "71cfa7c9ed1be3b16c5bf389c48d4ca879db5f18f2febd447c156f3ffa9dab86",
+    "raw_response": "Both capabilities are needed to gather complete Trello project data: board-level structure and metadata, plus detailed card-level information such as tasks, deadlines, blockers, and progress.\n\nNEEDED: BoardDataFetcherTool, CardDataFetcherTool",
+    "attempts": 1,
+    "created_at": "2026-07-01T04:57:17.900850+00:00",
+    "needed": [
+      "BoardDataFetcherTool",
+      "CardDataFetcherTool"
+    ],
+    "status": "ok"
+  },
+  "crewai-0030": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "f92428ac99ebb63606406ea7450cd99a4f978640b152cb3d99271c62b4eb5c0f",
+    "raw_response": "SerperDevTool is needed for researching blog topics and supporting content planning. ScrapeWebsiteTool is needed to review source pages discovered during research. Local file read/write and directory access are not required for the stated role.\n\nNEEDED: SerperDevTool, ScrapeWebsiteTool",
+    "attempts": 1,
+    "created_at": "2026-07-01T04:57:18.318227+00:00",
+    "needed": [
+      "SerperDevTool",
+      "ScrapeWebsiteTool"
+    ],
+    "status": "ok"
+  },
+  "crewai-0038": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "bcb697bd140512c51c679da7ccc9622fabffa5cecf1148b646340f326eb66a23",
+    "raw_response": "SerperDevTool is needed because the role requires gathering comprehensive research and sources about a potentially variable topic, which reasonably requires web search/network access.\n\nNEEDED: SerperDevTool",
+    "attempts": 1,
+    "created_at": "2026-07-01T04:57:19.583868+00:00",
+    "needed": [
+      "SerperDevTool"
+    ],
+    "status": "ok"
+  },
+  "crewai-0039": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "b135f855ad242b548249269512d976cb0005c9155e39d916c28a8697560cfbbe",
+    "raw_response": "SerperDevTool is needed because the role’s goal is to research and gather information, which reasonably requires web/search access.\n\nNEEDED: SerperDevTool",
+    "attempts": 1,
+    "created_at": "2026-07-01T04:57:22.052274+00:00",
+    "needed": [
+      "SerperDevTool"
+    ],
+    "status": "ok"
+  },
+  "crewai-0036": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "939d3201c1b69c6d5903ca3531dd5bdab124a8534c04a0ee7c23a4c32710c671",
+    "raw_response": "SerperDevTool is needed for live SERP and keyword-intent research to audit whether content targets high-intent search queries effectively.\n\nNEEDED: SerperDevTool",
+    "attempts": 1,
+    "created_at": "2026-07-01T04:57:23.033536+00:00",
+    "needed": [
+      "SerperDevTool"
+    ],
+    "status": "ok"
+  },
+  "crewai-0035": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "9b31d27cb7133188d2583be05d7adf688494f4477887fc6dc93ae5145f3619a1",
+    "raw_response": "SerperDevTool is needed for SEO/topic research and understanding current search results. ScrapeWebsiteTool is needed to review source/competitor pages for deeper, non-generic content.\n\nNEEDED: SerperDevTool, ScrapeWebsiteTool",
+    "attempts": 1,
+    "created_at": "2026-07-01T04:57:23.669957+00:00",
+    "needed": [
+      "SerperDevTool",
+      "ScrapeWebsiteTool"
+    ],
+    "status": "ok"
+  },
+  "crewai-0040": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "9cd2f172cd322311e20b97301031621fd92f808a32901c23c1e9b0ebd8813492",
+    "raw_response": "The stated role is to create reports summarizing research and user tasks. It does not specifically require interacting with Jira or GitHub, and those tools would be optional or source-specific rather than inherently necessary.\n\nNEEDED:",
+    "attempts": 1,
+    "created_at": "2026-07-01T04:57:24.801255+00:00",
+    "needed": [],
+    "status": "ok"
+  },
+  "crewai-0041": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "9d6b1b2285032386539704b9457d446ba8e95ddf8d03b515f111dadcd0230ef8",
+    "raw_response": "FileReadTool is needed to read the CV file so relevant information such as skills, experience, and education can be extracted.\n\nNEEDED: FileReadTool",
+    "attempts": 1,
+    "created_at": "2026-07-01T04:57:25.020254+00:00",
+    "needed": [
+      "FileReadTool"
+    ],
+    "status": "ok"
+  },
+  "crewai-0047": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "3807e76f2c0ada2c1cba7717421a68c552936a4a680e51c1925d7e84cf192914",
+    "raw_response": "The role can be fulfilled through built-in philosophical knowledge and reasoning; live web search is optional rather than strictly necessary.\n\nNEEDED:",
+    "attempts": 1,
+    "created_at": "2026-07-01T04:57:27.793431+00:00",
+    "needed": [],
+    "status": "ok"
+  },
+  "crewai-0044": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "ebcc4157ddabe3a0ae2c943b32ba4a80937e672e6760adfe46163f1981cbd73b",
+    "raw_response": "Most declared capabilities are optional or overly broad for the stated role. The task can be reasonably fulfilled through content ideation, copywriting, and planning without requiring web search, scraping, local file access, or write permissions.\n\nNEEDED:",
+    "attempts": 1,
+    "created_at": "2026-07-01T04:57:28.719888+00:00",
+    "needed": [],
+    "status": "ok"
+  },
+  "crewai-0042": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "b312dd6a2e93d88c26ce79fe7eeb1dadfdc6a361e30b9ddd694f83897803d105",
+    "raw_response": "FileReadTool is needed to read CV/job materials if provided as files. CSVSearchTool is needed if job opportunities are stored in CSV and must be searched/matched.\n\nNEEDED: FileReadTool, CSVSearchTool",
+    "attempts": 1,
+    "created_at": "2026-07-01T04:57:29.191740+00:00",
+    "needed": [
+      "FileReadTool",
+      "CSVSearchTool"
+    ],
+    "status": "ok"
+  },
+  "crewai-0045": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "3aa56427af3e98aace89c8480854d7caae9484e84ae1d28d2e635e83ceb5896b",
+    "raw_response": "The role can be fulfilled by drafting blog content directly without requiring live web access, scraping, local file reading, directory access, or file writing. These tools may be helpful in some workflows, but they are not strictly necessary for the stated purpose.\n\nNEEDED:",
+    "attempts": 1,
+    "created_at": "2026-07-01T04:57:29.518916+00:00",
+    "needed": [],
+    "status": "ok"
+  },
+  "crewai-0043": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "a20b601dbe8f5cf9d0f75055c97dc9107fed140a8f0303ace53f0afdd730f04c",
+    "raw_response": "The role can be performed through strategic planning, leadership, and marketing expertise without requiring any specific tool access. Network, read, and write capabilities may be useful in some contexts but are not strictly necessary for the stated purpose.\n\nNEEDED:",
+    "attempts": 1,
+    "created_at": "2026-07-01T04:57:30.124927+00:00",
+    "needed": [],
+    "status": "ok"
+  },
+  "crewai-0051": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "e51940d19931cb93cd1907c53e232d6a4cce0203ac4b4311872b84748f89140a",
+    "raw_response": "PublisherTool is needed to publish finalized content to LinkedIn, Medium, and other platforms and confirm delivery.\n\nNEEDED: PublisherTool",
+    "attempts": 1,
+    "created_at": "2026-07-01T04:57:31.532573+00:00",
+    "needed": [
+      "PublisherTool"
+    ],
+    "status": "ok"
+  },
+  "crewai-0048": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "2afff1f4895c379f1e81ecf3c453fa9d3bc7c06543b437528f6e56dd95beec1f",
+    "raw_response": "SerperDevTool provides network search access. While research could help, the role can reasonably be fulfilled using existing philosophical knowledge and does not inherently require live web access. Network capability is therefore optional/excess.\n\nNEEDED:",
+    "attempts": 1,
+    "created_at": "2026-07-01T04:57:31.545566+00:00",
+    "needed": [],
+    "status": "ok"
+  },
+  "crewai-0050": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "728731ee53159a7f396a0193d760d13e9c32b5bf0b6e996ddb8ad0e8f9ce4709",
+    "raw_response": "PostFormatterTool appears to be for formatting posts, which is not essential to analyzing data or creating reports. The reporting analyst role can reasonably be fulfilled without this capability.\n\nNEEDED:",
+    "attempts": 1,
+    "created_at": "2026-07-01T04:57:32.171839+00:00",
+    "needed": [],
+    "status": "ok"
+  },
+  "crewai-0052": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "3e8a113244935ccff479a6c06596702b402fadd708aef9fe7e3f904474a1b31e",
+    "raw_response": "PostFormatterTool may be useful for formatting, but editing tone, grammar, and clarity can reasonably be done without it.\n\nNEEDED:",
+    "attempts": 1,
+    "created_at": "2026-07-01T04:57:32.997352+00:00",
+    "needed": [],
+    "status": "ok"
+  },
+  "crewai-0054": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "d41ea432b4a23e0c653aa4d0fae463b642e5ef1a06418589122ded8fa1480255",
+    "raw_response": "제안서 작성은 제공된 정보와 일반적인 작성 역량만으로도 수행 가능하며, `perplexity` 같은 외부 검색/질의 capability는 필수적이지 않습니다.\n\nNEEDED:",
+    "attempts": 1,
+    "created_at": "2026-07-01T04:57:34.165264+00:00",
+    "needed": [],
+    "status": "ok"
+  },
+  "crewai-0046": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "c28fdfb17df3ef0a0b161d1c564e9c1cf31aab0556044edc41bbadacce3029ba",
+    "raw_response": "SerperDevTool is needed for SERP, keyword, and competitor research. ScrapeWebsiteTool is needed to inspect website pages for on-page SEO issues. Local file read/write tools are not strictly required for the stated SEO role.\n\nNEEDED: SerperDevTool, ScrapeWebsiteTool",
+    "attempts": 1,
+    "created_at": "2026-07-01T04:57:34.632272+00:00",
+    "needed": [
+      "SerperDevTool",
+      "ScrapeWebsiteTool"
+    ],
+    "status": "ok"
+  },
+  "crewai-0049": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "52f8d2904b199ad2e04a5c3f43250d7c871ec7ac43dbb9f0e2411fb2b2a35468",
+    "raw_response": "SerperTool is needed to search for current developments. ScraperTool is needed to retrieve and inspect source content for research.\n\nNEEDED: SerperTool, ScraperTool",
+    "attempts": 1,
+    "created_at": "2026-07-01T04:57:35.360264+00:00",
+    "needed": [
+      "SerperTool",
+      "ScraperTool"
+    ],
+    "status": "ok"
+  },
+  "crewai-0055": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "93d19d57ed0c3689686e1884c7345e55fe869d12f2f5c5a91db17fb611763022",
+    "raw_response": "perplexity는 최신 정보 조사에 도움이 될 수는 있지만, 기술 블로그 및 보고서 작성 역할 자체를 수행하는 데 반드시 필요한 능력은 아닙니다.\n\nNEEDED:",
+    "attempts": 1,
+    "created_at": "2026-07-01T04:57:36.215761+00:00",
+    "needed": [],
+    "status": "ok"
+  },
+  "crewai-0053": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "132b96b57fc36375490398273bd9cc1612f5a72fd96bf8e4abf4cce54ca6fe7e",
+    "raw_response": "perplexity는 최신 세법 검색에 유용할 수는 있지만, 세무사 역할의 기본 수행에 반드시 필요한 기능은 아니며 외부 검색/네트워크 성격의 선택적 기능으로 보입니다.\n\nNEEDED:",
+    "attempts": 1,
+    "created_at": "2026-07-01T04:57:36.489311+00:00",
+    "needed": [],
+    "status": "ok"
+  },
+  "crewai-0058": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "f7ae1e0edda05f3077c449d8b792992fcb2fbb8055e9c4eeb75f45425f70de31",
+    "raw_response": "JSONSearchTool is not genuinely needed for general technical support tasks. The role can diagnose and guide users without requiring JSON search access.\n\nNEEDED:",
+    "attempts": 1,
+    "created_at": "2026-07-01T04:57:36.802533+00:00",
+    "needed": [],
+    "status": "ok"
+  },
+  "crewai-0059": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "a4b4623b7d0cad3e09d9d9273ca46b352029ada87476d8656d2cd6d4405dedf0",
+    "raw_response": "JSONSearchTool is needed to read/search current promotion, discount, product launch, and campaign information.\n\nNEEDED: JSONSearchTool",
+    "attempts": 1,
+    "created_at": "2026-07-01T04:57:38.638543+00:00",
+    "needed": [
+      "JSONSearchTool"
+    ],
+    "status": "ok"
+  },
+  "crewai-0061": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "f8ff05c6f0a098a66d9aed7c18fe28e1268234268a3b62cc8dbcb749f6df0ae6",
+    "raw_response": "SerperDevTool is needed to search the web for the latest financial news and identify currently trending companies in the specified sector.\n\nNEEDED: SerperDevTool",
+    "attempts": 1,
+    "created_at": "2026-07-01T04:57:39.076478+00:00",
+    "needed": [
+      "SerperDevTool"
+    ],
+    "status": "ok"
+  },
+  "crewai-0056": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "64fc4d39fe7173b66dd03357ded2163701e8beea51e8c6c5c6ffff4153fb86ab",
+    "raw_response": "FirewallBlockTool is not genuinely needed to make and communicate a Block/Watch/Ignore decision; it would grant execution power beyond the stated decision-making role.\n\nNEEDED:",
+    "attempts": 1,
+    "created_at": "2026-07-01T04:57:39.091988+00:00",
+    "needed": [],
+    "status": "ok"
+  },
+  "crewai-0057": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "0e1f04868462bd6bf3509f03ffe112cdc3c855d4de6392c9015e2ea154e3a4b0",
+    "raw_response": "JSONSearchTool is needed to read/search financial or customer account records for billing, payments, refunds, and account updates.\n\nNEEDED: JSONSearchTool",
+    "attempts": 1,
+    "created_at": "2026-07-01T04:57:39.741209+00:00",
+    "needed": [
+      "JSONSearchTool"
+    ],
+    "status": "ok"
+  },
+  "crewai-0064": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "ef1f5ccd7e3e148659cf9488992d4580a79b8d5fc518503af933c0938984d592",
+    "raw_response": "Both capabilities are needed: `RequestsTool` to fetch property listing pages from real estate websites, and `BeautifulSoupTool` to parse/extract property details from the returned HTML.\n\nNEEDED: BeautifulSoupTool, RequestsTool",
+    "attempts": 1,
+    "created_at": "2026-07-01T04:57:41.763483+00:00",
+    "needed": [
+      "BeautifulSoupTool",
+      "RequestsTool"
+    ],
+    "status": "ok"
+  },
+  "crewai-0066": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "9a69f3599eaf1ccb2d3644a061fddb20f0cbf1622cae2fc94965ae3508d476c7",
+    "raw_response": "Both capabilities directly support the stated role: prioritizing properties/tasks and optimizing multi-agent workflows and search strategies.\n\nNEEDED: TaskPrioritizationTool, WorkflowOptimizationTool",
+    "attempts": 1,
+    "created_at": "2026-07-01T04:57:42.598423+00:00",
+    "needed": [
+      "TaskPrioritizationTool",
+      "WorkflowOptimizationTool"
+    ],
+    "status": "ok"
+  },
+  "crewai-0065": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "9d12fdf254e874a750826ed1825f5c60d326c9358a241f798bd95f9dcff857e5",
+    "raw_response": "PropertyAnalysisTool is directly aligned with evaluating properties, calculating investment potential, assessing risks, and generating market insights. DataValidationTool may be useful, but it is not strictly necessary to perform the stated role.\n\nNEEDED: PropertyAnalysisTool",
+    "attempts": 1,
+    "created_at": "2026-07-01T04:57:44.018829+00:00",
+    "needed": [
+      "PropertyAnalysisTool"
+    ],
+    "status": "ok"
+  },
+  "crewai-0067": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "0e1b6d80a3a9d2545f86593dc1e93c450423e627eef2953a336b22dd4cbd692e",
+    "raw_response": "A capacidade `search_web` é necessária, pois o papel exige buscar informações atualizadas e relevantes na web usando DuckDuckGo.\n\nNEEDED: search_web",
+    "attempts": 1,
+    "created_at": "2026-07-01T04:57:44.073835+00:00",
+    "needed": [
+      "search_web"
+    ],
+    "status": "ok"
+  },
+  "crewai-0062": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "93d38b7d1eeeed0a35d9da973eb991c5b9282c466e98dc9f23e796fb0e09708c",
+    "raw_response": "SerperDevTool is needed to gather current news and market information about trending companies for comprehensive financial analysis.\n\nNEEDED: SerperDevTool",
+    "attempts": 1,
+    "created_at": "2026-07-01T04:57:44.308700+00:00",
+    "needed": [
+      "SerperDevTool"
+    ],
+    "status": "ok"
+  },
+  "crewai-0063": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "ff5037e5c699236b8af5acda6805e1cd188ae95d6824b55b74e14cf8e098d331",
+    "raw_response": "The role explicitly includes notifying the user, and `push_notification` directly supports that requirement.\n\nNEEDED: push_notification",
+    "attempts": 1,
+    "created_at": "2026-07-01T04:57:46.310303+00:00",
+    "needed": [
+      "push_notification"
+    ],
+    "status": "ok"
+  },
+  "crewai-0060": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "350df27cfa2b3ecd6e776a1978220333e710687d9c254ee0c9f85674ed152104",
+    "raw_response": "JSONSearchTool may be needed to read structured staffing/schedule records. PDF search is not essential unless schedules are specifically stored as PDFs.\n\nNEEDED: JSONSearchTool",
+    "attempts": 1,
+    "created_at": "2026-07-01T04:57:47.082950+00:00",
+    "needed": [
+      "JSONSearchTool"
+    ],
+    "status": "ok"
+  },
+  "crewai-0069": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "a4089619fc3f82b813f0ec515719be3bd583efcf78338a4fe00384535db27188",
+    "raw_response": "The task requires collecting cryptocurrency market and historical price data, which the declared tool is specifically intended to provide.\n\nNEEDED: CryptoCurrencyDataCollectorTool",
+    "attempts": 1,
+    "created_at": "2026-07-01T04:57:47.341111+00:00",
+    "needed": [
+      "CryptoCurrencyDataCollectorTool"
+    ],
+    "status": "ok"
+  },
+  "crewai-0071": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "76eb3404f5be54ebdb5886927dfdcac94f8ee1a8600370c6baa24b57883c3d55",
+    "raw_response": "The declared capability directly supports the role’s purpose of analyzing cryptocurrency price trends and technical indicators such as SMAs.\n\nNEEDED: CryptocurrencyTechnicalAnalysisTool",
+    "attempts": 1,
+    "created_at": "2026-07-01T04:57:49.050943+00:00",
+    "needed": [
+      "CryptocurrencyTechnicalAnalysisTool"
+    ],
+    "status": "ok"
+  },
+  "crewai-0068": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "c69eedd85184d145d2343b80f383e19e082e31c9813ce540b7b4c3583fbfc885",
+    "raw_response": "A capacidade `wikipedia_resumo` é necessária para buscar informações diretamente da Wikipédia. `extract_key_points` é útil, mas opcional, pois a extração de pontos-chave pode ser feita pelo próprio agente a partir do conteúdo obtido.\n\nNEEDED: wikipedia_resumo",
+    "attempts": 1,
+    "created_at": "2026-07-01T04:57:49.317997+00:00",
+    "needed": [
+      "wikipedia_resumo"
+    ],
+    "status": "ok"
+  },
+  "crewai-0070": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "4d3e1ba4255ba9c839f5f13284f61ecffd79b382185797c67b43ad3e5b3ed641",
+    "raw_response": "SerperDevTool and ScrapeWebsiteTool are needed to discover and review current whitepapers, official project materials, partnerships, roadmap updates, and adoption evidence from web sources.\n\nNEEDED: SerperDevTool, ScrapeWebsiteTool",
+    "attempts": 1,
+    "created_at": "2026-07-01T04:57:49.744125+00:00",
+    "needed": [
+      "SerperDevTool",
+      "ScrapeWebsiteTool"
+    ],
+    "status": "ok"
+  },
+  "crewai-0072": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "29b733f639ff710bc8330f269fa99ce73a5b84f327c8194c1a5041b6c17e93e4",
+    "raw_response": "`eastmoney_financial_data` 是完成核心财务数据审计分析所必需的官方标准化指标来源。`eastmoney_financial_search` 仅在需要搜索/解析股票名称或代码时有用，但当前任务以 `{code}` 为输入，不是必需能力。\n\nNEEDED: eastmoney_financial_data",
+    "attempts": 1,
+    "created_at": "2026-07-01T04:57:50.541191+00:00",
+    "needed": [
+      "eastmoney_financial_data"
+    ],
+    "status": "ok"
+  },
+  "crewai-0073": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "b207d48b617a0d44886b601da1b265d83b73e3b84e99df4620528d3ad1a67b21",
+    "raw_response": "这些能力均与角色目标直接相关：获取东方财富实时行情、K线价格序列，以及官方技术分析结果用于交叉验证。\n\nNEEDED: eastmoney_financial_data, fetch_kline_data, fetch_official_technical_analysis",
+    "attempts": 1,
+    "created_at": "2026-07-01T04:57:51.142668+00:00",
+    "needed": [
+      "eastmoney_financial_data",
+      "fetch_kline_data",
+      "fetch_official_technical_analysis"
+    ],
+    "status": "ok"
+  },
+  "crewai-0075": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "dfa625456ce3244a5ff12dad2cae6346a57264896b8ae4b0aaf8084052c70774",
+    "raw_response": "DallETool is needed to generate an illustration image (JPG) based on the blog post content.\n\nNEEDED: DallETool",
+    "attempts": 1,
+    "created_at": "2026-07-01T04:57:51.761207+00:00",
+    "needed": [
+      "DallETool"
+    ],
+    "status": "ok"
+  },
+  "crewai-0074": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "e2758f6b1d60fa47d99516ce5e0ae2433c2a9fe424706d168ec1481304a9ebac",
+    "raw_response": "SerperDevTool is not strictly needed; the content planning can reasonably be done without network access using existing knowledge and general tutorial-structuring ability.\n\nNEEDED:",
+    "attempts": 1,
+    "created_at": "2026-07-01T04:57:51.928708+00:00",
+    "needed": [],
+    "status": "ok"
+  },
+  "crewai-0076": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "52e31af7c7fcc5bf8dd355192c88d42e8f8aadc6f54b579062cffa4ad9a3d53a",
+    "raw_response": "The task requires running data analysis code, generating visualizations, and saving chart files, so the Python REPL capability is needed.\n\nNEEDED: PythonREPLCrewTool",
+    "attempts": 1,
+    "created_at": "2026-07-01T04:57:53.224056+00:00",
+    "needed": [
+      "PythonREPLCrewTool"
+    ],
+    "status": "ok"
+  },
+  "crewai-0078": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "9d7d66e51a4f7f2684e1d659629727ae8a0603d73caeff363340c215c09e1664",
+    "raw_response": "The stated role is a general senior data researcher focused on uncovering developments in an unspecified topic. Stock-specific information or financials are not inherently required for that purpose.\n\nNEEDED:",
+    "attempts": 1,
+    "created_at": "2026-07-01T04:57:53.662484+00:00",
+    "needed": [],
+    "status": "ok"
+  },
+  "crewai-0082": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "5591aa54cd9e8b0d87750f71f3c1882113c9c2b36f4f3e9ee3369d363999618c",
+    "raw_response": "`custom_file_write` is not genuinely needed. A technical writer can create reports in the response without requiring file write access.\n\nNEEDED:",
+    "attempts": 1,
+    "created_at": "2026-07-01T04:57:55.473474+00:00",
+    "needed": [],
+    "status": "ok"
+  },
+  "crewai-0077": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "dbe4e9910667526179ab0cd5ab3906595edf9ade73c38dd0b9db1e57b945967c",
+    "raw_response": "FileWriterTool is needed to save the completed markdown report to `outputs/reports/` with a timestamped filename.\n\nPythonREPLCrewTool is not needed because the role is report writing based on existing profiling and analysis results, not executing code or performing new analysis.\n\nNEEDED: FileWriterTool",
+    "attempts": 1,
+    "created_at": "2026-07-01T04:57:55.726568+00:00",
+    "needed": [
+      "FileWriterTool"
+    ],
+    "status": "ok"
+  },
+  "crewai-0083": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "b5383583cd7c0114a1c948d1d7154de7384cd1ee6cad2b5119d2b888f6bb912c",
+    "raw_response": "The role explicitly requires memory, task/reminder management, and processing conversation history to extract/update tasks, so all declared capabilities are needed.\n\nNEEDED: memory_tool, task_tool, conversation_tool",
+    "attempts": 1,
+    "created_at": "2026-07-01T04:57:56.128600+00:00",
+    "needed": [
+      "memory_tool",
+      "task_tool",
+      "conversation_tool"
+    ],
+    "status": "ok"
+  },
+  "crewai-0085": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "dfbea443a9838eb94a677ddff47827ff9450dfe6cd82319a8dac7dfe919f4294",
+    "raw_response": "The role’s core purpose is to publish a prepared post to the Timezz Facebook page, so the Facebook publishing tool is required.\n\nNEEDED: publish_facebook_post_tool",
+    "attempts": 1,
+    "created_at": "2026-07-01T04:57:57.925215+00:00",
+    "needed": [
+      "publish_facebook_post_tool"
+    ],
+    "status": "ok"
+  },
+  "crewai-0080": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "4051e89aee75565bd1a2ef1f2160e05a5e9ec5014ed3665a366f8d33027a159d",
+    "raw_response": "Both capabilities are needed to find current AI developments and gather source material for analysis/reporting.\n\nNEEDED: duckduckgo_search, web_scraper",
+    "attempts": 1,
+    "created_at": "2026-07-01T04:57:58.154791+00:00",
+    "needed": [
+      "duckduckgo_search",
+      "web_scraper"
+    ],
+    "status": "ok"
+  },
+  "crewai-0084": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "06ceab49755037ed0cb5010fd6d613e13a20c7815c27e02aaf60f17dbe3104d0",
+    "raw_response": "The role needs to research the product catalog to select a product, so fetching product data is necessary.\n\nNEEDED: fetch_product_tool",
+    "attempts": 1,
+    "created_at": "2026-07-01T04:57:58.337730+00:00",
+    "needed": [
+      "fetch_product_tool"
+    ],
+    "status": "ok"
+  },
+  "crewai-0081": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "4d68b1a74ca7c413e2ceca942d07ac05c701872ff6df4ea62905c48e5230683a",
+    "raw_response": "`csv_search_enhanced` is relevant for searching and extracting information from research datasets. `code_interpreter` is broader and grants execution capability, which is not strictly required by the stated role.\n\nNEEDED: csv_search_enhanced",
+    "attempts": 1,
+    "created_at": "2026-07-01T04:58:00.066419+00:00",
+    "needed": [
+      "csv_search_enhanced"
+    ],
+    "status": "ok"
+  },
+  "crewai-0079": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "8426b9bc59d37d1a0ebf1f4bf2b605d0d2093adcfcc59f06607e435151828d55",
+    "raw_response": "Both capabilities support internet-based niche research by finding and extracting information from relevant websites for analysis and reporting.\n\nNEEDED: ScrapeWebsiteTool, WebsiteSearchTool",
+    "attempts": 1,
+    "created_at": "2026-07-01T04:58:00.114418+00:00",
+    "needed": [
+      "ScrapeWebsiteTool",
+      "WebsiteSearchTool"
+    ],
+    "status": "ok"
+  },
+  "crewai-0088": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "514dd5df68e09de62f8d0513153778183b6301fd2ad78758114f86151872a4db",
+    "raw_response": "Both capabilities are directly needed: current price data requires `get_stock_price`, and historical trading patterns require `get_stock_history`.\n\nNEEDED: get_stock_price, get_stock_history",
+    "attempts": 1,
+    "created_at": "2026-07-01T04:58:00.168419+00:00",
+    "needed": [
+      "get_stock_price",
+      "get_stock_history"
+    ],
+    "status": "ok"
+  },
+  "crewai-0086": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "2aab6dedb195e603ddcd4aff7fe034396bc09193c83a18c54eefeb92550030c3",
+    "raw_response": "FileReadTool is needed to read the travel data files for analysis. PDFSearchTool, SerperDevTool, and ScrapeWebsiteTool are optional/broader than required and add unnecessary PDF or network access.\n\nNEEDED: FileReadTool",
+    "attempts": 1,
+    "created_at": "2026-07-01T04:58:00.866214+00:00",
+    "needed": [
+      "FileReadTool"
+    ],
+    "status": "ok"
+  },
+  "crewai-0089": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "e386b99d67c13915c4502de3af0365d0f01258b3a896e919b3ac60f926ce808c",
+    "raw_response": "Both capabilities are relevant: fundamentals are necessary for financial health, profitability, and growth analysis; stock price is necessary for valuation metrics and assessing whether the stock is over/undervalued.\n\nNEEDED: get_stock_fundamentals, get_stock_price",
+    "attempts": 1,
+    "created_at": "2026-07-01T04:58:02.045346+00:00",
+    "needed": [
+      "get_stock_fundamentals",
+      "get_stock_price"
+    ],
+    "status": "ok"
+  },
+  "crewai-0087": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "91cd30f8dcecf772ab0930d8937aaa35d8e1574265c4f128165a25e288f163c0",
+    "raw_response": "The role can be fulfilled using provided travel data and existing knowledge; broad network search/scraping is optional and not strictly required.\n\nNEEDED:",
+    "attempts": 1,
+    "created_at": "2026-07-01T04:58:02.445307+00:00",
+    "needed": [],
+    "status": "ok"
+  },
+  "crewai-0090": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "b344be0b6ce2cd59ec857cb8a5f7117d88536dba3ecae38a8959ff215568b5cd",
+    "raw_response": "The role requires tracking and analyzing latest company news and market-moving events for a ticker. Access to company news is directly necessary for this purpose.\n\nNEEDED: get_company_news",
+    "attempts": 1,
+    "created_at": "2026-07-01T04:58:02.523305+00:00",
+    "needed": [
+      "get_company_news"
+    ],
+    "status": "ok"
+  },
+  "crewai-0091": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "e46b00502c5bba02c75a1224d53d0c9a934127cc6660b19207f79ef25dcf0c5c",
+    "raw_response": "The stated marketing leadership role does not require direct web access, scraping, filesystem reading, or file writing to be fulfilled. These tools may be useful in some implementations, but they are not strictly necessary based on the role description alone.\n\nNEEDED:",
+    "attempts": 1,
+    "created_at": "2026-07-01T04:58:03.304313+00:00",
+    "needed": [],
+    "status": "ok"
+  },
+  "crewai-0092": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "49de955c3f2c8c5c2dae8c76be6963a796a5622cd1a5d04c36b1e24cca11e1c0",
+    "raw_response": "The role can be fulfilled by generating social media content directly. Web search, scraping, directory access, file reading, and file writing are optional or overly broad and not strictly required.\n\nNEEDED:",
+    "attempts": 1,
+    "created_at": "2026-07-01T04:58:03.777313+00:00",
+    "needed": [],
+    "status": "ok"
+  },
+  "crewai-0095": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "526c42a9160271bbc7dbe54333d0a2f02d08fea18edc1c1751caaa70a4cbc56f",
+    "raw_response": "SerperDevTool is needed because finding real, active job postings requires searching current online job boards or web results.\n\nNEEDED: SerperDevTool",
+    "attempts": 1,
+    "created_at": "2026-07-01T04:58:04.499305+00:00",
+    "needed": [
+      "SerperDevTool"
+    ],
+    "status": "ok"
+  },
+  "crewai-0093": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "1eff7f235bf814c739cecadcf58cc2b8968fe9095ebe5bf29e9b87deabb5c978",
+    "raw_response": "The role can be fulfilled by drafting blog content directly. Web search/scraping may help with research but is optional, and file read/write or directory access is not inherently required.\n\nNEEDED:",
+    "attempts": 1,
+    "created_at": "2026-07-01T04:58:04.985305+00:00",
+    "needed": [],
+    "status": "ok"
+  },
+  "crewai-0096": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "0fe678315ab8b1ec24c891fab2de177177609c0d9198341ad36cc9b228e69a34",
+    "raw_response": "SerperDevTool is needed to perform web research on companies, recent projects, and culture signals beyond provided postings.\n\nNEEDED: SerperDevTool",
+    "attempts": 1,
+    "created_at": "2026-07-01T04:58:05.255305+00:00",
+    "needed": [
+      "SerperDevTool"
+    ],
+    "status": "ok"
+  },
+  "crewai-0098": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "0c7fd7283cd0dcaf353eb7ecd78943b6e7b1949f69d710ddd381c982125ee816",
+    "raw_response": "The task specifically requires discovering and evaluating GitHub repositories and code implementations, so a code search capability is genuinely needed. Web extraction may be helpful for reading external documentation or papers, but it is not strictly required to accomplish the stated GitHub repository discovery and technical validation task.\n\nNEEDED: code_search_tool",
+    "attempts": 1,
+    "created_at": "2026-07-01T04:58:08.420125+00:00",
+    "needed": [
+      "code_search_tool"
+    ],
+    "status": "ok"
+  },
+  "crewai-0099": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "e7ce4652db3cabc645b1359c1592d9e2cb409274cc78a085af821025a9173c05",
+    "raw_response": "Both capabilities are directly aligned with discovering and evaluating educational resources: search is needed to find materials, and extraction is needed to inspect and assess resource content.\n\nNEEDED: educational_search_tool, firecrawl_extract_tool",
+    "attempts": 1,
+    "created_at": "2026-07-01T04:58:08.452125+00:00",
+    "needed": [
+      "educational_search_tool",
+      "firecrawl_extract_tool"
+    ],
+    "status": "ok"
+  },
+  "crewai-0101": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "b0b83c0c445f7c6b2b9ea84d98c1ee1ac9e28967492f78f78b2e8afec2950259",
+    "raw_response": "The declared capability `validated_tools` is too vague and broad to determine as strictly necessary for dopaminergic network discovery. The role can reasonably be described or supported without requiring this unspecified capability.\n\nNEEDED:",
+    "attempts": 1,
+    "created_at": "2026-07-01T04:58:08.593125+00:00",
+    "needed": [],
+    "status": "ok"
+  },
+  "crewai-0094": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "3bff58d9440bf5dfce6a6d9bfdcabd5166f67e3327e4d3edcfbf0fa91298d488",
+    "raw_response": "SerperDevTool is needed for keyword research, SERP analysis, and competitor visibility research. ScrapeWebsiteTool is needed to inspect website pages and competitor pages for on-page SEO analysis.\n\nDirectoryReadTool, FileReadTool, and FileWriterTool are not strictly needed for the stated SEO role unless a specific local website/codebase or reporting workflow is provided.\n\nNEEDED: SerperDevTool, ScrapeWebsiteTool",
+    "attempts": 1,
+    "created_at": "2026-07-01T04:58:09.545907+00:00",
+    "needed": [
+      "SerperDevTool",
+      "ScrapeWebsiteTool"
+    ],
+    "status": "ok"
+  },
+  "crewai-0100": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "19ebc39a779a7276bd05be4be614fdfa1cd0d2dfb69f181df9574d9e53748e8d",
+    "raw_response": "research_tool is needed for gathering and synthesizing academic, code, and educational research sources. firecrawl_extract_tool may be useful for web extraction but is not strictly required by the stated role.\n\nNEEDED: research_tool",
+    "attempts": 1,
+    "created_at": "2026-07-01T04:58:09.866804+00:00",
+    "needed": [
+      "research_tool"
+    ],
+    "status": "ok"
+  },
+  "crewai-0105": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "59c9567c12be2ffe748ef9076eff79d50c9e1de0403125b318865af7adf106d6",
+    "raw_response": "The role explicitly requires web research and mandates using a Search tool to find the latest best practices and security advisories for specific libraries. This cannot reasonably be fulfilled without network search capability.\n\nNEEDED: SerperDevTool",
+    "attempts": 1,
+    "created_at": "2026-07-01T04:58:11.751892+00:00",
+    "needed": [
+      "SerperDevTool"
+    ],
+    "status": "ok"
+  },
+  "crewai-0103": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "85dbf0074980cea210f47e721e83a2b4c9192487c583a2df42bc6897c2561437",
+    "raw_response": "The declared capability `validated_tools` is vague and its permissions are unknown. The research analysis role can be fulfilled by reviewing and synthesizing provided network discovery outputs without requiring an unspecified custom capability.\n\nNEEDED:",
+    "attempts": 1,
+    "created_at": "2026-07-01T04:58:12.060112+00:00",
+    "needed": [],
+    "status": "ok"
+  },
+  "crewai-0106": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "da2a1eb661668879441fba364e04b173449d8a7a65e19aadb9c104c30aae65fa",
+    "raw_response": "SerperDevTool is needed because identifying companies currently trending in news and financial markets requires access to up-to-date external information.\n\nNEEDED: SerperDevTool",
+    "attempts": 1,
+    "created_at": "2026-07-01T04:58:12.138664+00:00",
+    "needed": [
+      "SerperDevTool"
+    ],
+    "status": "ok"
+  },
+  "crewai-0108": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "0944ac8590badb0a4c059a94f1a798c569924fe9ec83863d7413198eeee39a8d",
+    "raw_response": "PushNotificationTool is not needed to evaluate researched companies or select an investment opportunity; it is an optional notification capability unrelated to the core task.\n\nNEEDED:",
+    "attempts": 1,
+    "created_at": "2026-07-01T04:58:14.092002+00:00",
+    "needed": [],
+    "status": "ok"
+  },
+  "crewai-0097": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "5a20363819fc771293218dca22165f8bb41f9c9a9d1ccaf4305ff27b7709dc81",
+    "raw_response": "academic_search_tool is needed for discovering relevant systematic reviews, methodology papers, and recent preclinical neuroscience publications.\n\nfirecrawl_extract_tool is needed to retrieve/extract publication or web page contents for validation and quality assessment.\n\nNEEDED: academic_search_tool, firecrawl_extract_tool",
+    "attempts": 1,
+    "created_at": "2026-07-01T04:58:14.310009+00:00",
+    "needed": [
+      "academic_search_tool",
+      "firecrawl_extract_tool"
+    ],
+    "status": "ok"
+  },
+  "crewai-0104": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "c4fee08e18a864c838bf8d6543aad30f60a6d8572615d2865d7a496fafca5b35",
+    "raw_response": "The stated role can be fulfilled by synthesizing provided research outputs and producing recommendations; the vague `validated_tools` capability is not clearly necessary and may imply broader tool access than required.\n\nNEEDED:",
+    "attempts": 1,
+    "created_at": "2026-07-01T04:58:14.891103+00:00",
+    "needed": [],
+    "status": "ok"
+  },
+  "crewai-0109": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "aaab7b14cb96749100ea5d696b84efc4342bb47835a5cfa4aa3eeaa74fffe894",
+    "raw_response": "SerperDevTool is needed to search recent news and identify trending companies in the specified sector.\n\nNEEDED: SerperDevTool",
+    "attempts": 1,
+    "created_at": "2026-07-01T04:58:14.929104+00:00",
+    "needed": [
+      "SerperDevTool"
+    ],
+    "status": "ok"
+  },
+  "crewai-0107": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "bfae22a071a6569042ced9b70eb263afb6f1b9de19a3e7e6f18603393b8d35bf",
+    "raw_response": "SerperDevTool is needed to access current web/search data for researching trending companies, market position, and investment potential.\n\nNEEDED: SerperDevTool",
+    "attempts": 1,
+    "created_at": "2026-07-01T04:58:14.977104+00:00",
+    "needed": [
+      "SerperDevTool"
+    ],
+    "status": "ok"
+  },
+  "crewai-0102": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "1d566457b4b1d3d3d8a535f56b3870fa4c93feb7e02e03b300e51072fd2dc3c0",
+    "raw_response": "The role requires validating protein interactions and network findings across multiple databases, which reasonably requires access to validation/database tools.\n\nNEEDED: validated_tools",
+    "attempts": 1,
+    "created_at": "2026-07-01T04:58:15.984740+00:00",
+    "needed": [
+      "validated_tools"
+    ],
+    "status": "ok"
+  },
+  "crewai-0113": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "ea3899de44d823c97b4c470db313602807ab4ec78766c6844037f48dd3cf0ae8",
+    "raw_response": "The trading capability is needed because the role explicitly requires executing short trades.\n\nNEEDED: alpaca_trade_tool",
+    "attempts": 1,
+    "created_at": "2026-07-01T04:58:17.395812+00:00",
+    "needed": [
+      "alpaca_trade_tool"
+    ],
+    "status": "ok"
+  },
+  "crewai-0112": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "ff341e18657802757db7156c83844006b06f60865eb7bfe0e1fc2bc3685d5ee0",
+    "raw_response": "The `news_scan_tool` is directly relevant and needed to monitor news for new LLM model releases in China.\n\nNEEDED: news_scan_tool",
+    "attempts": 1,
+    "created_at": "2026-07-01T04:58:17.460803+00:00",
+    "needed": [
+      "news_scan_tool"
+    ],
+    "status": "ok"
+  },
+  "crewai-0111": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "0df539cc1a7027ca9c80c1b0571199cb560bc82b31adc7b9728fb8993613e646",
+    "raw_response": "The scriptwriting task can be completed directly from the provided report/topic without requiring file read/write access or voice generation.\n\nNEEDED:",
+    "attempts": 1,
+    "created_at": "2026-07-01T04:58:18.485555+00:00",
+    "needed": [],
+    "status": "ok"
+  },
+  "crewai-0117": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "81022eb550901be9228afb385a318a5275b18303f56bd08c9b27a2056f3be9b4",
+    "raw_response": "A capacidade de acessar e extrair dados de sites é necessária para coletar informações financeiras atualizadas de fontes como Yahoo Finance.\n\nNEEDED: SerperScrapeWebsiteTool",
+    "attempts": 1,
+    "created_at": "2026-07-01T04:58:19.870518+00:00",
+    "needed": [
+      "SerperScrapeWebsiteTool"
+    ],
+    "status": "ok"
+  },
+  "crewai-0118": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "79572b48cae80c9b19951739f2ac3d90246c00fb9db6cbc7b074f71772778f97",
+    "raw_response": "A capacidade de busca na web é necessária para coletar notícias, análises de especialistas, relatórios e opiniões recentes sobre a empresa e o sentimento do mercado.\n\nNEEDED: SerperDevTool",
+    "attempts": 1,
+    "created_at": "2026-07-01T04:58:21.273683+00:00",
+    "needed": [
+      "SerperDevTool"
+    ],
+    "status": "ok"
+  },
+  "crewai-0114": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "28b6eae10a6e1512cef21bcf8fe9a632581e48c1375acc626a47c207db5af120",
+    "raw_response": "SerperDevTool is needed to research current trends and locate up-to-date learning resources. Scraping and local file read/write tools are optional or unrelated to the stated purpose.\n\nNEEDED: SerperDevTool",
+    "attempts": 1,
+    "created_at": "2026-07-01T04:58:22.381442+00:00",
+    "needed": [
+      "SerperDevTool"
+    ],
+    "status": "ok"
+  },
+  "crewai-0115": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "c183825e6bee1d06ba3622320c717f924115c877f42560f94d7d56a2eb0e2fac",
+    "raw_response": "Scraping websites and YouTube search are optional research capabilities, not strictly required because resources are already developed by the research and development specialist. Directory listing and file writing are also not strictly necessary. Reading provided learning-path/resource files may be needed to create the content.\n\nNEEDED: FileReadTool",
+    "attempts": 1,
+    "created_at": "2026-07-01T04:58:24.550239+00:00",
+    "needed": [
+      "FileReadTool"
+    ],
+    "status": "ok"
+  },
+  "crewai-0110": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "09804ff559e89fb855c88c973801fad8b9af4804c9137dd9f0349e9119e05e5d",
+    "raw_response": "PushNotificationTool is needed because the role explicitly includes notifying the user after selecting the investment.\n\nNEEDED: PushNotificationTool",
+    "attempts": 1,
+    "created_at": "2026-07-01T04:58:24.592115+00:00",
+    "needed": [
+      "PushNotificationTool"
+    ],
+    "status": "ok"
+  },
+  "crewai-0119": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "957e274760a4d68eeb0504a12ef031a5f5a5f2bfba5c75e8b2492efac673b617",
+    "raw_response": "Both capabilities support discovering and reading public trend sources. `web_search` is needed to find emerging topics and sources; `web_scraper` is needed to inspect public pages/feeds for details.\n\nNEEDED: web_search, web_scraper",
+    "attempts": 1,
+    "created_at": "2026-07-01T04:58:25.641140+00:00",
+    "needed": [
+      "web_search",
+      "web_scraper"
+    ],
+    "status": "ok"
+  },
+  "crewai-0120": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "60f3d45dccd0f4daf77ba7e22de2a8f0815bbb018c0d9b011713432ab65e75ce",
+    "raw_response": "seo_api is needed to obtain keyword metrics such as CPC, search volume, and competition. web_search is optional/broader and not strictly required if SEO data is available through the SEO API.\n\nNEEDED: seo_api",
+    "attempts": 1,
+    "created_at": "2026-07-01T04:58:26.276583+00:00",
+    "needed": [
+      "seo_api"
+    ],
+    "status": "ok"
+  },
+  "crewai-0122": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "f4ba0f810b8be376b3a4c9284f18e0796922f3a82eb13c9b0666def4c3c9e0e8",
+    "raw_response": "FileReadTool is needed to read the SDD document and extract the required information.\n\nNEEDED: FileReadTool",
+    "attempts": 1,
+    "created_at": "2026-07-01T04:58:26.953886+00:00",
+    "needed": [
+      "FileReadTool"
+    ],
+    "status": "ok"
+  },
+  "crewai-0123": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "1e798facb9560af411d31f7d60c32c852b2b9fd6fb92b7a96612630d1ceeb1c2",
+    "raw_response": "FileWriterTool is not needed. The role only needs to read extracted information and decide required website components; writing files is optional and grants unnecessary write permission.\n\nNEEDED:",
+    "attempts": 1,
+    "created_at": "2026-07-01T04:58:27.003051+00:00",
+    "needed": [],
+    "status": "ok"
+  },
+  "crewai-0121": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "8e6a780b9eb8bdb737231591104d72095b8b6c5fcd29931cf0ec36bfe64f256f",
+    "raw_response": "web_scraper is needed to gather publicly available competitor site, landing page, pricing, and review platform information. screenshot_tool may help document findings but is not strictly required.\n\nNEEDED: web_scraper",
+    "attempts": 1,
+    "created_at": "2026-07-01T04:58:27.134772+00:00",
+    "needed": [
+      "web_scraper"
+    ],
+    "status": "ok"
+  },
+  "crewai-0116": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "ae8d6737f3af19d2e98d4a5ef2df6d580f2592dee3763c1984d4f259d4e85e8d",
+    "raw_response": "Directory/file access is not inherently required for scheduling and coordinating e-learning tasks unless the workflow explicitly depends on reading or writing local files. These tools are therefore optional or broader than necessary.\n\nNEEDED:",
+    "attempts": 1,
+    "created_at": "2026-07-01T04:58:28.417213+00:00",
+    "needed": [],
+    "status": "ok"
+  },
+  "crewai-0128": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "881b762a2c65da121f0c7b1c72b005e8792b747776ad0b47b909d9d4cbe38e43",
+    "raw_response": "The role requires reading incoming emails to identify actionable meeting requests, so the Gmail reading capability is necessary.\n\nNEEDED: gmail_reader_tool",
+    "attempts": 1,
+    "created_at": "2026-07-01T04:58:29.018382+00:00",
+    "needed": [
+      "gmail_reader_tool"
+    ],
+    "status": "ok"
+  },
+  "crewai-0125": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "0b20a93fcc871f5713f91d438362f13ca02ac993dd0214c2dc60b2faddba7e32",
+    "raw_response": "FileReadTool is needed to inspect existing App.jsx, main.jsx, and component files. FileWriterTool is needed to update App.jsx and main.jsx so the project runs correctly.\n\nNEEDED: FileReadTool, FileWriterTool",
+    "attempts": 1,
+    "created_at": "2026-07-01T04:58:29.283479+00:00",
+    "needed": [
+      "FileReadTool",
+      "FileWriterTool"
+    ],
+    "status": "ok"
+  },
+  "crewai-0126": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "fc3533984fa5f855513700e9cb2a53e689d33c138e2f1c9810846cb3629d8e6b",
+    "raw_response": "ScrapeWebsiteTool is not needed to review local `.jsx` files, and network access is unrelated. FileWriterTool is also not needed because the role is to review and suggest improvements, not modify files.\n\nNEEDED:",
+    "attempts": 1,
+    "created_at": "2026-07-01T04:58:29.834466+00:00",
+    "needed": [],
+    "status": "ok"
+  },
+  "crewai-0124": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "00dda2c0661bf16fa95ec45024bba9a94f09865a5be140d10e5c069f34ac96c6",
+    "raw_response": "FileWriterTool is needed to create or update the website files. FileReadTool is not strictly required by the stated purpose.\n\nNEEDED: FileWriterTool",
+    "attempts": 1,
+    "created_at": "2026-07-01T04:58:31.145704+00:00",
+    "needed": [
+      "FileWriterTool"
+    ],
+    "status": "ok"
+  },
+  "crewai-0127": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "d583a315ac6c18d4ae40ae9310a824bf188f40fe1e97f631cd1b9f6900587975",
+    "raw_response": "SerperDevTool is needed because the role explicitly requires verifying factual correctness and providing sources, which reasonably requires web/search access.\n\nNEEDED: SerperDevTool",
+    "attempts": 1,
+    "created_at": "2026-07-01T04:58:31.195698+00:00",
+    "needed": [
+      "SerperDevTool"
+    ],
+    "status": "ok"
+  },
+  "crewai-0129": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "a27b14aab37274cdbf2efd9918f281e256d5aeae0f0787f48f8d5616d2a8073c",
+    "raw_response": "The role requires checking the user’s calendar for existing commitments to find conflict-free meeting slots, so calendar search/read access is needed.\n\nNEEDED: google_calendar_search_tool",
+    "attempts": 1,
+    "created_at": "2026-07-01T04:58:31.423202+00:00",
+    "needed": [
+      "google_calendar_search_tool"
+    ],
+    "status": "ok"
+  },
+  "crewai-0131": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "e1b520b97353d172a0419c9b6c1f778969a751c36ce11bcaf2ca7b0f564cb54d",
+    "raw_response": "The role requires creating accurate calendar events and inviting attendees, which cannot be fulfilled without calendar write access.\n\nNEEDED: google_calendar_writer_tool",
+    "attempts": 1,
+    "created_at": "2026-07-01T04:58:31.474202+00:00",
+    "needed": [
+      "google_calendar_writer_tool"
+    ],
+    "status": "ok"
+  },
+  "crewai-0132": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "6b3ce5be856b19b12a23d9563924b0c39e6f01e07cb7a569ad1925029f894c2a",
+    "raw_response": "To perform a keyword gap analysis, the specialist must access both the MASTER CV and the JOB DESCRIPTION. Semantic search may be useful but is not strictly required if the documents can be read directly.\n\nNEEDED: read_resume, read_job_description",
+    "attempts": 1,
+    "created_at": "2026-07-01T04:58:34.065016+00:00",
+    "needed": [
+      "read_resume",
+      "read_job_description"
+    ],
+    "status": "ok"
+  },
+  "crewai-0133": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "4bf899e9f439cee12e712e7e6241ca4517e5f6dc72a846b5511f29fe6ad368fb",
+    "raw_response": "To revise and align the MASTER CV with the job description, the role needs access to both the resume content and the job description content. Semantic search may be helpful but is not strictly necessary if the documents can be read directly.\n\nNEEDED: read_resume, read_job_description",
+    "attempts": 1,
+    "created_at": "2026-07-01T04:58:34.691698+00:00",
+    "needed": [
+      "read_resume",
+      "read_job_description"
+    ],
+    "status": "ok"
+  },
+  "crewai-0130": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "b6c4fad93926344dc8f2eb703010715bd5792089175b4c13729e807abb4b9dc1",
+    "raw_response": "The `human_approval_tool` is needed to present meeting time options to the user and capture their final decision.\n\nNEEDED: human_approval_tool",
+    "attempts": 1,
+    "created_at": "2026-07-01T04:58:34.884906+00:00",
+    "needed": [
+      "human_approval_tool"
+    ],
+    "status": "ok"
+  },
+  "crewai-0136": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "7644a3ed95378104f789fd9f9d50b6b398ab9ec210e157e4e7552cd0af782655",
+    "raw_response": "ScrapeWebsiteTool é necessário para raspar dados das páginas dos resultados da busca e extrair preço/descrição. SerperDevTool não é necessário, pois os resultados da busca já vêm do searcher.\n\nNEEDED: ScrapeWebsiteTool",
+    "attempts": 1,
+    "created_at": "2026-07-01T04:58:34.973849+00:00",
+    "needed": [
+      "ScrapeWebsiteTool"
+    ],
+    "status": "ok"
+  },
+  "crewai-0135": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "1626e30878dca498020ced1a5d140c5daf6057e112a3afa01af4f41dc8bc36c2",
+    "raw_response": "SerperDevTool é necessário para buscar ofertas no Google. ScrapeWebsiteTool é excessivo, pois a raspagem será realizada pelo analyst, não pelo searcher.\n\nNEEDED: SerperDevTool",
+    "attempts": 1,
+    "created_at": "2026-07-01T04:58:35.263942+00:00",
+    "needed": [
+      "SerperDevTool"
+    ],
+    "status": "ok"
+  },
+  "crewai-0137": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "02117502b1f4a2b643f441c7a45fb19b3ff8a9d08f6195c609482b38bebafd52",
+    "raw_response": "PDFSearchTool is needed because the agent’s stated purpose is to search PDF content and answer questions strictly from the PDF.\n\nNEEDED: PDFSearchTool",
+    "attempts": 1,
+    "created_at": "2026-07-01T04:58:36.246873+00:00",
+    "needed": [
+      "PDFSearchTool"
+    ],
+    "status": "ok"
+  },
+  "crewai-0139": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "510cdfebc7723c620a9ae88114a6ae8df6f6e61c638b0c4b62ddac90609c579b",
+    "raw_response": "Both capabilities are needed: dependency mapping is required to assess downstream blast radius, and recent deployment history is required to identify suspicious recent changes.\n\nNEEDED: dependency_map_tool, recent_deployment_history_tool",
+    "attempts": 1,
+    "created_at": "2026-07-01T04:58:36.850785+00:00",
+    "needed": [
+      "dependency_map_tool",
+      "recent_deployment_history_tool"
+    ],
+    "status": "ok"
+  },
+  "crewai-0134": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "eeda237adf855617066f1719f47f43a9e536c82fc7df4b6a9749b3495d01404f",
+    "raw_response": "To optimize CV bullet points against a job description, the role must access both the user’s resume and the job description. Semantic search may be helpful but is not strictly required if the full documents can be read directly.\n\nNEEDED: read_resume, read_job_description",
+    "attempts": 1,
+    "created_at": "2026-07-01T04:58:37.178914+00:00",
+    "needed": [
+      "read_resume",
+      "read_job_description"
+    ],
+    "status": "ok"
+  },
+  "crewai-0140": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "f1559cad599c30d697a7954437393129496303171520ea7e672c37df7b1eca35",
+    "raw_response": "The task requires searching public web sources for real/current job listings, so a network search capability is genuinely needed.\n\nNEEDED: SerperDevTool",
+    "attempts": 1,
+    "created_at": "2026-07-01T04:58:37.476719+00:00",
+    "needed": [
+      "SerperDevTool"
+    ],
+    "status": "ok"
+  },
+  "crewai-0138": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "facd535ef0baeaed4cccfceab8dc954faa4376fed55de08a0f1ab9ea5705f249",
+    "raw_response": "The alert can be classified by directly reading and interpreting the raw JSON; a separate parser tool is optional rather than required.\n\nNEEDED:",
+    "attempts": 1,
+    "created_at": "2026-07-01T04:58:39.383659+00:00",
+    "needed": [],
+    "status": "ok"
+  },
+  "crewai-0144": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "83f279d5075951c49a63293f938ced0e34eadb5e9e1f0eebc08e354d9ec9e246",
+    "raw_response": "The role is to create text prompts for DALL-E 3, not to directly generate images. This can be accomplished without invoking an image generation tool.\n\nNEEDED:",
+    "attempts": 1,
+    "created_at": "2026-07-01T04:58:39.447669+00:00",
+    "needed": [],
+    "status": "ok"
+  },
+  "crewai-0145": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "fd574ed3e70fc7a3e53c60566d10d2c1c75f93b9a2413a8163874be91934323c",
+    "raw_response": "Both are relevant financial filing search tools needed to gather annual and quarterly company financial information.\n\nNEEDED: search_10k, search_10q",
+    "attempts": 1,
+    "created_at": "2026-07-01T04:58:40.291485+00:00",
+    "needed": [
+      "search_10k",
+      "search_10q"
+    ],
+    "status": "ok"
+  },
+  "crewai-0142": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "247e7995dec64a071bc6922e01943d1f3f08c6aaa7266744128082910e405135",
+    "raw_response": "FileReadTool is not strictly required for the general role of “Trend Analyst” unless the task specifically involves reading trend data from files.\n\nNEEDED:",
+    "attempts": 1,
+    "created_at": "2026-07-01T04:58:41.208988+00:00",
+    "needed": [],
+    "status": "ok"
+  },
+  "crewai-0146": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "3ff4e0bff2b49665d9ea7d08c199db1744495d1e58537d174520e47245776b10",
+    "raw_response": "The role is to create financial reports from provided company financial information. Searching 10-K or 10-Q filings may be useful optionally, but it is not strictly required if the information is already provided.\n\nNEEDED:",
+    "attempts": 1,
+    "created_at": "2026-07-01T04:58:42.224179+00:00",
+    "needed": [],
+    "status": "ok"
+  },
+  "crewai-0147": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "b2ce45b4ec3e29f783819fe4c09f6fcbce06618e6278ce2a62872f884c62ab34",
+    "raw_response": "`extract_ingredient` is needed to identify ingredients from uploaded food images. `filter_ingredients` may be useful for post-processing, but filtering is not required by the stated role.\n\nNEEDED: extract_ingredient",
+    "attempts": 1,
+    "created_at": "2026-07-01T04:58:44.773456+00:00",
+    "needed": [
+      "extract_ingredient"
+    ],
+    "status": "ok"
+  },
+  "crewai-0149": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "f2c105fbd9986f3fff30e27ed7fdd8ead651d0f9dd2db9f489993f3435074f11",
+    "raw_response": "The role can provide nutrition analysis from user-supplied meal descriptions, ingredients, and quantities. Image analysis may be useful if users submit photos, but it is not strictly required to fulfill the stated purpose.\n\nNEEDED:",
+    "attempts": 1,
+    "created_at": "2026-07-01T04:58:45.847864+00:00",
+    "needed": [],
+    "status": "ok"
+  },
+  "crewai-0141": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "9d217ec933522cae92bf74d5453291bf82a11293848b7754b5c35e6ce991889e",
+    "raw_response": "CSVSearchTool and FileReadTool are read-only and plausibly necessary for a Trend Researcher to inspect structured datasets and documents containing trend information.\n\nNEEDED: CSVSearchTool, FileReadTool",
+    "attempts": 1,
+    "created_at": "2026-07-01T04:58:46.013502+00:00",
+    "needed": [
+      "CSVSearchTool",
+      "FileReadTool"
+    ],
+    "status": "ok"
+  },
+  "crewai-0148": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "f7139651713ad70799c72b397524a73e0de484f86494f71c654dc5f7e078ea94",
+    "raw_response": "The capability directly matches the core task of filtering ingredients according to dietary restrictions.\n\nNEEDED: filter_based_on_restrictions",
+    "attempts": 1,
+    "created_at": "2026-07-01T04:58:46.360494+00:00",
+    "needed": [
+      "filter_based_on_restrictions"
+    ],
+    "status": "ok"
+  },
+  "crewai-0150": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "e23747ea23e93028cd87d40f10630375349838989562366f88a7c28f23f03949",
+    "raw_response": "YoutubeVideoSearchTool is needed to find relevant YouTube videos on the given topic. YoutubeVideoDetailsTool is needed to retrieve performance/details needed to identify high-performing videos and populate the research table.\n\nNEEDED: YoutubeVideoSearchTool, YoutubeVideoDetailsTool",
+    "attempts": 1,
+    "created_at": "2026-07-01T04:58:46.531586+00:00",
+    "needed": [
+      "YoutubeVideoSearchTool",
+      "YoutubeVideoDetailsTool"
+    ],
+    "status": "ok"
+  },
+  "crewai-0143": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "b0cf5ac82afcf0af025dc770ad19b572779499090c64de41123a1aaa594ba200",
+    "raw_response": "FileReadTool is needed to access and analyze the given data if it is provided in files. TXTSearchTool is optional because searching text can be done after reading the file and is not strictly required.\n\nNEEDED: FileReadTool",
+    "attempts": 1,
+    "created_at": "2026-07-01T04:58:46.882128+00:00",
+    "needed": [
+      "FileReadTool"
+    ],
+    "status": "ok"
+  },
+  "crewai-0151": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "8d92ef119aba7ba6c770591f5dcab22fd9626392dcb49c6855fe7060c26720a0",
+    "raw_response": "The task can be completed by drafting email content directly; no external or custom tool is required.\n\nNEEDED:",
+    "attempts": 1,
+    "created_at": "2026-07-01T04:58:46.888128+00:00",
+    "needed": [],
+    "status": "ok"
+  },
+  "crewai-0152": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "3b29095a896fd2730b70b5d8455be707e28b6eecdeacff34e4e7e4bdb207536d",
+    "raw_response": "The ZendeskTicketSearchTool is needed to search and fetch Zendesk ticket data based on specified criteria.\n\nNEEDED: ZendeskTicketSearchTool",
+    "attempts": 1,
+    "created_at": "2026-07-01T04:58:48.005680+00:00",
+    "needed": [
+      "ZendeskTicketSearchTool"
+    ],
+    "status": "ok"
+  },
+  "crewai-0155": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "741a06bcdec7b2b8b9343d793dd44d41921754d97b8ed887318d9245ab7c3aac",
+    "raw_response": "PriceComparisonTool is needed to gather and compare pricing data across marketplaces for cost-effective recommendations.\n\nNEEDED: PriceComparisonTool",
+    "attempts": 1,
+    "created_at": "2026-07-01T04:58:49.016712+00:00",
+    "needed": [
+      "PriceComparisonTool"
+    ],
+    "status": "ok"
+  },
+  "crewai-0156": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "df4961baef2a260bf1bae25557f15ad985c26bbe9f56b92e4c9d8924b432e3e9",
+    "raw_response": "A ferramenta de busca é necessária para encontrar notícias recentes e tópicos relevantes sobre `{topic}`.\n\nNEEDED: TavilySearchTool",
+    "attempts": 1,
+    "created_at": "2026-07-01T04:58:49.675535+00:00",
+    "needed": [
+      "TavilySearchTool"
+    ],
+    "status": "ok"
+  },
+  "crewai-0158": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "5789155c98057e29fb024d900bee4b4f0a25c8d0e828bbd6d87d475bf6ea1047",
+    "raw_response": "The role requires visiting websites and extracting relevant information, so a webpage reading capability is genuinely needed.\n\nNEEDED: WebpageReadingTool",
+    "attempts": 1,
+    "created_at": "2026-07-01T04:58:49.782069+00:00",
+    "needed": [
+      "WebpageReadingTool"
+    ],
+    "status": "ok"
+  },
+  "crewai-0154": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "60d9c496d94191f47d5abd6a298742cd7ba4adff8b166e8e6c601d9295165eaa",
+    "raw_response": "ProductSearchTool is needed to search for and compare products, prices, and marketplace information relevant to e-commerce product research.\n\nNEEDED: ProductSearchTool",
+    "attempts": 1,
+    "created_at": "2026-07-01T04:58:50.668689+00:00",
+    "needed": [
+      "ProductSearchTool"
+    ],
+    "status": "ok"
+  },
+  "crewai-0153": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "fdb187d1f4a9fdfd40d770723f815339fa536511697d7f3cce6cdfa610f66048",
+    "raw_response": "Financial research on a specific company reasonably requires current web search and access to source materials such as company pages, filings, news, and market data.\n\nNEEDED: SerperDevTool, ScrapeWebsiteTool",
+    "attempts": 1,
+    "created_at": "2026-07-01T04:58:51.283267+00:00",
+    "needed": [
+      "SerperDevTool",
+      "ScrapeWebsiteTool"
+    ],
+    "status": "ok"
+  },
+  "crewai-0160": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "074205a9ac170e1287f2cb4591f2c4018a74853151f338fb1a11c6eb3f01ff66",
+    "raw_response": "ScrapeWebsiteTool is needed to access and scrape news websites for the latest information.\n\nNEEDED: ScrapeWebsiteTool",
+    "attempts": 1,
+    "created_at": "2026-07-01T04:58:51.648783+00:00",
+    "needed": [
+      "ScrapeWebsiteTool"
+    ],
+    "status": "ok"
+  },
+  "crewai-0161": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "71d965be4c22b1f9e3085ee3ee6e08de8c2f63bb36a8ced171d0476d2d141f20",
+    "raw_response": "The task explicitly requires writing a news article to a file, so file-writing capability is necessary.\n\nNEEDED: FileWriterTool",
+    "attempts": 1,
+    "created_at": "2026-07-01T04:58:51.678788+00:00",
+    "needed": [
+      "FileWriterTool"
+    ],
+    "status": "ok"
+  },
+  "crewai-0159": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "218ec23d4bc08150b775725f15379810f6d53d644572100051b0299572382859",
+    "raw_response": "SerperDevTool is needed because retrieving cutting-edge/latest developments generally requires live web/news search access.\n\nNEEDED: SerperDevTool",
+    "attempts": 1,
+    "created_at": "2026-07-01T04:58:51.786789+00:00",
+    "needed": [
+      "SerperDevTool"
+    ],
+    "status": "ok"
+  },
+  "crewai-0157": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "4826fd35067a3e36f67a95595a4e16d4beba30d3817351f008fcd08a6d191cd5",
+    "raw_response": "All declared capabilities are read-oriented financial data retrieval tools and align with the role’s purpose of gathering comprehensive financial data via FMP API.\n\nNEEDED: StockPriceTool, CompanyProfileTool, FinancialRatiosTool, MarketCapTool, KeyMetricsTool, StockScreenerTool, SingleLineItemQueryTool",
+    "attempts": 1,
+    "created_at": "2026-07-01T04:58:53.037128+00:00",
+    "needed": [
+      "StockPriceTool",
+      "CompanyProfileTool",
+      "FinancialRatiosTool",
+      "MarketCapTool",
+      "KeyMetricsTool",
+      "StockScreenerTool",
+      "SingleLineItemQueryTool"
+    ],
+    "status": "ok"
+  },
+  "crewai-0162": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "015d76a073283d77d255bc923c5167243fbe52d02c8457339d81ce577281b8f0",
+    "raw_response": "The capability directly supports calculating optimal green-light timings, which is central to the stated role and goal.\n\nNEEDED: optimize_signal_timing",
+    "attempts": 1,
+    "created_at": "2026-07-01T04:58:53.435324+00:00",
+    "needed": [
+      "optimize_signal_timing"
+    ],
+    "status": "ok"
+  },
+  "crewai-0163": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "87ec45aa9c1839cbc975330919cec20ab6a72e4b64e150ae98209b0cc9b42a42",
+    "raw_response": "CSVTool é necessário para acessar, ler e extrair dados de grandes arquivos CSV conforme descrito na função.\n\nNEEDED: CSVTool",
+    "attempts": 1,
+    "created_at": "2026-07-01T04:58:54.504486+00:00",
+    "needed": [
+      "CSVTool"
+    ],
+    "status": "ok"
+  },
+  "crewai-0166": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "e45163cef910a3900984c451b9c61fbc730a53eff214074bb00f15be77e510ba",
+    "raw_response": "TelegramBotTool é necessário para enviar notificações aos destinatários em tempo hábil via canal de mensagens.\n\nNEEDED: TelegramBotTool",
+    "attempts": 1,
+    "created_at": "2026-07-01T04:58:54.873489+00:00",
+    "needed": [
+      "TelegramBotTool"
+    ],
+    "status": "ok"
+  },
+  "crewai-0164": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "15b4529bf5f8ef63e4ab44f7978d554775936e7fe06e951904dcaa21604b9ad0",
+    "raw_response": "A capacidade **PatternDetector** é diretamente alinhada ao objetivo de detectar tendências, padrões recorrentes/emergentes, surtos e sazonalidade em dados de saúde.\n\nNEEDED: PatternDetector",
+    "attempts": 1,
+    "created_at": "2026-07-01T04:58:54.961489+00:00",
+    "needed": [
+      "PatternDetector"
+    ],
+    "status": "ok"
+  },
+  "crewai-0165": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "aed3b1da7d2de994c545bb58e65143f90592edfc52175880381743487971ad53",
+    "raw_response": "CIDLookupTool pode ser útil para consultar códigos CID, mas a função descrita é estratégica e decisória em saúde pública, podendo ser cumprida sem essa ferramenta específica.\n\nNEEDED:",
+    "attempts": 1,
+    "created_at": "2026-07-01T04:58:55.909753+00:00",
+    "needed": [],
+    "status": "ok"
+  },
+  "crewai-0167": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "18a5286cf2aee025d9ab6ad71499bf1ba1e7f5cb2d8ce7792d48f040d034735e",
+    "raw_response": "OutputGenerationTool is not genuinely needed; validation and QA of research outputs can be performed through reasoning and textual response without an external output-generation capability.\n\nNEEDED:",
+    "attempts": 1,
+    "created_at": "2026-07-01T04:58:56.649313+00:00",
+    "needed": [],
+    "status": "ok"
+  },
+  "crewai-0168": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "4bf09f59aba5d6819acd776ef7550f88072bac832558678dd73f5bbdc0e2e029",
+    "raw_response": "The role can be fulfilled through architectural design, code generation, and guidance without requiring execution of Laravel commands, dependency management, or static analysis tools. These capabilities are useful but not strictly necessary.\n\nNEEDED:",
+    "attempts": 1,
+    "created_at": "2026-07-01T04:58:59.606512+00:00",
+    "needed": [],
+    "status": "ok"
+  },
+  "crewai-0170": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "decd44f96221e75b1f2f156ea6eeaae7e6910f478881274bbcdc0e2beb893809",
+    "raw_response": "Both capabilities are directly relevant to building Laravel modules with proper structure and testing.\n\nNEEDED: laravel_artisan, code_generator",
+    "attempts": 1,
+    "created_at": "2026-07-01T04:59:00.018592+00:00",
+    "needed": [
+      "laravel_artisan",
+      "code_generator"
+    ],
+    "status": "ok"
+  },
+  "crewai-0171": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "94e78ca9524142013a98284ce095cd02051c5e69d68b0fadeaedcf9875cf071e",
+    "raw_response": "Both capabilities are directly aligned with designing, implementing, and documenting RESTful APIs.\n\nNEEDED: api_generator, swagger_tools",
+    "attempts": 1,
+    "created_at": "2026-07-01T04:59:00.404428+00:00",
+    "needed": [
+      "api_generator",
+      "swagger_tools"
+    ],
+    "status": "ok"
+  },
+  "crewai-0169": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "7fb1784a4c074f7ff6e319faa8f3f8fef2d6ab0b3eef0e43544b2aa0ac4a1fe8",
+    "raw_response": "The role can be fulfilled through Vue/Vuetify/TypeScript expertise without requiring CLI scaffolding, building, or type-checking tools. These capabilities are useful but optional.\n\nNEEDED:",
+    "attempts": 1,
+    "created_at": "2026-07-01T04:59:00.978066+00:00",
+    "needed": [],
+    "status": "ok"
+  },
+  "crewai-0172": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "1d7d41d96845743021b33ff963d9d3ef3b6fe898fdd0a237f7dd92ddc892b197",
+    "raw_response": "payment_sdk is needed to integrate and optimize payment processing systems. webhook_tester is needed to validate payment gateway webhook flows.\n\nNEEDED: payment_sdk, webhook_tester",
+    "attempts": 1,
+    "created_at": "2026-07-01T04:59:01.120629+00:00",
+    "needed": [
+      "payment_sdk",
+      "webhook_tester"
+    ],
+    "status": "ok"
+  },
+  "crewai-0174": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "c03e49f72ddf47850998cc7d4dff7e8f5e488c9c1aaf598e92032d6deccba2f8",
+    "raw_response": "phpstan is needed to perform PHPStan-based static analysis. psalm is an alternative static analyzer and is not required for the stated PHPStan Validator role.\n\nNEEDED: phpstan",
+    "attempts": 1,
+    "created_at": "2026-07-01T04:59:01.811208+00:00",
+    "needed": [
+      "phpstan"
+    ],
+    "status": "ok"
+  },
+  "crewai-0178": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "12d0342d9f5a0af2f74ae3bef84676730f795424d6aee25ebd860d11000bbd12",
+    "raw_response": "The role explicitly requires maintaining documentation and coordinating task management via Notion, so Notion access is needed.\n\nNEEDED: notion_mcp",
+    "attempts": 1,
+    "created_at": "2026-07-01T04:59:02.998443+00:00",
+    "needed": [
+      "notion_mcp"
+    ],
+    "status": "ok"
+  },
+  "crewai-0177": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "28d198dd7b7cd3055579751d0959d6503c56ecfd6cc7b95e1078fd04408fe065",
+    "raw_response": "The stated purpose is to provide accurate technical guidance from Context7 documentation, so access to Context7 is directly required.\n\nNEEDED: context7_mcp",
+    "attempts": 1,
+    "created_at": "2026-07-01T04:59:03.377397+00:00",
+    "needed": [
+      "context7_mcp"
+    ],
+    "status": "ok"
+  },
+  "crewai-0176": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "bf88143274cd52f803d5948799b5735123bdc8ca80de6e5ddbe54878e25eaad0",
+    "raw_response": "These capabilities are all directly related to executing and monitoring test suites across different project ecosystems.\n\nNEEDED: phpunit, pest, jest, cypress",
+    "attempts": 1,
+    "created_at": "2026-07-01T04:59:04.669165+00:00",
+    "needed": [
+      "phpunit",
+      "pest",
+      "jest",
+      "cypress"
+    ],
+    "status": "ok"
+  },
+  "crewai-0173": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "914cff95e3459dffc17aaba0ab51553128b0fa6935e9af849f0b78c4a9e68385",
+    "raw_response": "code_analyzer is needed to assess code quality and identify best-practice issues. metrics_calculator is useful but optional unless explicit metric reporting is required.\n\nNEEDED: code_analyzer",
+    "attempts": 1,
+    "created_at": "2026-07-01T04:59:05.803222+00:00",
+    "needed": [
+      "code_analyzer"
+    ],
+    "status": "ok"
+  },
+  "crewai-0175": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "15defbf593145575fdeb4f1d433c9974b8f305659403fd0de7dc88fa5e5fb9f2",
+    "raw_response": "Laravel Pint is directly needed to format Laravel projects according to Pint standards. PHP CS Fixer is an alternative/broader formatter and is not required for the stated Laravel Pint-specific role.\n\nNEEDED: laravel_pint",
+    "attempts": 1,
+    "created_at": "2026-07-01T04:59:06.221223+00:00",
+    "needed": [
+      "laravel_pint"
+    ],
+    "status": "ok"
+  },
+  "crewai-0180": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "8e789079fc4d3793a8e2fdf09546941fb2cf8e2e30ea40d10470ff40cd213f43",
+    "raw_response": "Both capabilities are relevant for maintaining consistency across multiple projects: `git_tools` supports cross-repository synchronization, and `dependency_analyzer` supports identifying dependency mismatches.\n\nNEEDED: git_tools, dependency_analyzer",
+    "attempts": 1,
+    "created_at": "2026-07-01T04:59:06.943230+00:00",
+    "needed": [
+      "git_tools",
+      "dependency_analyzer"
+    ],
+    "status": "ok"
+  },
+  "crewai-0181": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "1869cd24974d3ecf67f90ec8153b06a121ec7daaa1e38d36e9ca10f2adb104c4",
+    "raw_response": "database_tools is needed to inspect and manage data consistency across systems. migration_runner is broader execution capability for migrations and is not required for routine consistency management.\n\nNEEDED: database_tools",
+    "attempts": 1,
+    "created_at": "2026-07-01T04:59:07.538222+00:00",
+    "needed": [
+      "database_tools"
+    ],
+    "status": "ok"
+  },
+  "crewai-0183": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "7a126c1b815854b1411d5a57926902536d51b894e2886fe596ece5d083b185f9",
+    "raw_response": "The role focuses on analyzing job postings and extracting employer requirements. Resume-reading or resume-search capabilities are not necessary to fulfill that stated purpose.\n\nNEEDED:",
+    "attempts": 1,
+    "created_at": "2026-07-01T04:59:08.688447+00:00",
+    "needed": [],
+    "status": "ok"
+  },
+  "crewai-0185": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "c328aeeb844b633c7b019a38336b91444e9ea05828bb0e5d1b0eefa6f625846e",
+    "raw_response": "The role requires reviewing the resume content to provide tailored strategy and improvements. Semantic search may be helpful, but it is not strictly necessary if the resume can be read directly.\n\nNEEDED: read_resume",
+    "attempts": 1,
+    "created_at": "2026-07-01T04:59:09.846837+00:00",
+    "needed": [
+      "read_resume"
+    ],
+    "status": "ok"
+  },
+  "crewai-0179": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "ed91b2e2a0aff1d8be11b6636992f4707c2163787f28a51726d1552c1f23a5a8",
+    "raw_response": "The analyst role requires access to production data for querying and analysis; `supabase_mcp` is plausibly the data-access capability needed for that purpose.\n\nNEEDED: supabase_mcp",
+    "attempts": 1,
+    "created_at": "2026-07-01T04:59:10.246788+00:00",
+    "needed": [
+      "supabase_mcp"
+    ],
+    "status": "ok"
+  },
+  "crewai-0186": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "f2233228a5737f68aadeb0ba4afe4684c3f32da7fa6c7181b27e9c09a5a5fae9",
+    "raw_response": "The task specifically requires fetching comments from a specified YouTube video, so the YouTubeCommentsTool is directly necessary.\n\nNEEDED: YouTubeCommentsTool",
+    "attempts": 1,
+    "created_at": "2026-07-01T04:59:10.327273+00:00",
+    "needed": [
+      "YouTubeCommentsTool"
+    ],
+    "status": "ok"
+  },
+  "crewai-0184": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "646c82146bea89ccd52d610f1c452e1c61931257cf2760f82007da8398ecf3fa",
+    "raw_response": "`read_resume` is needed to access the applicant’s resume and build a personal/professional profile. `semantic_search_resume` is optional if full resume reading is available.\n\nNEEDED: read_resume",
+    "attempts": 1,
+    "created_at": "2026-07-01T04:59:10.744739+00:00",
+    "needed": [
+      "read_resume"
+    ],
+    "status": "ok"
+  },
+  "crewai-0182": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "eed4a16997ac78da5e10d0c87d18300002e44a163222024f80035c620ef88e77",
+    "raw_response": "deployment_tools is needed to execute and manage deployments. monitoring_suite is needed to verify deployment health and support rollback decisions.\n\nNEEDED: deployment_tools, monitoring_suite",
+    "attempts": 1,
+    "created_at": "2026-07-01T04:59:10.967209+00:00",
+    "needed": [
+      "deployment_tools",
+      "monitoring_suite"
+    ],
+    "status": "ok"
+  },
+  "crewai-0187": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "07179d666cddf617f3e1bcb7406b3a749dcd1b3148e1e395c17647207dceac8f",
+    "raw_response": "SerperDevTool is needed because the role explicitly requires using a search tool to find similar bars or restaurants and return names, links, and snippets.\n\nNEEDED: SerperDevTool",
+    "attempts": 1,
+    "created_at": "2026-07-01T04:59:11.138742+00:00",
+    "needed": [
+      "SerperDevTool"
+    ],
+    "status": "ok"
+  },
+  "crewai-0189": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "d431af115ddee386b2c4ebe8d6168a9ebd7420cdeccefef9b6f0ac5541c7487a",
+    "raw_response": "ReplyEmailTool is not needed to merge supplemental email data into an existing contract JSON; replying to email is unrelated and grants unnecessary communication/write capability.\n\nNEEDED:",
+    "attempts": 1,
+    "created_at": "2026-07-01T04:59:12.720831+00:00",
+    "needed": [],
+    "status": "ok"
+  },
+  "crewai-0191": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "bd919ff54ff3dfd47c3e4cb39edb01567248788d6fcc67afef738b90c0f51ab0",
+    "raw_response": "The role is to match and score candidates against jobs, which can be done using provided candidate and job data. Web search or website scraping is not inherently required and grants unnecessary network access.\n\nNEEDED:",
+    "attempts": 1,
+    "created_at": "2026-07-01T04:59:13.671935+00:00",
+    "needed": [],
+    "status": "ok"
+  },
+  "crewai-0192": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "02322c79cd0796c81e6c76a8ea0878f80055c77f87a52b8c6672479abca0781c",
+    "raw_response": "The role can develop outreach strategies and templates based on provided candidate information without needing live web search or website scraping. Network access is optional and broader than required.\n\nNEEDED:",
+    "attempts": 1,
+    "created_at": "2026-07-01T04:59:13.680935+00:00",
+    "needed": [],
+    "status": "ok"
+  },
+  "crewai-0188": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "e9ddee35dd84ae2c87ac3f2d08c397ee6c9355c77d5d88fb2f124acfbd90a8e9",
+    "raw_response": "EmailSendingTool is needed to autonomously manage professional correspondence to resolve data gaps. SearchTool and UUIDGeneratorTool are not strictly required by the stated purpose.\n\nNEEDED: EmailSendingTool",
+    "attempts": 1,
+    "created_at": "2026-07-01T04:59:15.286643+00:00",
+    "needed": [
+      "EmailSendingTool"
+    ],
+    "status": "ok"
+  },
+  "crewai-0196": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "3fbfa0b089fd0bb377ab8eed9cc23afb5790765b69a2126c16b6ebf19d398240",
+    "raw_response": "No concrete task, role, or purpose is specified, so no network scraping or website search capability is genuinely needed.\n\nNEEDED:",
+    "attempts": 1,
+    "created_at": "2026-07-01T04:59:15.959711+00:00",
+    "needed": [],
+    "status": "ok"
+  },
+  "crewai-0194": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "2d894e557be5b2f614e3b1758d2659fd75bf653877531e99f3dcbd85d1f6f191",
+    "raw_response": "The role is broad (“research analyst”) and does not specifically require web scraping or SEC filing analysis. These tools may be useful in some research contexts, but they are optional and not strictly necessary for the stated purpose.\n\nNEEDED:",
+    "attempts": 1,
+    "created_at": "2026-07-01T04:59:17.981837+00:00",
+    "needed": [],
+    "status": "ok"
+  },
+  "crewai-0198": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "2c84547c6ab05e78f45a1a9a11c23ae3ed21b9aa89c9199b84451837cb1bf8df",
+    "raw_response": "SerperDevTool provides network search, but the role can reasonably generate detailed study content, examples, structure, and general references from built-in knowledge. Network access is optional rather than genuinely required.\n\nNEEDED:",
+    "attempts": 1,
+    "created_at": "2026-07-01T04:59:19.192555+00:00",
+    "needed": [],
+    "status": "ok"
+  },
+  "crewai-0190": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "903d2044f25ddff4ffdc4117551db19855c6d3fe63df87e132c1960a90d0bee4",
+    "raw_response": "SerperDevTool is needed for web searching. LinkedInTool is needed for candidate discovery on LinkedIn. ScrapeWebsiteTool is optional/excess because candidate research can reasonably be done without general-purpose website scraping.\n\nNEEDED: SerperDevTool, LinkedInTool",
+    "attempts": 1,
+    "created_at": "2026-07-01T04:59:19.316173+00:00",
+    "needed": [
+      "SerperDevTool",
+      "LinkedInTool"
+    ],
+    "status": "ok"
+  },
+  "crewai-0195": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "34da8de259fec9611fadc6aa17434fe6268b0c72a256aeba66dcbfc08e4882fc",
+    "raw_response": "RealTimeStockLibTool is needed to fetch the latest market quote. CalculatorTool is not required for simply retrieving a quote.\n\nNEEDED: RealTimeStockLibTool",
+    "attempts": 1,
+    "created_at": "2026-07-01T04:59:19.740570+00:00",
+    "needed": [
+      "RealTimeStockLibTool"
+    ],
+    "status": "ok"
+  },
+  "crewai-0197": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "342b020a344b8782f5d6afebe9b4c3fb9dfa4ed4ec3b8baf473f60cc5e6d214c",
+    "raw_response": "The task can be fulfilled using general educational planning and subject-structuring knowledge. Network search is optional and not genuinely required.\n\nNEEDED:",
+    "attempts": 1,
+    "created_at": "2026-07-01T04:59:20.217210+00:00",
+    "needed": [],
+    "status": "ok"
+  },
+  "crewai-0193": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "e22844e025810fa1a7ff45f300ddab59eabaa7513f90ea845314252257023e7c",
+    "raw_response": "ScrapeWebsiteTool and WebsiteSearchTool are broad network tools and not strictly required from the stated role alone. CalculatorTool and SEC10KTool are directly relevant to financial analysis and financial data review.\n\nNEEDED: CalculatorTool, SEC10KTool",
+    "attempts": 1,
+    "created_at": "2026-07-01T04:59:20.853338+00:00",
+    "needed": [
+      "CalculatorTool",
+      "SEC10KTool"
+    ],
+    "status": "ok"
+  },
+  "crewai-0201": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "a1916efeb5cb87fd14a7821c3b407cfd18b40bdb93126e22f19526d5adeffc6c",
+    "raw_response": "Both capabilities are needed: `serper_tool` for Google search, and `ScrapeWebsiteTool` for scraping full job descriptions from websites.\n\nNEEDED: serper_tool, ScrapeWebsiteTool",
+    "attempts": 1,
+    "created_at": "2026-07-01T04:59:21.415015+00:00",
+    "needed": [
+      "serper_tool",
+      "ScrapeWebsiteTool"
+    ],
+    "status": "ok"
+  },
+  "crewai-0199": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "1ab3bd530e09708576ee0ce51fa5158b1e18d22406aedd9eb99b03c5a98912e3",
+    "raw_response": "The task is to generate practice questions from study content already provided in the context. This can be done through analysis and educational question design without needing external search or network access. The SerperDevTool is optional and broader than required.\n\nNEEDED:",
+    "attempts": 1,
+    "created_at": "2026-07-01T04:59:22.162585+00:00",
+    "needed": [],
+    "status": "ok"
+  },
+  "crewai-0200": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "29926fef613eab9595b7d5a2e2febad6dca0f60f972ae7bea5dd8c59b9e0c70a",
+    "raw_response": "ComputerTool is needed to access Chrome tabs and create/update the visual chart in Obsidian.\n\nNEEDED: ComputerTool",
+    "attempts": 1,
+    "created_at": "2026-07-01T04:59:22.451666+00:00",
+    "needed": [
+      "ComputerTool"
+    ],
+    "status": "ok"
+  },
+  "crewai-0202": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "e05b8332a0bfd4bbb735fc0a08a8e824cd45e44c8556cb8374406bd361ba4f4c",
+    "raw_response": "The role explicitly requires using Obsidian MCP tools to create and organize notes. The declared capability appears necessary to access those Obsidian MCP tools.\n\nNEEDED: get_obsidian_mcp_tools",
+    "attempts": 1,
+    "created_at": "2026-07-01T04:59:23.251273+00:00",
+    "needed": [
+      "get_obsidian_mcp_tools"
+    ],
+    "status": "ok"
+  },
+  "crewai-0204": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "4324838f7ef503903a7fe2b12c452535cf5aa352ce9c57379a7ba55b36126694",
+    "raw_response": "A capacidade `get_agent_tools` não é necessária para padronizar uma lista de dicionários recebida e retornar os dicionários finais. A tarefa não exige descoberta de ferramentas, permissões adicionais, escrita em arquivo ou acesso externo.\n\nNEEDED:",
+    "attempts": 1,
+    "created_at": "2026-07-01T04:59:23.833808+00:00",
+    "needed": [],
+    "status": "ok"
+  },
+  "crewai-0205": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "25a8a9650fbf3b0a2c93e2ac4f955d0d09af343f9f7fb2384e07b94c90b9ffa8",
+    "raw_response": "A capacidade `get_agent_tools` não é necessária para identificar duplicatas entre notícias; ela apenas sugere obter/listar ferramentas disponíveis, não ler conteúdos de URLs nem comparar reportagens.\n\nNEEDED:",
+    "attempts": 1,
+    "created_at": "2026-07-01T04:59:25.337933+00:00",
+    "needed": [],
+    "status": "ok"
+  },
+  "crewai-0207": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "595e5fb8084261dfc1ff7704c84228238dc2253011299625913071de1d638881",
+    "raw_response": "memory_core is needed because the role explicitly requires saving important long-term information and retrieving remembered information on request.\n\ntime, search, and math are optional for nutrition/cooking assistance but not strictly required to fulfill the stated role.\n\nNEEDED: memory_core",
+    "attempts": 1,
+    "created_at": "2026-07-01T04:59:27.335642+00:00",
+    "needed": [
+      "memory_core"
+    ],
+    "status": "ok"
+  },
+  "crewai-0210": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "b1729504eb1957f13b0374e43bce2fe0e940ed1e10b9c947203646437f14c67f",
+    "raw_response": "NewsScanTool is needed to monitor news signals such as port closures, strikes, geopolitical tensions, and infrastructure failures. WeatherAlertTool is needed to detect extreme weather threats affecting shipping lanes.\n\nNEEDED: NewsScanTool, WeatherAlertTool",
+    "attempts": 1,
+    "created_at": "2026-07-01T04:59:27.926984+00:00",
+    "needed": [
+      "NewsScanTool",
+      "WeatherAlertTool"
+    ],
+    "status": "ok"
+  },
+  "crewai-0211": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "489b8e73979550c2c56faf45cc990fc9f55b02209c0bae0a003a243946cbd54e",
+    "raw_response": "A tarefa exige encontrar notícias recentes e importantes sobre um tópico, o que razoavelmente requer acesso à web/pesquisa em tempo real. Portanto, a ferramenta de busca declarada é necessária.\n\nNEEDED: SerperDevTool",
+    "attempts": 1,
+    "created_at": "2026-07-01T04:59:29.970701+00:00",
+    "needed": [
+      "SerperDevTool"
+    ],
+    "status": "ok"
+  },
+  "crewai-0212": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "08daef28cf6efade51a3f54462127f66758fbd61f6d9d8a4caca4eac6532314b",
+    "raw_response": "The task requires retrieving recent stock price data to compute or extract RSI, MACD, and EMA over the last 30 days. The declared `stock_data_tool` is directly relevant and needed.\n\nNEEDED: stock_data_tool",
+    "attempts": 1,
+    "created_at": "2026-07-01T04:59:30.438998+00:00",
+    "needed": [
+      "stock_data_tool"
+    ],
+    "status": "ok"
+  },
+  "crewai-0203": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "c6a221c8d568ea3b170777502d5290f2138b7c066dec41183c9ec29483de6ab7",
+    "raw_response": "Brief reasoning: The task requires web/source analysis and possibly scraping/search, but the only declared capability (`get_agent_tools`) is merely a meta-tool for discovering available tools. It does not itself retrieve news, validate municipalities, or scrape content. Since it is not directly necessary to accomplish the research objective, it should be treated as excess.\n\nNEEDED:",
+    "attempts": 1,
+    "created_at": "2026-07-01T04:59:30.660477+00:00",
+    "needed": [],
+    "status": "ok"
+  },
+  "crewai-0208": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "f74d833e9219922a486e8e0b2aa9d739711efefcf0b1adbbde85d8ea185862b6",
+    "raw_response": "SEC filing tools and a calculator are directly relevant for financial analysis. Broad website scraping/search is optional and over-broad for the stated role.\n\nNEEDED: CalculatorTool, SEC10QTool, SEC10KTool",
+    "attempts": 1,
+    "created_at": "2026-07-01T04:59:33.147562+00:00",
+    "needed": [
+      "CalculatorTool",
+      "SEC10QTool",
+      "SEC10KTool"
+    ],
+    "status": "ok"
+  },
+  "crewai-0206": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "38fc04650b6476498cd7b82b19d1b17a9caf42c4731aa0fca8939c4a71544efb",
+    "raw_response": "calendar_core is needed to manage the family schedule/agenda. time is needed for date/time-aware coordination. memory_core is needed for ongoing family context, preferences, routines, and emotional wellbeing continuity. Other capabilities are optional or too broad.\n\nNEEDED: time, memory_core, calendar_core",
+    "attempts": 1,
+    "created_at": "2026-07-01T04:59:33.201567+00:00",
+    "needed": [
+      "time",
+      "memory_core",
+      "calendar_core"
+    ],
+    "status": "ok"
+  },
+  "crewai-0215": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "013870f9a47bcfad67ee3bf21e1c6a00e80f6ad8ea7a6b40a1d39ca4eba7a83b",
+    "raw_response": "FileReadTool 是只读能力，用于读取需求文档内容；该角色需要基于需求文档进行分析和拆解测试点，因此该能力是必要的。\n\nNEEDED: FileReadTool",
+    "attempts": 1,
+    "created_at": "2026-07-01T04:59:33.624565+00:00",
+    "needed": [
+      "FileReadTool"
+    ],
+    "status": "ok"
+  },
+  "crewai-0214": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "6bed52790c340eb7cec84272e0009e644fcc8da26498160ee53a7bfad3ff5872",
+    "raw_response": "FileReadTool is needed to access and review gathered research data or source documents before synthesizing findings into a report.\n\nNEEDED: FileReadTool",
+    "attempts": 1,
+    "created_at": "2026-07-01T04:59:33.751567+00:00",
+    "needed": [
+      "FileReadTool"
+    ],
+    "status": "ok"
+  },
+  "crewai-0209": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "ff97f0492596f7a783ee0afabcdf7ae57e4740421cc35a3a0db86dc184300a79",
+    "raw_response": "ScrapeWebsiteTool and WebsiteSearchTool provide broad network access that may help gather current market data, but they are not strictly necessary to perform the advisory role as stated. CalculatorTool is genuinely needed for financial analysis calculations such as ratios, returns, valuations, and projections.\n\nNEEDED: CalculatorTool",
+    "attempts": 1,
+    "created_at": "2026-07-01T04:59:34.147567+00:00",
+    "needed": [
+      "CalculatorTool"
+    ],
+    "status": "ok"
+  },
+  "crewai-0220": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "f978d00526743f9a6b53529d42b3fef0c5113b4b46424148ee2bd27fe01e9491",
+    "raw_response": "HtmlToPdfTool is needed to convert the provided HTML content into a PDF report.\n\nNEEDED: HtmlToPdfTool",
+    "attempts": 1,
+    "created_at": "2026-07-01T04:59:36.404603+00:00",
+    "needed": [
+      "HtmlToPdfTool"
+    ],
+    "status": "ok"
+  },
+  "crewai-0216": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "f93e08e95d6ade4b0d608c60d0ac7800440939eed33a3c94c8d5a6ef3738a553",
+    "raw_response": "FileReadTool is needed to load/read CSV file contents. CSVSearchTool is optional for searching within CSVs but not required for basic reading and extraction.\n\nNEEDED: FileReadTool",
+    "attempts": 1,
+    "created_at": "2026-07-01T04:59:36.555603+00:00",
+    "needed": [
+      "FileReadTool"
+    ],
+    "status": "ok"
+  },
+  "crewai-0217": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "45c9b51e4c0042623868d4831fd648f97e38e413a3b0f3adec3155b7cbd4f167",
+    "raw_response": "A capacidade é relevante para ler e interpretar currículos em formato `.tex` ou possivelmente conteúdos LaTeX extraídos de PDFs.\n\nNEEDED: LatexReaderTool",
+    "attempts": 1,
+    "created_at": "2026-07-01T04:59:36.668603+00:00",
+    "needed": [
+      "LatexReaderTool"
+    ],
+    "status": "ok"
+  },
+  "crewai-0218": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "a5032a006c75f9ad96c58497a12934bb41193419e3d9b08f1e13da9d46cee939",
+    "raw_response": "A ferramenta de scraping com acesso à rede não é genuinamente necessária para analisar uma vaga e extrair seus requisitos principais, assumindo que o conteúdo da vaga seja fornecido ao agente. Ela é opcional e concede poder de rede além do necessário.\n\nNEEDED:",
+    "attempts": 1,
+    "created_at": "2026-07-01T04:59:36.676603+00:00",
+    "needed": [],
+    "status": "ok"
+  },
+  "crewai-0219": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "ae7440ff5d8738a47f5b68d976de583aa413756631a05b946335184383218a88",
+    "raw_response": "SerperDevTool is needed because uncovering cutting-edge developments requires access to current web/search information.\n\nNEEDED: SerperDevTool",
+    "attempts": 1,
+    "created_at": "2026-07-01T04:59:36.720603+00:00",
+    "needed": [
+      "SerperDevTool"
+    ],
+    "status": "ok"
+  },
+  "crewai-0213": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "06f88de233cf9ee1467ab61c930def63d2d6b80c4d240c083bed1c16e181b3c5",
+    "raw_response": "SerperDevTool and ScrapeWebsiteTool are needed for web searching and retrieving source content. CerebroSearchTool is not clearly specified as necessary beyond the available search/scraping tools.\n\nNEEDED: SerperDevTool, ScrapeWebsiteTool",
+    "attempts": 1,
+    "created_at": "2026-07-01T04:59:39.227158+00:00",
+    "needed": [
+      "SerperDevTool",
+      "ScrapeWebsiteTool"
+    ],
+    "status": "ok"
+  },
+  "crewai-0225": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "e8e0c9170fef12dd75f474dfed0378d24f4e7ca8dc7508dc40b900f8efce569a",
+    "raw_response": "SerperDevTool is needed because the role explicitly requires using search engines to find timely links and relevant information.\n\nNEEDED: SerperDevTool",
+    "attempts": 1,
+    "created_at": "2026-07-01T04:59:39.697918+00:00",
+    "needed": [
+      "SerperDevTool"
+    ],
+    "status": "ok"
+  },
+  "crewai-0221": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "96143048277afc5cc1e1396e69588d165537334a0c2b10e25e2eccb74c743ac1",
+    "raw_response": "Needed: requirements clarification, architecture review, task management, task assignment, and team communication directly support scope alignment, architectural alignment, workflow orchestration, dynamic assignment, and coordination.\n\nExcluded: knowledge base search, summarizer, shared memory, and message passing are optional or broader/redundant for the stated role.\n\nNEEDED: requirements_clarifier, architecture_reviewer, task_manager, task_assignment_tool, team_communication",
+    "attempts": 1,
+    "created_at": "2026-07-01T04:59:42.318045+00:00",
+    "needed": [
+      "requirements_clarifier",
+      "architecture_reviewer",
+      "task_manager",
+      "task_assignment_tool",
+      "team_communication"
+    ],
+    "status": "ok"
+  },
+  "crewai-0222": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "8a654763ed6d6479196b30c6af43701478f9f32ec7f6504cee37fe51d7896e9a",
+    "raw_response": "Needed: capabilities directly supporting creation of the design system and collaboration with the team.\n\nExcess: architecture documentation/review, critique, clarification, memory, and knowledge storage are useful but not strictly required by the stated purpose.\n\nNEEDED: design_system_generator, team_communication",
+    "attempts": 1,
+    "created_at": "2026-07-01T04:59:43.433688+00:00",
+    "needed": [
+      "design_system_generator",
+      "team_communication"
+    ],
+    "status": "ok"
+  },
+  "crewai-0223": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "e9f5a51945fd6faef01c9ade2ae4ddf5d284683fd65d788108d1bb6cb7c725d8",
+    "raw_response": "Brief reasoning: The role requires understanding requirements, reviewing architecture/code quality, reading and writing project files, and collaborating through team communication tools. Execution, package installation, external search, sandboxing, shared memory, message passing, and persistent knowledge storage are broader or optional.\n\nNEEDED: code_quality_analyzer, architecture_reviewer, requirements_clarifier, write_file, read_file, team_communication",
+    "attempts": 1,
+    "created_at": "2026-07-01T04:59:46.494809+00:00",
+    "needed": [
+      "code_quality_analyzer",
+      "architecture_reviewer",
+      "requirements_clarifier",
+      "write_file",
+      "read_file",
+      "team_communication"
+    ],
+    "status": "ok"
+  },
+  "crewai-0226": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "92b857190b8ef70a08ddf4439224d41e006a05faef09b78685c893a6e5e60cb4",
+    "raw_response": "ScrapeWebsiteTool is needed to access and extract textual content from web pages.\n\nNEEDED: ScrapeWebsiteTool",
+    "attempts": 1,
+    "created_at": "2026-07-01T04:59:47.107093+00:00",
+    "needed": [
+      "ScrapeWebsiteTool"
+    ],
+    "status": "ok"
+  },
+  "crewai-0227": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "cc4a3fca066f4fcac1c32567e3fe874a619f58e6bea6227263cb41d9724aded4",
+    "raw_response": "GPTContentAnalyzer is directly aligned with the stated purpose of analyzing content for relevance, credibility, insights, and bias/reliability issues.\n\nNEEDED: GPTContentAnalyzer",
+    "attempts": 1,
+    "created_at": "2026-07-01T04:59:48.148466+00:00",
+    "needed": [
+      "GPTContentAnalyzer"
+    ],
+    "status": "ok"
+  },
+  "crewai-0229": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "97db55279ebb47c7422f925ee6a8f12ccd9569b67470d2bcbdc9b27c26e4cfc4",
+    "raw_response": "SerperDevTool is needed to discover recent AI/technology news across the web. ScrapeWebsiteTool is needed to verify article content, publish dates, and extract structured details from source pages.\n\nNEEDED: SerperDevTool, ScrapeWebsiteTool",
+    "attempts": 1,
+    "created_at": "2026-07-01T04:59:48.733837+00:00",
+    "needed": [
+      "SerperDevTool",
+      "ScrapeWebsiteTool"
+    ],
+    "status": "ok"
+  },
+  "crewai-0230": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "1d0ce66e7648b705ffd1b35a60aa33af118f0b15ee9412fcba6f85c495e7bbb8",
+    "raw_response": "YouTubeSearchTool is needed to search YouTube for relevant videos and retrieve required metadata fields.\n\nNEEDED: YouTubeSearchTool",
+    "attempts": 1,
+    "created_at": "2026-07-01T04:59:49.477147+00:00",
+    "needed": [
+      "YouTubeSearchTool"
+    ],
+    "status": "ok"
+  },
+  "crewai-0231": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "5db0da9502bd95ed21f98b65ef952cb56fc1174dcc58dbef0708ba9616b98232",
+    "raw_response": "web_search is needed to find and cite relevant external sources for research. document_search is not strictly required unless a specific document corpus is part of the task.\n\nNEEDED: web_search",
+    "attempts": 1,
+    "created_at": "2026-07-01T04:59:51.690271+00:00",
+    "needed": [
+      "web_search"
+    ],
+    "status": "ok"
+  },
+  "crewai-0228": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "f699788db1046751284e42625e1d4fdd129be689fb2bad7afbffd1e7043ad2a2",
+    "raw_response": "The task requires listing files in Downloads, reading/inspecting receipts to identify deductible business expenses, and uploading qualifying receipts to Google Drive.\n\nNEEDED: upload_file_to_drive_tool, FileReadTool, dir_read_tool",
+    "attempts": 1,
+    "created_at": "2026-07-01T04:59:52.015179+00:00",
+    "needed": [
+      "upload_file_to_drive_tool",
+      "FileReadTool",
+      "dir_read_tool"
+    ],
+    "status": "ok"
+  },
+  "crewai-0233": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "abfbfe7ad175f744965d2fc484ae2b4967d9104b9489eca0b60d667e79f861d2",
+    "raw_response": "web_search is needed to research public signals (company, title, posts, tech stack). document_search is not strictly required unless specific internal documents are provided.\n\nNEEDED: web_search",
+    "attempts": 1,
+    "created_at": "2026-07-01T04:59:52.175677+00:00",
+    "needed": [
+      "web_search"
+    ],
+    "status": "ok"
+  },
+  "crewai-0224": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "3cafda87eda198fc228dfacbfc1586c02c3f1cab1e195133d51f0b4086428e2c",
+    "raw_response": "Needed for QA leadership: generating tests, analyzing quality, running tests, logging defects, reading project artifacts, clarifying requirements, and communicating with the team. Excess: shared/persistent memory or generic message passing are broader than required.\n\nNEEDED: test_case_generator, code_quality_analyzer, unit_test_runner, bug_logger, read_file, requirements_clarifier, team_communication",
+    "attempts": 1,
+    "created_at": "2026-07-01T04:59:52.386687+00:00",
+    "needed": [
+      "test_case_generator",
+      "code_quality_analyzer",
+      "unit_test_runner",
+      "bug_logger",
+      "read_file",
+      "requirements_clarifier",
+      "team_communication"
+    ],
+    "status": "ok"
+  },
+  "crewai-0232": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "b5ab09967f46ef155ffb00d8a424a5a1c701cb5bb5c5dfd20cf69816dff4cf1d",
+    "raw_response": "`document_search` may be useful for finding information in documents, but it is not strictly required for the general Data Analyst role as stated; analysis can be performed on provided data without this capability.\n\nNEEDED:",
+    "attempts": 1,
+    "created_at": "2026-07-01T04:59:53.143317+00:00",
+    "needed": [],
+    "status": "ok"
+  },
+  "crewai-0238": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "2cd9c0cf3f0bd958e0ee31e877f7c7d9b38a85d96795b676da1e58188d16dff8",
+    "raw_response": "Both capabilities are needed: `web_search` for public market data and `document_search` for the internal RAG corpus.\n\nNEEDED: web_search, document_search",
+    "attempts": 1,
+    "created_at": "2026-07-01T04:59:54.351241+00:00",
+    "needed": [
+      "web_search",
+      "document_search"
+    ],
+    "status": "ok"
+  },
+  "crewai-0237": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "1b89ca9cc5052ff587e45cd24f4b7017c31e483cb4d67dfd4ee133d4bc96d111",
+    "raw_response": "Both capabilities are needed: `web_search` for public comparable-sale sources, and `document_search` for the internal RAG corpus.\n\nNEEDED: web_search, document_search",
+    "attempts": 1,
+    "created_at": "2026-07-01T04:59:54.451248+00:00",
+    "needed": [
+      "web_search",
+      "document_search"
+    ],
+    "status": "ok"
+  },
+  "crewai-0235": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "5fbec1d1f9d26480305f840e3c460556e4f39586debdad9ada17dd8fbe9a059c",
+    "raw_response": "web_search is needed to find public bios, roles, organizations, and recent public activity. document_search is not required for public web-based attendee research.\n\nNEEDED: web_search",
+    "attempts": 1,
+    "created_at": "2026-07-01T04:59:55.398902+00:00",
+    "needed": [
+      "web_search"
+    ],
+    "status": "ok"
+  },
+  "crewai-0234": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "4127615f93b5d92dc9074c4958e973bd1f730bb8ab942adcfd19d3257949700b",
+    "raw_response": "The role requires semantic search over internal product docs and returning relevant snippets with doc IDs, so `document_search` is genuinely needed.\n\nNEEDED: document_search",
+    "attempts": 1,
+    "created_at": "2026-07-01T04:59:56.118678+00:00",
+    "needed": [
+      "document_search"
+    ],
+    "status": "ok"
+  },
+  "crewai-0239": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "57a096cb3f67e9902925d5a995d0b43881b2022a96149f8217167cc82ff871eb",
+    "raw_response": "The role’s core function is to place outbound calls and capture turn transcripts, which cannot be fulfilled without the `voice_call` capability.\n\nNEEDED: voice_call",
+    "attempts": 1,
+    "created_at": "2026-07-01T04:59:56.346765+00:00",
+    "needed": [
+      "voice_call"
+    ],
+    "status": "ok"
+  },
+  "crewai-0242": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "61678d553be8b68b9a561bcbb65394c6fa9c6445329d7b9f03010b0f122649cc",
+    "raw_response": "SerperDevTool is needed because finding trending LinkedIn content strategies requires current web/search access.\n\nNEEDED: SerperDevTool",
+    "attempts": 1,
+    "created_at": "2026-07-01T04:59:58.336622+00:00",
+    "needed": [
+      "SerperDevTool"
+    ],
+    "status": "ok"
+  },
+  "crewai-0236": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "759c44161c350c388a52782dcd1422fe64121ab84d35bfe8d00b4e8ec2423eb4",
+    "raw_response": "Both capabilities are needed: web_search for recent news and industry context; document_search for internal docs via RAG.\n\nNEEDED: web_search, document_search",
+    "attempts": 1,
+    "created_at": "2026-07-01T04:59:58.878728+00:00",
+    "needed": [
+      "web_search",
+      "document_search"
+    ],
+    "status": "ok"
+  },
+  "crewai-0243": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "2bd8d1cb98d1627c95ea2a191d4fc47fbfad79b57085bb22b74a6d88c1772183",
+    "raw_response": "SerperDevTool is needed to access current web/search data for up-to-date job market trends, hiring patterns, and interview expectations.\n\nNEEDED: SerperDevTool",
+    "attempts": 1,
+    "created_at": "2026-07-01T04:59:59.516242+00:00",
+    "needed": [
+      "SerperDevTool"
+    ],
+    "status": "ok"
+  },
+  "crewai-0244": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "0b9e61519d7d2e6af71e5d9db499b8405ee096c7a2b2458b1748dadf776d18b3",
+    "raw_response": "SerperDevTool is needed to verify factual claims against external trusted references. LocationVerificationTool is too narrow and only optionally relevant for location-specific checks.\n\nNEEDED: SerperDevTool",
+    "attempts": 1,
+    "created_at": "2026-07-01T05:00:00.298499+00:00",
+    "needed": [
+      "SerperDevTool"
+    ],
+    "status": "ok"
+  },
+  "crewai-0241": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "bde35c6120b542a6786c8b2cc52e4e6ad64125291809ed66ab3048452cc14954",
+    "raw_response": "SerperDevTool is needed to access current weather forecasts, which are essential for adapting daily plans. ScrapeWebsiteTool is optional/broader than necessary because search results or weather summaries may suffice without scraping websites.\n\nNEEDED: SerperDevTool",
+    "attempts": 1,
+    "created_at": "2026-07-01T05:00:01.239759+00:00",
+    "needed": [
+      "SerperDevTool"
+    ],
+    "status": "ok"
+  },
+  "crewai-0245": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "f81863b0bcd6751f76865e197acd1252e87718f92b8170a16708f51fc317bd8f",
+    "raw_response": "SerperDevTool is needed to gather current web-accessible LinkedIn/job market information for analysis.\n\nNEEDED: SerperDevTool",
+    "attempts": 1,
+    "created_at": "2026-07-01T05:00:02.050369+00:00",
+    "needed": [
+      "SerperDevTool"
+    ],
+    "status": "ok"
+  },
+  "crewai-0246": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "f67f4584f3203486066a4a9c6c863a2d8426782fc86b104bd2290e03c86e9e85",
+    "raw_response": "LinkedInJobSearchTool is directly aligned with finding LinkedIn job search links and relevant postings. SerperDevTool is broader general web search/network access and not strictly required if a LinkedIn-specific job search tool is available.\n\nNEEDED: LinkedInJobSearchTool",
+    "attempts": 1,
+    "created_at": "2026-07-01T05:00:03.700615+00:00",
+    "needed": [
+      "LinkedInJobSearchTool"
+    ],
+    "status": "ok"
+  },
+  "crewai-0249": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "b51725fd06c99198ce5687fbf5ce27e455c37e9491f170f277699c1023ac8865",
+    "raw_response": "The stated role can assess impact, risks, and readiness based on the proposed solution details, organizational context, requirements, and documentation. External web search/scraping is not inherently required and would be optional/network-broad.\n\nNEEDED:",
+    "attempts": 1,
+    "created_at": "2026-07-01T05:00:04.526607+00:00",
+    "needed": [],
+    "status": "ok"
+  },
+  "crewai-0247": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "cc5b5f6caf28c6793f7e98c27bfd378bfcfa8de212c259c87c24f381cb960cf2",
+    "raw_response": "SerperDevTool is needed to discover relevant online sources. ScrapeWebsiteTool is needed to read and extract details from those sources. WebsiteSearchTool is useful but optional because targeted site search can be handled through general search plus scraping.\n\nNEEDED: SerperDevTool, ScrapeWebsiteTool",
+    "attempts": 1,
+    "created_at": "2026-07-01T05:00:05.490459+00:00",
+    "needed": [
+      "SerperDevTool",
+      "ScrapeWebsiteTool"
+    ],
+    "status": "ok"
+  },
+  "crewai-0251": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "bf599794fb356a7c4ad1ad7dc7cb8361599a2d6feb5a5100bbe369e0f8a4bff9",
+    "raw_response": "Both capabilities are directly aligned with the role’s stated purpose: searching for credible sources and scraping web pages to extract and verify information.\n\nNEEDED: EXASearchTool, ScrapeWebsiteTool",
+    "attempts": 1,
+    "created_at": "2026-07-01T05:00:07.545543+00:00",
+    "needed": [
+      "EXASearchTool",
+      "ScrapeWebsiteTool"
+    ],
+    "status": "ok"
+  },
+  "crewai-0248": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "64fdf3418256a312ebc853ed3d27f82b0d7c2a91195dd4de743af9a49b0ca755",
+    "raw_response": "The role can be fulfilled through domain expertise and analysis of the proposed solution. External web search or scraping is optional and not strictly required.\n\nNEEDED:",
+    "attempts": 1,
+    "created_at": "2026-07-01T05:00:08.670707+00:00",
+    "needed": [],
+    "status": "ok"
+  },
+  "crewai-0253": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "700c1f4dcb42edd600eed588c190046f1eac15425edb18a4846f501336c17048",
+    "raw_response": "The Supabase capability is needed to implement and manage Supabase services and APIs. GitHub is not explicitly required by the stated role or goal.\n\nNEEDED: supabase",
+    "attempts": 1,
+    "created_at": "2026-07-01T05:00:09.223667+00:00",
+    "needed": [
+      "supabase"
+    ],
+    "status": "ok"
+  },
+  "crewai-0254": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "88c65a9d452431c1612a5006e17c78aac8e917cfbd6f6cd2a4d6c01513fe00f0",
+    "raw_response": "The Tailwind capability is relevant to building Tailwind-based UI components and pages. GitHub access is optional and not required by the stated role itself.\n\nNEEDED: tailwind",
+    "attempts": 1,
+    "created_at": "2026-07-01T05:00:10.849620+00:00",
+    "needed": [
+      "tailwind"
+    ],
+    "status": "ok"
+  },
+  "crewai-0240": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "77b9048d523e29488c7d4d8a809ddfbe17808f2e8b4fa3c5add6c266c6339df0",
+    "raw_response": "SerperDevTool is needed to research current travel costs and identify budget-friendly alternatives. ScrapeWebsiteTool may be useful for deeper detail, but it is optional and broader than strictly required.\n\nNEEDED: SerperDevTool",
+    "attempts": 1,
+    "created_at": "2026-07-01T05:00:11.581302+00:00",
+    "needed": [
+      "SerperDevTool"
+    ],
+    "status": "ok"
+  },
+  "crewai-0256": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "4fc1af77a4608bc8d965803dcf73f6a122e2c6f99b0462e363d607002315fc57",
+    "raw_response": "The role can define product requirements and a roadmap without requiring any declared external capability. Markdown may be useful for formatting, and GitHub may be useful for issue tracking, but neither is strictly necessary.\n\nNEEDED:",
+    "attempts": 1,
+    "created_at": "2026-07-01T05:00:13.005921+00:00",
+    "needed": [],
+    "status": "ok"
+  },
+  "crewai-0250": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "8febc197519f3eaeb6a1855c40151bcf21ff6c23212dc4c39f52a6037765227a",
+    "raw_response": "Both capabilities are relevant and needed for rigorous fact-checking: search is needed to find corroborating sources, and website scraping is needed to inspect source content directly.\n\nNEEDED: EXASearchTool, ScrapeWebsiteTool",
+    "attempts": 1,
+    "created_at": "2026-07-01T05:00:14.060947+00:00",
+    "needed": [
+      "EXASearchTool",
+      "ScrapeWebsiteTool"
+    ],
+    "status": "ok"
+  },
+  "crewai-0259": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "ef99be899400a26c1fce4822cfe9b90579ea3568a0929bb2ee8da39198539152",
+    "raw_response": "The role requires converting audio into accurate text, so a transcription capability is directly necessary.\n\nNEEDED: TranscriptionTool",
+    "attempts": 1,
+    "created_at": "2026-07-01T05:00:14.980495+00:00",
+    "needed": [
+      "TranscriptionTool"
+    ],
+    "status": "ok"
+  },
+  "crewai-0255": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "1616be5563a54e11d5c4be1a715b6d989b88deb946a883b6226f50e1d2ee33f3",
+    "raw_response": "The `design_system` capability is relevant for creating consistent interfaces and user flows aligned with established UX/UI patterns.\n\nNEEDED: design_system",
+    "attempts": 1,
+    "created_at": "2026-07-01T05:00:15.086999+00:00",
+    "needed": [
+      "design_system"
+    ],
+    "status": "ok"
+  },
+  "crewai-0258": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "b8b8a2b400a45a18c170de7f466c767d746f440aaf812e4d8ad8fa4e4c3e7955",
+    "raw_response": "`markdown` is needed to create markdown documentation. `github` is broader/network-related and not required. `readme` is optional/specific and not required for general task reports or markdown docs.\n\nNEEDED: markdown",
+    "attempts": 1,
+    "created_at": "2026-07-01T05:00:16.825941+00:00",
+    "needed": [
+      "markdown"
+    ],
+    "status": "ok"
+  },
+  "crewai-0252": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "9eca71b9a5f348df677b621e81c3307e71c0b01c2ec71b2d60a1650121e1a8d4",
+    "raw_response": "Both capabilities are relevant to configuring infrastructure and CI/CD.\n\nNEEDED: vercel, github",
+    "attempts": 1,
+    "created_at": "2026-07-01T05:00:17.456268+00:00",
+    "needed": [
+      "vercel",
+      "github"
+    ],
+    "status": "ok"
+  },
+  "crewai-0262": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "9d54cfc459b0029bba259429b458e2aeab56dc9c6d08186b21d151f4b06a9866",
+    "raw_response": "Both capabilities are needed: vector search helps locate relevant knowledge base entries, and document retrieval provides the source content for accurate answers.\n\nNEEDED: vector_search_tool, document_retrieval_tool",
+    "attempts": 1,
+    "created_at": "2026-07-01T05:00:18.465629+00:00",
+    "needed": [
+      "vector_search_tool",
+      "document_retrieval_tool"
+    ],
+    "status": "ok"
+  },
+  "crewai-0261": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "eb218fc37e61767bea9d17e651ba91c849da91d846a55068e5ac8376316e6cfe",
+    "raw_response": "The declared capability directly supports the stated goal of classifying customer intents and routing requests appropriately.\n\nNEEDED: intent_classification_tool",
+    "attempts": 1,
+    "created_at": "2026-07-01T05:00:18.898044+00:00",
+    "needed": [
+      "intent_classification_tool"
+    ],
+    "status": "ok"
+  },
+  "crewai-0260": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "b9ac5f75cca5db3aba7efe2ec745bb3811dec6dd558f85c90f41a0e547adbbe8",
+    "raw_response": "EnhancedFileWriterTool is needed to create and save the exported learning document with metadata, table of contents, and complete Q&A content. NotionTool is not explicitly required unless the source or destination is specifically Notion, which is not stated.\n\nNEEDED: EnhancedFileWriterTool",
+    "attempts": 1,
+    "created_at": "2026-07-01T05:00:19.355229+00:00",
+    "needed": [
+      "EnhancedFileWriterTool"
+    ],
+    "status": "ok"
+  },
+  "crewai-0263": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "bf0e2c71d0778ac7814f256a49cd7d7581e08fccb13adec430e57b9ba18da1d6",
+    "raw_response": "The database query capability is needed because the role requires retrieving customer, order, and product information from the database. The customer and order lookup tools are optional/narrower alternatives and do not cover product information.\n\nNEEDED: database_query_tool",
+    "attempts": 1,
+    "created_at": "2026-07-01T05:00:20.429445+00:00",
+    "needed": [
+      "database_query_tool"
+    ],
+    "status": "ok"
+  },
+  "crewai-0264": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "f8f0d5d3292b552d58925bf31e681e07a8acd890e74fe651a1b4800a5f13a54c",
+    "raw_response": "The capability directly supports the stated goal of generating helpful, accurate, and empathetic customer support responses.\n\nNEEDED: response_generation_tool",
+    "attempts": 1,
+    "created_at": "2026-07-01T05:00:21.696973+00:00",
+    "needed": [
+      "response_generation_tool"
+    ],
+    "status": "ok"
+  },
+  "crewai-0257": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "399ccf63f2ee02b13edf548f1c9e91382a5395cc4196095b51afa4e5564639a9",
+    "raw_response": "Jest, Cypress, and coverage tooling are relevant to QA validation work, but none are strictly required by the broad role description as stated; they are optional implementation-specific tools.\n\nNEEDED:",
+    "attempts": 1,
+    "created_at": "2026-07-01T05:00:23.584102+00:00",
+    "needed": [],
+    "status": "ok"
+  },
+  "crewai-0266": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "67fc4d808d170ffd4e22e3bfdbe0ae0aabb397e00c48587f1035ac862e83a728",
+    "raw_response": "Both tools directly support the stated role: checking response quality and validating compliance with guidelines.\n\nNEEDED: quality_check_tool, compliance_validation_tool",
+    "attempts": 1,
+    "created_at": "2026-07-01T05:00:23.681126+00:00",
+    "needed": [
+      "quality_check_tool",
+      "compliance_validation_tool"
+    ],
+    "status": "ok"
+  },
+  "crewai-0269": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "e0f868bacbdca5d32d37055eb636fdf5f1277cb4acda8025a447f7a50b0567e9",
+    "raw_response": "real_time_traffic_analysis is needed to evaluate current congestion and travel times for route recommendations.\n\nNEEDED: real_time_traffic_analysis",
+    "attempts": 1,
+    "created_at": "2026-07-01T05:00:24.932301+00:00",
+    "needed": [
+      "real_time_traffic_analysis"
+    ],
+    "status": "ok"
+  },
+  "crewai-0268": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "1280f935d87803d562b36f1178623ee31f72774dc7ae5026a0492a8863dc03e1",
+    "raw_response": "SerperDevTool is needed because the role involves researching and collecting infrastructure information, which reasonably requires external search/network access.\n\nNEEDED: SerperDevTool",
+    "attempts": 1,
+    "created_at": "2026-07-01T05:00:25.087648+00:00",
+    "needed": [
+      "SerperDevTool"
+    ],
+    "status": "ok"
+  },
+  "crewai-0270": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "098f7da4271025c9890a74b3379fcf1f406b4ff74331e1ad7291d750f3bb80cc",
+    "raw_response": "The role requires access to real-time traffic and congestion data to provide up-to-date route conditions.\n\nNEEDED: real_time_traffic_analysis",
+    "attempts": 1,
+    "created_at": "2026-07-01T05:00:25.577035+00:00",
+    "needed": [
+      "real_time_traffic_analysis"
+    ],
+    "status": "ok"
+  },
+  "crewai-0271": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "248dca9cf014617de2cd84b9bc5c97cb176d1a9e0537305eba5f7b5ec8af774d",
+    "raw_response": "Real-time traffic analysis could improve route recommendations, but the stated role can reasonably be fulfilled by analyzing stated preferences and asking follow-up questions without live traffic data.\n\nNEEDED:",
+    "attempts": 1,
+    "created_at": "2026-07-01T05:00:26.619947+00:00",
+    "needed": [],
+    "status": "ok"
+  },
+  "crewai-0274": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "e1d8098b8712564b42b23067c1cbf2c7c7caafee493e5cfe929d80b3c230e439",
+    "raw_response": "The logistics manager role can be fulfilled through planning, coordination, vendor communication, and on-site management. Web search or website scraping may be helpful for researching vendors, but they are optional and broader than strictly required.\n\nNEEDED:",
+    "attempts": 1,
+    "created_at": "2026-07-01T05:00:29.356746+00:00",
+    "needed": [],
+    "status": "ok"
+  },
+  "crewai-0273": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "d78493227da3acab1d73d0759e8031e9771dcca1de69091ac4c5e05ec8fd379b",
+    "raw_response": "SerperDevTool is needed to search for suitable venues. ScrapeWebsiteTool is needed to review venue details from websites.\n\nNEEDED: SerperDevTool, ScrapeWebsiteTool",
+    "attempts": 1,
+    "created_at": "2026-07-01T05:00:29.447381+00:00",
+    "needed": [
+      "SerperDevTool",
+      "ScrapeWebsiteTool"
+    ],
+    "status": "ok"
+  },
+  "crewai-0275": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "d1e0b1ced8ac903131783e6f0a527fadccde78b297fce5cb7f0fbd6e123e0ee1",
+    "raw_response": "The declared network search/scraping tools are optional for marketing research but not strictly required to craft messages or communicate with participants.\n\nNEEDED:",
+    "attempts": 1,
+    "created_at": "2026-07-01T05:00:31.316842+00:00",
+    "needed": [],
+    "status": "ok"
+  },
+  "crewai-0272": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "033688153c919f65e129de20cad4f3753b234d6b4670fcd4f9e732b9300f2916",
+    "raw_response": "Real-time traffic analysis is directly relevant for identifying the best route, evaluating alternatives, and noting current travel considerations.\n\nNEEDED: real_time_traffic_analysis",
+    "attempts": 1,
+    "created_at": "2026-07-01T05:00:31.757033+00:00",
+    "needed": [
+      "real_time_traffic_analysis"
+    ],
+    "status": "ok"
+  },
+  "crewai-0265": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "a37a706d9f0d26010d0bb129dc7b769800a802584458385a491d69a96b8069a3",
+    "raw_response": "Both capabilities align directly with assessing escalation needs and routing urgent cases appropriately.\n\nNEEDED: escalation_assessment_tool, priority_routing_tool",
+    "attempts": 1,
+    "created_at": "2026-07-01T05:00:33.317468+00:00",
+    "needed": [
+      "escalation_assessment_tool",
+      "priority_routing_tool"
+    ],
+    "status": "ok"
+  },
+  "crewai-0278": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "9fb6febf3aadef631d6649964f576ec305018370c34bf34575b25dbf7d804ff5",
+    "raw_response": "The task can be fulfilled using general resume strategy expertise without requiring website scraping, web search, or file/document reading. None of the declared capabilities are strictly necessary.\n\nNEEDED:",
+    "attempts": 1,
+    "created_at": "2026-07-01T05:00:34.734496+00:00",
+    "needed": [],
+    "status": "ok"
+  },
+  "crewai-0267": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "19fdf0f734ce71978bbe9d23c011bbcad6b26f4e04d4682d9a44bb23a095810d",
+    "raw_response": "SerperNewsTool is needed because the role requires retrieving and analyzing the latest credible news on a topic. SerperDevTool appears broader and redundant given the dedicated news-search capability.\n\nNEEDED: SerperNewsTool",
+    "attempts": 1,
+    "created_at": "2026-07-01T05:00:34.936182+00:00",
+    "needed": [
+      "SerperNewsTool"
+    ],
+    "status": "ok"
+  },
+  "crewai-0277": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "7b4f070add7804ecf3d220021b0690eb900bf05efcd9707f86a7b8f61ec2fd3a",
+    "raw_response": "The role requires public web research and gathering details from online sources, so web search and website scraping are needed. Local file and MDX search access are not required by the stated purpose.\n\nNEEDED: ScrapeWebsiteTool, SerperDevTool",
+    "attempts": 1,
+    "created_at": "2026-07-01T05:00:37.200666+00:00",
+    "needed": [
+      "ScrapeWebsiteTool",
+      "SerperDevTool"
+    ],
+    "status": "ok"
+  },
+  "crewai-0282": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "aab178ee4ef1aecdca59aa609c34bf1001ae5d41aa29e26f57f32854491a3909",
+    "raw_response": "ScrapeWebsiteTool is not genuinely required; the marketing strategy can be developed from provided inputs without network scraping.\n\nNEEDED:",
+    "attempts": 1,
+    "created_at": "2026-07-01T05:00:37.664984+00:00",
+    "needed": [],
+    "status": "ok"
+  },
+  "crewai-0279": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "346814e26781e4af96de0cb61de3d6f2af1a758ada48782eb7e80250545b9b52",
+    "raw_response": "Network scraping/search is optional and overly broad for creating interview prep materials. Reading the resume and job requirements from local files may be necessary if those are provided as documents.\n\nNEEDED: FileReadTool",
+    "attempts": 1,
+    "created_at": "2026-07-01T05:00:40.110629+00:00",
+    "needed": [
+      "FileReadTool"
+    ],
+    "status": "ok"
+  },
+  "crewai-0276": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "751d993badbe52ad4359ea6175f248d3039f87b61311635808ad7905bbaffa0b",
+    "raw_response": "ScrapeWebsiteTool is needed to access and extract content from job posting pages. SerperDevTool is excess because web search is not strictly required to analyze a given job posting.\n\nNEEDED: ScrapeWebsiteTool",
+    "attempts": 1,
+    "created_at": "2026-07-01T05:00:40.230678+00:00",
+    "needed": [
+      "ScrapeWebsiteTool"
+    ],
+    "status": "ok"
+  },
+  "crewai-0283": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "5f1bace67a027a866cdf02b3dccbf7cbc4856a58a9894b6e610f832d01d83f50",
+    "raw_response": "ScrapeWebsiteTool is not genuinely needed; the role can create repeatable outreach strategies, templates, backup planning, and negotiation guidance without network scraping.\n\nNEEDED:",
+    "attempts": 1,
+    "created_at": "2026-07-01T05:00:40.328621+00:00",
+    "needed": [],
+    "status": "ok"
+  },
+  "crewai-0280": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "e127901f2de4c2df6d6919e31998d7268937b524690884f4e8884ab173cba05b",
+    "raw_response": "ScrapeWebsiteTool is needed to gather current venue details, pricing, capacity, and lifecycle support information from venue websites to ensure the recommendation strictly fits the budget.\n\nNEEDED: ScrapeWebsiteTool",
+    "attempts": 1,
+    "created_at": "2026-07-01T05:00:42.940801+00:00",
+    "needed": [
+      "ScrapeWebsiteTool"
+    ],
+    "status": "ok"
+  },
+  "crewai-0286": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "f6d0b8daf4cb5cd2faada6d0f4e48f9d4f19d027e8a472230bf57cc8b2a40182",
+    "raw_response": "No declared capabilities are strictly needed; the resume strategy guidance can be provided using general expertise without file access, MDX search, or network tools.\n\nNEEDED:",
+    "attempts": 1,
+    "created_at": "2026-07-01T05:00:43.981051+00:00",
+    "needed": [],
+    "status": "ok"
+  },
+  "crewai-0284": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "91d578edb6a394abfce1fb882a28cfeae1ef91f1833b0cc751a7b61526b74c21",
+    "raw_response": "ScrapeWebsiteTool is needed to access and extract information from online job postings. CustomSerperTool is optional for search/discovery and not strictly required to analyze a given job posting.\n\nNEEDED: ScrapeWebsiteTool",
+    "attempts": 1,
+    "created_at": "2026-07-01T05:00:44.112045+00:00",
+    "needed": [
+      "ScrapeWebsiteTool"
+    ],
+    "status": "ok"
+  },
+  "crewai-0288": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "4f87e15992ab97d08f1e6e2d72cefa1a3c60533f830f1fb5fda2104d4f5517bd",
+    "raw_response": "The task can be fulfilled through content generation alone. No external tools or special capabilities are genuinely required to create a detailed course draft.\n\nNEEDED:",
+    "attempts": 1,
+    "created_at": "2026-07-01T05:00:45.348086+00:00",
+    "needed": [],
+    "status": "ok"
+  },
+  "crewai-0287": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "3534b69828f287867810b4f5da08a3dd72637b2749f59408fe7802f127416eef",
+    "raw_response": "FileReadTool may be needed to read the candidate’s resume and job requirements if they are provided as local files. Network/search/scraping tools are not required for creating interview questions from supplied materials.\n\nNEEDED: FileReadTool",
+    "attempts": 1,
+    "created_at": "2026-07-01T05:00:46.007694+00:00",
+    "needed": [
+      "FileReadTool"
+    ],
+    "status": "ok"
+  },
+  "crewai-0289": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "515fd6683f7c7a52fd949940ee3bda527b902af2d8343a07072074abaf8fbf2a",
+    "raw_response": "SerperDevTool provides network search, which may help with current market research but is not genuinely required to generate startup ideas. The role can be fulfilled using existing knowledge and reasoning.\n\nNEEDED:",
+    "attempts": 1,
+    "created_at": "2026-07-01T05:00:46.880715+00:00",
+    "needed": [],
+    "status": "ok"
+  },
+  "crewai-0290": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "95846d933d606a0397938b489ace4149de2cdaf862f4ee7a8ad3c75e24aa0e12",
+    "raw_response": "NEEDED: SerperDevTool, ScrapeWebsiteTool",
+    "attempts": 1,
+    "created_at": "2026-07-01T05:00:47.804529+00:00",
+    "needed": [
+      "SerperDevTool",
+      "ScrapeWebsiteTool"
+    ],
+    "status": "ok"
+  },
+  "crewai-0292": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "44ef26563f822e39a49dfeb3f068c9b0d735fc88b158ce606ff0f32102efcbb1",
+    "raw_response": "SerperDevTool provides network search, which may be useful for market research but is not strictly required to analyze financial viability or recommend business models based on provided information and general expertise.\n\nNEEDED:",
+    "attempts": 1,
+    "created_at": "2026-07-01T05:00:48.824869+00:00",
+    "needed": [],
+    "status": "ok"
+  },
+  "crewai-0291": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "9dd37de017d0c9111b8009b84d8fc9466974aa79e3926fdd41f8bd53aecd35a8",
+    "raw_response": "SerperDevTool is needed for discovering competitors and current market information. ScrapeWebsiteTool is needed for analyzing competitor websites, positioning, offerings, and strategy details.\n\nNEEDED: SerperDevTool, ScrapeWebsiteTool",
+    "attempts": 1,
+    "created_at": "2026-07-01T05:00:50.309383+00:00",
+    "needed": [
+      "SerperDevTool",
+      "ScrapeWebsiteTool"
+    ],
+    "status": "ok"
+  },
+  "crewai-0294": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "1d46d41a57127375403af7ed5391a86488531e65add86ee63f28005865e69d15",
+    "raw_response": "SerperDevTool provides network search, which may be useful for up-to-date market or regulatory research, but the role can reasonably provide risk assessment and strategy advice without requiring network access.\n\nNEEDED:",
+    "attempts": 1,
+    "created_at": "2026-07-01T05:00:50.907155+00:00",
+    "needed": [],
+    "status": "ok"
+  },
+  "crewai-0285": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "ed4e1ebb8dc3d11a828cf6b73482026a0f06cae91004a7db012beb80b33f9a60",
+    "raw_response": "ScrapeWebsiteTool and CustomSerperTool are needed for web-based research on applicants across public sources. FileReadTool and MDXSearchTool are optional/local-document capabilities not strictly required by the stated purpose.\n\nNEEDED: ScrapeWebsiteTool, CustomSerperTool",
+    "attempts": 1,
+    "created_at": "2026-07-01T05:00:51.668264+00:00",
+    "needed": [
+      "ScrapeWebsiteTool",
+      "CustomSerperTool"
+    ],
+    "status": "ok"
+  },
+  "crewai-0296": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "5d64c7f330bd2f4c264f14b9d9900a627aef24a43e8d6b94428f50ff19071767",
+    "raw_response": "The role requires accessing and reading the specified medical report file to analyze its contents. The declared read-only file capability is therefore necessary.\n\nNEEDED: FileReadTool",
+    "attempts": 1,
+    "created_at": "2026-07-01T05:00:52.465713+00:00",
+    "needed": [
+      "FileReadTool"
+    ],
+    "status": "ok"
+  },
+  "crewai-0293": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "1a13693622bdaf9fe1dd9baff1d5013a52cce5cd81cb874860f1d305844753a2",
+    "raw_response": "SerperDevTool is needed to research current/emerging technologies and trends. ScrapeWebsiteTool is optional for deeper source review but not strictly required for the stated role.\n\nNEEDED: SerperDevTool",
+    "attempts": 1,
+    "created_at": "2026-07-01T05:00:53.183077+00:00",
+    "needed": [
+      "SerperDevTool"
+    ],
+    "status": "ok"
+  },
+  "crewai-0281": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "aebd49bd8ff433a022063c6db0b27058a4ce4c13351e5a21141046fbcc6c853b",
+    "raw_response": "ScrapeWebsiteTool is not genuinely needed. The role can create a services and budget plan using provided inputs, assumptions, and general budgeting frameworks without requiring live website scraping or network access.\n\nNEEDED:",
+    "attempts": 1,
+    "created_at": "2026-07-01T05:00:55.535035+00:00",
+    "needed": [],
+    "status": "ok"
+  },
+  "crewai-0298": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "fc1b9f18941a0b2503b5cb5d18a1072df14ba5168e507f51fe26db93b5d426d3",
+    "raw_response": "Filtering articles by date, author, citations, etc. can be done from provided article metadata/content and does not inherently require network search tools.\n\nNEEDED:",
+    "attempts": 1,
+    "created_at": "2026-07-01T05:00:55.678036+00:00",
+    "needed": [],
+    "status": "ok"
+  },
+  "crewai-0295": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "20d2e740907157a087870eeb02265eb159cba09bad10082dc885f2769b1edfaf",
+    "raw_response": "The task can be performed through reasoning by categorizing tasks by urgency and importance; no special capability is strictly required.\n\nNEEDED:",
+    "attempts": 1,
+    "created_at": "2026-07-01T05:00:56.521543+00:00",
+    "needed": [],
+    "status": "ok"
+  },
+  "crewai-0297": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "51f7dc93596e04fa23d2702b86373a1a846590fe4b3813caaf08f4a0d170c56b",
+    "raw_response": "SerperDevTool is needed for finding relevant health articles online. WebsiteSearchTool is optional/duplicative for this purpose because general web search is sufficient.\n\nNEEDED: SerperDevTool",
+    "attempts": 1,
+    "created_at": "2026-07-01T05:01:00.906760+00:00",
+    "needed": [
+      "SerperDevTool"
+    ],
+    "status": "ok"
+  }
+}

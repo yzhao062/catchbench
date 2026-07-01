@@ -1,0 +1,2497 @@
+[
+{
+"instance_id": "crewai-0001",
+"needed": [
+"SerperDevTool",
+"ScrapeWebsiteTool"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "crewai-0002",
+"needed": [
+"akshare_tool",
+"financial_calculator_tool"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "crewai-0003",
+"needed": [
+"technical_analysis_tool",
+"charting_tool"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "crewai-0004",
+"needed": [
+"data_validation_tool"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "crewai-0005",
+"needed": [
+"fundamental_analysis_tool"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "crewai-0006",
+"needed": [
+"risk_assessment_tool"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "crewai-0007",
+"needed": [
+"industry_analysis_tool"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "crewai-0008",
+"needed": [
+"report_writing_tool"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "crewai-0009",
+"needed": [
+"sentiment_analysis_tool"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "crewai-0010",
+"needed": [
+"data_coordination_tool"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "crewai-0011",
+"needed": [
+"task_orchestration_tool"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "crewai-0012",
+"needed": [
+"collective_decision_tool"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "crewai-0013",
+"needed": [
+"collaboration_analysis_tool"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "crewai-0014",
+"needed": [
+"FileReadTool"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "crewai-0015",
+"needed": [
+"FileReadTool",
+"FileWriterTool",
+"CodeInterpreterTool",
+"DirectorySearchTool"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "crewai-0016",
+"needed": [
+"FileReadTool",
+"CodeDocsSearchTool"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "crewai-0017",
+"needed": [
+"FileReadTool",
+"DirectorySearchTool",
+"CodeInterpreterTool"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "crewai-0018",
+"needed": [],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "crewai-0019",
+"needed": [],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "crewai-0020",
+"needed": [
+"SerperDevTool",
+"ScrapeWebsiteTool"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "crewai-0021",
+"needed": [
+"SerperDevTool",
+"ScrapeWebsiteTool"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "crewai-0022",
+"needed": [],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "crewai-0023",
+"needed": [
+"parse_job_pdf"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "crewai-0024",
+"needed": [
+"parse_cv"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "crewai-0025",
+"needed": [
+"compute_keyword_match"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "crewai-0026",
+"needed": [
+"search_jobs"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "crewai-0027",
+"needed": [
+"scrape_linkedin_posts_tool",
+"SerperDevTool"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "crewai-0028",
+"needed": [
+"SerperDevTool",
+"ScrapeWebsiteTool"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "crewai-0029",
+"needed": [
+"SerperDevTool",
+"ScrapeWebsiteTool"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "crewai-0030",
+"needed": [
+"SerperDevTool",
+"ScrapeWebsiteTool"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "crewai-0031",
+"needed": [
+"SerperDevTool",
+"ScrapeWebsiteTool",
+"FileWriterTool"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "crewai-0032",
+"needed": [],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "crewai-0033",
+"needed": [
+"SerperDevTool",
+"ScrapeWebsiteTool"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "crewai-0034",
+"needed": [
+"SerperDevTool",
+"ScrapeWebsiteTool"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "crewai-0035",
+"needed": [
+"SerperDevTool",
+"ScrapeWebsiteTool"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "crewai-0036",
+"needed": [
+"SerperDevTool"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "crewai-0037",
+"needed": [
+"BoardDataFetcherTool",
+"CardDataFetcherTool"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "crewai-0038",
+"needed": [
+"SerperDevTool"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "crewai-0039",
+"needed": [
+"SerperDevTool"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "crewai-0040",
+"needed": [],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "crewai-0041",
+"needed": [
+"FileReadTool"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "crewai-0042",
+"needed": [
+"FileReadTool",
+"CSVSearchTool"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "crewai-0043",
+"needed": [
+"SerperDevTool",
+"ScrapeWebsiteTool"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "crewai-0044",
+"needed": [
+"SerperDevTool",
+"ScrapeWebsiteTool"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "crewai-0045",
+"needed": [
+"SerperDevTool",
+"ScrapeWebsiteTool"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "crewai-0046",
+"needed": [
+"SerperDevTool",
+"ScrapeWebsiteTool"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "crewai-0047",
+"needed": [
+"SerperDevTool"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "crewai-0048",
+"needed": [
+"SerperDevTool"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "crewai-0049",
+"needed": [
+"SerperTool",
+"ScraperTool"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "crewai-0050",
+"needed": [],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "crewai-0051",
+"needed": [
+"PublisherTool"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "crewai-0052",
+"needed": [],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "crewai-0053",
+"needed": [
+"perplexity"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "crewai-0054",
+"needed": [
+"perplexity"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "crewai-0055",
+"needed": [
+"perplexity"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "crewai-0056",
+"needed": [],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "crewai-0057",
+"needed": [
+"JSONSearchTool"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "crewai-0058",
+"needed": [
+"JSONSearchTool"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "crewai-0059",
+"needed": [
+"JSONSearchTool"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "crewai-0060",
+"needed": [
+"JSONSearchTool"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "crewai-0061",
+"needed": [
+"SerperDevTool"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "crewai-0062",
+"needed": [
+"SerperDevTool"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "crewai-0063",
+"needed": [
+"push_notification"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "crewai-0064",
+"needed": [
+"BeautifulSoupTool",
+"RequestsTool"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "crewai-0065",
+"needed": [
+"PropertyAnalysisTool"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "crewai-0066",
+"needed": [
+"TaskPrioritizationTool",
+"WorkflowOptimizationTool"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "crewai-0067",
+"needed": [
+"search_web"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "crewai-0068",
+"needed": [
+"wikipedia_resumo"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "crewai-0069",
+"needed": [
+"CryptoCurrencyDataCollectorTool"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "crewai-0070",
+"needed": [
+"SerperDevTool",
+"ScrapeWebsiteTool"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "crewai-0071",
+"needed": [
+"CryptocurrencyTechnicalAnalysisTool"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "crewai-0072",
+"needed": [
+"eastmoney_financial_data",
+"eastmoney_financial_search"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "crewai-0073",
+"needed": [
+"eastmoney_financial_data",
+"fetch_kline_data",
+"fetch_official_technical_analysis"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "crewai-0074",
+"needed": [
+"SerperDevTool"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "crewai-0075",
+"needed": [
+"DallETool"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "crewai-0076",
+"needed": [
+"PythonREPLCrewTool"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "crewai-0077",
+"needed": [
+"FileWriterTool"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "crewai-0078",
+"needed": [],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "crewai-0079",
+"needed": [
+"ScrapeWebsiteTool",
+"WebsiteSearchTool"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "crewai-0080",
+"needed": [
+"duckduckgo_search",
+"web_scraper"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "crewai-0081",
+"needed": [
+"code_interpreter",
+"csv_search_enhanced"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "crewai-0082",
+"needed": [
+"custom_file_write"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "crewai-0083",
+"needed": [
+"memory_tool",
+"task_tool",
+"conversation_tool"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "crewai-0084",
+"needed": [
+"fetch_product_tool"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "crewai-0085",
+"needed": [
+"publish_facebook_post_tool"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "crewai-0086",
+"needed": [
+"FileReadTool",
+"PDFSearchTool"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "crewai-0087",
+"needed": [],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "crewai-0088",
+"needed": [
+"get_stock_price",
+"get_stock_history"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "crewai-0089",
+"needed": [
+"get_stock_fundamentals",
+"get_stock_price"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "crewai-0090",
+"needed": [
+"get_company_news"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "crewai-0091",
+"needed": [
+"SerperDevTool",
+"ScrapeWebsiteTool",
+"FileWriterTool",
+"FileReadTool"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "crewai-0092",
+"needed": [
+"SerperDevTool",
+"ScrapeWebsiteTool",
+"FileWriterTool",
+"FileReadTool"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "crewai-0093",
+"needed": [
+"SerperDevTool",
+"ScrapeWebsiteTool",
+"FileWriterTool",
+"FileReadTool"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "crewai-0094",
+"needed": [
+"SerperDevTool",
+"ScrapeWebsiteTool",
+"FileWriterTool",
+"FileReadTool"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "crewai-0095",
+"needed": [
+"SerperDevTool"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "crewai-0096",
+"needed": [
+"SerperDevTool"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "crewai-0097",
+"needed": [
+"academic_search_tool",
+"firecrawl_extract_tool"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "crewai-0098",
+"needed": [
+"code_search_tool",
+"firecrawl_extract_tool"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "crewai-0099",
+"needed": [
+"educational_search_tool",
+"firecrawl_extract_tool"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "crewai-0100",
+"needed": [
+"research_tool"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "crewai-0101",
+"needed": [
+"validated_tools"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "crewai-0102",
+"needed": [
+"validated_tools"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "crewai-0103",
+"needed": [
+"validated_tools"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "crewai-0104",
+"needed": [
+"validated_tools"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "crewai-0105",
+"needed": [
+"SerperDevTool"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "crewai-0106",
+"needed": [
+"SerperDevTool"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "crewai-0107",
+"needed": [
+"SerperDevTool"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "crewai-0108",
+"needed": [],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "crewai-0109",
+"needed": [
+"SerperDevTool"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "crewai-0110",
+"needed": [
+"PushNotificationTool"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "crewai-0111",
+"needed": [
+"FileWriterTool",
+"FileReadTool"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "crewai-0112",
+"needed": [
+"news_scan_tool"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "crewai-0113",
+"needed": [
+"alpaca_trade_tool"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "crewai-0114",
+"needed": [
+"SerperDevTool",
+"ScrapeWebsiteTool",
+"FileWriterTool",
+"FileReadTool"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "crewai-0115",
+"needed": [
+"ScrapeWebsiteTool",
+"YoutubeChannelSearchTool",
+"FileWriterTool",
+"FileReadTool"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "crewai-0116",
+"needed": [
+"FileWriterTool",
+"FileReadTool"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "crewai-0117",
+"needed": [
+"SerperScrapeWebsiteTool"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "crewai-0118",
+"needed": [
+"SerperDevTool"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "crewai-0119",
+"needed": [
+"web_search",
+"web_scraper"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "crewai-0120",
+"needed": [
+"seo_api",
+"web_search"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "crewai-0121",
+"needed": [
+"web_scraper"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "crewai-0122",
+"needed": [
+"FileReadTool"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "crewai-0123",
+"needed": [
+"FileWriterTool"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "crewai-0124",
+"needed": [
+"FileReadTool",
+"FileWriterTool"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "crewai-0125",
+"needed": [
+"FileReadTool",
+"FileWriterTool"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "crewai-0126",
+"needed": [],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "crewai-0127",
+"needed": [
+"SerperDevTool"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "crewai-0128",
+"needed": [
+"gmail_reader_tool"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "crewai-0129",
+"needed": [
+"google_calendar_search_tool"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "crewai-0130",
+"needed": [
+"human_approval_tool"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "crewai-0131",
+"needed": [
+"google_calendar_writer_tool"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "crewai-0132",
+"needed": [
+"read_resume",
+"semantic_search_resume",
+"read_job_description",
+"semantic_search_job_description"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "crewai-0133",
+"needed": [
+"read_resume",
+"semantic_search_resume",
+"read_job_description",
+"semantic_search_job_description"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "crewai-0134",
+"needed": [
+"read_resume",
+"semantic_search_resume",
+"read_job_description",
+"semantic_search_job_description"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "crewai-0135",
+"needed": [
+"SerperDevTool"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "crewai-0136",
+"needed": [
+"ScrapeWebsiteTool"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "crewai-0137",
+"needed": [
+"PDFSearchTool"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "crewai-0138",
+"needed": [
+"alert_parser_tool"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "crewai-0139",
+"needed": [
+"dependency_map_tool",
+"recent_deployment_history_tool"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "crewai-0140",
+"needed": [
+"SerperDevTool"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "crewai-0141",
+"needed": [
+"CSVSearchTool",
+"FileReadTool"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "crewai-0142",
+"needed": [
+"FileReadTool"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "crewai-0143",
+"needed": [
+"FileReadTool",
+"TXTSearchTool"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "crewai-0144",
+"needed": [
+"DallETool"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "crewai-0145",
+"needed": [
+"search_10k",
+"search_10q"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "crewai-0146",
+"needed": [],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "crewai-0147",
+"needed": [
+"extract_ingredient",
+"filter_ingredients"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "crewai-0148",
+"needed": [
+"filter_based_on_restrictions"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "crewai-0149",
+"needed": [
+"analyze_image"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "crewai-0150",
+"needed": [
+"YoutubeVideoSearchTool",
+"YoutubeVideoDetailsTool"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "crewai-0151",
+"needed": [
+"Tool"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "crewai-0152",
+"needed": [
+"ZendeskTicketSearchTool"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "crewai-0153",
+"needed": [
+"SerperDevTool",
+"ScrapeWebsiteTool"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "crewai-0154",
+"needed": [
+"ProductSearchTool"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "crewai-0155",
+"needed": [
+"PriceComparisonTool"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "crewai-0156",
+"needed": [
+"TavilySearchTool"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "crewai-0157",
+"needed": [
+"StockPriceTool",
+"CompanyProfileTool",
+"FinancialRatiosTool",
+"MarketCapTool",
+"KeyMetricsTool",
+"StockScreenerTool",
+"SingleLineItemQueryTool"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "crewai-0158",
+"needed": [
+"WebpageReadingTool"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "crewai-0159",
+"needed": [
+"SerperDevTool"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "crewai-0160",
+"needed": [
+"ScrapeWebsiteTool"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "crewai-0161",
+"needed": [
+"FileWriterTool"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "crewai-0162",
+"needed": [
+"optimize_signal_timing"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "crewai-0163",
+"needed": [
+"CSVTool"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "crewai-0164",
+"needed": [
+"PatternDetector"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "crewai-0165",
+"needed": [],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "crewai-0166",
+"needed": [
+"TelegramBotTool"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "crewai-0167",
+"needed": [],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "crewai-0168",
+"needed": [
+"laravel_artisan",
+"composer_manager"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "crewai-0169",
+"needed": [
+"vue_cli"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "crewai-0170",
+"needed": [
+"laravel_artisan",
+"code_generator"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "crewai-0171",
+"needed": [
+"api_generator",
+"swagger_tools"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "crewai-0172",
+"needed": [
+"payment_sdk"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "crewai-0173",
+"needed": [
+"code_analyzer"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "crewai-0174",
+"needed": [
+"phpstan"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "crewai-0175",
+"needed": [
+"laravel_pint"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "crewai-0176",
+"needed": [
+"phpunit",
+"pest",
+"jest",
+"cypress"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "crewai-0177",
+"needed": [
+"context7_mcp"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "crewai-0178",
+"needed": [
+"notion_mcp"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "crewai-0179",
+"needed": [
+"supabase_mcp"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "crewai-0180",
+"needed": [
+"git_tools",
+"dependency_analyzer"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "crewai-0181",
+"needed": [
+"database_tools"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "crewai-0182",
+"needed": [
+"deployment_tools"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "crewai-0183",
+"needed": [],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "crewai-0184",
+"needed": [
+"read_resume",
+"semantic_search_resume"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "crewai-0185",
+"needed": [
+"read_resume",
+"semantic_search_resume"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "crewai-0186",
+"needed": [
+"YouTubeCommentsTool"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "crewai-0187",
+"needed": [
+"SerperDevTool"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "crewai-0188",
+"needed": [
+"SearchTool",
+"EmailSendingTool"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "crewai-0189",
+"needed": [],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "crewai-0190",
+"needed": [
+"SerperDevTool",
+"ScrapeWebsiteTool",
+"LinkedInTool"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "crewai-0191",
+"needed": [],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "crewai-0192",
+"needed": [],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "crewai-0193",
+"needed": [
+"ScrapeWebsiteTool",
+"WebsiteSearchTool",
+"CalculatorTool",
+"SEC10KTool"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "crewai-0194",
+"needed": [
+"ScrapeWebsiteTool",
+"SEC10QTool",
+"SEC10KTool"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "crewai-0195",
+"needed": [
+"RealTimeStockLibTool"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "crewai-0196",
+"needed": [],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "crewai-0197",
+"needed": [],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "crewai-0198",
+"needed": [],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "crewai-0199",
+"needed": [],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "crewai-0200",
+"needed": [
+"ComputerTool"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "crewai-0201",
+"needed": [
+"serper_tool",
+"ScrapeWebsiteTool"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "crewai-0202",
+"needed": [
+"get_obsidian_mcp_tools"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "crewai-0203",
+"needed": [
+"get_agent_tools"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "crewai-0204",
+"needed": [],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "crewai-0205",
+"needed": [
+"get_agent_tools"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "crewai-0206",
+"needed": [
+"time",
+"calendar_core",
+"attendee_search",
+"memory_core"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "crewai-0207",
+"needed": [
+"math",
+"memory_core"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "crewai-0208",
+"needed": [
+"ScrapeWebsiteTool",
+"WebsiteSearchTool",
+"CalculatorTool",
+"SEC10QTool",
+"SEC10KTool"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "crewai-0209",
+"needed": [
+"ScrapeWebsiteTool",
+"WebsiteSearchTool",
+"CalculatorTool"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "crewai-0210",
+"needed": [
+"NewsScanTool",
+"WeatherAlertTool"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "crewai-0211",
+"needed": [
+"SerperDevTool"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "crewai-0212",
+"needed": [
+"stock_data_tool"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "crewai-0213",
+"needed": [
+"SerperDevTool",
+"ScrapeWebsiteTool",
+"CerebroSearchTool"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "crewai-0214",
+"needed": [
+"FileReadTool"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "crewai-0215",
+"needed": [
+"FileReadTool"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "crewai-0216",
+"needed": [
+"FileReadTool",
+"CSVSearchTool"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "crewai-0217",
+"needed": [
+"LatexReaderTool"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "crewai-0218",
+"needed": [
+"SeleniumScrapingTool"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "crewai-0219",
+"needed": [
+"SerperDevTool"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "crewai-0220",
+"needed": [
+"HtmlToPdfTool"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "crewai-0221",
+"needed": [
+"requirements_clarifier",
+"architecture_reviewer",
+"task_manager",
+"task_assignment_tool",
+"shared_memory",
+"message_passing",
+"team_communication"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "crewai-0222",
+"needed": [
+"design_system_generator",
+"architecture_reviewer",
+"requirements_clarifier",
+"shared_memory",
+"message_passing",
+"team_communication"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "crewai-0223",
+"needed": [
+"write_file",
+"read_file",
+"code_execution",
+"team_communication"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "crewai-0224",
+"needed": [
+"test_case_generator",
+"code_quality_analyzer",
+"unit_test_runner",
+"bug_logger",
+"read_file",
+"team_communication"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "crewai-0225",
+"needed": [
+"SerperDevTool"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "crewai-0226",
+"needed": [
+"ScrapeWebsiteTool"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "crewai-0227",
+"needed": [
+"GPTContentAnalyzer"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "crewai-0228",
+"needed": [
+"upload_file_to_drive_tool",
+"FileReadTool",
+"pdf_search_tool",
+"dir_read_tool"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "crewai-0229",
+"needed": [
+"SerperDevTool",
+"ScrapeWebsiteTool"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "crewai-0230",
+"needed": [
+"YouTubeSearchTool"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "crewai-0231",
+"needed": [
+"web_search",
+"document_search"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "crewai-0232",
+"needed": [],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "crewai-0233",
+"needed": [
+"web_search"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "crewai-0234",
+"needed": [
+"document_search"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "crewai-0235",
+"needed": [
+"web_search"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "crewai-0236",
+"needed": [
+"web_search",
+"document_search"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "crewai-0237",
+"needed": [
+"web_search",
+"document_search"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "crewai-0238",
+"needed": [
+"web_search",
+"document_search"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "crewai-0239",
+"needed": [
+"voice_call"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "crewai-0240",
+"needed": [
+"SerperDevTool",
+"ScrapeWebsiteTool"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "crewai-0241",
+"needed": [
+"SerperDevTool",
+"ScrapeWebsiteTool"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "crewai-0242",
+"needed": [
+"SerperDevTool"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "crewai-0243",
+"needed": [
+"SerperDevTool"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "crewai-0244",
+"needed": [
+"SerperDevTool"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "crewai-0245",
+"needed": [
+"SerperDevTool"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "crewai-0246",
+"needed": [
+"SerperDevTool",
+"LinkedInJobSearchTool"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "crewai-0247",
+"needed": [
+"SerperDevTool",
+"ScrapeWebsiteTool",
+"WebsiteSearchTool"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "crewai-0248",
+"needed": [],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "crewai-0249",
+"needed": [],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "crewai-0250",
+"needed": [
+"EXASearchTool",
+"ScrapeWebsiteTool"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "crewai-0251",
+"needed": [
+"EXASearchTool",
+"ScrapeWebsiteTool"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "crewai-0252",
+"needed": [
+"vercel",
+"github"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "crewai-0253",
+"needed": [
+"supabase"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "crewai-0254",
+"needed": [
+"tailwind"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "crewai-0255",
+"needed": [
+"design_system"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "crewai-0256",
+"needed": [
+"markdown"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "crewai-0257",
+"needed": [
+"jest",
+"cypress",
+"coverage"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "crewai-0258",
+"needed": [
+"markdown",
+"readme"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "crewai-0259",
+"needed": [
+"TranscriptionTool"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "crewai-0260",
+"needed": [
+"NotionTool",
+"EnhancedFileWriterTool"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "crewai-0261",
+"needed": [
+"intent_classification_tool"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "crewai-0262",
+"needed": [
+"vector_search_tool",
+"document_retrieval_tool"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "crewai-0263",
+"needed": [
+"database_query_tool",
+"customer_lookup_tool",
+"order_lookup_tool"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "crewai-0264",
+"needed": [
+"response_generation_tool"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "crewai-0265",
+"needed": [
+"escalation_assessment_tool",
+"priority_routing_tool"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "crewai-0266",
+"needed": [
+"quality_check_tool",
+"compliance_validation_tool"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "crewai-0267",
+"needed": [
+"SerperNewsTool",
+"SerperDevTool"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "crewai-0268",
+"needed": [
+"SerperDevTool"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "crewai-0269",
+"needed": [
+"real_time_traffic_analysis"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "crewai-0270",
+"needed": [
+"real_time_traffic_analysis"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "crewai-0271",
+"needed": [],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "crewai-0272",
+"needed": [],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "crewai-0273",
+"needed": [
+"SerperDevTool",
+"ScrapeWebsiteTool"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "crewai-0274",
+"needed": [
+"SerperDevTool",
+"ScrapeWebsiteTool"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "crewai-0275",
+"needed": [],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "crewai-0276",
+"needed": [
+"ScrapeWebsiteTool",
+"SerperDevTool"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "crewai-0277",
+"needed": [
+"ScrapeWebsiteTool",
+"SerperDevTool",
+"FileReadTool",
+"MDXSearchTool"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "crewai-0278",
+"needed": [
+"FileReadTool",
+"MDXSearchTool"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "crewai-0279",
+"needed": [
+"FileReadTool",
+"MDXSearchTool"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "crewai-0280",
+"needed": [
+"ScrapeWebsiteTool"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "crewai-0281",
+"needed": [
+"ScrapeWebsiteTool"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "crewai-0282",
+"needed": [],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "crewai-0283",
+"needed": [],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "crewai-0284",
+"needed": [
+"ScrapeWebsiteTool",
+"CustomSerperTool"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "crewai-0285",
+"needed": [
+"ScrapeWebsiteTool",
+"CustomSerperTool",
+"FileReadTool",
+"MDXSearchTool"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "crewai-0286",
+"needed": [
+"FileReadTool",
+"MDXSearchTool"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "crewai-0287",
+"needed": [
+"FileReadTool",
+"MDXSearchTool"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "crewai-0288",
+"needed": [],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "crewai-0289",
+"needed": [],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "crewai-0290",
+"needed": [
+"SerperDevTool",
+"ScrapeWebsiteTool"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "crewai-0291",
+"needed": [
+"SerperDevTool",
+"ScrapeWebsiteTool"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "crewai-0292",
+"needed": [],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "crewai-0293",
+"needed": [
+"SerperDevTool",
+"ScrapeWebsiteTool"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "crewai-0294",
+"needed": [],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "crewai-0295",
+"needed": [
+"priority_tool"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "crewai-0296",
+"needed": [
+"FileReadTool"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "crewai-0297",
+"needed": [
+"SerperDevTool",
+"WebsiteSearchTool"
+],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+},
+{
+"instance_id": "crewai-0298",
+"needed": [],
+"model": "claude-opus-4-8",
+"prompt_version": "pre-needed-v1"
+}
+]

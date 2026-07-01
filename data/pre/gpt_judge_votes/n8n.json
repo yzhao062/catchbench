@@ -1,0 +1,2857 @@
+{
+  "n8n-6270": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "d30a9fcbac9bf175961ecbfbfca688fd30384bd7460331290a6f5bd23efc4487",
+    "raw_response": "Both declared tools are part of the stated demo agent purpose: fetching weather and reading RSS news feeds as example actions the agent can take.\n\nNEEDED: Get News, Get Weather",
+    "attempts": 1,
+    "created_at": "2026-07-01T05:01:04.864712+00:00",
+    "needed": [
+      "Get News",
+      "Get Weather"
+    ],
+    "status": "ok"
+  },
+  "n8n-7639": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "d829c5b7b5f8a3cba07760b2b44d1fae4c8ec0d460d3bd5af5c934ad87077df6",
+    "raw_response": "The workflow only needs read access to Google Sheets to answer questions about spreadsheet data. The declared capability grants write permission, which is broader than necessary.\n\nNEEDED:",
+    "attempts": 1,
+    "created_at": "2026-07-01T05:01:05.589027+00:00",
+    "needed": [],
+    "status": "ok"
+  },
+  "n8n-5148": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "8e756cc475097bc0886475e621b0b103a64724d5dd6f1932ba140f609f163f1b",
+    "raw_response": "The chatbot’s core purpose is retrieval-augmented generation over PDFs stored in Qdrant, so read access to the Qdrant vector store is genuinely required to fetch relevant document chunks.\n\nNEEDED: Qdrant Vector Store1",
+    "attempts": 1,
+    "created_at": "2026-07-01T05:01:07.377861+00:00",
+    "needed": [
+      "Qdrant Vector Store1"
+    ],
+    "status": "ok"
+  },
+  "n8n-5035": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "b73a9e3c5ebb55f78abdeade9aed046c0e390fb85fbf579234072c6f1c597e88",
+    "raw_response": "The task is pure text generation (creative ideas and structured video prompts). These capabilities may help, but the AI can reasonably fulfill the role without special declared tools.\n\nNEEDED:",
+    "attempts": 1,
+    "created_at": "2026-07-01T05:01:09.279246+00:00",
+    "needed": [],
+    "status": "ok"
+  },
+  "n8n-5819": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "b0dc2a224b031bd759ee40bb61e691dd13adf74493fe5940670948b0dc7a3316",
+    "raw_response": "All declared capabilities directly correspond to the agent’s stated demo tools and advertised user-facing functions.\n\nNEEDED: wikipedia, get_a_joke, days_from_now, create_password, n8n_blog_rss_feed, calculate_loan_payment",
+    "attempts": 1,
+    "created_at": "2026-07-01T05:01:09.797487+00:00",
+    "needed": [
+      "wikipedia",
+      "get_a_joke",
+      "days_from_now",
+      "create_password",
+      "n8n_blog_rss_feed",
+      "calculate_loan_payment"
+    ],
+    "status": "ok"
+  },
+  "n8n-7756": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "3a91c25d8565b9b5bdcc32060ee6f188cef79d3c8e006fec7bd1d282ed5b1490",
+    "raw_response": "Registering users, logging meals, updating profiles, fetching profile data, and generating reports are all central to the nutrition tracker’s stated functionality.\n\nNEEDED: Get Report, Register User, Append Meal Data, Get Profile Data, Update Profile Data",
+    "attempts": 1,
+    "created_at": "2026-07-01T05:01:11.157981+00:00",
+    "needed": [
+      "Get Report",
+      "Register User",
+      "Append Meal Data",
+      "Get Profile Data",
+      "Update Profile Data"
+    ],
+    "status": "ok"
+  },
+  "n8n-5110": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "daac47f63d026ca8eabf429d2a6907f4f77d5a501d64198a8b088f1ba90662f3",
+    "raw_response": "The declared capability “Think” is not necessary as a separate capability for this workflow. The workflow’s actual needs involve external APIs and publishing/logging services, none of which are represented by the declared capability.\n\nNEEDED:",
+    "attempts": 1,
+    "created_at": "2026-07-01T05:01:11.175980+00:00",
+    "needed": [],
+    "status": "ok"
+  },
+  "n8n-4827": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "67183238f52cd0060daddd6eb8f6e8b67d8b9a0bde87bebb58980aa4db4d290e",
+    "raw_response": "MongoDB vector search read access is needed to retrieve relevant documentation chunks for RAG-based WhatsApp responses.\n\nNEEDED: MongoDB Vector Search",
+    "attempts": 1,
+    "created_at": "2026-07-01T05:01:12.180833+00:00",
+    "needed": [
+      "MongoDB Vector Search"
+    ],
+    "status": "ok"
+  },
+  "n8n-8500": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "5075b7fc54358a74eb558873c571286f348c7773b8b43dc442761453623135a6",
+    "raw_response": "The Jarvis assistant’s stated purpose explicitly includes managing emails, calendar events, contacts, tasks, and expenses. Those require the corresponding MCP integrations. The separate “Think” capability is not specifically required to fulfill the role because reasoning can be handled by the assistant itself.\n\nNEEDED: Gmail MCP, Calendar MCP, Finance Tracker, Google Contacts, Google Tasks MCP",
+    "attempts": 1,
+    "created_at": "2026-07-01T05:01:12.862260+00:00",
+    "needed": [
+      "Gmail MCP",
+      "Calendar MCP",
+      "Finance Tracker",
+      "Google Contacts",
+      "Google Tasks MCP"
+    ],
+    "status": "ok"
+  },
+  "n8n-11204": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "5c3f647a18a431698a9d1456fad7fff2d1c7d08402a5b34d484f6bafbc17b9c2",
+    "raw_response": "The declared capability “Think” is not required to create prompts, generate captions, or publish videos. The workflow would need integrations like Telegram, OpenAI, Fal.ai, and Blotato, but none of those are declared.\n\nNEEDED:",
+    "attempts": 1,
+    "created_at": "2026-07-01T05:01:17.054526+00:00",
+    "needed": [],
+    "status": "ok"
+  },
+  "n8n-9200": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "5d863f0ea69e6c23ddaee32c36e33d63de683992f194af6fc0f22951cab9c011",
+    "raw_response": "The stated workflow requires generating structured image/video prompts and JSON outputs. The declared capabilities `Think` and `Think1` are only internal thinking tools and are not necessary to fulfill the role; the task can be completed without invoking any declared capability.\n\nNEEDED:",
+    "attempts": 1,
+    "created_at": "2026-07-01T05:01:17.145869+00:00",
+    "needed": [],
+    "status": "ok"
+  },
+  "n8n-6287": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "7fcf246ae7f7bd67590626a4429890ffc65c91112ace8376429c968361c550df",
+    "raw_response": "The workflow explicitly requires logging every processed email interaction to a Google Sheet, including request type, priority, status, response sent, follow-up, and notes. Therefore, Google Sheets write access is genuinely needed.\n\nNEEDED: Append or update row in sheet in Google Sheets | type: google_sheets | permission_level: write",
+    "attempts": 2,
+    "created_at": "2026-07-01T05:01:18.751458+00:00",
+    "status": "malformed",
+    "error": "unknown names: Append or update row in sheet in Google Sheets | type: google_sheets | permission_level: write"
+  },
+  "n8n-5338": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "9b02a604e880a0cd93a15693820c0f319d7c0a358af09479c35abfc534f8c71d",
+    "raw_response": "Both declared capabilities are directly aligned with the workflow’s stated purpose: generating creative video ideas and refining/validating prompts for AI video production.\n\nNEEDED: Tool: Refine and Validate Prompts1, Tool: Inject Creative Perspective (Idea)",
+    "attempts": 1,
+    "created_at": "2026-07-01T05:01:19.601667+00:00",
+    "needed": [
+      "Tool: Refine and Validate Prompts1",
+      "Tool: Inject Creative Perspective (Idea)"
+    ],
+    "status": "ok"
+  },
+  "n8n-13503": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "0225f80b17af860c0200ddd0b8a5170f7a8edbeec4483b2beffaf1acfb4240eb",
+    "raw_response": "database, Get orders, Send email, Get products, Update product\n\nNEEDED: database, Get orders, Send email, Get products, Update product",
+    "attempts": 1,
+    "created_at": "2026-07-01T05:01:20.161893+00:00",
+    "needed": [
+      "database",
+      "Get orders",
+      "Send email",
+      "Get products",
+      "Update product"
+    ],
+    "status": "ok"
+  },
+  "n8n-8428": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "dfe0a8ee3306e187d82e0fa098bb2998348d3783f16b66c391887a820bf744aa",
+    "raw_response": "The prompt-building role can be fulfilled directly by the assistant without any external capability. The declared Think tool is optional and not required.\n\nNEEDED:",
+    "attempts": 1,
+    "created_at": "2026-07-01T05:01:20.226901+00:00",
+    "needed": [],
+    "status": "ok"
+  },
+  "n8n-15369": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "9c30a307f890c9069900dcadcc2f6086b08339dfb17ec4e84a038e02f6ce6905",
+    "raw_response": "Both declared capabilities are needed:\n\n- Gmail Thread Tool: Needed to read the full Gmail conversation/thread context before classification and reply drafting.\n- Google Calendar Tool: Needed to check availability and suggest meeting slots in drafted replies.\n\nNEEDED: Gmail Thread Tool, Google Calendar Tool",
+    "attempts": 1,
+    "created_at": "2026-07-01T05:01:21.378238+00:00",
+    "needed": [
+      "Gmail Thread Tool",
+      "Google Calendar Tool"
+    ],
+    "status": "ok"
+  },
+  "n8n-5010": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "22591a60d715bf26601766dce2ece90c5bdcf25e0e7ff6e07efa2f74b5cc08ba",
+    "raw_response": "The RAG template needs to query the in-memory vector store to retrieve relevant knowledge for the agent’s responses.\n\nNEEDED: Query Data Tool",
+    "attempts": 1,
+    "created_at": "2026-07-01T05:01:23.237989+00:00",
+    "needed": [
+      "Query Data Tool"
+    ],
+    "status": "ok"
+  },
+  "n8n-5948": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "5d1a9ce4a8cf5d262cbb58fee58a1f2a83ef41a7ca761e9c1057d18e1d5d9dfd",
+    "raw_response": "The workflow’s core purpose is to monitor competitor pricing pages by scraping websites and extracting pricing changes. The declared MCP scraping capability is directly required for accessing competitor websites via Bright Data and retrieving page content.\n\nNEEDED: MCP Client to Scrape as markdown",
+    "attempts": 1,
+    "created_at": "2026-07-01T05:01:24.397945+00:00",
+    "needed": [
+      "MCP Client to Scrape as markdown"
+    ],
+    "status": "ok"
+  },
+  "n8n-13526": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "bc0904fdc1980a96fda6b0c5332654d796ef2ac55f9b09c65136c419228ded7b",
+    "raw_response": "All declared capabilities are needed for the specified end-to-end workflow: creating and polling sources, generating and polling visuals, publishing to the requested platform, and sending Telegram confirmations or clarification messages.\n\nNEEDED: Get source, Get visual, Create source, Post to TikTok, Post to Instagram, Send notification, Create visual - AI image video, Create visual - tweet card carousel",
+    "attempts": 1,
+    "created_at": "2026-07-01T05:01:26.110620+00:00",
+    "needed": [
+      "Get source",
+      "Get visual",
+      "Create source",
+      "Post to TikTok",
+      "Post to Instagram",
+      "Send notification",
+      "Create visual - AI image video",
+      "Create visual - tweet card carousel"
+    ],
+    "status": "ok"
+  },
+  "n8n-9383": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "4bc538ec15e0807cc9448ff3b1ff55489bc764d330e1f878567f86dac1511420",
+    "raw_response": "Create calendar events and checking calendar availability are needed for appointment scheduling. The Google Sheets “Know about the user enquiry” capability is described as a lookup/read function, but it is declared with write permission, which is broader than needed.\n\nNEEDED: Create an event, GET MANY EVENTS OF DAY THE USER ASKED",
+    "attempts": 1,
+    "created_at": "2026-07-01T05:01:27.629926+00:00",
+    "needed": [
+      "Create an event",
+      "GET MANY EVENTS OF DAY THE USER ASKED"
+    ],
+    "status": "ok"
+  },
+  "n8n-4722": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "b23d57609699577b39872df8281d60fbf88d7bf50256f88b47b7371ca64beed2",
+    "raw_response": "Both capabilities are relevant to the stated workflow: reading/retrieving Gmail message data and checking prior sent correspondence are needed for context-aware classification.\n\nNEEDED: Get Email, Check Sent",
+    "attempts": 1,
+    "created_at": "2026-07-01T05:01:27.752903+00:00",
+    "needed": [
+      "Get Email",
+      "Check Sent"
+    ],
+    "status": "ok"
+  },
+  "n8n-8591": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "acdaaf920ec25e79dee20879b8cebde08d81e998efa2b50b953877ef8e2804e1",
+    "raw_response": "The declared capability `Think` is not genuinely needed to fulfill the stated prompt-generation roles. The tasks require producing structured JSON text, which can be done without any external tool capability.\n\nNEEDED:",
+    "attempts": 1,
+    "created_at": "2026-07-01T05:01:31.393490+00:00",
+    "needed": [],
+    "status": "ok"
+  },
+  "n8n-14167": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "a751b96a6b387e45caabc7a56f04e05eef0253ebc6bfb6ba4906ca2f1b0a0c64",
+    "raw_response": "The workflow’s stated purpose is to search, scrape, and browse/interact with web pages using Firecrawl. Search and scrape are core requirements, and the interact tools are explicitly part of the intended “complete web navigation” capability for dynamic pages.\n\nNEEDED: /scrape with Firecrawl, /search with Firecrawl, Interact context with Firecrawl, Stop interaction with Firecrawl, Execute interaction with Firecrawl",
+    "attempts": 1,
+    "created_at": "2026-07-01T05:01:32.641561+00:00",
+    "needed": [
+      "/scrape with Firecrawl",
+      "/search with Firecrawl",
+      "Interact context with Firecrawl",
+      "Stop interaction with Firecrawl",
+      "Execute interaction with Firecrawl"
+    ],
+    "status": "ok"
+  },
+  "n8n-4600": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "afae286466d5ad273e9392ab3ab851e957b2106cc24ed26c1f8e1b2877bb5dc7",
+    "raw_response": "Tavily Internet Search is needed because the workflow explicitly requires real-time research, current automotive information/news, and source attribution before generating Telegram posts.\n\nNEEDED: Tavily Internet Search",
+    "attempts": 1,
+    "created_at": "2026-07-01T05:01:35.182566+00:00",
+    "needed": [
+      "Tavily Internet Search"
+    ],
+    "status": "ok"
+  },
+  "n8n-13409": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "e587d7569661a933ee63a09238e5afb1ed39ce1d5330ab9b547b7622b72fb5ba",
+    "raw_response": "Source collection/retrieval, visual generation/retrieval, and publishing to Instagram + LinkedIn are core to the described pipeline.\n\nNEEDED: Source Collector, Source Retriever, LinkedIn Publisher, Instagram Publisher, Infographic Generator, Visual Asset Retriever, Slideshow Video Generator",
+    "attempts": 1,
+    "created_at": "2026-07-01T05:01:35.451165+00:00",
+    "needed": [
+      "Source Collector",
+      "Source Retriever",
+      "LinkedIn Publisher",
+      "Instagram Publisher",
+      "Infographic Generator",
+      "Visual Asset Retriever",
+      "Slideshow Video Generator"
+    ],
+    "status": "ok"
+  },
+  "n8n-9429": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "7c2e6a2132aad6cc85d771823f4f4af77cbd28552bc6870dc93ade66c74faf46",
+    "raw_response": "Calendar access is required to check open slots, create appointments, and update appointments as described. A separate LangChain “Reasoning Tool” is not strictly required because the AI agent can reason without that declared tool.\n\nNEEDED: Calendar: Check Availability, Calendar: Create Appointment, Update an event in Google Calendar",
+    "attempts": 1,
+    "created_at": "2026-07-01T05:01:35.863431+00:00",
+    "needed": [
+      "Calendar: Check Availability",
+      "Calendar: Create Appointment",
+      "Update an event in Google Calendar"
+    ],
+    "status": "ok"
+  },
+  "n8n-8597": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "ab0dd8f66b4085cf404c828143d5d50071a8bbb488c69ad995ae8bc7c1447663",
+    "raw_response": "The workflow needs access to the knowledge base, calendar availability checking, appointment creation, and email confirmation sending. The reasoning tool is not strictly required as an external capability to accomplish the stated purpose.\n\nNEEDED: Knowledgebase Lookup, Send Booking Confirmation, Calendar: Check Availability, Calendar: Create Appointment",
+    "attempts": 1,
+    "created_at": "2026-07-01T05:01:37.609713+00:00",
+    "needed": [
+      "Knowledgebase Lookup",
+      "Send Booking Confirmation",
+      "Calendar: Check Availability",
+      "Calendar: Create Appointment"
+    ],
+    "status": "ok"
+  },
+  "n8n-4484": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "7e75ad27cb0913bea86fcb5f10543b83d0d4bb26ce024675f252eb9798177bdf",
+    "raw_response": "All four declared capabilities are needed because the agent’s stated purpose is to answer user queries by consulting Dmitry Paranyushkin book experts via InfraNodus/GraphRAG tools, selecting at least one and up to three relevant experts per query.\n\nNEEDED: The Flow and the Notion Book, Waves into Patterns Book Expert, The Polysingularity Letters Book, Special Agent's Manual Book Expert",
+    "attempts": 1,
+    "created_at": "2026-07-01T05:01:43.479466+00:00",
+    "needed": [
+      "The Flow and the Notion Book",
+      "Waves into Patterns Book Expert",
+      "The Polysingularity Letters Book",
+      "Special Agent's Manual Book Expert"
+    ],
+    "status": "ok"
+  },
+  "n8n-3066": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "66d7cc001ef3449a010326fe1c1cab09fbaca0f265ee36ccf7b6ab0e3c43520b",
+    "raw_response": "SerpAPI is needed because the workflow explicitly requires researching topics using latest information and states that SERP API is used to search for relevant content.\n\nNEEDED: SerpAPI",
+    "attempts": 1,
+    "created_at": "2026-07-01T05:01:44.343694+00:00",
+    "needed": [
+      "SerpAPI"
+    ],
+    "status": "ok"
+  },
+  "n8n-5398": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "3e45214fe81ea0a62cfdb5d9c940b8171c0cf9c312a5c698f2a14a7a54f8dc09",
+    "raw_response": "RAG access is needed for MCP knowledge retrieval. Search execution is needed for real-time/current information. Listing tools is optional if the search tool is already declared, and the generic MCP Client is broader/redundant.\n\nNEEDED: RAG MCP Server, MCP_Search_Search_Engine",
+    "attempts": 1,
+    "created_at": "2026-07-01T05:01:46.948766+00:00",
+    "needed": [
+      "RAG MCP Server",
+      "MCP_Search_Search_Engine"
+    ],
+    "status": "ok"
+  },
+  "n8n-7467": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "76df2146a4e09d13060a7afe26b9c0f5009b5d33af49dc83ca43135d6827c2a2",
+    "raw_response": "Required for Salesforce lead de-dupe and create/update workflow, plus required Slack and client email notifications. The Think tool is optional and not necessary to fulfill the task.\n\nNEEDED: create_lead, update_lead, check_duplicate_lead, send_notification_client, send_notification_internal",
+    "attempts": 1,
+    "created_at": "2026-07-01T05:01:48.006058+00:00",
+    "needed": [
+      "create_lead",
+      "update_lead",
+      "check_duplicate_lead",
+      "send_notification_client",
+      "send_notification_internal"
+    ],
+    "status": "ok"
+  },
+  "n8n-5817": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "532027bf2f34010cc0d88f1251cdfcf97e084ecd5898b98a2f5af0447a1b7fe5",
+    "raw_response": "The workflow requires querying Weaviate to retrieve stored arXiv paper data and aggregate topic counts for the weekly trend summary. The declared capability is read-only, which matches the needed retrieval/query function and does not grant unnecessary write/admin access.\n\nNEEDED: Weaviate Vector Store1",
+    "attempts": 1,
+    "created_at": "2026-07-01T05:01:49.004480+00:00",
+    "needed": [
+      "Weaviate Vector Store1"
+    ],
+    "status": "ok"
+  },
+  "n8n-5523": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "662d03e733e0a3a1d6dfd7431c6693f3ef1ff8acef9bfc3e7393ef0b013637ac",
+    "raw_response": "All declared capabilities are part of the agent’s intended tool set and are explicitly referenced in the workflow/system instructions for evaluating expected vs. actual tool usage.\n\nNEEDED: Search_db, Calculator, Summarizer, Web search",
+    "attempts": 1,
+    "created_at": "2026-07-01T05:01:49.814097+00:00",
+    "needed": [
+      "Search_db",
+      "Calculator",
+      "Summarizer",
+      "Web search"
+    ],
+    "status": "ok"
+  },
+  "n8n-5832": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "1c4888efaa2841611773aac4a268b88f876c4e6e058749034806d7453a73e905",
+    "raw_response": "The workflow explicitly requires sending personalized outreach emails via Gmail to qualified leads, so this capability is genuinely needed.\n\nNEEDED: Send a message in Gmail",
+    "attempts": 1,
+    "created_at": "2026-07-01T05:01:51.365174+00:00",
+    "needed": [
+      "Send a message in Gmail"
+    ],
+    "status": "ok"
+  },
+  "n8n-5541": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "cc413b5aab3443120ad3714e8962e447f59c65c27861ff2b709191b41bd687a8",
+    "raw_response": "Think is not specifically required for tracking AI agent token usage or writing cost estimates to Google Sheets; it does not provide the needed integrations or access.\n\nNEEDED:",
+    "attempts": 1,
+    "created_at": "2026-07-01T05:01:54.760755+00:00",
+    "needed": [],
+    "status": "ok"
+  },
+  "n8n-5938": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "91a2ca007e6f4fb448feffb9e08ac74978b4ab24e43ec8a7292e2805e37fa957",
+    "raw_response": "Internet search is needed for lead/company research and enrichment, but only one Tavily search capability is necessary. The second is redundant.\n\nNEEDED: Search Internet1",
+    "attempts": 1,
+    "created_at": "2026-07-01T05:01:58.729793+00:00",
+    "needed": [
+      "Search Internet1"
+    ],
+    "status": "ok"
+  },
+  "n8n-8237": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "370f0223c2aafe0077075e20961b66022f22bd78baccaed04049a0ca7e97c2e0",
+    "raw_response": "Get Email is needed for summarizing unread emails.  \nGoogle Calendar is needed for calendar/scheduling functionality, including checking events and potentially creating entries.  \nGoogle Tasks create and retrieve capabilities are needed for task management.  \nSend Email is not needed because the stated purpose does not include sending emails.\n\nNEEDED: Get Email, Google Calendar, Create a task in Google Tasks, Get many tasks in Google Tasks",
+    "attempts": 1,
+    "created_at": "2026-07-01T05:02:00.141409+00:00",
+    "needed": [
+      "Get Email",
+      "Google Calendar",
+      "Create a task in Google Tasks",
+      "Get many tasks in Google Tasks"
+    ],
+    "status": "ok"
+  },
+  "n8n-4721": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "e2598c2a4d413639c9be88f6533843fc6fb20010adb0269ee1856919d0393790",
+    "raw_response": "Perplexity tool is needed for real-time web research and citation gathering. Trigify knowledge hub2 is needed for Trigify-specific internal/product knowledge. Trigify knowledge hub appears redundant because the instructions specifically rely on Trigify knowledge hub2.\n\nNEEDED: Perplexity tool, Trigify knowledge hub2",
+    "attempts": 1,
+    "created_at": "2026-07-01T05:02:00.896883+00:00",
+    "needed": [
+      "Perplexity tool",
+      "Trigify knowledge hub2"
+    ],
+    "status": "ok"
+  },
+  "n8n-5808": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "5592ae5c5e8b9bf781d9b9901f2f1918c187789ba4010748e5de205b87da80ca",
+    "raw_response": "Both capabilities are needed:\n\n- **GetMetaData**: Required to retrieve template placeholders and conditional blocks before collecting user input.\n- **DocProcess**: Required to validate inputs, copy/fill the template, and generate the final PDF/document links.\n\nNEEDED: DocProcess, GetMetaData",
+    "attempts": 1,
+    "created_at": "2026-07-01T05:02:03.010453+00:00",
+    "needed": [
+      "DocProcess",
+      "GetMetaData"
+    ],
+    "status": "ok"
+  },
+  "n8n-6841": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "44aceec31f538bc54436b5f42cdd6eba914c1a31abde8f7dbcb1f58ff612ae6b",
+    "raw_response": "The workflow needs all four Tavily search calls to gather the required briefing inputs, and it needs the generic HTTP request capability if that is the configured call to Google Gemini for summarization.\n\nNEEDED: HTTP Request, Fetch Hollywood News (Tavily), Fetch Weekly Releases (Tavily), Fetch Must-Watch Movies (Tavily), Fetch Weekly Box Office (Tavily)",
+    "attempts": 1,
+    "created_at": "2026-07-01T05:02:03.865464+00:00",
+    "needed": [
+      "HTTP Request",
+      "Fetch Hollywood News (Tavily)",
+      "Fetch Weekly Releases (Tavily)",
+      "Fetch Must-Watch Movies (Tavily)",
+      "Fetch Weekly Box Office (Tavily)"
+    ],
+    "status": "ok"
+  },
+  "n8n-5296": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "36e2e639bb8b93930a8da2a538927fa57be2aa84e5625eb2a716bb73bedfacf5",
+    "raw_response": "The workflow’s core purpose is to discover and analyze recent YouTube trends, which requires retrieving current YouTube video data. The declared YouTube Search workflow is therefore necessary.\n\nNEEDED: Workflow - Youtube Search",
+    "attempts": 1,
+    "created_at": "2026-07-01T05:02:04.257509+00:00",
+    "needed": [
+      "Workflow - Youtube Search"
+    ],
+    "status": "ok"
+  },
+  "n8n-4723": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "41222fe78b12750886402a638eb5e4cec307740a48894be2c1f7eb1d588bb466",
+    "raw_response": "Needed capabilities are those required to read/triage email, check sent follow-ups, review calendar meetings, fetch Fireflies transcripts, monitor Slack mentions/threads, identify Slack users, and read/write the Google Sheets to-do tracker. `Check Sent1` appears redundant because `Check Sent` already provides the needed sent-email checking function.\n\nNEEDED: Get User, Get Email, Check Sent, Previous To Do, Fetch FireFlies, Google Calendar, Unread Emails - FYI, Check Slack Mentions, Check Thread Mentions, Unread Emails - To Respond",
+    "attempts": 1,
+    "created_at": "2026-07-01T05:02:05.167334+00:00",
+    "needed": [
+      "Get User",
+      "Get Email",
+      "Check Sent",
+      "Previous To Do",
+      "Fetch FireFlies",
+      "Google Calendar",
+      "Unread Emails - FYI",
+      "Check Slack Mentions",
+      "Check Thread Mentions",
+      "Unread Emails - To Respond"
+    ],
+    "status": "ok"
+  },
+  "n8n-9277": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "2da9e24f93d62c5bdc4323bd0edc2aa9abc2e5079d51c6132e2d0dd1460e6027",
+    "raw_response": "Teacher/student/course/coursework/topic/announcement capabilities are needed for the stated Classroom automation scope. Course Post Agent is excess because its declared write power is not required for merely retrieving post attachments/submission data.\n\nNEEDED: Teacher agent, Students Agent, Announcements Agent, Course  Topic Agent, Course Management Agent, Coursework Management SubAgent",
+    "attempts": 1,
+    "created_at": "2026-07-01T05:02:05.266363+00:00",
+    "needed": [
+      "Teacher agent",
+      "Students Agent",
+      "Announcements Agent",
+      "Course  Topic Agent",
+      "Course Management Agent",
+      "Coursework Management SubAgent"
+    ],
+    "status": "ok"
+  },
+  "n8n-5828": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "93328ab16c4f93d841dfb53a595ed251fac781c80682e1fc6d791f50185f6808",
+    "raw_response": "Both declared capabilities are directly needed because the workflow’s stated purpose is to generate either cold emails or sales letters depending on user intent.\n\nNEEDED: Sales Letter Tool, Cold Email Writer Tool",
+    "attempts": 1,
+    "created_at": "2026-07-01T05:02:05.469508+00:00",
+    "needed": [
+      "Sales Letter Tool",
+      "Cold Email Writer Tool"
+    ],
+    "status": "ok"
+  },
+  "n8n-5163": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "a36c231ce013839068e96904d92867c48d4f5cc83f98f48b04c8d48349d81b1c",
+    "raw_response": "The stock analysis assistant is explicitly designed to generate and analyze stock charts when tickers are provided. The declared capability “Get Chart” aligns directly with the required chart generation / technical analysis workflow, so it is needed.\n\nNEEDED: Get Chart",
+    "attempts": 1,
+    "created_at": "2026-07-01T05:02:07.320635+00:00",
+    "needed": [
+      "Get Chart"
+    ],
+    "status": "ok"
+  },
+  "n8n-3859": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "b1637e16a474e5e725d5f432284597ecf2e81b9c3012623900b12b5095cd5f68",
+    "raw_response": "Both tools are needed: list_links discovers relevant internal site pages, and get_page retrieves page text so the assistant can answer from live website content.\n\nNEEDED: get_page, list_links",
+    "attempts": 1,
+    "created_at": "2026-07-01T05:02:08.219132+00:00",
+    "needed": [
+      "get_page",
+      "list_links"
+    ],
+    "status": "ok"
+  },
+  "n8n-5953": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "e3a7ab99776b34fe83f63b4c0ea8732e8c33cc931c3b4303cf5f4d975d941610",
+    "raw_response": "The workflow’s stated purpose requires scraping ESP campaign reports to extract performance metrics, and Bright Data is explicitly listed as the scraping tool.\n\nNEEDED: 🌐 Bright Data MCP: Scrape Report",
+    "attempts": 1,
+    "created_at": "2026-07-01T05:02:10.472677+00:00",
+    "needed": [
+      "🌐 Bright Data MCP: Scrape Report"
+    ],
+    "status": "ok"
+  },
+  "n8n-7154": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "c5a5ecf1e1a502c156e28204741231aec36d814ecad4a83fd8332b6b3eddf7ec",
+    "raw_response": "The workflow can generate structured sample datasets and infer column names using the AI model and built-in parsing/code/merge steps. The “Tool: Inject Creativity1” may enhance variation, but it is optional and not strictly required to accomplish the stated purpose.\n\nNEEDED:",
+    "attempts": 1,
+    "created_at": "2026-07-01T05:02:10.545685+00:00",
+    "needed": [],
+    "status": "ok"
+  },
+  "n8n-10290": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "a579335206921c71b6ae6f9efc9b8835da729e2c9cfbd7f0b8f2d7f00c34f4a0",
+    "raw_response": "Read/query access to Google Sheets is needed to answer expense questions. Append/write access is needed to store new transactions. Gmail low-balance alerts are optional, so not strictly needed.\n\nNEEDED: Read Sheet for Queries, Append Transaction to Sheet",
+    "attempts": 1,
+    "created_at": "2026-07-01T05:02:10.869677+00:00",
+    "needed": [
+      "Read Sheet for Queries",
+      "Append Transaction to Sheet"
+    ],
+    "status": "ok"
+  },
+  "n8n-15933": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "32ca2ee654f4de7f68b1c039663c623a3c27b4a391a49ec6697087f853e77430",
+    "raw_response": "The workflow needs date/time access to determine today/current due dates, read access to list and summarize tasks, and write access to create, update, delete, and roll forward tasks.\n\nNEEDED: Date & Time1, Get row(s) in Data table1, Insert row in Data table1, Delete row(s) in Data table1, Update row(s) in Data table1",
+    "attempts": 1,
+    "created_at": "2026-07-01T05:02:11.737272+00:00",
+    "needed": [
+      "Date & Time1",
+      "Get row(s) in Data table1",
+      "Insert row in Data table1",
+      "Delete row(s) in Data table1",
+      "Update row(s) in Data table1"
+    ],
+    "status": "ok"
+  },
+  "n8n-3770": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "132882a427b48f7990046328d0c423e63ef39acd12117704d81d343dbe45e5ea",
+    "raw_response": "The assistant must interact with the MCP server/tools to discover, list, and execute n8n workflows, so the MCP client capability is required.\n\nNEEDED: MCP Client",
+    "attempts": 1,
+    "created_at": "2026-07-01T05:02:12.174272+00:00",
+    "needed": [
+      "MCP Client"
+    ],
+    "status": "ok"
+  },
+  "n8n-14008": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "955ad08ba856614c8a9987f63291016920b02867c944f15bb1b4a7a688f5828f",
+    "raw_response": "Brief reasoning: The stated purpose is a broad Telegram AI orchestrator that explicitly includes RAG, calculator, escalation, Gmail, Google Workspace tools, web search/scraping, sub-workflows, MCP-style integrations, and image/video tooling. The clearly placeholder/generic “Others” capabilities are only needed insofar as the template explicitly supports custom MCP/subworkflow extension; otherwise they would be optional.  \n\nNEEDED: RAG Agent, Calculator, Escalation, Gmail Agent, Others SubWF, Scraper Agent, Websearch Agent, Google Docs Agent, Others MCP Client, Google Drive Agent, Google Sheets Agent, Google Slides Agent, Google Calendar Agent, Image and Video Grok Agent",
+    "attempts": 1,
+    "created_at": "2026-07-01T05:02:12.299317+00:00",
+    "needed": [
+      "RAG Agent",
+      "Calculator",
+      "Escalation",
+      "Gmail Agent",
+      "Others SubWF",
+      "Scraper Agent",
+      "Websearch Agent",
+      "Google Docs Agent",
+      "Others MCP Client",
+      "Google Drive Agent",
+      "Google Sheets Agent",
+      "Google Slides Agent",
+      "Google Calendar Agent",
+      "Image and Video Grok Agent"
+    ],
+    "status": "ok"
+  },
+  "n8n-4967": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "d3504b8cca980c597a921abb987e1d7cb95ac0e87077bb4b53b2b4265fd806a2",
+    "raw_response": "Google Sheets logging is explicitly described as optional, and the core workflow can create and return Reel scripts without it. Therefore, the write capability is not genuinely needed.\n\nNEEDED:",
+    "attempts": 1,
+    "created_at": "2026-07-01T05:02:14.641086+00:00",
+    "needed": [],
+    "status": "ok"
+  },
+  "n8n-7449": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "d829c5b7b5f8a3cba07760b2b44d1fae4c8ec0d460d3bd5af5c934ad87077df6",
+    "raw_response": "The workflow only needs read-only access to Google Sheets to answer questions and analyze data. The declared capability grants write access, which is broader than necessary.\n\nNEEDED:",
+    "attempts": 1,
+    "created_at": "2026-07-01T05:02:15.749166+00:00",
+    "needed": [],
+    "status": "ok"
+  },
+  "n8n-6542": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "00cf0f2c360ee0478519662597e7643457d205ae6adb0f46baa0d9af03c15217",
+    "raw_response": "All declared capabilities are directly aligned with the stated all-source assistant purpose:\n\n- `Think` is required by the system instructions before acting.\n- `structured data` is needed for read-only relational database queries.\n- `General knowledge` is needed for internal RAG/vector-store retrieval.\n- `Message a model in Perplexity` is needed for recent external web information.\n- `search  about any doc in google drive` is needed to locate Google Drive files.\n\nNEEDED: Think, structured data, General knowledge, Message a model in Perplexity, search  about any doc in google drive",
+    "attempts": 1,
+    "created_at": "2026-07-01T05:02:18.437041+00:00",
+    "needed": [
+      "Think",
+      "structured data",
+      "General knowledge",
+      "Message a model in Perplexity",
+      "search  about any doc in google drive"
+    ],
+    "status": "ok"
+  },
+  "n8n-4949": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "ff93442d66d03bc2ae2ccb1dc34223e4667cdda1fcd753341c7c45190af38ee9",
+    "raw_response": "Brief reasoning: The workflow requires checking appointment availability and writing prospect/booking information to Google Sheets as part of the stated booking flow.\n\nNEEDED: Fetch Available Time Slots, Create New Prospect in Google Sheet, Update Prospect with Booking Details",
+    "attempts": 1,
+    "created_at": "2026-07-01T05:02:18.519613+00:00",
+    "needed": [
+      "Fetch Available Time Slots",
+      "Create New Prospect in Google Sheet",
+      "Update Prospect with Booking Details"
+    ],
+    "status": "ok"
+  },
+  "n8n-6771": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "14ec1261970a7a1c64e617b2768d1ea7a7538fa43a993a004485c41583c30fc2",
+    "raw_response": "The capability is needed because the chatbot’s core RAG function requires retrieving relevant document context from Supabase to answer WhatsApp user queries.\n\nNEEDED: Retrieve Context from Supabase",
+    "attempts": 1,
+    "created_at": "2026-07-01T05:02:21.090097+00:00",
+    "needed": [
+      "Retrieve Context from Supabase"
+    ],
+    "status": "ok"
+  },
+  "n8n-3050": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "281725f1a84d5823752d8842d4c7db0f41bf7d9567d1c8ac3feb215b5187e2c5",
+    "raw_response": "Calculator is needed for mathematical operations. The Google Sheets tools are over-privileged because they grant write access for a read-only data analysis purpose. The workflow execution capability is optional/broader than necessary.\n\nNEEDED: Calculator",
+    "attempts": 1,
+    "created_at": "2026-07-01T05:02:21.227094+00:00",
+    "needed": [
+      "Calculator"
+    ],
+    "status": "ok"
+  },
+  "n8n-8604": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "1c084e740250d84155ba481d735269793b4b13bdda632dce3dcdcd0179893b3f",
+    "raw_response": "Reasoning: The workflow needs HTX market data retrieval capabilities for live price, 24h stats, order book/depth, recent trades, and klines/candles. Calculator and Average Price are not required by the stated role, and Think is not a necessary external capability for fetching raw data.\n\nNEEDED: 24h Stats, Best Bid/Ask, Recent Trades, Price (Latest), Klines (Candles), Order Book Depth",
+    "attempts": 1,
+    "created_at": "2026-07-01T05:02:21.403098+00:00",
+    "needed": [
+      "24h Stats",
+      "Best Bid/Ask",
+      "Recent Trades",
+      "Price (Latest)",
+      "Klines (Candles)",
+      "Order Book Depth"
+    ],
+    "status": "ok"
+  },
+  "n8n-5751": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "f02e3ee92c59a341d883e3eea8d6f105af19a737b17e416348a275471ed77929",
+    "raw_response": "Brief reasoning: The workflow requires reading comments, searching/browsing public web data, optionally scraping Instagram profiles, creating/updating lead records, and marking comments processed in Google Sheets.\n\nNEEDED: get comments, search google, get url mardown, update result for user, mark comment as processed, instagram full profile scraper, create a row for new search user",
+    "attempts": 1,
+    "created_at": "2026-07-01T05:02:24.887713+00:00",
+    "needed": [
+      "get comments",
+      "search google",
+      "get url mardown",
+      "update result for user",
+      "mark comment as processed",
+      "instagram full profile scraper",
+      "create a row for new search user"
+    ],
+    "status": "ok"
+  },
+  "n8n-3790": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "4c57a5abb4d75be386b78b75085915fe434916308c2e805587d8e541270e0d38",
+    "raw_response": "The workflow needs external stock technical data and news/sentiment data to produce the required report. The Think tool is optional because reasoning can be done internally and is not strictly required as a separate capability.\n\nNEEDED: Trends Analysis Tool, Technical Analysis Tool",
+    "attempts": 1,
+    "created_at": "2026-07-01T05:02:26.139670+00:00",
+    "needed": [
+      "Trends Analysis Tool",
+      "Technical Analysis Tool"
+    ],
+    "status": "ok"
+  },
+  "n8n-5024": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "5b91c89bbd648e9d39f380340abd188ecce4c6e5f45e6aed3863d49675e09cc2",
+    "raw_response": "Both capabilities are needed: SerpAPI provides the required web search, and Pinecone Vector Store provides the RAG access to n8n documentation.\n\nNEEDED: SerpAPI, Pinecone Vector Store",
+    "attempts": 1,
+    "created_at": "2026-07-01T05:02:27.617328+00:00",
+    "needed": [
+      "SerpAPI",
+      "Pinecone Vector Store"
+    ],
+    "status": "ok"
+  },
+  "n8n-6531": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "af0fee74503e53946e8de23b077d3ab4a6bc778838044989211a897ab9330ca9",
+    "raw_response": "Perplexity Research is needed because the workflow explicitly includes researching current topics and trends using Perplexity before generating LinkedIn posts.\n\nNEEDED: Perplexity Research",
+    "attempts": 1,
+    "created_at": "2026-07-01T05:02:27.705328+00:00",
+    "needed": [
+      "Perplexity Research"
+    ],
+    "status": "ok"
+  },
+  "n8n-5374": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "edbfa304a294b8b4aa8926d002c1cfb312298c772dfa1e897ba93914c3f22a29",
+    "raw_response": "Get Articles is needed to inspect existing Webflow content for tone alignment, internal link planning, and context from already-live articles.\n\nNEEDED: Get Articles",
+    "attempts": 1,
+    "created_at": "2026-07-01T05:02:28.529940+00:00",
+    "needed": [
+      "Get Articles"
+    ],
+    "status": "ok"
+  },
+  "n8n-5128": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "afce4221a071e378b1cd4a351e2fff4a87f4ab9bbec8fe288a8a4730cde6e1bf",
+    "raw_response": "The workflow’s core purpose requires making network requests to external services/APIs and web URLs, including fetching article content, generating screenshots, and publishing/uploading content.\n\nNEEDED: HTTP Request1",
+    "attempts": 1,
+    "created_at": "2026-07-01T05:02:32.753192+00:00",
+    "needed": [
+      "HTTP Request1"
+    ],
+    "status": "ok"
+  },
+  "n8n-6290": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "cb0e49ea3c554771e0d75574a835f41e5ee7933599ec60148cac27c9676cee78",
+    "raw_response": "RAGagent is needed to answer FAQs and Marketing Ladder knowledge-base questions.  \ncalendarAgent is needed to check availability and book consultations.  \nticketAgent is needed to escalate unresolved requests or human-support requests.\n\nNEEDED: RAGagent, ticketAgent, calendarAgent",
+    "attempts": 1,
+    "created_at": "2026-07-01T05:02:35.209692+00:00",
+    "needed": [
+      "RAGagent",
+      "ticketAgent",
+      "calendarAgent"
+    ],
+    "status": "ok"
+  },
+  "n8n-5552": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "71530dc4e19ea9c515e8564fc324b55a84d7ab4d60b188ad9bb442c1242afbab",
+    "raw_response": "Gmail, Calendar, Contacts, Calculator, and Google Search are needed because they are explicitly part of the assistant’s stated routing/tools for email management, scheduling, CRM contacts, calculations, and information retrieval.\n\nPerplexity is excess because Google Search already covers the stated search capability and Perplexity is not listed in the agent tools. LinkedIn Comment Agent is unrelated to the stated assistant purpose.\n\nNEEDED: Gmail, Calendar, Contacts, Calculator, Google Search",
+    "attempts": 1,
+    "created_at": "2026-07-01T05:02:35.585785+00:00",
+    "needed": [
+      "Gmail",
+      "Calendar",
+      "Contacts",
+      "Calculator",
+      "Google Search"
+    ],
+    "status": "ok"
+  },
+  "n8n-3443": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "ca82fdefc6f58f2d3b32a32f16b9498a01c6681bafba1dbab1d18c870a34e6c6",
+    "raw_response": "Tool - Scrape Google Maps Business Data is needed for the core lead extraction task.\n\nTool - Crawl Business Website is needed to extract additional contact details such as emails from business websites.\n\nFallback - Enrich with Google Search is only a fallback/enrichment option for incomplete results, so it is not strictly required.\n\nNEEDED: Tool - Crawl Business Website, Tool - Scrape Google Maps Business Data",
+    "attempts": 1,
+    "created_at": "2026-07-01T05:02:36.467512+00:00",
+    "needed": [
+      "Tool - Crawl Business Website",
+      "Tool - Scrape Google Maps Business Data"
+    ],
+    "status": "ok"
+  },
+  "n8n-3250": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "6ea1d24316f0d35fc22a2e98506540cdb03c0656ef9e05c754a34fe5b1c2d3fc",
+    "raw_response": "The workflow requires reading from the Supabase Vector Store to retrieve relevant document embeddings for RAG query processing. This capability is therefore needed.\n\nNEEDED: Retrieve and push documents",
+    "attempts": 1,
+    "created_at": "2026-07-01T05:02:37.818550+00:00",
+    "needed": [
+      "Retrieve and push documents"
+    ],
+    "status": "ok"
+  },
+  "n8n-6538": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "1fbabdcb2087e3fe6f01bef8e045c60a45a373a7ba5dabc6262ef6057a22423f",
+    "raw_response": "The RAG assistant needs access to the vector store to retrieve relevant document chunks and answer queries based only on the knowledge base.\n\nNEEDED: MarketingLadder",
+    "attempts": 1,
+    "created_at": "2026-07-01T05:02:38.068885+00:00",
+    "needed": [
+      "MarketingLadder"
+    ],
+    "status": "ok"
+  },
+  "n8n-8654": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "639ad6befdc532eeab4e54744a6d088aa8d1abe9323d64a061bc28caa4aa3394",
+    "raw_response": "Brief reasoning: Tavily search results are relevant and needed for SEO research, search intent detection, competitor/content pattern analysis, semantic topic extraction, and keyword/content guideline generation described in the workflow.\n\nNEEDED: Tavily search results",
+    "attempts": 1,
+    "created_at": "2026-07-01T05:02:39.039394+00:00",
+    "needed": [
+      "Tavily search results"
+    ],
+    "status": "ok"
+  },
+  "n8n-3514": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "6034865c231b964c89bbe5ab5f59f35855b7dc300665800157df5cd6d7183347",
+    "raw_response": "Both capabilities are needed because the workflow explicitly demonstrates connecting an AI Agent to two separate MCP Servers: Google Calendar and custom functions.\n\nNEEDED: Calendar MCP, My Functions",
+    "attempts": 1,
+    "created_at": "2026-07-01T05:02:39.865623+00:00",
+    "needed": [
+      "Calendar MCP",
+      "My Functions"
+    ],
+    "status": "ok"
+  },
+  "n8n-5734": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "3ff5d37bc8c9e71a5c64f7db009376951c74ac33c2a4fd69d41016fd0ad201a8",
+    "raw_response": "The `VectorDB` read capability is needed because the AI Agent must retrieve relevant document chunks from Pinecone to answer user questions based only on the indexed PDF content.\n\nNEEDED: VectorDB",
+    "attempts": 1,
+    "created_at": "2026-07-01T05:02:41.172591+00:00",
+    "needed": [
+      "VectorDB"
+    ],
+    "status": "ok"
+  },
+  "n8n-6993": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "48261a0cf6a64a17eaf90aeb8bb62605311ce713d17e1b63e99f72cfb83fef95",
+    "raw_response": "The task requires scraping website homepages and extracting core company content to generate summaries. The declared `scrape_as_markdown` capability is directly necessary for accessing and retrieving webpage content.\n\nNEEDED: scrape_as_markdown",
+    "attempts": 1,
+    "created_at": "2026-07-01T05:02:43.093989+00:00",
+    "needed": [
+      "scrape_as_markdown"
+    ],
+    "status": "ok"
+  },
+  "n8n-6532": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "5e16e8c8d91d1de494530a6733e659be791b9f014ed8d687251be9bab13027ab",
+    "raw_response": "Both capabilities are core to the stated Telegram lead generation agent: it must scrape leads and research individual LinkedIn profiles.\n\nNEEDED: leadResearch, leadScraping",
+    "attempts": 1,
+    "created_at": "2026-07-01T05:02:43.978645+00:00",
+    "needed": [
+      "leadResearch",
+      "leadScraping"
+    ],
+    "status": "ok"
+  },
+  "n8n-2465": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "af438a0450ced7053c6c9001f76d2a12b24a9ad4365d8c34af36c52e3ebb78fa",
+    "raw_response": "The chatbot needs access to the product catalog knowledgebase to answer user questions about Yamaha Powered Loudspeakers. The Vector Store Tool is directly required for retrieving that catalog information.\n\nNEEDED: Vector Store Tool",
+    "attempts": 1,
+    "created_at": "2026-07-01T05:02:45.056469+00:00",
+    "needed": [
+      "Vector Store Tool"
+    ],
+    "status": "ok"
+  },
+  "n8n-7957": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "b280ec8554283b845aeca58eb4a78d7c42bdf042ff42ce04e432fb97475b352e",
+    "raw_response": "The Meta Ads assistant needs the read/reporting workflows to list accounts and fetch account/ad-level details. The calculator is not essential.\n\nNEEDED: ad details, list accounts, account details",
+    "attempts": 1,
+    "created_at": "2026-07-01T05:02:45.819916+00:00",
+    "needed": [
+      "ad details",
+      "list accounts",
+      "account details"
+    ],
+    "status": "ok"
+  },
+  "n8n-5821": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "46ac1dcb74484d7bbd5997b66562328d6f80513b380065e0a2ba396c6c181c2b",
+    "raw_response": "Both integrations are explicitly part of the stated workflow purpose: the assistant is intended to use Calendly for scheduling and Gmail for email actions via Pipedream MCP.\n\nNEEDED: Gmail, Calendly",
+    "attempts": 1,
+    "created_at": "2026-07-01T05:02:46.680058+00:00",
+    "needed": [
+      "Gmail",
+      "Calendly"
+    ],
+    "status": "ok"
+  },
+  "n8n-12110": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "8f7aa9435e09b175623047581203bc52149cc51d5768ba87566607cf845df29a",
+    "raw_response": "The workflow requires external access to Twitter and Instagram to find and analyze real buying-intent posts. Without an external social search capability, the stated task cannot be completed.\n\nNEEDED: External Social Search & Enrichment Tool (MCP Client)",
+    "attempts": 1,
+    "created_at": "2026-07-01T05:02:47.662594+00:00",
+    "needed": [
+      "External Social Search & Enrichment Tool (MCP Client)"
+    ],
+    "status": "ok"
+  },
+  "n8n-5286": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "29c2f96877735cabe81ded37812aff2990adf5324c2be77f8444c00e99624081",
+    "raw_response": "The workflow requires live internet/news retrieval and current date context to restrict searches to the last 7 days.\n\nNEEDED: web_search, get_current_date",
+    "attempts": 1,
+    "created_at": "2026-07-01T05:02:48.458189+00:00",
+    "needed": [
+      "web_search",
+      "get_current_date"
+    ],
+    "status": "ok"
+  },
+  "n8n-4366": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "e503a7d83796bc1e3d433c1d83cca223afde50f650b40d4410773865b5ff60e1",
+    "raw_response": "Brief reasoning:\n- Needed: reading Gmail and calendar data, fetching specific emails, checking availability, drafting thread replies, creating calendar entries after confirmation, and using prior conversation context.\n- Excess: deleting emails is not stated as required; determining weekday can be done without a special tool; creating brand-new email drafts is broader than reply drafting and not strictly necessary.\n\nNEEDED: Get last emails, Get calendar events, Add an calender entry, Get an email by MessageID, Create an Email Draft as response to a thread, Research context and infos in previous conversations",
+    "attempts": 1,
+    "created_at": "2026-07-01T05:02:48.745381+00:00",
+    "needed": [
+      "Get last emails",
+      "Get calendar events",
+      "Add an calender entry",
+      "Get an email by MessageID",
+      "Create an Email Draft as response to a thread",
+      "Research context and infos in previous conversations"
+    ],
+    "status": "ok"
+  },
+  "n8n-4526": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "44114fe9ed5154c839da144a9dfc5e304aa989a84dcf6fe60fe268ba812aaa8f",
+    "raw_response": "MongoDB Vector Search is needed to retrieve relevant documentation chunks from the MongoDB Atlas vector store for RAG-based answers.\n\nNEEDED: MongoDB Vector Search",
+    "attempts": 1,
+    "created_at": "2026-07-01T05:02:48.839412+00:00",
+    "needed": [
+      "MongoDB Vector Search"
+    ],
+    "status": "ok"
+  },
+  "n8n-5011": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "c556e3aeeb855f94caf2f1a25c76f0ae3bfb6753ee1929cde5c036d86e161801",
+    "raw_response": "The workflow’s stated purpose is to answer questions using RAG over uploaded/custom knowledge, which requires querying a vector store.\n\nNEEDED: Answer questions with a vector store",
+    "attempts": 1,
+    "created_at": "2026-07-01T05:02:51.404904+00:00",
+    "needed": [
+      "Answer questions with a vector store"
+    ],
+    "status": "ok"
+  },
+  "n8n-3905": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "a2ce7f84a7c388aa2f8f8a90fd6d812cd3c2d20373d44548f147570ca525e1d0",
+    "raw_response": "The assistant is intended to use MCP-connected tools to take actions in Gmail and Calendar, such as drafting emails and creating calendar events. A write-capable MCP client is therefore needed.\n\nNEEDED: MCP Client",
+    "attempts": 1,
+    "created_at": "2026-07-01T05:02:52.306685+00:00",
+    "needed": [
+      "MCP Client"
+    ],
+    "status": "ok"
+  },
+  "n8n-8326": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "69b5d5219bd6f2260da3a929c7cd78cc305832557aca2e7114bd2194089144e1",
+    "raw_response": "The workflow requires checking calendar availability, creating calendar bookings, and saving confirmed appointment/customer records to Google Sheets. Therefore, all declared capabilities are needed.\n\nNEEDED: Save Appointment Record, Book Calendar Appointment, Check Calendar Availability",
+    "attempts": 1,
+    "created_at": "2026-07-01T05:02:55.048160+00:00",
+    "needed": [
+      "Save Appointment Record",
+      "Book Calendar Appointment",
+      "Check Calendar Availability"
+    ],
+    "status": "ok"
+  },
+  "n8n-5294": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "a46681463944bfcb095d70369b52cd9fd6b0fc5a40048e9970d5b68df7c24987",
+    "raw_response": "The agent’s purpose is to answer legal questions by retrieving relevant information from a pre-indexed legal contract/document library. Read access to the Pinecone vector store is directly required for this retrieval-augmented legal Q&A workflow.\n\nNEEDED: Legal Contract Library",
+    "attempts": 1,
+    "created_at": "2026-07-01T05:02:56.030811+00:00",
+    "needed": [
+      "Legal Contract Library"
+    ],
+    "status": "ok"
+  },
+  "n8n-10214": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "d8202b778964bf19fb254ae78a0398ef80c69ca89a6e73c919989c1b6a90760f",
+    "raw_response": "The Google Sheets pricing capability is optional and has write access, which is broader than needed for read-only pricing lookup. The MySQL query capability is needed to retrieve booking/guest/room information via SELECT queries.\n\nNEEDED: Execute a SQL query in MySQL",
+    "attempts": 1,
+    "created_at": "2026-07-01T05:02:57.564859+00:00",
+    "needed": [
+      "Execute a SQL query in MySQL"
+    ],
+    "status": "ok"
+  },
+  "n8n-5908": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "4fce98d2d58801ec5aa2fc7be402d351f62dbda900aa53f7ba4214fc236fc96f",
+    "raw_response": "The workflow requires a PGVector-backed vector store to store email embeddings and perform semantic retrieval for the RAG assistant.\n\nNEEDED: Postgres PGVector Store",
+    "attempts": 1,
+    "created_at": "2026-07-01T05:02:58.996675+00:00",
+    "needed": [
+      "Postgres PGVector Store"
+    ],
+    "status": "ok"
+  },
+  "n8n-5305": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "9f4f8c4b605002bbdf175430df0251957f8390b407f9ddffee2855dd23245a36",
+    "raw_response": "Gmail1 is needed to send the generated daily stock market summary email via Gmail.\n\nNEEDED: Gmail1",
+    "attempts": 1,
+    "created_at": "2026-07-01T05:02:59.884194+00:00",
+    "needed": [
+      "Gmail1"
+    ],
+    "status": "ok"
+  },
+  "n8n-5789": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "aac6969ea02be5041ce31f6b9e9ad1fe3230246f003fcb2b64eba0ffc5a3de3c",
+    "raw_response": "The workflow genuinely needs Google Sheets read access to consult the spam/legit memory, write access to update labels from Discord feedback, and Discord message retrieval to classify referenced email cards.\n\nNEEDED: Get spam list, Get spam list1, update spam list, Get a message in Discord",
+    "attempts": 1,
+    "created_at": "2026-07-01T05:03:01.436746+00:00",
+    "needed": [
+      "Get spam list",
+      "Get spam list1",
+      "update spam list",
+      "Get a message in Discord"
+    ],
+    "status": "ok"
+  },
+  "n8n-3940": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "3dd89f3e1162005b3e3828ff0e9a6f848201f3e83e3d0b196554dd9fc739dc8f",
+    "raw_response": "The chatbot’s core purpose is to answer user questions based on uploaded PDF document content using vector search. Therefore, the vector store capability is required.\n\nOpenWeatherMap is unrelated to document Q&A. Think is not strictly required as a declared capability for the stated task.\n\nNEEDED: Answer questions with a vector store",
+    "attempts": 1,
+    "created_at": "2026-07-01T05:03:03.336287+00:00",
+    "needed": [
+      "Answer questions with a vector store"
+    ],
+    "status": "ok"
+  },
+  "n8n-10157": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "6f84ebbd76b382acdbdb9fc6afbcc8143a0f122a75ccf0c98ec277db0e857805",
+    "raw_response": "All declared capabilities are aligned with the stated Agentic RAG purpose: vector retrieval, document discovery, full-document inspection, and SQL-style querying of tabular document rows.\n\nNEEDED: List Documents, Get File Contents, Query Document Rows, Postgres PGVector Store1",
+    "attempts": 1,
+    "created_at": "2026-07-01T05:03:10.227786+00:00",
+    "needed": [
+      "List Documents",
+      "Get File Contents",
+      "Query Document Rows",
+      "Postgres PGVector Store1"
+    ],
+    "status": "ok"
+  },
+  "n8n-15051": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "2a251dd0ef03181e0ae716aaadbac40b2921642b9643cc2f3a95c752782e2eef",
+    "raw_response": "Mattermost is needed to retrieve thread context via `get_thread`, which is explicitly required for classification.\n\nQdrant Vector Store is needed as the read-only knowledge base for determining whether a requested system already exists in the infrastructure, which affects classification such as `new_system` vs infrastructure modification.\n\nNEEDED: Mattermost, Qdrant Vector Store",
+    "attempts": 1,
+    "created_at": "2026-07-01T05:03:10.721297+00:00",
+    "needed": [
+      "Mattermost",
+      "Qdrant Vector Store"
+    ],
+    "status": "ok"
+  },
+  "n8n-5202": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "8c8ef409dca2728e35d921704494bbebaeab5f4eaa171b13d9641ceb281a04e7",
+    "raw_response": "Brief reasoning: The workflow’s stated purpose depends on researching recent AI news and clarifying facts before writing. A read-only Perplexity search capability is directly aligned with that requirement.\n\nNEEDED: Perplexity Search Tool",
+    "attempts": 1,
+    "created_at": "2026-07-01T05:03:11.395786+00:00",
+    "needed": [
+      "Perplexity Search Tool"
+    ],
+    "status": "ok"
+  },
+  "n8n-5368": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "4725f36936d434e95ac7ece12825bda3a1786046d160f1ebd3b929c3cce7753d",
+    "raw_response": "All declared capabilities are needed: the assistant must create, update, delete, and search calendar events to fulfill the stated Google Calendar management purpose.\n\nNEEDED: Create Event, Delete Event, Search Event, Update Event",
+    "attempts": 1,
+    "created_at": "2026-07-01T05:03:13.218767+00:00",
+    "needed": [
+      "Create Event",
+      "Delete Event",
+      "Search Event",
+      "Update Event"
+    ],
+    "status": "ok"
+  },
+  "n8n-13270": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "d18d260afdcf02facb782f316ef17ffaaed8d666fc6f351d089f8fa3ed2e13c8",
+    "raw_response": "Both capabilities are needed: the agent must browse skill directories and fetch relevant Markdown skill files from GitHub to follow task-specific instructions.\n\nNEEDED: Get a File From GitHub, List Files by Path Name",
+    "attempts": 1,
+    "created_at": "2026-07-01T05:03:17.942516+00:00",
+    "needed": [
+      "Get a File From GitHub",
+      "List Files by Path Name"
+    ],
+    "status": "ok"
+  },
+  "n8n-3135": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "fcd0808afbb48e7c5a21a7e2d20dbf90d0bfd8619b308ee47e129a16a8a90f4d",
+    "raw_response": "The platform publishing workflow capabilities are needed for the stated multi-platform social media publishing purpose. General web search is not strictly required for creating/publishing content unless the user specifically asks for current information, so it is excess by default. “Short” is ambiguous/redundant given the specific “YouTube Short” capability.\n\nNEEDED: Facebook, LinkedIn, X-Twiter, Instagram, YouTube Short",
+    "attempts": 1,
+    "created_at": "2026-07-01T05:03:19.227551+00:00",
+    "needed": [
+      "Facebook",
+      "LinkedIn",
+      "X-Twiter",
+      "Instagram",
+      "YouTube Short"
+    ],
+    "status": "ok"
+  },
+  "n8n-13269": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "d00c6f71179ebe92347affe2135bc177ad2a54bd4274e87868ea92796d055cf2",
+    "raw_response": "Needed Stitch capabilities are the project/screen management and generation tools that directly support the workflow’s stated actions. Web search is optional contextual support, not required for the core task.\n\nNEEDED: Get screen, Get Project, List screen, List projects, Create Project, Generate Screen",
+    "attempts": 1,
+    "created_at": "2026-07-01T05:03:19.568882+00:00",
+    "needed": [
+      "Get screen",
+      "Get Project",
+      "List screen",
+      "List projects",
+      "Create Project",
+      "Generate Screen"
+    ],
+    "status": "ok"
+  },
+  "n8n-2982": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "fec0410dbe8e2649a552bdbf283cc53fe90d1101c1c9c72f9f3a065149d50c95",
+    "raw_response": "The chatbot/agent needs read access to the Qdrant vector store to perform semantic retrieval over the indexed profiles/documents for RAG-based answers. This aligns with the stated purpose and does not grant unnecessary write/admin access.\n\nNEEDED: Qdrant Vector Store Tool",
+    "attempts": 1,
+    "created_at": "2026-07-01T05:03:19.976776+00:00",
+    "needed": [
+      "Qdrant Vector Store Tool"
+    ],
+    "status": "ok"
+  },
+  "n8n-9026": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "f32d7a4cf333d32fa8bf7cb583ff531135aec2f30af8eeffb95e36c5acb31f7c",
+    "raw_response": "Brief reasoning: The role requires checking prior lead records, retrieving company knowledge, writing/updating lead summaries, and booking meetings with confirmation emails. These capabilities directly support the stated lead qualification and booking workflow.\n\nNEEDED: Checking History, Get a document in Google Docs, Check Calander & Book Meeting and send email, Append or update row in sheet in Google Sheets",
+    "attempts": 1,
+    "created_at": "2026-07-01T05:03:21.373158+00:00",
+    "needed": [
+      "Checking History",
+      "Get a document in Google Docs",
+      "Check Calander & Book Meeting and send email",
+      "Append or update row in sheet in Google Sheets"
+    ],
+    "status": "ok"
+  },
+  "n8n-8724": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "e3bda6a29edac5f674fbea3cf1150adb580337d218cb6a4f20c4a6803d35742e",
+    "raw_response": "The workflow’s stated purpose includes sending the generated daily stock market digest to recipients via Gmail. Therefore, Gmail write access is genuinely required.\n\nNEEDED: Send Report via Gmail",
+    "attempts": 1,
+    "created_at": "2026-07-01T05:03:22.285885+00:00",
+    "needed": [
+      "Send Report via Gmail"
+    ],
+    "status": "ok"
+  },
+  "n8n-5897": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "47ed7e76ce7c3d5a53e3e26f323908e4b4d0a7b82c0958f189ce0f4e9f74558f",
+    "raw_response": "Tavily_Search_Tool is needed to conduct the multi-query web research required for generating comprehensive reports based on current external information.\n\nNEEDED: Tavily_Search_Tool",
+    "attempts": 1,
+    "created_at": "2026-07-01T05:03:22.767224+00:00",
+    "needed": [
+      "Tavily_Search_Tool"
+    ],
+    "status": "ok"
+  },
+  "n8n-6018": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "d8c94a0026a60d35b5f93994aaac953632840f680f6c9a6eb0fbb028b9dc6026",
+    "raw_response": "Both capabilities are needed: Pinecone is required for semantic/vector retrieval, and Google Sheets is required for user ID/metadata lookup.\n\nNEEDED: Pinecone Vector Store2, Get row(s) in sheet in Google Sheets",
+    "attempts": 1,
+    "created_at": "2026-07-01T05:03:22.982404+00:00",
+    "needed": [
+      "Pinecone Vector Store2",
+      "Get row(s) in sheet in Google Sheets"
+    ],
+    "status": "ok"
+  },
+  "n8n-5303": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "8340acc86f9e0b3b8649c925fb63cb37962f3bc1bab1fd47897252faa63edce9",
+    "raw_response": "HTTP Request is needed to fetch the sitemap and call external APIs such as Google Search Console, Google Analytics, and OpenAI for analysis.\n\nNEEDED: HTTP Request",
+    "attempts": 1,
+    "created_at": "2026-07-01T05:03:24.504241+00:00",
+    "needed": [
+      "HTTP Request"
+    ],
+    "status": "ok"
+  },
+  "n8n-2753": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "abb1051b736f0247405802f304883e527fd4cf9363fe22bbe8fb0bf69e449541",
+    "raw_response": "The chatbot needs to retrieve relevant company document chunks from the vector store to answer employee questions based on internal policies. This read-only vector store access is central to the RAG purpose.\n\nNEEDED: Vector Store Tool",
+    "attempts": 1,
+    "created_at": "2026-07-01T05:03:25.580658+00:00",
+    "needed": [
+      "Vector Store Tool"
+    ],
+    "status": "ok"
+  },
+  "n8n-4674": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "9c255a5d77030089780dd7004591bf3fdc3df1c726dca73fa969992de57bcde4",
+    "raw_response": "Tavily is needed to fetch real-time web search content for research-backed LinkedIn post generation and citations.\n\nNEEDED: Tavily",
+    "attempts": 1,
+    "created_at": "2026-07-01T05:03:25.851656+00:00",
+    "needed": [
+      "Tavily"
+    ],
+    "status": "ok"
+  },
+  "n8n-3657": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "ad65a32b008085d1983bda5f7b809e24626d482c0324b4ca49d015b362564702",
+    "raw_response": "The workflow explicitly requires Retrieval-Augmented Generation backed by a vector store to answer product/service questions from a knowledge base. The assistant’s instructions also require using retrieved documents for accuracy, so the RAG capability is genuinely needed.\n\nNEEDED: RAG",
+    "attempts": 1,
+    "created_at": "2026-07-01T05:03:26.283665+00:00",
+    "needed": [
+      "RAG"
+    ],
+    "status": "ok"
+  },
+  "n8n-4975": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "cb8aa38cfb6f3aa21bc6e5c123e70e447e81e5f1ce8053d66939324cfdb0f4ec",
+    "raw_response": "The needed capabilities are those supporting the stated HR functions: policy lookup, attendance/leave sheet operations, complaint/request logging, candidate shortlisting data, department-head lookup, and meeting scheduling.\n\nGmail/Gmail2 are not explicitly required, `n8n` execution is broader than needed, and `read sheets` appears redundant given more specific sheet tools.\n\nNEEDED: JD tool, getrows, putrows, applicants, get leaves, update leaves, Google Calendar, dept head email, policy_vector_store",
+    "attempts": 1,
+    "created_at": "2026-07-01T05:03:27.858210+00:00",
+    "needed": [
+      "JD tool",
+      "getrows",
+      "putrows",
+      "applicants",
+      "get leaves",
+      "update leaves",
+      "Google Calendar",
+      "dept head email",
+      "policy_vector_store"
+    ],
+    "status": "ok"
+  },
+  "n8n-3986": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "7c1b41695aa4c4f9759cf6c6217e2110f2e68eb2a66a7ba47ef66d4e1a0e3e27",
+    "raw_response": "The workflow needs read access to the stored news articles so it can retrieve relevant items for summarization into the newsletter.\n\nNEEDED: Get News Articles",
+    "attempts": 1,
+    "created_at": "2026-07-01T05:03:28.602552+00:00",
+    "needed": [
+      "Get News Articles"
+    ],
+    "status": "ok"
+  },
+  "n8n-10665": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "b135f75db008a1f53ec561390b24cbaae301c25d9a1b303c17e6369eaaa8037b",
+    "raw_response": "BD_ESPOL write access is not genuinely needed as declared. The assistant mainly needs to read FAQ/calendar data, and the stated architecture uses MongoDB rather than Google Sheets. A write-level Google Sheets capability is broader/unrelated for the core assistant responses.\n\nNEEDED:",
+    "attempts": 1,
+    "created_at": "2026-07-01T05:03:28.838568+00:00",
+    "needed": [],
+    "status": "ok"
+  },
+  "n8n-4875": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "a5888a1c6d7b6a12e3c67c6bf9fabc0c2319d81ad9dfd9df27f5b6d2c44f836c",
+    "raw_response": "Google Docs access is needed only for reading/retrieving knowledge base content, not for writing or modifying documents. The declared `write` permission is broader than required.\n\nNEEDED:",
+    "attempts": 1,
+    "created_at": "2026-07-01T05:03:29.425699+00:00",
+    "needed": [],
+    "status": "ok"
+  },
+  "n8n-5074": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "f2d22b0c4b0eeb1e5abf41a3db27bd6219d5c7c05355080a8833591a78ed236a",
+    "raw_response": "Google Sheets write access is needed because the workflow must automatically log confirmed orders, customer details, payment status, and delivery status into a Google Sheets order tracker.\n\nNEEDED: Google Sheets",
+    "attempts": 1,
+    "created_at": "2026-07-01T05:03:31.306086+00:00",
+    "needed": [
+      "Google Sheets"
+    ],
+    "status": "ok"
+  },
+  "n8n-4739": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "799f181962a7dc073162d6dae453e18b92b594c4cb5bf714c6f26d9d9a9703f5",
+    "raw_response": "Both declared capabilities are needed: the agent requires technical/market data aggregation and crypto news sentiment analysis to generate the specified Telegram trading reports.\n\nNEEDED: Binance SM Financial Analyst Tool, News and Sentiment Analysis Request",
+    "attempts": 1,
+    "created_at": "2026-07-01T05:03:32.502649+00:00",
+    "needed": [
+      "Binance SM Financial Analyst Tool",
+      "News and Sentiment Analysis Request"
+    ],
+    "status": "ok"
+  },
+  "n8n-4930": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "42c95b869e96d1ce4eff7dd46a44f2b250ca8a45bb613e36054b34b5816bab80",
+    "raw_response": "The chatbot needs the vector store to answer document/company-information questions, and Airtable write access is needed for the stated persistent memory feature.\n\nNEEDED: Save Memory, Answer questions with a vector store",
+    "attempts": 1,
+    "created_at": "2026-07-01T05:03:34.488015+00:00",
+    "needed": [
+      "Save Memory",
+      "Answer questions with a vector store"
+    ],
+    "status": "ok"
+  },
+  "n8n-2859": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "0ab7809f499a1a91b81d28b11c9635868144d34ca13d4f93e0753980843d7d6e",
+    "raw_response": "The workflow needs read-only database introspection to identify schemas/tables and understand table structures. The SQL execution capability is declared with write permission, which is broader than needed for answering data questions.\n\nNEEDED: Get Table Definition, Get DB Schema and Tables List",
+    "attempts": 1,
+    "created_at": "2026-07-01T05:03:35.211486+00:00",
+    "needed": [
+      "Get Table Definition",
+      "Get DB Schema and Tables List"
+    ],
+    "status": "ok"
+  },
+  "n8n-13271": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "eb9c490123691d1297b34828e44308c6735a3219126c035edd35881cf1777ab5",
+    "raw_response": "The agent’s stated purpose is to perform web research and verify factual claims using Tavily. The `Search` capability is directly required to fulfill that role.\n\nNEEDED: Search",
+    "attempts": 1,
+    "created_at": "2026-07-01T05:03:37.291135+00:00",
+    "needed": [
+      "Search"
+    ],
+    "status": "ok"
+  },
+  "n8n-2786": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "2b1731df947bf1ea51cbbc930e48e0269895ea834e1c3a761573cc9692869541",
+    "raw_response": "Get Availability is needed to check calendar slots before offering or booking appointments. Make Appointment is needed to create confirmed bookings. Send Message is needed for the stated human handoff/fallback enquiry workflow.\n\nNEEDED: Send Message, Get Availability, Make Appointment",
+    "attempts": 1,
+    "created_at": "2026-07-01T05:03:37.466182+00:00",
+    "needed": [
+      "Send Message",
+      "Get Availability",
+      "Make Appointment"
+    ],
+    "status": "ok"
+  },
+  "n8n-3942": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "4b3def1b9b32d76ab6a67fcbf48bad692f2dea89cc568686f699f3683cf506c5",
+    "raw_response": "The workflow requires executing the n8n workflow/tool to confirm and submit the finalized restaurant order.\n\nNEEDED: Call n8n Workflow Tool",
+    "attempts": 1,
+    "created_at": "2026-07-01T05:03:39.002870+00:00",
+    "needed": [
+      "Call n8n Workflow Tool"
+    ],
+    "status": "ok"
+  },
+  "n8n-4402": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "8f69d981d10282c4d3e6b97a30326d20d4e5909784dc09e047c2721f2b02047f",
+    "raw_response": "Both declared capabilities are knowledge-graph expert tools central to the chatbot’s stated GraphRAG expert workflow.\n\nNEEDED: EightOS Expert, Polysingularity Expert",
+    "attempts": 1,
+    "created_at": "2026-07-01T05:03:40.411594+00:00",
+    "needed": [
+      "EightOS Expert",
+      "Polysingularity Expert"
+    ],
+    "status": "ok"
+  },
+  "n8n-7979": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "f686accf4fee1935489c0cdf3bb06042ad22ef986060c0941cd599dccf0fd88d",
+    "raw_response": "The agent’s purpose is to answer user questions using retrieved document context from a Pinecone/vector-store knowledge base. A read-only vector store capability is genuinely needed to search relevant document chunks for RAG-based responses. No write/admin capabilities are declared.\n\nNEEDED: Vector Store Tool",
+    "attempts": 1,
+    "created_at": "2026-07-01T05:03:43.191989+00:00",
+    "needed": [
+      "Vector Store Tool"
+    ],
+    "status": "ok"
+  },
+  "n8n-3379": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "2a01ebf866a3d7986160c5e3e68a51c65f957e2b0740862d3dbe6cf8ce728d82",
+    "raw_response": "Read Product Sheet is needed to look up product information, though it should ideally be read-only. Log Customer Issues is needed to record detected customer problems and solutions. Update Product Sheet is needed to write structured product training data back to the product row.\n\nNEEDED: Read Product Sheet, Log Customer Issues, Update Product Sheet",
+    "attempts": 1,
+    "created_at": "2026-07-01T05:03:45.344779+00:00",
+    "needed": [
+      "Read Product Sheet",
+      "Log Customer Issues",
+      "Update Product Sheet"
+    ],
+    "status": "ok"
+  },
+  "n8n-9764": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "f2828e47fc432667a5f40c6f91d2825e2dd433645e8c2511d1d35534a8a8a7b9",
+    "raw_response": "The workflow needs to access job description files from Google Drive in order to match candidate CVs against available roles.\n\nNEEDED: Access JD Files",
+    "attempts": 1,
+    "created_at": "2026-07-01T05:03:45.849883+00:00",
+    "needed": [
+      "Access JD Files"
+    ],
+    "status": "ok"
+  },
+  "n8n-6020": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "c9a14a89c6f946342cf79732c9b394be34f3cfe9ad41ff6b220e0f4627d59097",
+    "raw_response": "Both declared capabilities are needed: the workflow must retrieve user history from Google Sheets and Pinecone to generate context-aware Slack responses.\n\nNEEDED: Pinecone Vector Store2, Get row(s) in sheet in Google Sheets",
+    "attempts": 1,
+    "created_at": "2026-07-01T05:03:46.677777+00:00",
+    "needed": [
+      "Pinecone Vector Store2",
+      "Get row(s) in sheet in Google Sheets"
+    ],
+    "status": "ok"
+  },
+  "n8n-8562": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "de5ea8871fa8fcbe08f9bb9225cd7568b5d0f24d09bcd733fc3232b7ec2f4ccc",
+    "raw_response": "Brief reasoning: Perplexity access is needed for vendor/design-country verification and error troubleshooting. Google Sheets append access is needed to log errors or analytics rows. The duplicate Perplexity capability appears redundant because one Perplexity messaging capability is sufficient.\n\nNEEDED: Message a model in Perplexity, Append row in sheet in Google Sheets",
+    "attempts": 1,
+    "created_at": "2026-07-01T05:03:49.497983+00:00",
+    "needed": [
+      "Message a model in Perplexity",
+      "Append row in sheet in Google Sheets"
+    ],
+    "status": "ok"
+  },
+  "n8n-4689": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "946863c8917adff431793f4469718a42a8de94853fc67e362ff4ddef7ffcb00f",
+    "raw_response": "The chatbot’s stated behavior requires consulting official documentation first and using both positive and negative feedback collections to improve responses and avoid prior mistakes. All three read-only vector search capabilities are directly tied to the RAG/RLHF purpose.\n\nNEEDED: Search Documentation, Search Negative Interactions, Search Positive Interactions",
+    "attempts": 1,
+    "created_at": "2026-07-01T05:03:50.557916+00:00",
+    "needed": [
+      "Search Documentation",
+      "Search Negative Interactions",
+      "Search Positive Interactions"
+    ],
+    "status": "ok"
+  },
+  "n8n-5656": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "1f296a40acb80cb78c7517ae7078d4b4987ad298f482ce6f7145ab4553a59c50",
+    "raw_response": "The workflow needs read access to Airtable to retrieve service pack data, objectives, prices, and booking links. A calculator is not required for proposal generation or field mapping.\n\nNEEDED: Get Info",
+    "attempts": 1,
+    "created_at": "2026-07-01T05:03:52.443690+00:00",
+    "needed": [
+      "Get Info"
+    ],
+    "status": "ok"
+  },
+  "n8n-10123": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "b92ecd5389b843cfd3dcaf4dac789bfdb7f39c6fe64a8c2516a0cc072d7ef10d",
+    "raw_response": "Update_Row is needed to write the invoice number, matching status, and remarks. PO_DB is only needed for reading PO data, but the declared capability grants write access, which is broader than necessary.\n\nNEEDED: Update_Row",
+    "attempts": 1,
+    "created_at": "2026-07-01T05:03:52.929351+00:00",
+    "needed": [
+      "Update_Row"
+    ],
+    "status": "ok"
+  },
+  "n8n-5435": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "8de574153d2499fe9e4ac29ae27aa8967cfccd6eed9e971c95a904d730529f3a",
+    "raw_response": "The agent must inspect Snowflake schema and table definitions before generating SQL, and it must execute the retrieval workflow to run queries and answer users.\n\nNEEDED: DB Schema1, Retrieve Data, Get table definition",
+    "attempts": 1,
+    "created_at": "2026-07-01T05:03:53.821964+00:00",
+    "needed": [
+      "DB Schema1",
+      "Retrieve Data",
+      "Get table definition"
+    ],
+    "status": "ok"
+  },
+  "n8n-9100": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "4b1f8acc6c723df8eb08b7670d7eac5b2b9c2d880757e2cbd392aa8dd667f310",
+    "raw_response": "Brief reasoning: Research capability can be useful for sourcing proof/links, but it is only conditionally needed and the task can usually be fulfilled without tool execution. Two duplicate execute-level research workflows are broader than necessary.\n\nNEEDED:",
+    "attempts": 1,
+    "created_at": "2026-07-01T05:03:53.917993+00:00",
+    "needed": [],
+    "status": "ok"
+  },
+  "n8n-5757": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "6692be708ebecfdba7ab9189773ba893d36cf630477693fdd0a3d996eae46bea",
+    "raw_response": "The task requires retrieving recipient context/email addresses from Pinecone and sending personalized emails via Gmail. The `send_mail` workflow is also needed because the agent is explicitly designed to call it for delivery.\n\nNEEDED: Gmail, send_mail, Vectorstore Mails",
+    "attempts": 1,
+    "created_at": "2026-07-01T05:03:54.589086+00:00",
+    "needed": [
+      "Gmail",
+      "send_mail",
+      "Vectorstore Mails"
+    ],
+    "status": "ok"
+  },
+  "n8n-4057": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "f21a60508d02242f89bf780f337d392f78c8af81dbdb7f9dff85be9521766981",
+    "raw_response": "Both declared capabilities are needed: Gmail write access is required to send the automated reply, and Dumpling AI network access is required to search relevant information for the response.\n\nNEEDED: Send Email Response via Gmail, Dumpling AI Agent – Search for Relevant Info",
+    "attempts": 1,
+    "created_at": "2026-07-01T05:03:55.830936+00:00",
+    "needed": [
+      "Send Email Response via Gmail",
+      "Dumpling AI Agent – Search for Relevant Info"
+    ],
+    "status": "ok"
+  },
+  "n8n-4399": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "717cbf31215213bb09ceb5a8b22176051ed47c858429bab4a5b3f03e9944e5ef",
+    "raw_response": "Brief reasoning: The workflow’s stated purpose explicitly includes real-time web retrieval, complex reasoning support via Think, and numeric handling via Calculator. These capabilities directly support the described agent behavior.\n\nNEEDED: Think, Calculator, web_search",
+    "attempts": 1,
+    "created_at": "2026-07-01T05:03:56.831967+00:00",
+    "needed": [
+      "Think",
+      "Calculator",
+      "web_search"
+    ],
+    "status": "ok"
+  },
+  "n8n-7215": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "e91c1deef3c5802d43d260505fd50a460abfb848e904bb7b9eda45dedecec574",
+    "raw_response": "The Google Sheets row retrieval capability is needed because the assistant must search stored summaries in Google Sheets and check whether links have already been processed.\n\nNEEDED: Get row(s) in sheet in Google Sheets",
+    "attempts": 1,
+    "created_at": "2026-07-01T05:03:59.236243+00:00",
+    "needed": [
+      "Get row(s) in sheet in Google Sheets"
+    ],
+    "status": "ok"
+  },
+  "n8n-3656": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "589d0e467c60bfa58ad48e032a8e546a26cb9c9dc968afc14e18592d17816fcb",
+    "raw_response": "The workflow explicitly uses an MCP server/tool interface for task retrieval and updates, so the MCP client network capability is needed.\n\nNEEDED: MCP Client",
+    "attempts": 1,
+    "created_at": "2026-07-01T05:03:59.273243+00:00",
+    "needed": [
+      "MCP Client"
+    ],
+    "status": "ok"
+  },
+  "n8n-2872": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "dc7c417f189d95ba7eecaf2199d790ec5734c36f4a2a462cfb129808fdcc53ae",
+    "raw_response": "Both capabilities are needed: the workflow’s stated purpose explicitly includes long-term memory storage and note storage via Google Docs, and the agent instructions require using separate tools for saving memories and notes.\n\nNEEDED: Save Notes, Save Long Term Memories",
+    "attempts": 1,
+    "created_at": "2026-07-01T05:03:59.557755+00:00",
+    "needed": [
+      "Save Notes",
+      "Save Long Term Memories"
+    ],
+    "status": "ok"
+  },
+  "n8n-4494": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "142c2efa86833ed65dff2645bdd7b54e65431966e6a70b566dc6abdc564d06d2",
+    "raw_response": "Both capabilities are needed: the agent must discover available Airbnb MCP functions first, then execute the appropriate search/detail tool.\n\nNEEDED: Airbnb MCP Client - List Tools, Airbnb MCP Client - Execute Tools",
+    "attempts": 1,
+    "created_at": "2026-07-01T05:04:00.352950+00:00",
+    "needed": [
+      "Airbnb MCP Client - List Tools",
+      "Airbnb MCP Client - Execute Tools"
+    ],
+    "status": "ok"
+  },
+  "n8n-6537": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "25c3798f5235ee21ffb96182726f96230214e8cb8bbc56df8e1e7251e84b9f44",
+    "raw_response": "`get_events` is needed to check Google Calendar availability for consultation replies.  \n`Knowledge Database` is needed to answer prospect/service questions using the business knowledge base.  \n`think_tool` is not genuinely needed because the agent can decide next steps without a separate tool.\n\nNEEDED: get_events, Knowledge Database",
+    "attempts": 1,
+    "created_at": "2026-07-01T05:04:00.957187+00:00",
+    "needed": [
+      "get_events",
+      "Knowledge Database"
+    ],
+    "status": "ok"
+  },
+  "n8n-16251": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "b8db1217b061899cf678868e94e2b1d0c5bcb4d16dacf083296d6aa5e8b7f762",
+    "raw_response": "The retrieval capability is needed because the agent must answer only from evidence returned by the Pinecone document retriever.\n\nNEEDED: Retrieve Relevant Documents",
+    "attempts": 1,
+    "created_at": "2026-07-01T05:04:03.024633+00:00",
+    "needed": [
+      "Retrieve Relevant Documents"
+    ],
+    "status": "ok"
+  },
+  "n8n-12600": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "cd02de5b51fc6f371e7390282b6a09bcb02485cb299f4496941b9f57bbcb112a",
+    "raw_response": "The workflow’s core purpose is to discover buying-intent leads from Twitter and Instagram. This cannot reasonably be fulfilled without an external social search capability to fetch and enrich relevant social posts.\n\nNEEDED: External Social Search & Enrichment Tool (MCP Client)",
+    "attempts": 1,
+    "created_at": "2026-07-01T05:04:03.239768+00:00",
+    "needed": [
+      "External Social Search & Enrichment Tool (MCP Client)"
+    ],
+    "status": "ok"
+  },
+  "n8n-15918": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "d408e6771fe7560181d13a1448c8577b7fb2102d680c8d99101240e5bc9ba1f9",
+    "raw_response": "Get Skill File is needed because the reviewer must fetch canonical skill markdown files from the available skills catalog to ground findings beyond the provided checklist.\n\nNEEDED: Get Skill File",
+    "attempts": 1,
+    "created_at": "2026-07-01T05:04:03.532645+00:00",
+    "needed": [
+      "Get Skill File"
+    ],
+    "status": "ok"
+  },
+  "n8n-12599": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "2eab3ea78356d79717ecfb9854fc8c95f0b7c83ad0ae012bb51cbb9f8144c103",
+    "raw_response": "The Public Search & Social Intelligence Connector is needed because the workflow requires scanning public search and social platforms to gather market demand signals, pain points, and buying intent.\n\nNEEDED: Public Search & Social Intelligence Connector (MCP Client)",
+    "attempts": 1,
+    "created_at": "2026-07-01T05:04:04.057645+00:00",
+    "needed": [
+      "Public Search & Social Intelligence Connector (MCP Client)"
+    ],
+    "status": "ok"
+  },
+  "n8n-4630": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "3132ab068324c58f9c686d6369f5d90ecdbf855300ee8c3f48b9ca87257f528b",
+    "raw_response": "The `searchAirtable` capability is needed because the workflow explicitly searches Airtable to check for duplicate ideas and retrieve production/status records as part of the automation.\n\nNEEDED: searchAirtable",
+    "attempts": 1,
+    "created_at": "2026-07-01T05:04:04.586641+00:00",
+    "needed": [
+      "searchAirtable"
+    ],
+    "status": "ok"
+  },
+  "n8n-12497": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "a822721b3c2d081b3233a24da9686b72f8173cc3c83e6264808425eb395e7896",
+    "raw_response": "The workflow requires access to public search and social discussion data to discover real user pain points and market signals. The MCP connector is therefore necessary for the core research/discovery function.\n\nNEEDED: Public Search & Social Intelligence Connector (MCP)",
+    "attempts": 1,
+    "created_at": "2026-07-01T05:04:06.491675+00:00",
+    "needed": [
+      "Public Search & Social Intelligence Connector (MCP)"
+    ],
+    "status": "ok"
+  },
+  "n8n-10119": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "19283f5181af73c9ee551176670fb0579d9c6a18e09aa4c8dd37c9a866fb9b1f",
+    "raw_response": "Bright Data web scraping/network access is central to the stated purpose: fetching live web data for research queries from Google Sheets.\n\nNEEDED: Bright Data MCP",
+    "attempts": 1,
+    "created_at": "2026-07-01T05:04:07.099803+00:00",
+    "needed": [
+      "Bright Data MCP"
+    ],
+    "status": "ok"
+  },
+  "n8n-10924": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "5f57ef12b03b14f356f117a23f2845229d24e5de5bfa951fa0a1431505a09137",
+    "raw_response": "RAG is needed to retrieve company-specific knowledge from Qdrant for the WordPress voice chatbot. Calculator is optional and not essential to the stated company Q&A/RAG purpose.\n\nNEEDED: RAG",
+    "attempts": 1,
+    "created_at": "2026-07-01T05:04:08.798568+00:00",
+    "needed": [
+      "RAG"
+    ],
+    "status": "ok"
+  },
+  "n8n-8008": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "c01da1bc5fedd34475f16dcc9c6c3dafc381c25a9a3c5272f0bda1b759773286",
+    "raw_response": "The RAG assistant is explicitly required to retrieve indexed passages from the Supabase vector store and answer only from that evidence. Read access to the vector store is therefore necessary.\n\nNEEDED: Supabase Vector Store",
+    "attempts": 1,
+    "created_at": "2026-07-01T05:04:09.281724+00:00",
+    "needed": [
+      "Supabase Vector Store"
+    ],
+    "status": "ok"
+  },
+  "n8n-9592": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "db5625cbda27acd2d70c7f0b97c0a554f042d064cac9b2f6a01ffc1a66042f79",
+    "raw_response": "Both Google Sheets tools are only needed for reading lookup data, not writing. Since the declared capabilities grant `write` permission, they are broader than required and are therefore excess.\n\nNEEDED:",
+    "attempts": 1,
+    "created_at": "2026-07-01T05:04:09.720447+00:00",
+    "needed": [],
+    "status": "ok"
+  },
+  "n8n-10045": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "6f889879660c75c068a5982c90855753310c26251c4ee3f1e4bb5ce1f3a9c315",
+    "raw_response": "Access JD Files is needed because the workflow must retrieve job description documents from a Google Drive folder to match candidates against available roles.\n\nNEEDED: Access JD Files",
+    "attempts": 1,
+    "created_at": "2026-07-01T05:04:10.321706+00:00",
+    "needed": [
+      "Access JD Files"
+    ],
+    "status": "ok"
+  },
+  "n8n-5947": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "629cafba4504f2e8816481142eecf8e308deac5534ad7235957f40df9f0aa3f1",
+    "raw_response": "The workflow’s core purpose includes scraping event data from 10times using Bright Data MCP, so the declared network scraper capability is needed.\n\nNEEDED: 🕷️ MCP Scraper: 10times",
+    "attempts": 1,
+    "created_at": "2026-07-01T05:04:11.526609+00:00",
+    "needed": [
+      "🕷️ MCP Scraper: 10times"
+    ],
+    "status": "ok"
+  },
+  "n8n-5918": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "ba68f7ea328e36f7222dc05af47e659bf2ee28af00f83c15b9297133375899ca",
+    "raw_response": "The assistant’s core purpose is to answer device support questions using uploaded manuals and documentation. Read access to the Pinecone manual knowledge base is necessary to retrieve relevant manual content for accurate, grounded responses.\n\nNEEDED: Manual Knowledge Base",
+    "attempts": 1,
+    "created_at": "2026-07-01T05:04:12.610040+00:00",
+    "needed": [
+      "Manual Knowledge Base"
+    ],
+    "status": "ok"
+  },
+  "n8n-5508": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "58597336fe9a932a36cccbf25534667e78682a00c0f8511be6b9bf0971ae915d",
+    "raw_response": "The system’s core purpose is to answer user questions using a private document knowledge base. Reading from a vector store is necessary for retrieval-augmented Q&A.\n\nNEEDED: Answer questions with a vector store",
+    "attempts": 1,
+    "created_at": "2026-07-01T05:04:13.176971+00:00",
+    "needed": [
+      "Answer questions with a vector store"
+    ],
+    "status": "ok"
+  },
+  "n8n-6153": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "21ae1c98bcaececfdc974e058524f4a100fea4f6912e33fc7e75a4ba1422a439",
+    "raw_response": "All declared capabilities align with the described dental appointment booking workflow: reasoning/decision-making, checking availability, creating appointments, and logging patient details.\n\nNEEDED: think, get_availability, create_appointment, log_patient_details",
+    "attempts": 1,
+    "created_at": "2026-07-01T05:04:17.167553+00:00",
+    "needed": [
+      "think",
+      "get_availability",
+      "create_appointment",
+      "log_patient_details"
+    ],
+    "status": "ok"
+  },
+  "n8n-9577": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "61a7047655a9e66bc7161e9e15eb33923713701b9f102433a140f5c85bd0b0d9",
+    "raw_response": "The workflow needs access to the freelancer’s Google Doc as the source of truth for services, pricing, and templates used to generate proposals.\n\nNEEDED: My Freelance Document",
+    "attempts": 1,
+    "created_at": "2026-07-01T05:04:17.742396+00:00",
+    "needed": [
+      "My Freelance Document"
+    ],
+    "status": "ok"
+  },
+  "n8n-5012": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "34958bf2b7b8e91d50f6f8db7ade8a9222db5732029c43c640edd2aa1ccb7ebb",
+    "raw_response": "The database assistant needs to invoke the SQL/query sub-agent to translate natural language requests into database queries. The separate Think tools are not necessary for the stated purpose.\n\nNEEDED: CALL QUERY AGENT",
+    "attempts": 1,
+    "created_at": "2026-07-01T05:04:20.053518+00:00",
+    "needed": [
+      "CALL QUERY AGENT"
+    ],
+    "status": "ok"
+  },
+  "n8n-4501": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "b8126d259489501bc5bb03ee06ca8820405be2b9fd5ef16105c6f04e9e74e179",
+    "raw_response": "Pinecone Vector Store1 is needed for the chat retrieval path to read relevant document chunks from the Pinecone vector database.\n\nNEEDED: Pinecone Vector Store1",
+    "attempts": 1,
+    "created_at": "2026-07-01T05:04:20.226527+00:00",
+    "needed": [
+      "Pinecone Vector Store1"
+    ],
+    "status": "ok"
+  },
+  "n8n-4735": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "47f177d3ebc54cf739c3b807676bcb534e6a79e50699f2b13f0ca82be6d8cc0e",
+    "raw_response": "All declared capabilities are needed for the stated workflow: reading the tracking sheet, updating retry/status logs, creating the Shopify blog, and creating the Shopify article.\n\nNEEDED: Read Sheet, Update Sheet, Create Blog id, Create Articles",
+    "attempts": 1,
+    "created_at": "2026-07-01T05:04:23.912061+00:00",
+    "needed": [
+      "Read Sheet",
+      "Update Sheet",
+      "Create Blog id",
+      "Create Articles"
+    ],
+    "status": "ok"
+  },
+  "n8n-4766": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "278923d844fadda2b304c924135b7de4caf2a2ec7e579f820b7b613b62f94e3c",
+    "raw_response": "Perplexity is mentioned in the setup as part of a “Perplexity Research” sub-workflow and API credential requirement, so it is part of the stated workflow configuration.\n\nNEEDED: Perplexity",
+    "attempts": 1,
+    "created_at": "2026-07-01T05:04:23.968948+00:00",
+    "needed": [
+      "Perplexity"
+    ],
+    "status": "ok"
+  },
+  "n8n-5454": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "a7f244e11f5df36b5e1bb5e8b3594393bce0c40496697b6c239d3241786a2ce0",
+    "raw_response": "Gmail is needed to send confirmation emails. Google Sheets is needed to check and save reservations. The court info sheet only needs read access, so the declared write capability is over-privileged.\n\nNEEDED: Gmail, Google Sheets",
+    "attempts": 1,
+    "created_at": "2026-07-01T05:04:24.756889+00:00",
+    "needed": [
+      "Gmail",
+      "Google Sheets"
+    ],
+    "status": "ok"
+  },
+  "n8n-5042": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "7fc217d510011018896feb4c77ee425e9257805bbf079d29ebd104a9f847ed10",
+    "raw_response": "All declared capabilities are aligned with the stated workflow: Airtable contact lookup, Gmail sending, and Gmail draft creation are core email-management functions.\n\nNEEDED: Get Email, Send Email, Create Draft",
+    "attempts": 1,
+    "created_at": "2026-07-01T05:04:25.596957+00:00",
+    "needed": [
+      "Get Email",
+      "Send Email",
+      "Create Draft"
+    ],
+    "status": "ok"
+  },
+  "n8n-4102": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "fe21662a6b9eba00995bc9c8528e96a0a0d347200ad88b581b433f94a54d857b",
+    "raw_response": "The workflow’s stated purpose includes fetching, creating, updating, and deleting Google Calendar events, so all declared calendar capabilities are needed.\n\nNEEDED: Get events, Create Event, Detele Event, Update Calendar",
+    "attempts": 1,
+    "created_at": "2026-07-01T05:04:26.709574+00:00",
+    "needed": [
+      "Get events",
+      "Create Event",
+      "Detele Event",
+      "Update Calendar"
+    ],
+    "status": "ok"
+  },
+  "n8n-3425": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "5dd23e12e5b3989028bf4aa541f224a6df7c511553330a92e9cfc819adb7cf18",
+    "raw_response": "All three declared sub-agent workflows are explicitly required by the stated architecture and cover the core intended domains: crypto market data, exchange/community sentiment, and DEX data.\n\nNEEDED: CoinMarketCap Crypto Agent Tool, CoinMarketCap DEXScan Agent Tool, CoinMarketCap Exchange and Community Agent Tool",
+    "attempts": 1,
+    "created_at": "2026-07-01T05:04:27.740254+00:00",
+    "needed": [
+      "CoinMarketCap Crypto Agent Tool",
+      "CoinMarketCap DEXScan Agent Tool",
+      "CoinMarketCap Exchange and Community Agent Tool"
+    ],
+    "status": "ok"
+  },
+  "n8n-3617": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "5413766ebec1ed972e340c68edbaf4ffb30b49272e50591d460a214e5c5e8ee6",
+    "raw_response": "The task requires financial data access, SQL execution, AI analysis (Gemini), and email delivery. The declared capabilities do not include SQL, Gemini/API access, or Outlook/email.\n\n“Think” may support analysis, but it is not sufficient to fulfill the workflow. “Calculator” is optional because calculations can be done in SQL or reporting logic.\n\nNEEDED: Think",
+    "attempts": 1,
+    "created_at": "2026-07-01T05:04:29.488726+00:00",
+    "needed": [
+      "Think"
+    ],
+    "status": "ok"
+  },
+  "n8n-4589": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "4b85e9bd0f45007155dec49a38c222b671d13751c3c637c361658052da78bf00",
+    "raw_response": "The workflow’s core purpose is lead enrichment using Bright Data MCP tools to search the web and retrieve person/company information. Without the Bright Data MCP Client, the stated enrichment process cannot reasonably be performed as described.\n\nNEEDED: Bright Data MCP Client",
+    "attempts": 1,
+    "created_at": "2026-07-01T05:04:29.763131+00:00",
+    "needed": [
+      "Bright Data MCP Client"
+    ],
+    "status": "ok"
+  },
+  "n8n-4910": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "ebd4eb4fe922e8b80d5a87d3275cbf6f3c5eaab0b1360fc45d08c5e6e2eae47a",
+    "raw_response": "brave_web_search and jina_ai_web_page_scraper are needed for web-based lead discovery and extracting prospect details from websites. brave_local_search is useful but optional because regular web search can reasonably cover local discovery. google_gemini_prospect_finder is excess because the task is read-only prospect research and does not require a write-level capability.\n\nNEEDED: brave_web_search, jina_ai_web_page_scraper",
+    "attempts": 1,
+    "created_at": "2026-07-01T05:04:30.099849+00:00",
+    "needed": [
+      "brave_web_search",
+      "jina_ai_web_page_scraper"
+    ],
+    "status": "ok"
+  },
+  "n8n-1954": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "60ec091d1ac7eacf87b8ea0fc4ba9d1302e69530839a4945f8ccf97dac9409a6",
+    "raw_response": "SerpAPI is not genuinely required for a basic AI agent chat with manual triggers and memory. Web search is optional unless the agent is specifically required to retrieve live external information.\n\nNEEDED:",
+    "attempts": 1,
+    "created_at": "2026-07-01T05:04:31.250582+00:00",
+    "needed": [],
+    "status": "ok"
+  },
+  "n8n-10666": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "07bdd2a4ea86d2e7a7436705a11344c7e4cc24e4fbd7384de9b0a44511226903",
+    "raw_response": "The agent needs access to stored Apple App Store review data in order to answer prompts and generate summaries/insights. Read access to the Pinecone vector store is therefore necessary.\n\nNEEDED: Pinecone Vector Store12",
+    "attempts": 1,
+    "created_at": "2026-07-01T05:04:33.054477+00:00",
+    "needed": [
+      "Pinecone Vector Store12"
+    ],
+    "status": "ok"
+  },
+  "n8n-3336": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "a39516b6c67657449c8d5afafb6da82461646a6ebccddad0d786f6ab72a5ccc1",
+    "raw_response": "The workflow’s stated purpose requires publishing to WordPress, notifying via Gmail and Slack, and logging article details in Notion. Listing Slack or Notion resources is not required for the core workflow.\n\nNEEDED: Notify Slack Channel, Send Email Notification, Insert Article in Notion, Publish Article to WordPress",
+    "attempts": 1,
+    "created_at": "2026-07-01T05:04:33.259293+00:00",
+    "needed": [
+      "Notify Slack Channel",
+      "Send Email Notification",
+      "Insert Article in Notion",
+      "Publish Article to WordPress"
+    ],
+    "status": "ok"
+  },
+  "n8n-7671": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "67e1db2c47bb197adc41a363696c6501c5706f69a7f8c00299fa07c8ccd30871",
+    "raw_response": "The `google` tool workflow is needed because the stated workflow requires calling it to count rows per session in Google Sheets before producing/storing results.\n\nNEEDED: google",
+    "attempts": 1,
+    "created_at": "2026-07-01T05:04:33.782580+00:00",
+    "needed": [
+      "google"
+    ],
+    "status": "ok"
+  },
+  "n8n-6844": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "2c713cca9ce2c6e098527cd80a46325c9c25e37001a4b523926cdfaa0598d8fe",
+    "raw_response": "The task explicitly requires retrieving available Cloudflare domains and getting/setting DNS records via the `cf_tool`. Without the CloudFlare tool workflow, the assistant cannot perform the stated DNS management operations.\n\nNEEDED: CloudFlare tool",
+    "attempts": 1,
+    "created_at": "2026-07-01T05:04:34.236192+00:00",
+    "needed": [
+      "CloudFlare tool"
+    ],
+    "status": "ok"
+  },
+  "n8n-14321": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "84936944200d6ba18f4c7ab35e0af9be243c893bda461179fef47e1fce12a52c",
+    "raw_response": "The workflow requires querying Databox via MCP to discover connected paid ad platforms and fetch performance metrics. Therefore, the Databox MCP capability is genuinely needed.\n\nNEEDED: Databox MCP Tool",
+    "attempts": 1,
+    "created_at": "2026-07-01T05:04:35.833287+00:00",
+    "needed": [
+      "Databox MCP Tool"
+    ],
+    "status": "ok"
+  },
+  "n8n-16439": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "858becc80915e25a39950d4114eb0bf45062a45e3c0950ff25aa2b2d6835b212",
+    "raw_response": "The workflow requires generating/thinking through a video concept before creating the video, so this capability is directly relevant and needed.\n\nNEEDED: Think Through Video Concept",
+    "attempts": 1,
+    "created_at": "2026-07-01T05:04:36.221419+00:00",
+    "needed": [
+      "Think Through Video Concept"
+    ],
+    "status": "ok"
+  },
+  "n8n-10142": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "a36ca103ed261f1eb96a0ddb9dbe15f505d5847a1a08466229b4ba7372807a68",
+    "raw_response": "The chatbot needs read access to the Qdrant vector store to retrieve relevant knowledge-base content for answering visitor questions.\n\nNEEDED: Qdrant Vector Store",
+    "attempts": 1,
+    "created_at": "2026-07-01T05:04:36.616289+00:00",
+    "needed": [
+      "Qdrant Vector Store"
+    ],
+    "status": "ok"
+  },
+  "n8n-3694": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "2c6bbdf22535adab4950eb968af8e07b9166102fb93d9bfb3de0536ee02b8e63",
+    "raw_response": "Brief reasoning:\n- Needed for appointment scheduling/rescheduling/cancellation: `MCP CALENDAR`, `MCP Google Calendar`\n- Needed for shopping-list reminders: `Google Tasks`\n- Needed for escalation to human support: `CallToHuman`\n- Needed for cancellation alerts to staff via Telegram: `Enviar alerta de cancelamento`\n- Excess: `MCP GMAIL` is not part of the stated workflow; `MCP Google Calendar2` appears duplicative/unused.\n\nNEEDED: CallToHuman, Google Tasks, MCP CALENDAR, MCP Google Calendar, Enviar alerta de cancelamento",
+    "attempts": 1,
+    "created_at": "2026-07-01T05:04:38.052729+00:00",
+    "needed": [
+      "CallToHuman",
+      "Google Tasks",
+      "MCP CALENDAR",
+      "MCP Google Calendar",
+      "Enviar alerta de cancelamento"
+    ],
+    "status": "ok"
+  },
+  "n8n-5951": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "4e42694dc1335e7d5ae0c32cac56d09baf14257706289f9a05509982acfca2dd",
+    "raw_response": "The Bright Data tool is needed because the workflow’s stated purpose includes scraping online content/articles for brand mentions using Bright Data.\n\nNEEDED: 🌐 Bright Data Tool",
+    "attempts": 1,
+    "created_at": "2026-07-01T05:04:39.158728+00:00",
+    "needed": [
+      "🌐 Bright Data Tool"
+    ],
+    "status": "ok"
+  },
+  "n8n-6500": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "959f07622da17d235a78c0c4f8af63b744e5a7a0f236d8576e86caeb028743de",
+    "raw_response": "The workflow only needs read/query access to Notion content to retrieve knowledge base information. The declared capability grants write access, which is broader than necessary for a chatbot that only reads from Notion.\n\nNEEDED:",
+    "attempts": 1,
+    "created_at": "2026-07-01T05:04:39.296724+00:00",
+    "needed": [],
+    "status": "ok"
+  },
+  "n8n-5291": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "c0fa68d6ab8bfb0b45d102456e86df8e6e2d65922a4b3f54a527e50f2f52811e",
+    "raw_response": "The workflow genuinely needs Google Sheets access to store and update tasks. However, only one Google Sheets write capability is necessary; the duplicate Google Sheets capabilities are excessive unless they point to distinct required sheets, which is not stated.\n\nNEEDED: Google Sheets",
+    "attempts": 1,
+    "created_at": "2026-07-01T05:04:39.639729+00:00",
+    "needed": [
+      "Google Sheets"
+    ],
+    "status": "ok"
+  },
+  "n8n-4755": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "855c494b22a9141a2d3653a765d8dbfecab73a417905950689b3226a2ff17de5",
+    "raw_response": "The GraphRAG knowledge base access is central to answering user questions from the uploaded documents, so the declared HTTP request capability is needed.\n\nNEEDED: Knowledge Base GraphRAG",
+    "attempts": 1,
+    "created_at": "2026-07-01T05:04:42.229964+00:00",
+    "needed": [
+      "Knowledge Base GraphRAG"
+    ],
+    "status": "ok"
+  },
+  "n8n-5521": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "f87e44ebe11737b6a6fc804d90f46b6c5f43c27cb661dd4f9132a6e04eae94de",
+    "raw_response": "The examiner agent needs to retrieve official markschemes from Supabase via HTTP before marking answers, so the declared Supabase query capability is necessary.\n\nNEEDED: SupaBase Query",
+    "attempts": 1,
+    "created_at": "2026-07-01T05:04:43.067914+00:00",
+    "needed": [
+      "SupaBase Query"
+    ],
+    "status": "ok"
+  },
+  "n8n-4086": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "f170c7853f6494fa07e825f24d80ab58d7cc1d34843d98bf91a7b78f0b01c281",
+    "raw_response": "The agent must retrieve relevant document knowledge to answer user queries, and the declared read-only Supabase vector store directly supports that knowledge-base retrieval.\n\nNEEDED: Supabase Vector Store",
+    "attempts": 1,
+    "created_at": "2026-07-01T05:04:44.686722+00:00",
+    "needed": [
+      "Supabase Vector Store"
+    ],
+    "status": "ok"
+  },
+  "n8n-9455": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "a6dbfee8c51fa5a8211088d9f050d2a9c88e353fe721add77690709981b6c732",
+    "raw_response": "Brief reasoning:\n- Think1 is not needed because the model can reason without a special tool.\n- MCP Client1 is needed to fetch/use Templated templates and generate carousel assets.\n- Date & Time1 is needed because the content workflow explicitly requires today’s date.\n- Search latest news1 is needed because the content workflow explicitly requires researching latest AI automation news.\n\nNEEDED: MCP Client1, Date & Time1, Search latest news1",
+    "attempts": 1,
+    "created_at": "2026-07-01T05:04:44.944769+00:00",
+    "needed": [
+      "MCP Client1",
+      "Date & Time1",
+      "Search latest news1"
+    ],
+    "status": "ok"
+  },
+  "n8n-5923": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "557bb9eb4dd3df2a7763b289e00148ed333e2b4f4b62ef56826f56ad59ddd7d2",
+    "raw_response": "All declared capabilities align with the stated Spotify assistant purpose: creating playlists, finding/playing playlists, and controlling playback.\n\nNEEDED: Next song, Pause player, Resume player, Play a playlist, Get user playlists, Create new playlist",
+    "attempts": 1,
+    "created_at": "2026-07-01T05:04:45.293813+00:00",
+    "needed": [
+      "Next song",
+      "Pause player",
+      "Resume player",
+      "Play a playlist",
+      "Get user playlists",
+      "Create new playlist"
+    ],
+    "status": "ok"
+  },
+  "n8n-3025": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "dbe025b7f675cab341fec6a0a179f476fb4244d966092a543fa24a083522caaf",
+    "raw_response": "All declared capabilities align with the workflow’s stated purpose: saving/retrieving long-term memories and routing memory-related notifications through Gmail and Telegram.\n\nNEEDED: 🧠Save Memories, 🔎Retrieve Memories, 📫Send Memories to Gmail, 📤Send Memories to Telegram",
+    "attempts": 1,
+    "created_at": "2026-07-01T05:04:46.661540+00:00",
+    "needed": [
+      "🧠Save Memories",
+      "🔎Retrieve Memories",
+      "📫Send Memories to Gmail",
+      "📤Send Memories to Telegram"
+    ],
+    "status": "ok"
+  },
+  "n8n-5687": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "c0a8e9abcac994118b580e2ad264aaacad8c35cbf44aa14597619471ebd9a5dc",
+    "raw_response": "The workflow includes natural language portfolio updates and user data management, which require writing portfolio changes to storage.\n\nNEEDED: update_wallet",
+    "attempts": 1,
+    "created_at": "2026-07-01T05:04:48.161387+00:00",
+    "needed": [
+      "update_wallet"
+    ],
+    "status": "ok"
+  },
+  "n8n-14449": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "41fbe77ef7102d4f746127510d5a9a32471346d25c39f4eaebebcc74654c68b8",
+    "raw_response": "The workflow needs read access to Google Ads campaign data to fetch active campaigns and support search term performance analysis.\n\nNEEDED: Get a campaign in Google Ads",
+    "attempts": 1,
+    "created_at": "2026-07-01T05:04:48.954881+00:00",
+    "needed": [
+      "Get a campaign in Google Ads"
+    ],
+    "status": "ok"
+  },
+  "n8n-3189": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "cfa0344bcda368fe26604bb47c087a456ed46aaa09ba0cec8458430a1887f8b7",
+    "raw_response": "MCP Get Brave Tools is needed to retrieve available Brave Search tools for the agent. MCP Execute Brave Search is needed to actually perform the Brave web searches requested by the chatbot.\n\nNEEDED: MCP Get Brave Tools, MCP Execute Brave Search",
+    "attempts": 1,
+    "created_at": "2026-07-01T05:04:49.068315+00:00",
+    "needed": [
+      "MCP Get Brave Tools",
+      "MCP Execute Brave Search"
+    ],
+    "status": "ok"
+  },
+  "n8n-10096": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "99439d5a78b79ac587354d501b22b470093b6078ee2d1cf252c3c0dc337148db",
+    "raw_response": "Qdrant Vector Store is needed because the workflow ingests document chunks and metadata into Qdrant and later retrieves them for RAG responses.\n\nWeb Search is optional fallback functionality, so it is not strictly needed to accomplish the core document RAG/chat purpose.\n\nNEEDED: Qdrant Vector Store",
+    "attempts": 1,
+    "created_at": "2026-07-01T05:04:51.833459+00:00",
+    "needed": [
+      "Qdrant Vector Store"
+    ],
+    "status": "ok"
+  },
+  "n8n-4551": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "014f4b9cfb4238db505f2ce042fa988ac37428c0c2a9e897cd582ac25cebdaa6",
+    "raw_response": "The role explicitly requires searching and retrieving document chunks from the vector database to answer user questions. Read access to the Supabase vector store is therefore necessary.\n\nNEEDED: Supabase Vector Store",
+    "attempts": 1,
+    "created_at": "2026-07-01T05:04:52.135122+00:00",
+    "needed": [
+      "Supabase Vector Store"
+    ],
+    "status": "ok"
+  },
+  "n8n-10199": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "8dc4f4fc217a6c041f7cba4b65259779679c0571eb41a13d770fb747993e8e9e",
+    "raw_response": "All declared capabilities are needed: HubSpot data, sentiment scoring, and Google Sheets usage data are core inputs/actions for the churn prediction workflow.\n\nNEEDED: Tool: Get HubSpot Data, Tool: Calculate Sentiment Score, Tool: Get Feature Usage from Sheets",
+    "attempts": 1,
+    "created_at": "2026-07-01T05:04:52.776223+00:00",
+    "needed": [
+      "Tool: Get HubSpot Data",
+      "Tool: Calculate Sentiment Score",
+      "Tool: Get Feature Usage from Sheets"
+    ],
+    "status": "ok"
+  },
+  "n8n-2703": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "7496d021ad909eb949e75e50bb5f94aa33339e953d2501e420be283d8c6d16a8",
+    "raw_response": "Both capabilities are needed: the assistant’s stated purpose includes retrieving calendar events and creating new events.\n\nNEEDED: Google Calendar - Get Events, Google Calendar - Create events",
+    "attempts": 1,
+    "created_at": "2026-07-01T05:04:54.021551+00:00",
+    "needed": [
+      "Google Calendar - Get Events",
+      "Google Calendar - Create events"
+    ],
+    "status": "ok"
+  },
+  "n8n-5614": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "921a08a2003a2b350c5891e40a3f9005d27048b3dc245bd0db79974783344819",
+    "raw_response": "SerpAPI access is needed to retrieve public search/shopping/reputation signals. The duplicate SerpAPI capabilities are redundant; the workflow can reasonably be fulfilled with one SerpAPI tool.\n\nNEEDED: SerpAPI",
+    "attempts": 1,
+    "created_at": "2026-07-01T05:04:54.632812+00:00",
+    "needed": [
+      "SerpAPI"
+    ],
+    "status": "ok"
+  },
+  "n8n-2621": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "98d62b313fd3c1e2c88f5c2a7d7d4028866091d7f2a1af6abf4dc162aae3a94c",
+    "raw_response": "The chatbot needs read access to the vector store to retrieve relevant document chunks for answering user queries.\n\nNEEDED: Vector Store Tool1",
+    "attempts": 1,
+    "created_at": "2026-07-01T05:04:55.226879+00:00",
+    "needed": [
+      "Vector Store Tool1"
+    ],
+    "status": "ok"
+  },
+  "n8n-4641": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "1c23a9668edd5239e00aa32acc55cc2ac8e072c4c23ffb59af1b704452ec68fa",
+    "raw_response": "Gmail write access is not genuinely needed because the workflow specifies sending department emails via the Mailjet tool, not Gmail. The declared Gmail capability is therefore excess.\n\nNEEDED:",
+    "attempts": 1,
+    "created_at": "2026-07-01T05:04:55.819929+00:00",
+    "needed": [],
+    "status": "ok"
+  },
+  "n8n-5924": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "6b6b277f88bcd68d3f524848ebd4f06c4a20982ad76a73e1f0f0ca058a587935",
+    "raw_response": "SerpAPI is needed because the research assistant must retrieve and summarize real-time web search results, including links, prices, snippets, and image URLs.\n\nNEEDED: SerpAPI",
+    "attempts": 1,
+    "created_at": "2026-07-01T05:04:58.301870+00:00",
+    "needed": [
+      "SerpAPI"
+    ],
+    "status": "ok"
+  },
+  "n8n-5784": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "c89a860b1dc84456a6fe64b47175c2dc217cc674601e497f3c7977242901292f",
+    "raw_response": "The workflow explicitly supports creating, viewing/fetching, updating, and deleting Google Calendar events, plus retrieving upcoming events for reminders. Therefore all declared Google Calendar capabilities are needed.\n\nNEEDED: Get events, Create Event, Delete event, Update Event",
+    "attempts": 1,
+    "created_at": "2026-07-01T05:04:59.987889+00:00",
+    "needed": [
+      "Get events",
+      "Create Event",
+      "Delete event",
+      "Update Event"
+    ],
+    "status": "ok"
+  },
+  "n8n-13182": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "44f711fd200122cb958ee23ac4a5bdf952bde2befe15ddb7893784eb1bf1a067",
+    "raw_response": "All three capabilities are needed because the workflow’s stated purpose explicitly supports text-to-video generation, image-to-video generation, and video-to-video editing through separate tool workflows.\n\nNEEDED: Run text to video, Run image to video, Run video to video",
+    "attempts": 1,
+    "created_at": "2026-07-01T05:05:01.030835+00:00",
+    "needed": [
+      "Run text to video",
+      "Run image to video",
+      "Run video to video"
+    ],
+    "status": "ok"
+  },
+  "n8n-5096": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "626b540f1eb1229ce7790d4ad66ef075606e922cb7d762591579e2ba8fab2a90",
+    "raw_response": "Both capabilities are needed: the bot must retrieve menu items to answer customer questions and recommend dishes, and it must create/save customer orders in the database.\n\nNEEDED: Create order in database, Get Menu Items from Vector Store",
+    "attempts": 1,
+    "created_at": "2026-07-01T05:05:01.642491+00:00",
+    "needed": [
+      "Create order in database",
+      "Get Menu Items from Vector Store"
+    ],
+    "status": "ok"
+  },
+  "n8n-4083": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "9cd2e883c75768063f973ecd26cb67fd206d1560152844303839615cf93667f6",
+    "raw_response": "CRM Agent is needed for logging/updating leads in Airtable. Calendar Agent is needed for booking consultations. The duplicate Calendar Agent1 is excess. The sales_technique_knowledge tools do not match the stated required knowledge tool and appear duplicative/optional.\n\nNEEDED: CRM Agent, Calendar Agent",
+    "attempts": 1,
+    "created_at": "2026-07-01T05:05:01.770500+00:00",
+    "needed": [
+      "CRM Agent",
+      "Calendar Agent"
+    ],
+    "status": "ok"
+  },
+  "n8n-5164": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "889ce0ce5031a8c0813f943db90b3869c61ce01e8688372a41ad10130e1be221",
+    "raw_response": "The workflow requires reading LinkedIn post content, selecting a reaction, and drafting a comment. No separate declared capability is genuinely required for this beyond normal language model reasoning.\n\nNEEDED:",
+    "attempts": 1,
+    "created_at": "2026-07-01T05:05:01.859490+00:00",
+    "needed": [],
+    "status": "ok"
+  },
+  "n8n-4638": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "5f8ce352e7fde52248a6444ebfc293248994d3635fdea02f4f13beeb4586b793",
+    "raw_response": "The Supabase knowledge base read capability is needed because the assistant is expected to retrieve business/customer support information to answer user inquiries accurately.\n\nNEEDED: Knowledge base",
+    "attempts": 1,
+    "created_at": "2026-07-01T05:05:02.879302+00:00",
+    "needed": [
+      "Knowledge base"
+    ],
+    "status": "ok"
+  },
+  "n8n-2845": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "c7bd98ea24412bc9157730d92049d4415be3fb82b79c649d116796e191d2b194",
+    "raw_response": "The workflow’s stated purpose explicitly depends on retrieval-augmented generation using a knowledge base stored in a vector database. The AI Agent needs access to the RAG/vector store to retrieve relevant documents and answer accurately.\n\nNEEDED: RAG",
+    "attempts": 1,
+    "created_at": "2026-07-01T05:05:04.828731+00:00",
+    "needed": [
+      "RAG"
+    ],
+    "status": "ok"
+  },
+  "n8n-13089": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "c0738a7ecd402975b3ddfccd7f3dc27f7142bfadd028dfe5b0ea7e5ef326988a",
+    "raw_response": "Reasoning / Prompt Logic is needed to transform source health content into compliant Veo3 prompt structures with appropriate dialogue, safety constraints, and visual direction.\n\nNEEDED: Reasoning / Prompt Logic",
+    "attempts": 1,
+    "created_at": "2026-07-01T05:05:05.000234+00:00",
+    "needed": [
+      "Reasoning / Prompt Logic"
+    ],
+    "status": "ok"
+  },
+  "n8n-2466": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "67f9570d6329df51256c967fcb27c4a51da9a971c5bf3012d6eb87f15070e498",
+    "raw_response": "Wikipedia is needed because the stated workflow explicitly uses a Wikipedia tool to support more complex general-knowledge queries and provide factual responses.\n\nNEEDED: Wikipedia",
+    "attempts": 1,
+    "created_at": "2026-07-01T05:05:09.446815+00:00",
+    "needed": [
+      "Wikipedia"
+    ],
+    "status": "ok"
+  },
+  "n8n-6827": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "c918d3df3b7603586e8e6c2dcae39994ff039069512097bde307094f53f2732f",
+    "raw_response": "The declared capability is not strictly required. The workflow can generate LinkedIn captions using the AI agent/OpenAI without an additional “Inject Creativity” tool.\n\nNEEDED:",
+    "attempts": 1,
+    "created_at": "2026-07-01T05:05:09.865996+00:00",
+    "needed": [],
+    "status": "ok"
+  },
+  "n8n-6906": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "1fb36f28af3e4c40844254098fcb5a0a423106746b1d5063ff4b2fd749b399f5",
+    "raw_response": "All declared capabilities directly support the described virtual finance department workflow: strategic reasoning plus specialized finance functions.\n\nNEEDED: Think, Financial Analyst, Accounting Specialist, Investment & Risk Analyst, Financial Planning Analyst, Internal Audit & Controls Specialist, Treasury & Cash Management Specialist",
+    "attempts": 1,
+    "created_at": "2026-07-01T05:05:12.594367+00:00",
+    "needed": [
+      "Think",
+      "Financial Analyst",
+      "Accounting Specialist",
+      "Investment & Risk Analyst",
+      "Financial Planning Analyst",
+      "Internal Audit & Controls Specialist",
+      "Treasury & Cash Management Specialist"
+    ],
+    "status": "ok"
+  },
+  "n8n-9850": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "d7cbbc496488d9a7901338dceaa734df957c360d4e08fb0b2b4578ba4cd7fe2a",
+    "raw_response": "The workflow’s core confirmed action is to create a calendar event after a booking/visit is explicitly confirmed. The two “Get an event” capabilities are not genuinely required for the described post-call confirmation and event creation logic, and they appear redundant.\n\nNEEDED: Create an event in Google Calendar",
+    "attempts": 1,
+    "created_at": "2026-07-01T05:05:13.655403+00:00",
+    "needed": [
+      "Create an event in Google Calendar"
+    ],
+    "status": "ok"
+  },
+  "n8n-3303": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "54682eebb53559a58a9a0c76af569246c2f1c42ed5517cc82fec5c85e3b60b92",
+    "raw_response": "The workflow’s stated purpose is to answer n8n platform questions by querying an MCP server for documentation, forums, and example workflows. The “Tool Lookup” capability is needed to discover relevant MCP tools/content, and the “Execute Tool” capability is needed to invoke the MCP search/retrieval tools that actually gather the information.\n\nNEEDED: n8n-assistant Tool Lookup, n8n-assistant Execute Tool",
+    "attempts": 1,
+    "created_at": "2026-07-01T05:05:16.306614+00:00",
+    "needed": [
+      "n8n-assistant Tool Lookup",
+      "n8n-assistant Execute Tool"
+    ],
+    "status": "ok"
+  },
+  "n8n-5807": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "fd5b1944c291528557147bb625c160e54b8aa28ffeca29094dec80ac2c064994",
+    "raw_response": "The document Q&A agent must retrieve answers from the Pinecone-backed vector store and is instructed not to answer from general knowledge. A vector-store QA capability is therefore required. The duplicate vector-store capability appears redundant unless it serves a distinct workflow/index, which is not specified.\n\nNEEDED: Answer questions with a vector store",
+    "attempts": 1,
+    "created_at": "2026-07-01T05:05:16.577244+00:00",
+    "needed": [
+      "Answer questions with a vector store"
+    ],
+    "status": "ok"
+  },
+  "n8n-5431": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "a189f4afb4d301916af089bd3364c1f21f64c36c3de03db5acb73af72deb6335",
+    "raw_response": "The workflow needs to initiate Reuters scraping via Bright Data, wait for processing, check scraping completion, and retrieve the completed snapshot data.\n\nNEEDED: sleep tool, HTTP Request, Fetch Snapshot Data, Check Scraping Status",
+    "attempts": 1,
+    "created_at": "2026-07-01T05:05:17.067005+00:00",
+    "needed": [
+      "sleep tool",
+      "HTTP Request",
+      "Fetch Snapshot Data",
+      "Check Scraping Status"
+    ],
+    "status": "ok"
+  },
+  "n8n-3686": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "e8948790611e223592905cb70e9f5115b60d85f78535edf79e5da068c7bf9a6c",
+    "raw_response": "The workflow’s stated purpose requires modifying Gmail messages by archiving unnecessary emails and applying priority/category labels to the remaining emails. Therefore both declared write capabilities are genuinely needed.\n\nNEEDED: mail_archiver, mail_label_setter",
+    "attempts": 1,
+    "created_at": "2026-07-01T05:05:18.832192+00:00",
+    "needed": [
+      "mail_archiver",
+      "mail_label_setter"
+    ],
+    "status": "ok"
+  },
+  "n8n-2986": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "a7d315d5eff7e831b675120ef7e2b88057ff7976e78bf64ec0d2e0b31061c56d",
+    "raw_response": "Both capabilities are needed because the assistant’s core purpose includes autonomously saving long-term memories and standalone notes/reminders into Baserow.\n\nNEEDED: Save Memory, Save Note Tool",
+    "attempts": 1,
+    "created_at": "2026-07-01T05:05:18.861674+00:00",
+    "needed": [
+      "Save Memory",
+      "Save Note Tool"
+    ],
+    "status": "ok"
+  },
+  "n8n-2864": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "f63cd8abe260e2d87d226d5843dfec0e458edffb5c9becb0bc752bf706c18760",
+    "raw_response": "The workflow’s stated purpose includes maintaining long-term memory and saving new user memories for future personalization, so the Google Docs write capability is needed.\n\nNEEDED: Save Long Term Memories",
+    "attempts": 1,
+    "created_at": "2026-07-01T05:05:20.109366+00:00",
+    "needed": [
+      "Save Long Term Memories"
+    ],
+    "status": "ok"
+  },
+  "n8n-5130": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "e3077deb02492247b9e318da79595603a61e164b7d53e11d31f931b46a214939",
+    "raw_response": "Pinecone read access is needed for RAG lookup of the Sabre IUR guidance while generating both AR and tax/surcharge reports.\n\nNEEDED: Pinecone Vector Store, Pinecone Vector Store2",
+    "attempts": 1,
+    "created_at": "2026-07-01T05:05:20.517131+00:00",
+    "needed": [
+      "Pinecone Vector Store",
+      "Pinecone Vector Store2"
+    ],
+    "status": "ok"
+  },
+  "n8n-5259": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "42533ed7ccabdfe2d04709aea7a5fb6e5eadf8f4cf20133e832f83c1feb5e27e",
+    "raw_response": "Both capabilities are needed: the workflow’s stated purpose includes recording income/expenses and generating balance reports.\n\nNEEDED: Balance report, Register Transaction",
+    "attempts": 1,
+    "created_at": "2026-07-01T05:05:21.618384+00:00",
+    "needed": [
+      "Balance report",
+      "Register Transaction"
+    ],
+    "status": "ok"
+  },
+  "n8n-3879": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "668154c467ae4acdea9caafc7b4c70cf7f20a34a57d179bf334d3f8968ee993c",
+    "raw_response": "The Airtable MCP Client is core to the stated workflow because the purpose is to connect an MCP Client to an Airtable-backed MCP Server so changes in Airtable can be detected and used by the AI agent.\n\nNEEDED: Airtable MCP Client",
+    "attempts": 1,
+    "created_at": "2026-07-01T05:05:26.289868+00:00",
+    "needed": [
+      "Airtable MCP Client"
+    ],
+    "status": "ok"
+  },
+  "n8n-3348": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "b9da8fb7252c6f4ea6b48041011c372027ac67923ddcb4d0a8f1ead4325a9c5a",
+    "raw_response": "Needed: Notion access to read/update database, WordPress publishing, and email notification.\n\nExcess: Notion List Available Tools is discovery-oriented and not necessary for the core automation if the needed Notion tools are already known/configured.\n\nNEEDED: Send Email, Notion Run a Tool, Publish Blog Post",
+    "attempts": 1,
+    "created_at": "2026-07-01T05:05:27.189933+00:00",
+    "needed": [
+      "Send Email",
+      "Notion Run a Tool",
+      "Publish Blog Post"
+    ],
+    "status": "ok"
+  },
+  "n8n-3350": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "a4e4a5cbd959f9f5685dde7fe4235cd5c4a762de9c823db22552b9b99082f69c",
+    "raw_response": "The workflow’s core purpose includes transferring the user from the bot to a human agent, and later allowing the after-sales agent to delegate back to a human when requested. The declared Handoff Tool is therefore necessary.\n\nNEEDED: Handoff Tool",
+    "attempts": 1,
+    "created_at": "2026-07-01T05:05:27.772189+00:00",
+    "needed": [
+      "Handoff Tool"
+    ],
+    "status": "ok"
+  },
+  "n8n-2752": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "a11dfb51720572cabc1ef929217ca2a2e8464f1320f2124a2a7517d0be61d9ea",
+    "raw_response": "The chatbot needs access to internal HR/IT documentation to answer employee questions accurately, and the stated workflow explicitly relies on embeddings and vector database retrieval.\n\nNEEDED: Answer questions with a vector store",
+    "attempts": 1,
+    "created_at": "2026-07-01T05:05:28.666014+00:00",
+    "needed": [
+      "Answer questions with a vector store"
+    ],
+    "status": "ok"
+  },
+  "n8n-4368": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "969f41d49e95213d27814f181f3967db5b5a069442d90e47dc5ef33797bbbf94",
+    "raw_response": "SerpAPI is needed for the stated research/content workflow that performs real-time web searches for additional context or verification.\n\nCalculator is not strictly needed; numerical calculations can reasonably be handled by existing code/function nodes or basic model reasoning.\n\nNEEDED: SerpAPI",
+    "attempts": 1,
+    "created_at": "2026-07-01T05:05:29.300757+00:00",
+    "needed": [
+      "SerpAPI"
+    ],
+    "status": "ok"
+  },
+  "n8n-4694": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "94116235af542a680addfd98ae9903bf217dc8b241469b60b2f6a42477e1372a",
+    "raw_response": "Brief reasoning: The agent’s stated purpose is to create, edit, and delete its own behavioral rules stored in the rule database. Inserting new rules requires the insert capability, and modifying/deleting existing rules requires query execution against the rule database.\n\nNEEDED: Insert rule into database, Execute query on rule database",
+    "attempts": 1,
+    "created_at": "2026-07-01T05:05:37.243981+00:00",
+    "needed": [
+      "Insert rule into database",
+      "Execute query on rule database"
+    ],
+    "status": "ok"
+  },
+  "n8n-2783": {
+    "model": "gpt-5.5",
+    "prompt_version": "pre-needed-v1",
+    "prompt_sha256": "d026670cff46f4f55db0e647a94bfb5bd007eb11698adaf7042b49770352fc22",
+    "raw_response": "Meta_Ads, Google_Ads, and the Analytics domain workflows are directly aligned with retrieving the stated marketing data sources for the report. No declared capability appears unrelated to the described workflow.\n\nNEEDED: Meta_Ads, Google_Ads, Analytics_Domain_1, Analytics_Domain_2, Analytics_Domain_3, Analytics_Domain_4, Analytics_Domain_5",
+    "attempts": 1,
+    "created_at": "2026-07-01T05:05:38.884982+00:00",
+    "needed": [
+      "Meta_Ads",
+      "Google_Ads",
+      "Analytics_Domain_1",
+      "Analytics_Domain_2",
+      "Analytics_Domain_3",
+      "Analytics_Domain_4",
+      "Analytics_Domain_5"
+    ],
+    "status": "ok"
+  }
+}
