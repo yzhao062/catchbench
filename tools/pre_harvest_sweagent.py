@@ -170,7 +170,9 @@ READ_COMMANDS = {
     "find_file",
 }
 WRITE_COMMANDS = {"edit", "create"}
-EXECUTE_COMMANDS = {"submit", "python", "bash"}
+# `submit` finalizes the answer; it grants no shell/code execution, so it is
+# `unknown` (matching the synthetic SWE-agent toolset), not `execute`.
+EXECUTE_COMMANDS = {"python", "bash"}
 
 
 class ParseError(ValueError):

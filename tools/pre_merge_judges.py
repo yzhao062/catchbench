@@ -77,7 +77,15 @@ def load_gpt(src: str) -> dict[str, set]:
 
 def load_claude(src: str) -> dict[str, set]:
     p = CLAUDE_DIR / f"{src}.json"
-    return {r["instance_id"]: set(r.get("needed", [])) for r in json.load(open(p, encoding="utf-8"))}
+    out: dict[str, set] = {}
+    for r in json.load(open(p, encoding="utf-8")):
+        needed = r.get("needed")
+        # Only an explicit list counts as a vote; a missing or malformed field
+        # must NOT default to empty-needed (that would silently mark every
+        # declared capability excess and break the both-vendors-judged contract).
+        if isinstance(needed, list):
+            out[r["instance_id"]] = set(needed)
+    return out
 
 
 def main() -> None:
@@ -158,6 +166,16 @@ def main() -> None:
         lines.append("An earlier single-vendor pass with non-identical prompts scored kappa 0.06; aligning the")
         lines.append("prompt wording across vendors raised agreement to the value above, which is why the two")
         lines.append("judges must be asked the identical question before their agreement means anything.")
+        lines.append("")
+        lines.append("## Known limitations")
+        lines.append("")
+        lines.append("A minority of configs carry an all-excess label (empty minimal reference) where both judges")
+        lines.append("independently agreed that no declared capability is strictly needed. These are reasoning or")
+        lines.append("reporting roles whose declared tools exceed the stated purpose; the cross-vendor agreement")
+        lines.append("makes them genuine judgments rather than parser artifacts. Separately, the labeler reads a")
+        lines.append("bare `NEEDED:` line as 'none', so a truncated judge response could in principle mislabel a")
+        lines.append("config as all-excess. The union merge rescues any single-judge empty-needed answer, so a")
+        lines.append("mislabel would require both judges to truncate identically on the same config.")
         lines.append("")
         open(REPORT, "w", encoding="utf-8").write("\n".join(lines))
         print("WROTE", PRE, "and", REPORT)

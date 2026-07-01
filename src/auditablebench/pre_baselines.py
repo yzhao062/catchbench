@@ -96,16 +96,23 @@ class LlmJudgeNeededMethod:
             o["instance_id"]: {c["name"] for c in o["declared_capabilities"]}
             for o in view
         }
-        flagged: dict[str, set[str]] = {}
+        # The cache holds each judge's NEEDED capability names; the excess
+        # prediction is declared - needed, so accumulate needed first and flag
+        # the complement (flagging needed directly would invert the method).
+        needed_by_id: dict[str, set[str]] = {}
         for path in sorted(glob.glob(os.path.join(_CACHE_DIR, "*.json"))):
             with open(path, encoding="utf-8") as f:
                 rows = json.load(f)
             for instance_id, names in rows.items():
-                if instance_id not in declared_by_id:
+                if instance_id not in declared_by_id or not isinstance(names, list):
                     continue
-                flagged.setdefault(instance_id, set()).update(
+                needed_by_id.setdefault(instance_id, set()).update(
                     name for name in names if name in declared_by_id[instance_id]
                 )
+        flagged = {
+            instance_id: declared_by_id[instance_id] - needed
+            for instance_id, needed in needed_by_id.items()
+        }
         return pre_score(flagged, task.instances)
 
 

@@ -20,3 +20,13 @@ Per-capability agreement and Cohen's kappa characterize label reliability. Kappa
 An earlier single-vendor pass with non-identical prompts scored kappa 0.06; aligning the
 prompt wording across vendors raised agreement to the value above, which is why the two
 judges must be asked the identical question before their agreement means anything.
+
+## Known limitations
+
+A minority of configs carry an all-excess label (empty minimal reference) where both judges
+independently agreed that no declared capability is strictly needed. These are reasoning or
+reporting roles whose declared tools exceed the stated purpose; the cross-vendor agreement
+makes them genuine judgments rather than parser artifacts. Separately, the labeler reads a
+bare `NEEDED:` line as 'none', so a truncated judge response could in principle mislabel a
+config as all-excess. The union merge rescues any single-judge empty-needed answer, so a
+mislabel would require both judges to truncate identically on the same config.
