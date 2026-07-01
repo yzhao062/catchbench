@@ -70,8 +70,14 @@ def load_gpt(src: str) -> dict[str, set]:
     raw = json.load(open(p, encoding="utf-8"))
     out = {}
     for iid, entry in raw.items():
-        if isinstance(entry, dict) and entry.get("needed") is not None and entry.get("status") != "error":
-            out[iid] = set(entry["needed"])
+        if not isinstance(entry, dict) or entry.get("status") == "error":
+            continue
+        needed = entry.get("needed")
+        # Symmetric with load_claude: only an explicit list counts as a vote, so
+        # a malformed entry becomes a single-judge exclusion rather than an
+        # empty-needed default that would mark every declared capability excess.
+        if isinstance(needed, list):
+            out[iid] = set(needed)
     return out
 
 
