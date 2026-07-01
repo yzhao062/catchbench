@@ -21,6 +21,7 @@ data/*
 # Exception: the committed LLM-judge prediction caches ARE the benchmark's reproducibility anchor.
 # The board scores them deterministically with no API call, so they must ship with the repo.
 !data/llm_judge/
+!data/pre/
 *.parquet
 *.jsonl
 

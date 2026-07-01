@@ -1,6 +1,9 @@
 """PRE pillar: over-privileged harness configuration audit."""
 from __future__ import annotations
 
+import glob
+import json
+import os
 from dataclasses import dataclass
 from typing import Mapping
 
@@ -66,6 +69,36 @@ def _fixture_instances() -> list[PreInstance]:
     ]
 
 
+def pre_instance_from_dict(d: dict) -> PreInstance:
+    return PreInstance(
+        instance_id=d["instance_id"],
+        source=d["source"],
+        provenance=d["provenance"],
+        task_or_role_spec=d["task_or_role_spec"],
+        declared_capabilities=d["declared_capabilities"],
+        minimal_reference=d["minimal_reference"],
+        labels=d["labels"],
+    )
+
+
+_DATA_DIR = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(__file__))), "data", "pre")
+
+
+def _load_data_dir() -> list[PreInstance]:
+    """Load every committed data/pre/*.json (each a list of PreInstance dicts).
+
+    Keeps the board deterministic and zero-API on replay: harvesters write their
+    normalized instances here offline, the board only reads them.
+    """
+    out: list[PreInstance] = []
+    for p in sorted(glob.glob(os.path.join(_DATA_DIR, "*.json"))):
+        with open(p, encoding="utf-8") as f:
+            rows = json.load(f)
+        for r in rows:
+            out.append(pre_instance_from_dict(r))
+    return out
+
+
 class PreOverPrivilege:
     """PRE / over-privilege Task over harness capability declarations."""
 
@@ -81,7 +114,11 @@ class PreOverPrivilege:
     def setup(self) -> None:
         if self._loaded:
             return
-        self.instances = self._seed if self._seed is not None else _fixture_instances()
+        if self._seed is not None:
+            self.instances = self._seed
+        else:
+            loaded = _load_data_dir()
+            self.instances = loaded if loaded else _fixture_instances()
         for o in self.instances:
             validate_pre_instance(o)
         self._loaded = True
