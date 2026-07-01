@@ -2,7 +2,8 @@
 
     python run.py
 
-POST and LIVE pillars run here. POST: a localization board (Who&When, human labels), detection boards
+PRE, POST, and LIVE pillars run here. PRE: an over-privileged harness fixture board. POST: a
+localization board (Who&When, human labels), detection boards
 (SWE-Gym and tau-bench outcome labels), and a Gold board (faults injected into clean SWE-Gym runs,
 with injection-site labels: the benchmark's own data contribution). LIVE: streaming early-warning
 (SWE-Gym and tau-bench prefixes) and online stale-state detection over the Gold injection. The PRE
@@ -39,19 +40,22 @@ from auditablebench.live import (  # noqa: E402
 )
 from auditablebench.llm_judge import discovered_llm_judge_methods  # noqa: E402  cached LLM-judge panel
 from auditablebench.post import PostLocalization, post_localization_methods  # noqa: E402
+from auditablebench.pre import PreOverPrivilege, pre_methods  # noqa: E402
 from auditablebench.pyod_extra import pyod_extra_methods  # noqa: E402  more PyOD tabular detectors
 from auditablebench.pygod_extra import pygod_extra_methods  # noqa: E402  more PyGOD graph detectors
 
 
 def main() -> None:
-    tasks = [PostLocalization(), PostDetection("swegym"), PostDetection("tau"), GoldLocalization(),
-             GoldAttribution(), LiveStreaming("swegym"), LiveStreaming("tau"), LiveStaleState()]
-    methods = (post_localization_methods() + discovered_llm_judge_methods() + post_detection_methods()
+    tasks = [PreOverPrivilege(), PostLocalization(), PostDetection("swegym"), PostDetection("tau"),
+             GoldLocalization(), GoldAttribution(), LiveStreaming("swegym"), LiveStreaming("tau"),
+             LiveStaleState()]
+    methods = (pre_methods() + post_localization_methods() + discovered_llm_judge_methods()
+               + post_detection_methods()
                + pyod_extra_methods() + pygod_extra_methods()
                + gold_localization_methods() + gold_attribution_methods()
                + live_streaming_methods() + live_stale_methods())
 
-    print("AuditableBench :: POST + LIVE board(s)\n")
+    print("AuditableBench :: PRE + POST + LIVE board(s)\n")
     for task in tasks:
         if hasattr(task, "corpus_line"):
             print(task.corpus_line())
