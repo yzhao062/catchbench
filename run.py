@@ -2,12 +2,13 @@
 
     python run.py
 
-PRE, POST, and LIVE pillars run here. PRE: an over-privileged harness fixture board. POST: a
+PRE, POST, and LIVE pillars run here. PRE: an over-privilege harness board flagging over-granted
+capabilities across six config corpora, with a per-source F1 breakdown. POST: a
 localization board (Who&When, human labels), detection boards
 (SWE-Gym and tau-bench outcome labels), and a Gold board (faults injected into clean SWE-Gym runs,
 with injection-site labels: the benchmark's own data contribution). LIVE: streaming early-warning
-(SWE-Gym and tau-bench prefixes) and online stale-state detection over the Gold injection. The PRE
-pillar plugs into the same RunPipeline as it lands. The boards download their corpora from the
+(SWE-Gym and tau-bench prefixes) and online stale-state detection over the Gold injection. The POST
+and LIVE boards download their corpora from the
 Hugging Face Hub on first run; the PyGOD baseline needs torch + pygod + a pyg-lib / torch-sparse
 backend.
 """
@@ -40,7 +41,7 @@ from auditablebench.live import (  # noqa: E402
 )
 from auditablebench.llm_judge import discovered_llm_judge_methods  # noqa: E402  cached LLM-judge panel
 from auditablebench.post import PostLocalization, post_localization_methods  # noqa: E402
-from auditablebench.pre import PreOverPrivilege, pre_methods  # noqa: E402
+from auditablebench.pre import PreOverPrivilege, pre_methods, pre_source_breakdown  # noqa: E402
 from auditablebench.pyod_extra import pyod_extra_methods  # noqa: E402  more PyOD tabular detectors
 from auditablebench.pygod_extra import pygod_extra_methods  # noqa: E402  more PyGOD graph detectors
 
@@ -62,6 +63,10 @@ def main() -> None:
 
     rows = RunPipeline(tasks, methods).run()
     print(RunPipeline.leaderboard(rows))
+
+    pre = next((t for t in tasks if isinstance(t, PreOverPrivilege)), None)
+    if pre is not None:  # PRE headline is the per-source F1, since the pooled row mixes label sources
+        print(pre_source_breakdown(pre, pre_methods()))
 
     gold = next((t for t in tasks if isinstance(t, GoldLocalization)), None)
     if gold is not None:  # Gold's headline is the per-fault breakdown, not the aggregate row

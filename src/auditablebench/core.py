@@ -87,11 +87,12 @@ class RunPipeline:
         for (pillar, task, dataset), task_rows in by_task.items():
             metric_keys = list(task_rows[0].metrics.keys())
             label = f"{task} :: {dataset}" if dataset else task
+            mw = max([len("method")] + [len(row.method) for row in task_rows])  # fit the widest id
             out.append(f"\n[{pillar}] {label}")
-            out.append(f"  {'method':22s}" + "".join(f"{k:>10s}" for k in metric_keys))
+            out.append(f"  {'method':{mw}s}" + "".join(f"{k:>10s}" for k in metric_keys))
             for row in task_rows:
                 out.append(
-                    f"  {row.method:22s}"
+                    f"  {row.method:{mw}s}"
                     + "".join(f"{row.metrics[k]:>10.3f}" for k in metric_keys)
                 )
         return "\n".join(out)

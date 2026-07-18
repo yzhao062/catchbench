@@ -127,8 +127,9 @@ class PreOverPrivilege:
         self.setup()
         bys = {}
         for o in self.instances:
-            bys[o.source] = bys.get(o.source, 0) + 1
-        return f"PRE over_privilege: {len(self.instances)} configs across {len(bys)} sources {dict(bys)}"
+            g = _pre_logical_source(o.source)
+            bys[g] = bys.get(g, 0) + 1
+        return f"PRE over_privilege: {len(self.instances)} configs across {len(bys)} corpora {dict(bys)}"
 
     def method_view(self) -> list[dict]:
         self.setup()
@@ -166,3 +167,50 @@ def pre_methods() -> list:
     from .pre_baselines import pre_baseline_methods
 
     return [FlagAllMethod(), FlagNoneMethod()] + pre_baseline_methods()
+
+
+# Logical source -> the label process that produced its excess_set, so the breakdown can flag that
+# a pooled F1 mixes labels of different provenance (llm_judge is judge opinion; the others are
+# roster / usage / injection derived). The four synth_* buckets share one injection process.
+_PRE_LABEL_SOURCE = {
+    "crewai": "llm_judge", "n8n": "llm_judge", "mcp": "llm_judge",
+    "injecagent": "roster_relabel", "sweagent": "declared_minus_used", "synthetic": "synthetic_inject",
+}
+_PRE_SOURCE_ORDER = ["crewai", "n8n", "mcp", "injecagent", "sweagent", "synthetic"]
+
+
+def _pre_logical_source(source: str) -> str:
+    return "synthetic" if source.startswith("synth") else source
+
+
+def pre_source_breakdown(task: "PreOverPrivilege", methods: list) -> str:
+    """Per-source F1 for each PRE method, the analogue of POST's per-corpus tables.
+
+    The pooled board scores one P/R/F1 over configs whose labels come from four different
+    processes (llm_judge, roster_relabel, declared_minus_used, synthetic_inject). That pooled
+    number is dominated by the largest sources and hides that the labels differ in reliability, so
+    this breakdown reports F1 per source. Each method is re-scored on a seeded sub-task per source
+    through the same evaluate() path, so no method interface changes.
+    """
+    task.setup()
+    groups: dict[str, list[PreInstance]] = {}
+    for o in task.instances:
+        groups.setdefault(_pre_logical_source(o.source), []).append(o)
+    cols = [g for g in _PRE_SOURCE_ORDER if g in groups] + [
+        g for g in sorted(groups) if g not in _PRE_SOURCE_ORDER
+    ]
+    subtasks = {g: PreOverPrivilege(instances=insts) for g, insts in groups.items()}
+
+    scored = [m for m in methods if "pre_over_privilege" in getattr(m, "supports", set())]
+    mw = max([len("method")] + [len(m.method_id) for m in scored])  # fit the widest method id
+    header = f"  {'method':{mw}s}" + "".join(f"{g:>13s}" for g in cols) + f"{'overall':>13s}"
+    lines = ["\n[PRE] pre_over_privilege :: F1 by source", header]
+    for m in scored:
+        cells = "".join(f"{m.evaluate(subtasks[g])['f1']:>13.3f}" for g in cols)
+        overall = m.evaluate(task)["f1"]
+        lines.append(f"  {m.method_id:{mw}s}{cells}{overall:>13.3f}")
+
+    legend = ", ".join(f"{g} n={len(groups[g])} ({_PRE_LABEL_SOURCE.get(g, '?')})" for g in cols)
+    lines.append(f"  label source per column: {legend}")
+    lines.append("  pooled F1 mixes these label sources; read per source, not just overall.")
+    return "\n".join(lines)

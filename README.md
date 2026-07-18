@@ -57,7 +57,7 @@ state cannot read another's evidence, so the pillars are separate tracks, not in
 one dataset.
 
 - **PRE** (only the plan and harness exist): the audit is static, for over-privilege and missing
-  guardrails. *(planned)*
+  guardrails. **Over-privilege shipped; missing-guardrail planned.**
 - **LIVE** (a growing prefix is visible, the outcome is not): the audit is predictive and runs under a
   false-alarm budget, for early warning from a streaming prefix and online detection. **Shipped.**
 - **POST** (the complete trace and outcome are in hand): the audit is forensic, answering which step
@@ -71,10 +71,11 @@ budget, because a live detector is only useful if it does not flood the operator
 ## The Boards
 
 POST answers its three forensic questions (which step, did it fail, what kind) plus the Gold injection
-board, and LIVE answers its two real-time questions (early warning from a prefix, online detection).
-Run `python run.py` to reproduce every number. The POST localization, detection, and Gold boards are
-shown in full below; the cause-attribution board and the two LIVE boards are summarized at the end and
-detailed in the paper.
+board; LIVE answers its two real-time questions (early warning from a prefix, online detection); and PRE
+answers the deploy-gate question (is the declared harness over-privileged). Run `python run.py` to
+reproduce every number. The POST localization, detection, and Gold boards and the PRE over-privilege
+board are shown in full below; the cause-attribution board and the two LIVE boards are summarized at the
+end and detailed in the paper.
 
 ### Fault Localization on Who&When
 
@@ -293,6 +294,52 @@ seeds), far below the 0.71 within-run localization. A dep-count control sits exa
 confirming the span, not generic structural change, is the signal. Spotting one stale read online
 without false-alarming is an open problem.
 
+### Over-Privilege Audit on Declared Harnesses (PRE)
+
+Before a run, the only evidence is what the agent declares: its task or role, and the capabilities its
+harness grants. The PRE board asks whether a method can flag the granted capabilities the task does not
+need. It runs over 1187 configurations from six corpora (crewai, n8n, mcp, injecagent, sweagent, and a
+synthetic set), each declared capability labeled needed or excess, scored by precision, recall, and F1
+over the flagged-excess set.
+
+| Method | Precision | Recall | F1 |
+|---|---|---|---|
+| flag-all (floor) | 0.430 | 1.000 | 0.601 |
+| flag-none (floor) | 0.000 | 0.000 | 0.000 |
+| risky-permission scan | 0.418 | 0.564 | 0.480 |
+| OWASP excessive-agency scan | 0.473 | 0.492 | 0.482 |
+| LLM judge, held out (Llama-3.3-70B) | 0.594 | 0.741 | **0.659** |
+| oracle (declared minus minimal) | 1.000 | 1.000 | 1.000 |
+
+The strongest method short of the oracle is a held-out LLM judge: show a model the task and the declared
+tool list, and ask which capabilities the task needs. This is the PRE analogue of the LLM-judge panel
+topping POST localization, and it is the expected result, because a capable model reading the stated
+purpose is a strong over-privilege detector. Held out is the load-bearing phrase. The labels for the
+crewai, n8n, and mcp corpora were made by two other judges (GPT-5.5 and Claude), so scoring a third
+model that made none of them keeps the baseline from grading its own homework. The rule scanners (a
+risky-permission flag and an OWASP excessive-agency rule) are cheap and deterministic, and they trail
+the judge.
+
+Read the board per source, because the four label processes differ and a pooled F1 hides it:
+
+| Method | crewai | n8n | mcp | injecagent | sweagent | synthetic |
+|---|---|---|---|---|---|---|
+| flag-all | 0.388 | 0.154 | 0.654 | 0.750 | 0.574 | 0.763 |
+| risky-permission scan | 0.326 | 0.095 | 0.575 | 0.827 | 0.025 | 0.803 |
+| OWASP excessive-agency | 0.326 | 0.066 | 0.536 | 0.801 | 0.015 | 0.812 |
+| LLM judge, held out | 0.518 | 0.357 | 0.662 | 0.990 | 0.467 | 0.972 |
+| oracle | 1.000 | 1.000 | 1.000 | 1.000 | 1.000 | 1.000 |
+
+Label origin per column: crewai, n8n, and mcp carry cross-vendor LLM-judge labels (Cohen's kappa 0.666,
+`data/pre/LABEL_QUALITY.md`); injecagent is a roster relabel; sweagent is declared-minus-used; the
+synthetic set is injection. The held-out judge lands near the top on injecagent (0.990) and synthetic
+(0.972), where the labels are constructed, and only moderate on the judge-labeled corpora (0.36 to
+0.66). That gap is the reason to hold the judge out: a same-judge method would inherit perfect recall
+and a mechanically inflated F1 by construction, so the moderate agreement here is real disagreement on
+a subjective call, not a leak. Where excess is rare (n8n, mean excess ratio 0.084) every method
+struggles, because a single over-flag sinks precision. The held-out judge parsed 1182 of the 1187
+configs; the 5 it could not parse are scored as flagging nothing, which counts against its recall.
+
 ## The Full Task List
 
 Each task is one auditor question at one information state, with the label that answers it, not a
@@ -310,11 +357,13 @@ list chosen for coverage. Shipped in v1:
   Prefix-AUC and time to detection.
 - **Online stale-state detection** (LIVE, *catch it live*): detect the Gold stale-state injection
   online. True-positive rate at a fixed false-positive budget.
+- **Over-privilege audit** (PRE, *is the declared harness safe*): flag granted capabilities the task
+  does not need. Precision / recall / F1 over 1187 configs from six corpora.
 
 Planned:
 
-- **Harness and plan audit** (PRE, *is it safe before the run*): flag over-privilege and missing
-  guardrails.
+- **Missing-guardrail plan audit** (PRE, *is the plan safe*): flag removed or weakened guardrails in a
+  declared plan.
 
 ## Run It
 
@@ -354,10 +403,11 @@ the method, is the fixed point. See `src/auditablebench/core.py` for the contrac
 
 ## Status and Release
 
-v1 is a local working build of the POST and LIVE pillars: POST localization, detection, cause
-attribution, and the Gold injection board; LIVE streaming early-warning and online stale-state
-detection. The repository goes public together with the benchmark paper, so the framing and the
-leaderboard arrive at once and the angle is established in print before it is copied. That is a
+v1 is a local working build of the POST and LIVE pillars plus the PRE over-privilege board: POST
+localization, detection, cause attribution, and the Gold injection board; LIVE streaming early-warning
+and online stale-state detection; and PRE over-privilege audit across six config corpora. The repository
+goes public together with the benchmark paper, so the framing and the leaderboard arrive at once and the
+angle is established in print before it is copied. That is a
 release-timing choice, not a secrecy one: nothing here is withheld. GRADE is public on arXiv,
 `auditable`'s kernel is public, and the labels are public.
 
