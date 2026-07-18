@@ -302,31 +302,65 @@ need. It runs over 1187 configurations from six corpora (crewai, n8n, mcp, injec
 synthetic set), each declared capability labeled needed or excess, scored by precision, recall, and F1
 over the flagged-excess set.
 
+Most agent-auditing tools ship a static over-privilege check, so the board's static baseline is built
+to at least the accepted coverage, not one hand-rolled rule. Each rule maps to a standard
+over-privilege category from OWASP LLM06:2025 Excessive Agency, the OWASP Agentic Security Initiative
+(ASI), and the CWE privilege family:
+
+| Standard category | Scanner rule | Reference |
+|---|---|---|
+| Excessive permissions / least privilege | `owasp_excess_permissions` | OWASP LLM06; CWE-272, CWE-250 |
+| Excessive functionality | `owasp_excess_functionality` | OWASP LLM06 |
+| Privilege compromise / escalation | `owasp_privilege_escalation` | CWE-269; OWASP ASI (Privilege Compromise) |
+| Excessive autonomy (approximation) | `unrequested_high_impact` | OWASP LLM06 (autonomy driver) |
+| Sensitive-access exposure surface | `sensitive_access` | OWASP LLM02 (risk surface) |
+
+`owasp_asi_combined` is their union. Three standard concerns are named but stay out of static
+single-config scope, and the board says so rather than overclaiming: a full excessive-autonomy check
+needs an approval-gate field the schema does not carry, so `unrequested_high_impact` is an
+approximation (a high-impact action the task never asks for); full ASI Tool Misuse needs declared
+operation, scope, and allowlist controls the schema does not express, so `sensitive_access` is a
+narrower LLM02 exposure heuristic; and a deprecated or duplicate extension needs deployment history.
+The board scores each rule and the union, so coverage is visible rather than asserted:
+
 | Method | Precision | Recall | F1 |
 |---|---|---|---|
 | flag-all (floor) | 0.430 | 1.000 | 0.601 |
 | flag-none (floor) | 0.000 | 0.000 | 0.000 |
 | risky-permission scan | 0.418 | 0.564 | 0.480 |
-| OWASP excessive-agency scan | 0.473 | 0.492 | 0.482 |
+| `owasp_excess_permissions` | 0.504 | 0.506 | 0.505 |
+| `owasp_excess_functionality` | 0.538 | 0.796 | 0.642 |
+| `owasp_privilege_escalation` | 0.811 | 0.010 | 0.020 |
+| `unrequested_high_impact` | 0.633 | 0.148 | 0.240 |
+| `sensitive_access` | 0.763 | 0.016 | 0.030 |
+| `owasp_asi_combined` | 0.511 | 0.910 | **0.654** |
 | LLM judge, held out (Llama-3.3-70B) | 0.594 | 0.741 | **0.659** |
 | oracle (declared minus minimal) | 1.000 | 1.000 | 1.000 |
 
-The strongest method short of the oracle is a held-out LLM judge: show a model the task and the declared
-tool list, and ask which capabilities the task needs. This is the PRE analogue of the LLM-judge panel
-topping POST localization, and it is the expected result, because a capable model reading the stated
-purpose is a strong over-privilege detector. Held out is the load-bearing phrase. The labels for the
-crewai, n8n, and mcp corpora were made by two other judges (GPT-5.5 and Claude), so scoring a third
-model that made none of them keeps the baseline from grading its own homework. The rule scanners (a
-risky-permission flag and an OWASP excessive-agency rule) are cheap and deterministic, and they trail
-the judge.
+How to read it. The combined OWASP/CWE scanner is the strongest rule-based method (0.654 F1, 0.910
+recall), close behind the held-out LLM judge, because it flags unnecessary read and unknown
+capabilities (excessive functionality applies at every permission level), not just risky permission
+levels. The three narrow rules make few predictions each (privilege escalation 37, sensitive access
+59, unrequested high-impact 676 over the full 1187-config board), so their low overall recall shows
+they cover small slices of the aggregate excess set. The corpus labels one undifferentiated excess
+set with no per-category annotation, so it cannot say how prevalent each standard category is, and
+these rules' precision is measured over those small-to-moderate samples rather than a category-level
+ground truth. Above every rule sits the held-out LLM judge (0.659), the PRE
+analogue of the LLM-judge panel topping POST localization, because a capable model reading the stated
+purpose is a strong over-privilege detector. Held out is the load-bearing phrase: the crewai, n8n, and
+mcp labels were made by two other judges (GPT-5.5 and Claude), so scoring a third model that made none
+of them keeps the baseline from grading its own homework. The scanners are keyword-based and therefore
+language-brittle: a task spec in a language the keyword lists do not cover falls back to the read-only
+floor and over-flags, a real property of static analysis that the board reports per source rather than
+hides.
 
-Read the board per source, because the four label processes differ and a pooled F1 hides it:
+Read the board per source, because the four label processes differ and a pooled F1 hides it (the
+per-rule per-source numbers print from `run.py`):
 
 | Method | crewai | n8n | mcp | injecagent | sweagent | synthetic |
 |---|---|---|---|---|---|---|
-| flag-all | 0.388 | 0.154 | 0.654 | 0.750 | 0.574 | 0.763 |
 | risky-permission scan | 0.326 | 0.095 | 0.575 | 0.827 | 0.025 | 0.803 |
-| OWASP excessive-agency | 0.326 | 0.066 | 0.536 | 0.801 | 0.015 | 0.812 |
+| `owasp_asi_combined` | 0.448 | 0.411 | 0.644 | 0.961 | 0.570 | 0.842 |
 | LLM judge, held out | 0.518 | 0.357 | 0.662 | 0.990 | 0.467 | 0.972 |
 | oracle | 1.000 | 1.000 | 1.000 | 1.000 | 1.000 | 1.000 |
 
@@ -358,7 +392,8 @@ list chosen for coverage. Shipped in v1:
 - **Online stale-state detection** (LIVE, *catch it live*): detect the Gold stale-state injection
   online. True-positive rate at a fixed false-positive budget.
 - **Over-privilege audit** (PRE, *is the declared harness safe*): flag granted capabilities the task
-  does not need. Precision / recall / F1 over 1187 configs from six corpora.
+  does not need, against an OWASP / CWE static-scanner set (the standard-coverage baseline) and a
+  held-out LLM judge. Precision / recall / F1 over 1187 configs from six corpora.
 
 Planned:
 

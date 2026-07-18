@@ -1,13 +1,18 @@
-"""Rule-based PRE scanner baselines."""
+"""Rule-based PRE scanner baselines.
+
+The naive risky-permission flag and the privilege-diff oracle live here; the comprehensive
+OWASP / CWE static scanner set (the standard-coverage baseline) lives in ``pre_static_scanner`` and
+is spliced into ``pre_baseline_methods`` below.
+"""
 from __future__ import annotations
 
 import glob
 import json
 import os
-import re
 from typing import Mapping
 
 from .pre import PreOverPrivilege, pre_score
+from .pre_static_scanner import owasp_scanner_methods
 
 
 _RISKY_PERMISSION_LEVELS = {"write", "execute", "network", "admin"}
@@ -17,25 +22,6 @@ _CACHE_DIR = os.path.join(
     "pre",
     "llm_judge_method",
 )
-_KIND_KEYWORDS = {
-    "read": ("read", "summarize", "inspect", "list", "report"),
-    "write": ("write", "save", "edit", "create", "update", "delete"),
-    "network": ("fetch", "http", "url", "api", "web", "download"),
-    "execute": ("run", "execute", "shell", "bash", "test", "compile"),
-}
-
-
-def _matches_keyword(text: str, keyword: str) -> bool:
-    return re.search(rf"\b{re.escape(keyword)}\w*\b", text) is not None
-
-
-def _allowed_permission_levels(task_or_role_spec: str) -> set[str]:
-    text = task_or_role_spec.lower()
-    allowed = {"read", "unknown"}
-    for permission_level, keywords in _KIND_KEYWORDS.items():
-        if any(_matches_keyword(text, keyword) for keyword in keywords):
-            allowed.add(permission_level)
-    return allowed
 
 
 class FlagRiskyPermsMethod:
@@ -52,24 +38,6 @@ class FlagRiskyPermsMethod:
             }
             for o in view
         }
-        return pre_score(flagged, task.instances)
-
-
-class OwaspExcessiveAgencyMethod:
-    method_id = "owasp_excessive_agency"
-    supports = {"pre_over_privilege"}
-
-    def evaluate(self, task: PreOverPrivilege) -> Mapping[str, float]:
-        view = task.method_view()
-        flagged = {}
-        for o in view:
-            allowed = _allowed_permission_levels(o["task_or_role_spec"])
-            excess = {
-                c["name"]
-                for c in o["declared_capabilities"]
-                if c["permission_level"] not in allowed
-            }
-            flagged[o["instance_id"]] = excess
         return pre_score(flagged, task.instances)
 
 
@@ -127,8 +95,11 @@ def _llm_judge_methods() -> list:
 
 
 def pre_baseline_methods() -> list:
-    return [
-        FlagRiskyPermsMethod(),
-        OwaspExcessiveAgencyMethod(),
-        PrivilegeDiffOracleMethod(),
-    ] + _llm_judge_methods()
+    # flag-risky (naive floor) -> the OWASP/CWE scanner set (standard-coverage) -> oracle (ceiling)
+    # -> held-out LLM judge(s).
+    return (
+        [FlagRiskyPermsMethod()]
+        + owasp_scanner_methods()
+        + [PrivilegeDiffOracleMethod()]
+        + _llm_judge_methods()
+    )
