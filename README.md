@@ -33,7 +33,12 @@ this benchmark is the public arena that keeps it honest and turns the data flywh
 
 The benchmark is written up alongside the code: *AuditableBench: A Benchmark for Auditing Agent
 Failures Across the PRE / LIVE / POST Lifecycle* (ICLR 2027 target, in progress). Every board in this
-README is a table in the paper, generated from `run.py` so the two cannot drift. The preprint link
+README is regenerated from `run.py`, which keeps the paper tables and the README in step. That
+regeneration does not freeze the numbers on its own: the boards download their corpora from the
+Hugging Face Hub, and an upstream dataset can be rebuilt in place, so the same `run.py` can quietly
+return different numbers on a later run. Reproducibility therefore requires pinning each corpus to a
+fixed dataset revision, and the tau-bench loader is now pinned to commit `382e57d` (the 2026-07-05
+converter fix that corrected the gpt-4.1 and Kimi-K2-Instruct base-model runs). The preprint link
 goes here on release.
 
 ## Posture: Branded Name, Neutral Content
@@ -139,24 +144,26 @@ SWE-Gym, 376 runs (188 failed, 188 resolved):
 | full (reference) | 0.819 |
 | G-Safeguard (supervised GNN) | **0.828** |
 
-tau-bench (MIT), 660 runs (380 failed, 280 resolved):
+tau-bench (MIT), 660 runs (363 failed, 297 resolved):
 
 | Method | ROC-AUC |
 |---|---|
-| random | 0.501 |
-| size (flat) | 0.583 |
-| PyOD-flatten (ECOD) | 0.571 |
-| PyGOD-DOMINANT (graph AD) | 0.507 |
-| GUARDIAN (recon-AE) | 0.555 |
-| `auditable` (structure) | 0.614 |
-| full (reference) | **0.627** |
-| G-Safeguard (supervised GNN) | 0.578 |
+| random | 0.498 |
+| size (flat) | 0.619 |
+| PyOD-flatten (ECOD) | 0.555 |
+| PyGOD-DOMINANT (graph AD) | 0.503 |
+| GUARDIAN (recon-AE) | 0.542 |
+| `auditable` (structure) | **0.665** |
+| full (reference) | 0.665 |
+| G-Safeguard (supervised GNN) | 0.626 |
 
 How to read it. The size-normalized dependency block beats the size-only baseline on both
-corpora (+0.141 on SWE-Gym, +0.031 on tau-bench), so the structural signal predicts failure
+corpora (+0.141 on SWE-Gym, +0.046 on tau-bench), so the structural signal predicts failure
 beyond run length, and it does so in the same direction across two independent domains. The
 magnitude is domain-dependent: strong on SWE-Gym, modest on tau-bench, which is the benchmark
-doing its job of telling the two domains apart rather than rewarding one trick. PyOD (ECOD)
+doing its job of telling the two domains apart rather than rewarding one trick. On tau-bench the
+structural block now reaches the full-feature reference (0.665 for both), so the size-normalized
+dependency features already carry what the full vector adds there. PyOD (ECOD)
 beating the linear size model on SWE-Gym (0.765 over 0.663) is its own signal: failure is
 non-monotone in run length there (both very short and very long runs fail), which a tail-based
 detector catches and a linear one misses. The dependency structure still adds on top of it.
