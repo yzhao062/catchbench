@@ -12,11 +12,18 @@ Faults are documented agent failure modes, realized on the inferred dependency l
 
 What the current slice actually shows (report it per fault kind, not just in aggregate):
   - Stale-state is detectable. A dependency-span detector localizes it well above the floor.
-  - Dropped-grounding is NOT yet localized by any baseline here; removing one edge among many leaves
-    no signal the current detectors catch. Honest open problem, not a win to average away.
+  - Dropped-grounding is not localized by the span/count baselines; removing one edge among many
+    leaves no signal they catch.
   - The dependency-aware detector (dep-anomaly) is essentially raw max-span, i.e. KEYED to the
     stale-state mechanism. It is reported as a mechanism check beside the raw max-span and low-count
     controls, not as a general detector.
+  - Construction leakage, measured (2026-07-19): the clean substrate is deps=[last_on_file[f]], so
+    BOTH injections break the immediate-same-file-predecessor invariant at the injected step. A
+    broken-predecessor baseline (tools/gold_artifact_diagnostic.py) uniquely ranks all 82 stale and
+    all 106 dropped targets Top-1 with 0/188 clean flags across five seeds. Both fault kinds
+    therefore fail the no-artifact-leakage bar on this substrate; read every score here as a
+    mechanism diagnostic, not artifact-controlled benchmark evidence. A better detector cannot
+    repair this; the named-value substrate can.
 
 Leakage and distribution checks, reported as first-class results (see ``gold_report`` /
 ``gold_breakdown``):
@@ -25,15 +32,16 @@ Leakage and distribution checks, reported as first-class results (see ``gold_rep
     have dependencies: a has-dep eligibility baseline scores almost the same, so the lift is target
     SELECTION, a construction leak. ``gold_matched_breakdown`` controls for it by ranking only within
     the injector's eligible pool, where has-dep and degree fall to the matched floor and the
-    dependency-span signal is what survives (for stale-state). That matched comparison is the
-    leakage control, reported beside the full-pool board rather than asserted.
+    dependency-span signal is what survives (for stale-state). That matched comparison holds
+    eligibility and degree fixed but cannot control the missing-predecessor marker above, so it is
+    a selection control, not a full artifact control.
   - Stale-state preserves run-level edge count; dropped-grounding removes one edge; stale-state also
     shifts the run-level max-span distribution by construction. All are reported paired, clean
     versus injected.
   - Labels are the injection site, correct by construction and independent of any detector.
   - Caveat: SWE-Gym dependencies are INFERRED, so a redirected edge is a dependency-misattribution
-    proxy for a true stale read. The airtight upgrade is a named-value corpus; the degree-matched
-    selection control and a dropped-grounding detector are the nearer fixes.
+    proxy for a true stale read. The named-value corpus is the fix for both the proxy and the
+    construction leakage; the degree-matched selection control is the nearer partial check.
 """
 from __future__ import annotations
 
@@ -630,8 +638,8 @@ def _mean_std(vals) -> Tuple[float, float]:
 def gold_seed_robustness(methods: list, seeds=(0, 1, 2, 3, 4)) -> str:
     """Stability of the Gold headline across injection seeds: the robustness question a synthetic
     injection has to answer. Per scoring method, stale-state and dropped-grounding Top-1 as mean +/-
-    std over seeds; plus the matched-control stale max-span versus its floor, so the leak-controlled
-    signal is shown stable, not a single-draw artifact. Clean runs are cached, so this re-injects K
+    std over seeds; plus the matched-control stale max-span versus its floor, so the
+    selection-controlled mechanism signal is shown stable, not a single-draw artifact. Clean runs are cached, so this re-injects K
     times without reloading the corpus."""
     seeds = tuple(seeds)
     keep = [m for m in methods if hasattr(m, "scores") and m.method_id != "random"]
@@ -661,5 +669,6 @@ def gold_seed_robustness(methods: list, seeds=(0, 1, 2, 3, 4)) -> str:
     spm, sps = _mean_std(matched_span)
     flm, fls = _mean_std(matched_floor)
     lines.append(f"  matched stale max-span {spm:.3f}+/-{sps:.3f} vs floor {flm:.3f}+/-{fls:.3f} "
-                 f"(leak-controlled signal, stable across seeds)")
+                 f"(selection-controlled mechanism signal, stable across seeds; construction "
+                 f"leakage is measured separately by tools/gold_artifact_diagnostic.py)")
     return "\n".join(lines)

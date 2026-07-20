@@ -252,17 +252,23 @@ open ones, following BOND's discipline that the synthesis must be defensible:
 
 - **Grounded faults, one strong half.** Stale-state (redirect a dependency to an earlier superseded
   event on the same file) is localized at 0.707 Top-1, and 0.671 +/- 0.022 across five injection seeds.
-  Dropped-grounding (remove a required dependency) is realized but not yet localized by any baseline; it
-  needs a better detector or a stronger substrate.
-- **Leakage check, controlled for stale-state.** `position` stays at the random floor. In the full
+  Dropped-grounding (remove a required dependency) is realized but not localized by the span/count
+  baselines; the named-value substrate is what it needs (a better detector cannot help, per the
+  leakage check below).
+- **Leakage check, two levels.** `position` stays at the random floor. In the full
   pool `degree` and a `has-dep` eligibility baseline both lift above it, but that is target selection:
   the injector only corrupts steps that have dependencies. Ranking within the degree-matched eligible
   pool removes the artifact. `has-dep` lands exactly on the matched floor (0.350 stale) and `degree`
   sits below it overall (0.225 against 0.308) with a small stale residual (0.394) that a Monte-Carlo
   check reads as seed noise, while the dependency-span detector clears the floor by far (0.805 stale
-  against 0.350, and 0.795 +/- 0.020 across seeds). The stale-state lift survives the control, so it is
-  the fault signature rather than the construction. dropped-grounding stays at the floor in both pools,
-  which is the open detection problem, not a leak.
+  against 0.350, and 0.795 +/- 0.020 across seeds). That controls selection, not construction: the
+  clean substrate wires every file event to its immediate same-file predecessor, both injections break
+  exactly that invariant at the injected step, and a broken-predecessor baseline
+  (`tools/gold_artifact_diagnostic.py`) uniquely ranks all 82 stale-state and all 106
+  dropped-grounding targets Top-1 while flagging 0 of 188 clean runs, across five injection seeds.
+  Both fault kinds therefore fail the no-artifact-leakage bar on the file-level substrate; read the
+  Gold boards as mechanism diagnostics, with artifact-controlled evidence waiting on a named-value
+  substrate.
 - **Distributional validity, reported honestly.** Stale-state preserves the valid dependency-edge
   count (mean 9.2, unchanged); dropped-grounding removes exactly one valid dependency edge (mean 7.9 to
   6.9), so treat edge count as a reported run-level shift for the dropped half, not as matched.
@@ -271,9 +277,9 @@ open ones, following BOND's discipline that the synthesis must be defensible:
   step.
 - **Labels are the injection site**, correct by construction and independent of any detector.
 - **Characterized caveat.** SWE-Gym dependencies are inferred, not gold value-flow, so a redirected
-  edge is a dependency-misattribution proxy for a true stale read. The nearer fix is a
-  dropped-grounding detector; the airtight substrate is a named-value corpus where writes and reads
-  are explicit, with a human-audited validation slice (Cohen's kappa).
+  edge is a dependency-misattribution proxy for a true stale read. The fix is a named-value corpus
+  where writes and reads are explicit, with a human-audited validation slice (Cohen's kappa); a
+  stronger detector cannot repair the construction leakage.
 
 ### Cause Attribution and the LIVE Boards
 
@@ -455,7 +461,9 @@ release-timing choice, not a secrecy one: nothing here is withheld. GRADE is pub
 
 The benchmark's own data contribution, the Gold board, now ships its first slice: faults injected
 into real runs with injection-site labels (the standard move when real labels are scarce; BOND
-injects anomalies into real graphs for the same reason), with the stale-state half leakage-controlled
-by a degree-matched eligible-pool ranking. The airtight upgrade is a named-value corpus where a stale
-read is unambiguous, plus a dropped-grounding detector and a human-audited validation slice, which
-together grow the dataset past the public corpora it starts from.
+injects anomalies into real graphs for the same reason), with a degree-matched eligible-pool ranking
+as the selection control. A broken-predecessor baseline still separates both fault kinds perfectly
+on the file-level substrate (`tools/gold_artifact_diagnostic.py`), so the Gold boards read as
+mechanism diagnostics. The airtight upgrade is a named-value corpus where a stale read is
+unambiguous, plus a human-audited validation slice, which together grow the dataset past the public
+corpora it starts from.
