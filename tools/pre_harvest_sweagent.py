@@ -10,6 +10,13 @@ import sys
 from pathlib import Path
 from typing import Any
 
+from pre_spec_features import (
+    add_retain_prose_argument,
+    deidentify_rows,
+    write_json_rows,
+    write_local_prose,
+)
+
 
 ROOT = Path(__file__).resolve().parents[1]
 OUT_PATH = ROOT / "data" / "pre" / "sweagent.json"
@@ -341,7 +348,7 @@ def stats(rows: list[dict[str, Any]], attempted: int) -> dict[str, float]:
     }
 
 
-def harvest(out_path: Path) -> tuple[list[dict[str, Any]], dict[str, float]]:
+def harvest() -> tuple[list[dict[str, Any]], dict[str, float]]:
     rows: list[dict[str, Any]] = []
     for i, instance_id in enumerate(SAMPLE_INSTANCE_IDS, start=1):
         try:
@@ -355,17 +362,19 @@ def harvest(out_path: Path) -> tuple[list[dict[str, Any]], dict[str, float]]:
     if len(rows) < 100:
         raise RuntimeError(f"only parsed {len(rows)} clean instances")
 
-    out_path.parent.mkdir(parents=True, exist_ok=True)
-    out_path.write_text(json.dumps(rows, indent=2, sort_keys=True) + "\n", encoding="utf-8")
     return rows, stats(rows, len(SAMPLE_INSTANCE_IDS))
 
 
 def main() -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument("--out", type=Path, default=OUT_PATH)
+    add_retain_prose_argument(parser)
     args = parser.parse_args()
 
-    rows, summary = harvest(args.out)
+    raw_rows, summary = harvest()
+    write_local_prose(raw_rows, args.retain_prose)
+    rows = deidentify_rows(raw_rows)
+    write_json_rows(rows, args.out, sort_keys=True)
     print(json.dumps(summary, sort_keys=True))
     print(f"wrote {len(rows)} instances to {args.out}")
     return 0

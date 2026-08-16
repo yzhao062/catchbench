@@ -9,11 +9,11 @@ Coverage map (standard category -> rule -> reference):
 
   | Standard category                       | Rule                       | Reference                       |
   |-----------------------------------------|----------------------------|---------------------------------|
-  | Excessive permissions / least privilege | owasp_excess_permissions   | OWASP LLM06; CWE-272; CWE-250   |
-  | Excessive functionality                 | owasp_excess_functionality | OWASP LLM06                     |
+  | Excessive permissions / least privilege | owasp_excess_permissions   | OWASP LLM06:2025; CWE-272, 250  |
+  | Excessive functionality                 | owasp_excess_functionality | OWASP LLM06:2025                |
   | Privilege compromise / escalation       | owasp_privilege_escalation | CWE-269; OWASP ASI (threat)     |
-  | Excessive autonomy (approximation)      | unrequested_high_impact    | OWASP LLM06 (autonomy driver)   |
-  | Sensitive-access exposure surface       | sensitive_access           | OWASP LLM02 (risk surface)      |
+  | Excessive autonomy (approximation)      | unrequested_high_impact    | OWASP LLM06:2025 (autonomy)     |
+  | Sensitive-access exposure surface       | sensitive_access           | OWASP LLM02:2025 (risk surface) |
 
 ``owasp_asi_combined`` is the union of all five, the comprehensive scanner.
 
@@ -38,6 +38,16 @@ References:
     principles (https://genai.owasp.org/resource/agentic-ai-threats-and-mitigations/).
   CWE-250 Execution with Unnecessary Privileges; CWE-269 Improper Privilege Management;
   CWE-272 Least Privilege Violation (https://cwe.mitre.org/).
+
+Edition note. Every bare ``LLM06`` and ``LLM02`` below means the 2025 edition, which is the published
+edition and the one these rules were written against. Two caveats:
+  - CWE 4.20 marks CWE-269 as DISCOURAGED for direct vulnerability mapping and points to CWE-250,
+    which now names Excessive Agency and over-privileged agent components explicitly. The citation
+    here documents conceptual lineage rather than mapping a CVE, so it stands, but a future rule
+    revision should prefer CWE-250.
+  - A 2026 revision of the OWASP list is in preparation in the project's GitHub repository and its
+    working draft renumbers Excessive Agency. Do not cite that numbering until genai.owasp.org
+    publishes it; as of 2026-08-15 the site still serves LLM06:2025 Excessive Agency.
 
 Inflection is handled by expanding each KNOWN keyword forward to its inflected forms (``create`` ->
 ``creating``, ``created``, ``creates``) and matching spec tokens against those forms by exact
@@ -188,6 +198,35 @@ _HIGH_IMPACT_F2B = _forms_to_base(_HIGH_IMPACT_ACTION)
 _PRIVILEGE_F2B = _forms_to_base(_PRIVILEGE_MGMT)
 _SENSITIVE_F2B = _forms_to_base(_SENSITIVE)
 
+_FIXED_SPEC_FORMS: frozenset[str] = frozenset().union(
+    *_VERB_LEVEL_FORMS.values(),
+    _HIGH_IMPACT_F2B,
+    _PRIVILEGE_F2B,
+    _SENSITIVE_F2B,
+)
+
+_EMAIL_RE = re.compile(
+    r"(?i)(?<![\w.+-])[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}(?![\w.-])"
+)
+_URL_RE = re.compile(r"(?i)\b(?:https?://|www\.)[^\s<>\"']+")
+_HANDLE_RE = re.compile(r"(?<![\w@])@[A-Za-z][A-Za-z0-9_.-]{1,38}")
+_PHONE_RE = re.compile(r"(?<![\w])(?:\+?\d{1,3}[ .()-]*)?(?:\d[ .()-]*){7,14}\d(?![\w])")
+_WINDOWS_PATH_RE = re.compile(r"(?i)(?<![\w])(?:[A-Z]:\\|\\\\)[^\s<>\"'`]+")
+_POSIX_PATH_RE = re.compile(
+    r"(?<![\w])(?:~?/|(?:\.{1,2}/))[A-Za-z0-9._~+%-]+(?:/[A-Za-z0-9._~+%-]+)+/?"
+)
+_RELATIVE_PATH_RE = re.compile(
+    r"(?<![\w])(?:[A-Za-z0-9._~+%-]+/)+(?:[A-Za-z0-9._~+%-]*\.[A-Za-z0-9._~-]+)(?![\w])"
+)
+
+_OVERRIDE_KEYS = frozenset({
+    "permission_levels",
+    "functionality_capabilities",
+    "privilege_bases",
+    "high_impact_bases",
+    "sensitive_bases",
+})
+
 
 def _tokens(text: str) -> set[str]:
     """Lowercased token set. Splits snake/kebab and camelCase INCLUDING acronym boundaries
@@ -203,6 +242,31 @@ def _tokens(text: str) -> set[str]:
     return out
 
 
+def _replace_spec_identifiers(text: str, replacement: str) -> str:
+    replaced = text or ""
+    for pattern in (
+        _EMAIL_RE,
+        _URL_RE,
+        _WINDOWS_PATH_RE,
+        _POSIX_PATH_RE,
+        _RELATIVE_PATH_RE,
+        _HANDLE_RE,
+        _PHONE_RE,
+    ):
+        replaced = pattern.sub(replacement, replaced)
+    return replaced
+
+
+def scrub_spec_identifiers(text: str) -> str:
+    """Remove direct identifiers before building the token evidence that may be distributed."""
+    return _replace_spec_identifiers(text, " ")
+
+
+def redact_spec_identifiers(text: str) -> str:
+    """Replace direct identifiers in retained diagnostic text with a visible marker."""
+    return _replace_spec_identifiers(text, "[redacted]")
+
+
 def _cap_tokens(cap: dict) -> set[str]:
     return _tokens(cap.get("name", "")) | _tokens(cap.get("type", ""))
 
@@ -215,42 +279,135 @@ def _singular(token: str) -> str:
     return token
 
 
-def _allowed_levels(spec: str) -> set[str]:
-    spec_tokens = _tokens(spec)
+def _requested_bases(tokens: set[str], forms_to_base: Mapping[str, str]) -> set[str]:
+    return {forms_to_base[token] for token in tokens if token in forms_to_base}
+
+
+def _levels_for_tokens(tokens: set[str]) -> set[str]:
     allowed = set(_LOW_RISK_LEVELS)
     for level, forms in _VERB_LEVEL_FORMS.items():
-        if spec_tokens & forms:
+        if tokens & forms:
             allowed.add(level)
     return allowed
 
 
-def rule_excess_permissions(spec: str, caps: list[dict]) -> set[str]:
+def derive_spec_features(spec: str, caps: list[dict]) -> dict[str, object]:
+    """Build the distributable token evidence and small compatibility summaries.
+
+    Tokens are taken only from scrubbed text and only when a scanner rule can consult them for this
+    capability roster. A direct identifier can contain a meaningful scanner word. Its old effect is
+    retained as an enum, fixed keyword base, or declared capability name, never as an identifier
+    token. This keeps replay equal to the text-backed scanner while removing the text.
+    """
+    raw_tokens = _tokens(spec)
+    scrubbed_tokens = _tokens(scrub_spec_identifiers(spec))
+    cap_content_by_name = {
+        cap["name"]: {_singular(token) for token in _cap_tokens(cap)} - _GENERIC for cap in caps
+    }
+    reachable_content = set().union(*cap_content_by_name.values()) if cap_content_by_name else set()
+    safe_tokens = {
+        token
+        for token in scrubbed_tokens
+        if token in _FIXED_SPEC_FORMS or _singular(token) in reachable_content
+    }
+
+    raw_content = {_singular(token) for token in raw_tokens} - _GENERIC
+    safe_content = {_singular(token) for token in safe_tokens} - _GENERIC
+    raw_related = {
+        name for name, content in cap_content_by_name.items() if content and content & raw_content
+    }
+    safe_related = {
+        name for name, content in cap_content_by_name.items() if content and content & safe_content
+    }
+
+    cap_levels = {cap.get("permission_level") for cap in caps}
+    cap_tokens = set().union(*(_cap_tokens(cap) for cap in caps)) if caps else set()
+    cap_privilege_bases = _requested_bases(cap_tokens, _PRIVILEGE_F2B)
+    cap_high_impact_bases = _requested_bases(cap_tokens, _HIGH_IMPACT_F2B)
+    cap_sensitive_bases = _requested_bases(cap_tokens, _SENSITIVE_F2B)
+
+    override_sets = {
+        "permission_levels": (
+            _levels_for_tokens(raw_tokens) - _levels_for_tokens(safe_tokens)
+        ) & cap_levels,
+        "functionality_capabilities": raw_related - safe_related,
+        "privilege_bases": (
+            _requested_bases(raw_tokens, _PRIVILEGE_F2B)
+            - _requested_bases(safe_tokens, _PRIVILEGE_F2B)
+        ) & cap_privilege_bases,
+        "high_impact_bases": (
+            _requested_bases(raw_tokens, _HIGH_IMPACT_F2B)
+            - _requested_bases(safe_tokens, _HIGH_IMPACT_F2B)
+        ) & cap_high_impact_bases,
+        "sensitive_bases": (
+            _requested_bases(raw_tokens, _SENSITIVE_F2B)
+            - _requested_bases(safe_tokens, _SENSITIVE_F2B)
+        ) & cap_sensitive_bases,
+    }
+    overrides = {key: sorted(values) for key, values in override_sets.items() if values}
+    return {"spec_tokens": sorted(safe_tokens), "spec_token_overrides": overrides}
+
+
+def _spec_tokens(spec: str | Mapping[str, object]) -> set[str]:
+    if isinstance(spec, str):
+        return _tokens(spec)
+    tokens = spec.get("spec_tokens", [])
+    if not isinstance(tokens, list) or not all(isinstance(token, str) for token in tokens):
+        raise TypeError("spec_tokens must be a list of strings")
+    return set(tokens)
+
+
+def _override_values(spec: str | Mapping[str, object], key: str) -> set[str]:
+    if isinstance(spec, str):
+        return set()
+    overrides = spec.get("spec_token_overrides", {})
+    if not isinstance(overrides, dict) or set(overrides) - _OVERRIDE_KEYS:
+        raise TypeError("spec_token_overrides has invalid keys")
+    values = overrides.get(key, [])
+    if not isinstance(values, list) or not all(isinstance(value, str) for value in values):
+        raise TypeError(f"spec_token_overrides.{key} must be a list of strings")
+    return set(values)
+
+
+def _allowed_levels(spec: str | Mapping[str, object]) -> set[str]:
+    allowed = _levels_for_tokens(_spec_tokens(spec))
+    allowed.update(_override_values(spec, "permission_levels"))
+    return allowed
+
+
+def rule_excess_permissions(spec: str | Mapping[str, object], caps: list[dict]) -> set[str]:
     """OWASP LLM06 (permissions) / CWE-272 / CWE-250: level above what the task's verbs justify."""
     allowed = _allowed_levels(spec)
     return {c["name"] for c in caps if c.get("permission_level") not in allowed}
 
 
-def rule_excess_functionality(spec: str, caps: list[dict]) -> set[str]:
+def rule_excess_functionality(spec: str | Mapping[str, object], caps: list[dict]) -> set[str]:
     """OWASP LLM06 (functionality): a capability, at ANY permission level, whose subject is unrelated
     to the task. Overlap on a generic word (file, tool, create) does not count as related; a
     capability whose tokens are all generic is left unassessed rather than flagged. Relatedness uses
     singular-normalized content tokens (reports matches report) with no lossy stemming."""
-    spec_content = {_singular(t) for t in _tokens(spec)} - _GENERIC
+    spec_content = {_singular(t) for t in _spec_tokens(spec)} - _GENERIC
+    related_overrides = _override_values(spec, "functionality_capabilities")
     flagged = set()
     for c in caps:
         cap_content = {_singular(t) for t in _cap_tokens(c)} - _GENERIC
-        if cap_content and not (cap_content & spec_content):
+        if cap_content and c["name"] not in related_overrides and not (cap_content & spec_content):
             flagged.add(c["name"])
     return flagged
 
 
-def _flag_unrequested(spec: str, caps: list[dict], forms_to_base: dict[str, str]) -> set[str]:
+def _flag_unrequested(
+    spec: str | Mapping[str, object],
+    caps: list[dict],
+    forms_to_base: dict[str, str],
+    override_key: str,
+) -> set[str]:
     """Flag a capability carrying a class token the task never asks for. A cap token counts if it is
     an inflected form of a class keyword; the task "requests" a keyword if any of its inflected forms
     appears in the spec. Flags the unrequested REMAINDER, so ``send_and_delete_email`` is flagged for
     the unrequested ``delete`` even when the task asks to ``send``."""
-    spec_tokens = _tokens(spec)
-    requested = {forms_to_base[t] for t in spec_tokens if t in forms_to_base}
+    requested = _requested_bases(_spec_tokens(spec), forms_to_base)
+    requested.update(_override_values(spec, override_key))
     flagged = set()
     for c in caps:
         cap_bases = {forms_to_base[t] for t in _cap_tokens(c) if t in forms_to_base}
@@ -259,23 +416,23 @@ def _flag_unrequested(spec: str, caps: list[dict], forms_to_base: dict[str, str]
     return flagged
 
 
-def rule_privilege_escalation(spec: str, caps: list[dict]) -> set[str]:
+def rule_privilege_escalation(spec: str | Mapping[str, object], caps: list[dict]) -> set[str]:
     """CWE-269 / OWASP ASI Privilege Compromise: a privilege-management capability not requested."""
-    return _flag_unrequested(spec, caps, _PRIVILEGE_F2B)
+    return _flag_unrequested(spec, caps, _PRIVILEGE_F2B, "privilege_bases")
 
 
-def rule_unrequested_high_impact(spec: str, caps: list[dict]) -> set[str]:
+def rule_unrequested_high_impact(spec: str | Mapping[str, object], caps: list[dict]) -> set[str]:
     """OWASP LLM06 autonomy driver, approximated: a high-impact action the task never asks for. NOT
     an approval-gate check (the schema has no approval field); see the module note."""
-    return _flag_unrequested(spec, caps, _HIGH_IMPACT_F2B)
+    return _flag_unrequested(spec, caps, _HIGH_IMPACT_F2B, "high_impact_bases")
 
 
-def rule_sensitive_access(spec: str, caps: list[dict]) -> set[str]:
+def rule_sensitive_access(spec: str | Mapping[str, object], caps: list[dict]) -> set[str]:
     """OWASP LLM02 exposure surface: credential or secret access the task does not ask for."""
-    return _flag_unrequested(spec, caps, _SENSITIVE_F2B)
+    return _flag_unrequested(spec, caps, _SENSITIVE_F2B, "sensitive_bases")
 
 
-_RULES: tuple[Callable[[str, list[dict]], set[str]], ...] = (
+_RULES: tuple[Callable[[str | Mapping[str, object], list[dict]], set[str]], ...] = (
     rule_excess_permissions,
     rule_excess_functionality,
     rule_privilege_escalation,
@@ -284,7 +441,7 @@ _RULES: tuple[Callable[[str, list[dict]], set[str]], ...] = (
 )
 
 
-def rule_owasp_asi(spec: str, caps: list[dict]) -> set[str]:
+def rule_owasp_asi(spec: str | Mapping[str, object], caps: list[dict]) -> set[str]:
     """The comprehensive scanner: union of every standard-category rule above."""
     flagged: set[str] = set()
     for rule in _RULES:
@@ -297,14 +454,24 @@ class _RuleScanner:
 
     supports = {"pre_over_privilege"}
 
-    def __init__(self, method_id: str, rule: Callable[[str, list[dict]], set[str]]) -> None:
+    def __init__(
+        self,
+        method_id: str,
+        rule: Callable[[str | Mapping[str, object], list[dict]], set[str]],
+    ) -> None:
         self.method_id = method_id
         self._rule = rule
 
     def evaluate(self, task: PreOverPrivilege) -> Mapping[str, float]:
         view = task.method_view()
         flagged = {
-            o["instance_id"]: self._rule(o["task_or_role_spec"], o["declared_capabilities"])
+            o["instance_id"]: self._rule(
+                {
+                    "spec_tokens": o["spec_tokens"],
+                    "spec_token_overrides": o["spec_token_overrides"],
+                },
+                o["declared_capabilities"],
+            )
             for o in view
         }
         return pre_score(flagged, task.instances)

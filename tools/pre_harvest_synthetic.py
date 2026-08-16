@@ -1,10 +1,17 @@
 """Generate authored synthetic PRE over-privilege instances."""
 from __future__ import annotations
 
-import json
+import argparse
 import random
 from collections import Counter
 from pathlib import Path
+
+from pre_spec_features import (
+    add_retain_prose_argument,
+    deidentify_rows,
+    write_json_rows,
+    write_local_prose,
+)
 
 
 SEED = 20260630
@@ -393,12 +400,18 @@ def build_instances() -> list[dict]:
 
 
 def main() -> None:
-    rows = build_instances()
-    OUT_PATH.parent.mkdir(parents=True, exist_ok=True)
-    OUT_PATH.write_text(json.dumps(rows, indent=2) + "\n", encoding="utf-8")
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--out", type=Path, default=OUT_PATH)
+    add_retain_prose_argument(parser)
+    args = parser.parse_args()
+
+    raw_rows = build_instances()
+    write_local_prose(raw_rows, args.retain_prose)
+    rows = deidentify_rows(raw_rows)
+    write_json_rows(rows, args.out)
     by_source = Counter(row["source"] for row in rows)
     by_label = Counter(row["labels"]["label_source"] for row in rows)
-    print(f"WROTE {OUT_PATH}")
+    print(f"WROTE {args.out}")
     print(f"TOTAL {len(rows)}")
     print(f"BY_SOURCE {dict(sorted(by_source.items()))}")
     print(f"BY_LABEL {dict(sorted(by_label.items()))}")

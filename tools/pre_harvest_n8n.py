@@ -10,6 +10,8 @@ import sys
 from pathlib import Path
 from typing import Any
 
+from pre_spec_features import add_retain_prose_argument, deidentify_rows, write_local_prose
+
 
 ROOT = Path(__file__).resolve().parents[1]
 OUT_PATH = ROOT / "data" / "pre_staging" / "n8n.json"
@@ -437,6 +439,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--target-count", type=int, default=220)
     parser.add_argument("--discover-pages", type=int, help="Print discovered AI Agent template IDs and exit.")
     parser.add_argument("--discover-rows", type=int, default=100)
+    add_retain_prose_argument(parser)
     return parser.parse_args()
 
 
@@ -447,7 +450,9 @@ def main() -> int:
         print(json.dumps(ids))
         return 0
 
-    rows, stats = harvest(TEMPLATE_IDS, args.target_count)
+    raw_rows, stats = harvest(TEMPLATE_IDS, args.target_count)
+    write_local_prose(raw_rows, args.retain_prose)
+    rows = deidentify_rows(raw_rows)
     write_rows(rows, args.output)
     print(json.dumps(stats, sort_keys=True))
     print(f"wrote {len(rows)} instances to {args.output}")

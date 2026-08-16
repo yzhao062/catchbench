@@ -9,6 +9,13 @@ from typing import Mapping
 
 
 _PERM_LEVELS = {"read", "write", "execute", "network", "admin", "unknown"}
+_SPEC_OVERRIDE_KEYS = {
+    "permission_levels",
+    "functionality_capabilities",
+    "privilege_bases",
+    "high_impact_bases",
+    "sensitive_bases",
+}
 
 
 @dataclass
@@ -16,7 +23,8 @@ class PreInstance:
     instance_id: str
     source: str
     provenance: dict
-    task_or_role_spec: str
+    spec_tokens: list[str]
+    spec_token_overrides: dict[str, list[str]]
     declared_capabilities: list[dict]
     minimal_reference: list[str]
     labels: dict
@@ -27,7 +35,14 @@ def validate_pre_instance(o: PreInstance) -> None:
     assert o.source, "source"
     for k in ("repo", "commit", "path", "license"):
         assert k in o.provenance, f"provenance.{k}"
+    assert o.spec_tokens == sorted(set(o.spec_tokens)), "spec_tokens must be sorted and unique"
+    assert all(isinstance(token, str) and token for token in o.spec_tokens), "invalid spec token"
+    assert set(o.spec_token_overrides) <= _SPEC_OVERRIDE_KEYS, "invalid spec_token_overrides key"
+    for key, values in o.spec_token_overrides.items():
+        assert values == sorted(set(values)), f"spec_token_overrides.{key} must be sorted and unique"
+        assert all(isinstance(value, str) and value for value in values), f"invalid override {key}"
     names = {c["name"] for c in o.declared_capabilities}
+    assert set(o.spec_token_overrides.get("functionality_capabilities", [])) <= names
     for c in o.declared_capabilities:
         assert c["permission_level"] in _PERM_LEVELS, f"perm {c['permission_level']}"
     assert set(o.minimal_reference) <= names, "minimal_reference not subset of declared"
@@ -57,7 +72,8 @@ def _fixture_instances() -> list[PreInstance]:
             instance_id="fixture-0001",
             source="fixture",
             provenance={"repo": "in-repo", "commit": "n/a", "path": "fixture", "license": "MIT"},
-            task_or_role_spec="Read a CSV file and summarize it.",
+            spec_tokens=["read"],
+            spec_token_overrides={},
             declared_capabilities=[
                 {"name": "read_file", "type": "fs", "permission_level": "read"},
                 {"name": "write_file", "type": "fs", "permission_level": "write"},
@@ -74,7 +90,8 @@ def pre_instance_from_dict(d: dict) -> PreInstance:
         instance_id=d["instance_id"],
         source=d["source"],
         provenance=d["provenance"],
-        task_or_role_spec=d["task_or_role_spec"],
+        spec_tokens=d["spec_tokens"],
+        spec_token_overrides=d.get("spec_token_overrides", {}),
         declared_capabilities=d["declared_capabilities"],
         minimal_reference=d["minimal_reference"],
         labels=d["labels"],
@@ -137,7 +154,8 @@ class PreOverPrivilege:
             {
                 "instance_id": o.instance_id,
                 "source": o.source,
-                "task_or_role_spec": o.task_or_role_spec,
+                "spec_tokens": o.spec_tokens,
+                "spec_token_overrides": o.spec_token_overrides,
                 "declared_capabilities": o.declared_capabilities,
             }
             for o in self.instances

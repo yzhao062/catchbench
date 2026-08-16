@@ -15,6 +15,13 @@ from typing import Any
 
 import yaml
 
+from pre_spec_features import (
+    add_retain_prose_argument,
+    deidentify_rows,
+    write_json_rows,
+    write_local_prose,
+)
+
 
 ROOT = Path(__file__).resolve().parents[1]
 OUT_PATH = ROOT / "data" / "pre_staging" / "crewai.json"
@@ -537,14 +544,16 @@ def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--output", type=Path, default=OUT_PATH)
     parser.add_argument("--max-rows", type=int, default=300)
+    add_retain_prose_argument(parser)
     return parser.parse_args()
 
 
 def main() -> int:
     args = parse_args()
-    rows, summary = harvest(args.max_rows)
-    args.output.parent.mkdir(parents=True, exist_ok=True)
-    args.output.write_text(json.dumps(rows, indent=2, ensure_ascii=True) + "\n", encoding="utf-8")
+    raw_rows, summary = harvest(args.max_rows)
+    write_local_prose(raw_rows, args.retain_prose)
+    rows = deidentify_rows(raw_rows)
+    write_json_rows(rows, args.output)
     print(json.dumps(summary, sort_keys=True))
     print(f"wrote={args.output}")
     return 0

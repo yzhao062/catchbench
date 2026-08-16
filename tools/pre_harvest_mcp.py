@@ -15,18 +15,29 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import Any
 
+from pre_spec_features import (
+    add_retain_prose_argument,
+    deidentify_rows,
+    write_json_rows,
+    write_local_prose,
+)
+
 
 ROOT = Path(__file__).resolve().parents[1]
 OUT_PATH = ROOT / "data" / "pre_staging" / "mcp.json"
 REGISTRY_URL = "https://registry.modelcontextprotocol.io/v0/servers"
 USER_AGENT = "auditablebench-mcp-harvester/0.1"
 PROTOCOL_VERSION = "2025-06-18"
-STAGING_KEYS = {
+RAW_STAGING_KEYS = {
     "instance_id",
     "source",
     "provenance",
     "task_or_role_spec",
     "declared_capabilities",
+}
+DERIVED_STAGING_KEYS = (RAW_STAGING_KEYS - {"task_or_role_spec"}) | {
+    "spec_tokens",
+    "spec_token_overrides",
 }
 PROVENANCE_KEYS = {"repo", "commit", "path", "license"}
 CAPABILITY_KEYS = {"name", "type", "permission_level"}
@@ -561,7 +572,7 @@ def build_instance(
 def validate_rows(rows: list[dict[str, Any]]) -> None:
     instance_ids: set[str] = set()
     for row in rows:
-        assert set(row) == STAGING_KEYS, f"keys {row.keys()}"
+        assert set(row) in (RAW_STAGING_KEYS, DERIVED_STAGING_KEYS), f"keys {row.keys()}"
         assert row["source"] == "mcp", row["source"]
         assert isinstance(row["instance_id"], str) and row["instance_id"], "instance_id"
         assert row["instance_id"] not in instance_ids, f"duplicate {row['instance_id']}"
@@ -569,7 +580,11 @@ def validate_rows(rows: list[dict[str, Any]]) -> None:
         assert set(row["provenance"]) == PROVENANCE_KEYS, f"provenance keys {row['provenance'].keys()}"
         for key in PROVENANCE_KEYS:
             assert isinstance(row["provenance"][key], str) and row["provenance"][key], f"provenance.{key}"
-        assert isinstance(row["task_or_role_spec"], str) and row["task_or_role_spec"], "task_or_role_spec"
+        if "task_or_role_spec" in row:
+            assert isinstance(row["task_or_role_spec"], str) and row["task_or_role_spec"], "task_or_role_spec"
+        else:
+            assert row["spec_tokens"] == sorted(set(row["spec_tokens"])), "spec_tokens"
+            assert isinstance(row["spec_token_overrides"], dict), "spec_token_overrides"
         capabilities = row["declared_capabilities"]
         assert isinstance(capabilities, list) and capabilities, "declared_capabilities"
         names: set[str] = set()
@@ -634,6 +649,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--max-workers", type=int, default=16)
     parser.add_argument("--min-servers", type=int, default=100)
     parser.add_argument("--validate-only", action="store_true")
+    add_retain_prose_argument(parser)
     return parser.parse_args()
 
 
@@ -652,9 +668,10 @@ def main() -> int:
             print(f"sample.capabilities={len(sample['declared_capabilities'])}")
         return 0
 
-    rows, summary = harvest(args.max_workers, args.min_servers)
-    args.output.parent.mkdir(parents=True, exist_ok=True)
-    args.output.write_text(json.dumps(rows, indent=2, ensure_ascii=True) + "\n", encoding="utf-8")
+    raw_rows, summary = harvest(args.max_workers, args.min_servers)
+    write_local_prose(raw_rows, args.retain_prose)
+    rows = deidentify_rows(raw_rows)
+    write_json_rows(rows, args.output)
     print(json.dumps(summary, sort_keys=True))
     print(f"wrote {len(rows)} servers to {args.output}")
     return 0

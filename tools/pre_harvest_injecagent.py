@@ -10,6 +10,13 @@ from collections import defaultdict, deque
 from pathlib import Path
 from typing import Any
 
+from pre_spec_features import (
+    add_retain_prose_argument,
+    deidentify_rows,
+    write_json_rows,
+    write_local_prose,
+)
+
 
 REPO_URL = "https://github.com/uiuc-kang-lab/InjecAgent.git"
 REPO_SLUG = "uiuc-kang-lab/InjecAgent"
@@ -355,7 +362,8 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--source-dir", help="Existing InjecAgent checkout. If omitted, clone from GitHub.")
     parser.add_argument("--commit", help="Commit hash to use when --source-dir is not a git checkout.")
     parser.add_argument("--per-user-limit", type=int, default=20)
-    parser.add_argument("--output", default="data/pre/injecagent.json")
+    parser.add_argument("--output", type=Path, default=Path("data/pre/injecagent.json"))
+    add_retain_prose_argument(parser)
     return parser.parse_args()
 
 
@@ -366,11 +374,12 @@ def main() -> None:
         tool_defs = load_tool_defs(source_dir)
         candidates, stats = load_unique_cases(source_dir)
         selected = select_balanced(candidates, args.per_user_limit)
-        instances = build_instances(selected, tool_defs, commit)
+        raw_instances = build_instances(selected, tool_defs, commit)
+        write_local_prose(raw_instances, args.retain_prose)
+        instances = deidentify_rows(raw_instances)
 
-        output = Path(args.output)
-        output.parent.mkdir(parents=True, exist_ok=True)
-        output.write_text(json.dumps(instances, indent=2, ensure_ascii=True) + "\n", encoding="utf-8")
+        output = args.output
+        write_json_rows(instances, output)
 
         mean_excess = sum(len(row["attacker_tools"]) for row in selected) / len(selected)
         print(f"wrote={output}")
