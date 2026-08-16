@@ -4,12 +4,13 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "auditablebench"
-version = "0.0.1"
+version = "0.1.0"
 description = "AuditableBench: a benchmark for agent auditing across the PRE / LIVE / POST lifecycle."
 readme = "README.md"
 requires-python = ">=3.10"
 license = { text = "MIT" }
 dependencies = [
+    "auditable>=0.2.0",
     "numpy",
     "scikit-learn",
     "networkx",
@@ -22,11 +23,16 @@ graph-ad = ["pyod", "pygod", "torch", "torch-geometric"]
 # run.py reaches GRADE's experiment loaders, which pull corpora from the Hub. These mirror GRADE's
 # own [experiments] extra; prefer `pip install -e <grade-checkout>[experiments]` so versions track.
 dev-seed = ["huggingface_hub", "pyarrow", "datasets"]
-
-# Dev-seed note: the POST seed also imports GRADE's verified eval and `auditable`'s
-# kernel. For now those are resolved through `auditablebench._reuse` (a sys.path bridge to
-# the local `grade` and `auditable` checkouts). A packaged build will depend on `auditable`
-# as a normal dependency and vendor the GRADE loader.
+full = [
+    "pyod",
+    "pygod",
+    "torch",
+    "torch-geometric",
+    "huggingface_hub",
+    "pyarrow",
+    "datasets",
+]
+dev = ["pytest"]
 
 [tool.setuptools.packages.find]
 where = ["src"]

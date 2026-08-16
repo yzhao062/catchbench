@@ -3,8 +3,8 @@
 The public arena where methods compete at finding and attributing agent failures over real
 agent traces. Organized along the agent lifecycle (PRE deploy gate, LIVE real-time, POST
 forensics); each pillar holds scenarios, each scenario is one ``Task`` with its own labels,
-metric, and baseline set. See the design in the agent-startup-thesis planning repo
-(``research/auditablebench-design.md``).
+metric, and baseline set. The shared ``Task`` / ``Method`` contract keeps those inputs fixed
+while each compatible method supplies its own evaluation logic.
 """
 from auditablebench.core import Method, ResultRow, RunPipeline, Task
 

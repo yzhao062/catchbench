@@ -1,0 +1,104 @@
+name: Verify
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+  schedule:
+    - cron: "17 8 * * 1"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  tests:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ["3.12", "3.10"]
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-python@v6
+        with:
+          python-version: ${{ matrix.python-version }}
+          cache: pip
+      - name: Install package and test runner
+        run: python -m pip install -e ".[dev]" pytest
+      - name: Test with hash seed 0
+        env:
+          PYTHONHASHSEED: "0"
+        run: pytest tests -q
+      - name: Test with hash seed 1
+        env:
+          PYTHONHASHSEED: "1"
+        run: pytest tests -q
+
+  smoke:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
+          cache: pip
+      - name: Install package
+        run: python -m pip install -e .
+      - name: Run offline smoke check
+        run: python tools/ci_smoke.py
+
+  cache-integrity:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
+      - name: Validate prediction caches
+        shell: bash
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+
+          post_paths = sorted(Path("data/llm_judge").glob("*.json"))
+          pre_paths = sorted(Path("data/pre/llm_judge_method").glob("*.json"))
+          assert post_paths, "no POST prediction caches found"
+          assert pre_paths, "no PRE prediction caches found"
+
+          for path in post_paths:
+              root = json.loads(path.read_text(encoding="utf-8"))
+              assert isinstance(root, dict), f"{path}: root must be an object"
+              predictions = root.get("predictions")
+              assert isinstance(predictions, dict), f"{path}: missing predictions object"
+              for run_id, prediction in predictions.items():
+                  assert isinstance(prediction, dict), f"{path}: {run_id} must be an object"
+                  assert {"top", "ranking", "raw"} <= prediction.keys(), (
+                      f"{path}: {run_id} lacks a scoring field"
+                  )
+                  top = prediction["top"]
+                  assert top is None or isinstance(top, int), f"{path}: {run_id} has invalid top"
+                  assert isinstance(prediction["ranking"], list), (
+                      f"{path}: {run_id} has invalid ranking"
+                  )
+                  assert all(isinstance(i, int) for i in prediction["ranking"]), (
+                      f"{path}: {run_id} ranking entries must be integers"
+                  )
+                  assert isinstance(prediction["raw"], str), f"{path}: {run_id} has invalid raw"
+
+          for path in pre_paths:
+              predictions = json.loads(path.read_text(encoding="utf-8"))
+              assert isinstance(predictions, dict), f"{path}: root must be an object"
+              for instance_id, needed in predictions.items():
+                  assert isinstance(instance_id, str), f"{path}: instance id must be text"
+                  assert isinstance(needed, list), f"{path}: {instance_id} must be a list"
+                  assert all(isinstance(name, str) for name in needed), (
+                      f"{path}: {instance_id} entries must be text"
+                  )
+
+          print(f"validated {len(post_paths)} POST caches and {len(pre_paths)} PRE caches")
+          PY

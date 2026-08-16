@@ -1,7 +1,7 @@
 """Gold v2 admissibility check on the named-value substrate.
 
-Runs the controls specified in `research/auditablebench-namedvalue-injection.md` section 6 and
-tests the FIXED-THRESHOLD criterion:
+Compares each injection site with the injector's matched eligible pool and tests the
+FIXED-THRESHOLD criterion:
 
   process-artifact controls : injection-site Top-1 minus matched floor must have its seed-block
                               95% CI inside [-0.05, +0.05], AND run-level ROC-AUC CI inside
@@ -10,8 +10,8 @@ tests the FIXED-THRESHOLD criterion:
                               not evidence of leakage.
 
 The decision bands and the seed count are held fixed across the reported runs. The injector was
-revised after control feedback (see the spec, section 6.1), so this is a fixed decision threshold
-applied to an adaptive, in-sample diagnostic, not a confirmatory pre-registered test.
+revised after control feedback, so this is a fixed decision threshold applied to an adaptive,
+in-sample diagnostic, not a confirmatory pre-registered test.
 
 Run:  KMP_DUPLICATE_LIB_OK=TRUE PYTHONPATH=src python tools/namedvalue_admissibility.py
 """
@@ -28,7 +28,7 @@ T975_4 = 2.776  # t(0.975, df=4): seed-block CI half-width over 5 seeds
 SEEDS = (0, 1, 2, 3, 4)
 TOP1_MARGIN = 0.05
 AUC_BAND = (0.45, 0.55)
-KIND = os.environ.get("NV_KIND", "dropped")  # tau affords no usable stale population; see spec
+KIND = os.environ.get("NV_KIND", "dropped")  # tau affords no usable stale population
 
 
 # --- corpus-level statistics the controls compare against -------------------------------------

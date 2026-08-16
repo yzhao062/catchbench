@@ -4,6 +4,9 @@ The script is cache-aware: each raw judge response is stored under
 data/pre/gpt_judge_votes/<source>.json keyed by instance_id. Existing cache
 entries are reused, so reruns are zero-API for completed rows. These raw votes
 are one half of the cross-vendor label; see data/pre/LABEL_QUALITY.md.
+
+Gateway runs read the endpoint from ``NAIRR_GATEWAY_URL`` and a least-privilege
+credential from ``NAIRR_GATEWAY_KEY``. They do not read credentials from files.
 """
 from __future__ import annotations
 
@@ -25,10 +28,6 @@ TOOLS_DIR = REPO_ROOT / "tools"
 STAGING_DIR = REPO_ROOT / "data" / "pre_staging"
 OUT_DIR = REPO_ROOT / "data" / "pre"
 CACHE_DIR = OUT_DIR / "gpt_judge_votes"
-
-DEFAULT_NAIRR_KEY_FILES = [
-    Path("C:/Users/yuezh/PycharmProjects/ai-research-resources/nairr-pilot/keys.local.md"),
-]
 
 PROMPT_VERSION = "pre-needed-v1"
 NONE_MARKERS = {
@@ -62,45 +61,6 @@ def _write_json_atomic(path: Path, obj: Any) -> None:
         json.dump(obj, f, ensure_ascii=False, indent=2)
         f.write("\n")
     os.replace(tmp, path)
-
-
-def _extract_key(text: str, env_var: str) -> str | None:
-    named = re.search(
-        rf"(?:export\s+)?{re.escape(env_var)}\s*(?:=|:)\s*[`\"']?([^`\"'\s|]+)",
-        text,
-    )
-    if named:
-        return named.group(1).strip()
-    bearer = re.search(r"\bsk-[A-Za-z0-9._-]{8,}\b", text)
-    if bearer:
-        return bearer.group(0)
-    return None
-
-
-def _extract_url(text: str) -> str | None:
-    match = re.search(r"https?://[^\s`\"')]+/v1\b", text)
-    return match.group(0) if match else None
-
-
-def ensure_nairr_env(key_files: list[Path]) -> None:
-    if os.environ.get("NAIRR_GATEWAY_KEY"):
-        return
-    for path in key_files:
-        if not path.exists():
-            continue
-        text = path.read_text(encoding="utf-8", errors="ignore")
-        key = _extract_key(text, "NAIRR_GATEWAY_KEY")
-        if key:
-            os.environ["NAIRR_GATEWAY_KEY"] = key
-            if not os.environ.get("NAIRR_GATEWAY_URL"):
-                url = _extract_url(text)
-                if url:
-                    os.environ["NAIRR_GATEWAY_URL"] = url
-            print(f"loaded NAIRR_GATEWAY_KEY from {path}")
-            return
-    raise SystemExit(
-        "set NAIRR_GATEWAY_KEY or provide a readable key file with a gateway sk-* key"
-    )
 
 
 def build_prompt(row: dict) -> str:
@@ -368,19 +328,9 @@ def main() -> None:
     parser.add_argument("--model", default="gpt-5.5")
     parser.add_argument("--workers", type=int, default=8)
     parser.add_argument("--limit", type=int, default=None)
-    parser.add_argument(
-        "--nairr-key-file",
-        action="append",
-        type=Path,
-        default=[],
-        help="local file containing the NAIRR gateway key; may be repeated",
-    )
     args = parser.parse_args()
 
     _setup_imports()
-    key_files = args.nairr_key_file or DEFAULT_NAIRR_KEY_FILES
-    ensure_nairr_env(key_files)
-
     from run_llm_judge_panel import _USAGE, make_complete
 
     complete = make_complete(args.model)

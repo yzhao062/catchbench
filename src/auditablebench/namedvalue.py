@@ -1,9 +1,9 @@
 """Gold v2: named-value substrate and injection over tau-bench trajectories.
 
-Implements `research/auditablebench-namedvalue-injection.md`. The substrate keeps the values a
-trajectory actually carries, so a dependency edge is DERIVED from values rather than stored. An
-injection mutates one value and the edge set recomputes, which is what removes the v1 file-level
-process artifact (there, both faults broke an invariant clean construction never breaks).
+The substrate keeps the values a trajectory actually carries, so dependency edges are derived
+from current values rather than stored. An injection mutates one argument value and rebuilds the
+graph, removing the file-level process artifact where both faults broke an invariant that clean
+construction never breaks.
 
 Two signal classes, and only one carries the admissibility bar:
   process artifact  : a property produced by the act of editing (format, schema, position skew).
@@ -66,7 +66,7 @@ def _leaves(obj: Any, out: List[str]) -> None:
 def _arg_leaves(obj: Any, prefix: tuple = ()):
     """Every scalar leaf of a call-argument structure as (path_tuple, norm_value). The path holds
     real dict keys and list indices, so an injection can address the exact leaf; nested arguments
-    are values too (spec section 3), not only top-level scalars."""
+    count as values, not only top-level scalars."""
     if isinstance(obj, dict):
         for k, v in obj.items():
             yield from _arg_leaves(v, prefix + (k,))
@@ -270,7 +270,7 @@ def build_graph(run_id: str, events: List[Event], given: set,
             entities[(ev.tool, ids[0])].append((i, fld_idx.get(i + 1, {})))
         for path, nv in _arg_leaves(ev.args):   # recurse into nested argument leaves, not only top level
             prior = [p for p in produced.get(nv, ()) if p < i]
-            prods = (prior[-1],) if prior else ()  # spec section 3: edge to the LATEST prior producer
+            prods = (prior[-1],) if prior else ()  # edge to the latest prior producer
             if prods:
                 prov = DERIVED
             elif nv in given:

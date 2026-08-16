@@ -4,13 +4,10 @@ One scenario is one ``Task``; a ``Method`` evaluates a ``Task``; ``RunPipeline``
 valid ``(Task, Method)`` pair and emits leaderboard rows. The POST localization seed runs
 through these interfaces, and LIVE and PRE Tasks plug into the same contract.
 
-Seed contract (this file): a ``Method`` sees the whole ``Task`` and returns its metric dict.
-Supervised baselines do their own out-of-sample cross-validation inside ``evaluate`` (the
-label-safety mechanism): grouped by run for step-level localization, stratified over runs for
-run-level detection (each run is one row), as the seed does. The stricter, label-safe split where the
-``Task`` owns train / eval folds and hands a ``Method`` only label-free instances (the plan's
-Layer 3 / Layer 4) is the next refinement on top of this seed contract; see
-``research/auditablebench-plan.md``.
+Under this contract, a ``Method`` sees the whole ``Task`` and returns its metric dict.
+Supervised baselines prevent in-sample scoring by running out-of-sample cross-validation inside
+``evaluate``: grouped by run for step-level localization and stratified over runs for run-level
+detection, where each run is one row.
 """
 from __future__ import annotations
 

@@ -6,8 +6,9 @@ Two backends, both standard APIs so a second party can regenerate every row:
   - AWS Bedrock (Converse API): open-weights + small proprietary judges (Llama-3.3-70B, Qwen3-32B,
     DeepSeek-R1, Mistral, Gemma, OpenAI gpt-oss, and Amazon Nova).
 
-Keys come from the environment, so nothing secret is committed:
-  - NAIRR_GATEWAY_KEY  (and optional NAIRR_GATEWAY_URL to override the endpoint)
+Gateway configuration comes from the environment, so no endpoint or secret is committed:
+  - NAIRR_GATEWAY_URL  (required; HTTPS except for localhost or 127.0.0.1 development servers)
+  - NAIRR_GATEWAY_KEY  (a least-privilege key limited to the required judge models)
   - AWS_BEARER_TOKEN_BEDROCK  (or standard AWS credentials)
 
 The prompt templates, parsing, scoring, caching, resume, and checkpointing all live in
@@ -25,12 +26,11 @@ from __future__ import annotations
 import argparse
 import os
 import sys
+from urllib.parse import urlparse
 
 sys.path.insert(0, os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "src"))
 
 from auditablebench import llm_judge as lj  # noqa: E402
-
-GATEWAY_URL = os.environ.get("NAIRR_GATEWAY_URL", "http://35.226.229.248:4000/v1")
 
 # Short board label -> provider model id.
 GATEWAY_MODELS = {
@@ -53,13 +53,37 @@ BEDROCK_MODELS = {
 _USAGE = {"in": 0, "out": 0}
 
 
-def gateway_complete(model_id: str, max_tokens: int = 8000, timeout: int = 240):
-    from openai import OpenAI
+def _gateway_url() -> str:
+    url = os.environ.get("NAIRR_GATEWAY_URL", "").strip()
+    if not url:
+        raise SystemExit(
+            "set NAIRR_GATEWAY_URL to the gateway API base URL "
+            "(HTTPS required; HTTP is allowed only for localhost or 127.0.0.1)"
+        )
+    parsed = urlparse(url)
+    if not parsed.hostname:
+        raise SystemExit("NAIRR_GATEWAY_URL must be an absolute URL with a host")
+    if parsed.scheme == "https":
+        return url
+    if parsed.scheme == "http" and parsed.hostname in {"localhost", "127.0.0.1"}:
+        return url
+    raise SystemExit(
+        "NAIRR_GATEWAY_URL must use HTTPS; HTTP is allowed only for localhost or "
+        "127.0.0.1 development servers"
+    )
 
+
+def gateway_complete(model_id: str, max_tokens: int = 8000, timeout: int = 240):
+    gateway_url = _gateway_url()
     key = os.environ.get("NAIRR_GATEWAY_KEY")
     if not key:
-        raise SystemExit("set NAIRR_GATEWAY_KEY (the gateway master/operator key)")
-    client = OpenAI(base_url=GATEWAY_URL, api_key=key)
+        raise SystemExit(
+            "set NAIRR_GATEWAY_KEY to a least-privilege key limited to the required judge models"
+        )
+
+    from openai import OpenAI
+
+    client = OpenAI(base_url=gateway_url, api_key=key)
 
     def complete(prompt: str) -> str:
         try:
@@ -125,12 +149,13 @@ def main() -> None:
     ap.add_argument("--workers", type=int, default=8, help="concurrent API calls per model")
     args = ap.parse_args()
 
+    completes = {label: make_complete(label) for label in args.models}
     runs = lj.load_judge_runs()
     if args.limit:
         runs = runs[: args.limit]
     for label in args.models:
         _USAGE["in"] = _USAGE["out"] = 0
-        complete = make_complete(label)
+        complete = completes[label]
         path = lj.regenerate_cache(args.method, label, complete, limit=args.limit,
                                    max_workers=args.workers)
         preds = lj.load_cache(args.method, label)["predictions"]
