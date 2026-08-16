@@ -11,7 +11,14 @@ reintroduce the v1 failure mode:
 """
 import pytest
 
-nv = pytest.importorskip("auditablebench.namedvalue")
+# Not pytest.importorskip: the ImportError comes from auditablebench._reuse, a module deeper than
+# the one requested, and pytest changed how it treats that. 9.0 skipped; 9.1 lets the error escape
+# and breaks collection. An explicit guard behaves the same on every version. CI installs GRADE, so
+# this path is for a contributor working without a GRADE checkout.
+try:
+    from auditablebench import namedvalue as nv
+except ImportError as exc:  # pragma: no cover - exercised only without a GRADE checkout
+    pytest.skip(f"needs a GRADE checkout: {exc}", allow_module_level=True)
 
 
 def _mk(events, given=()):
