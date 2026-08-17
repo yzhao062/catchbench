@@ -13,9 +13,10 @@ and no other runs (the closest stand-in for a running detector). The supervised 
 verified code unchanged: ``build_graph`` over the first ``k`` steps, the nested feature layers, and the
 cross-validation. The
 full prefix (100%) runs that machinery on the whole trace, so the 100% column reproduces the POST
-detection board wherever the LIVE ``>=4``-step filter leaves the POST population unchanged (exact on
-SWE-Gym; off by one run on tau-bench, whose POST board keeps ``>=2``-step runs). It is a built-in
-validity check, not a separate number to reconcile.
+detection board wherever the LIVE ``>=4``-step filter leaves the POST population unchanged. LIVE and
+POST retain different minimum-step criteria (``>=4`` against ``>=2``), but the current SWE-Gym and
+tau-bench populations both coincide, so the columns agree today rather than by construction. It is a
+built-in validity check, not a separate number to reconcile.
 
   - random              : floor (~0.5 at every prefix).
   - size (flat)          : prefix size and counts only, the trivial baseline.

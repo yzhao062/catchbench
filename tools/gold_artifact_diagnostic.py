@@ -11,7 +11,8 @@ from clean perfectly.
 
 Documented result (2026-07-19, seeds 0-4): the marker uniquely ranks all 82 stale-state and all 106
 dropped-grounding targets Top-1 in every seed, and flags 0 of 188 paired clean runs. The
-degree-matched control in ``gold_matched_breakdown`` holds eligibility and degree fixed but cannot
+eligibility-matched control in ``gold_matched_breakdown`` holds eligibility fixed, but not
+degree, and cannot
 control this marker, so Gold scores on this substrate are mechanism diagnostics; artifact-controlled
 evidence waits on a named-value substrate. Injection-site labels stay detector-independent (Bar
 item 4 passes).

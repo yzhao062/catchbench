@@ -164,8 +164,17 @@ def pools_for(pairs):
     return out
 
 
+def _tie_aware_top1(pool_scores, inj_local):
+    """Expected Top-1 for the injected site under uniform random tie breaking."""
+    injected_score = pool_scores[inj_local]
+    greater = sum(score > injected_score for score in pool_scores)
+    tied = sum(score == injected_score for score in pool_scores)
+    ranks = range(greater + 1, greater + tied + 1)
+    return sum(rank == 1 for rank in ranks) / tied
+
+
 def top1_and_floor(pairs, fn, stats, pools):
-    """Injection-site Top-1 inside the eligible pool, and the matched random floor.
+    """Tie-aware injection-site Top-1 inside the eligible pool, and the matched random floor.
 
     Sites come from the clean run; scores are read off the injected run at those same sites.
     """
@@ -174,12 +183,14 @@ def top1_and_floor(pairs, fn, stats, pools):
         if not pool:
             continue
         by_site = {(c.event_idx, c.path): c for c in p.injected.consumptions}
-        scored = sorted(
-            (s for s in pool if s in by_site),
-            key=lambda s: -fn(p.injected, by_site[s], stats))
+        scored = [(site, fn(p.injected, by_site[site], stats))
+                  for site in pool if site in by_site]
         if not scored:
             continue
-        hits.append(1.0 if scored[0] == (p.label.event_idx, p.label.path) else 0.0)
+        target = (p.label.event_idx, p.label.path)
+        target_idx = next((i for i, (site, _) in enumerate(scored) if site == target), None)
+        hits.append(_tie_aware_top1([score for _, score in scored], target_idx)
+                    if target_idx is not None else 0.0)
         floors.append(1.0 / len(scored))
     return (st.mean(hits) if hits else 0.0), (st.mean(floors) if floors else 0.0)
 

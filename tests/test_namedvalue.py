@@ -239,3 +239,34 @@ def test_identifier_shape_rule():
     assert not nv.identifier_shaped("available")   # no digit
     assert not nv.identifier_shaped("12345")       # no letter
     assert not nv.identifier_shaped("AB1")         # too short
+
+
+def test_constant_score_matches_analytic_floors():
+    """Uniform ties must give the target its expected share, independent of pool order."""
+    import sys
+    from pathlib import Path
+    from types import SimpleNamespace
+
+    # `tools` is a plain directory beside the package, not an installed module, so it is importable
+    # only when the repository root is on sys.path. That holds when pytest runs from the root, as CI
+    # does, and not when it is pointed at an absolute test path from elsewhere. Resolve it here so
+    # the test reports a real result rather than a ModuleNotFoundError that looks like a code fault.
+    root = Path(__file__).resolve().parents[1]
+    if str(root) not in sys.path:
+        sys.path.insert(0, str(root))
+
+    from tools import namedvalue_admissibility as adm
+
+    sites = [(0, ("a",)), (1, ("b",)), (2, ("target",))]
+    consumptions = [SimpleNamespace(event_idx=event_idx, path=path)
+                    for event_idx, path in sites]
+    graph = SimpleNamespace(consumptions=consumptions)
+    label = SimpleNamespace(event_idx=2, path=("target",))
+    pair = SimpleNamespace(clean=graph, injected=graph, label=label)
+    constant_score = lambda _graph, _consumption, _stats: 0.0
+
+    top1, floor = adm.top1_and_floor([pair], constant_score, {}, [sites])
+
+    assert top1 == pytest.approx(floor)
+    assert floor == pytest.approx(1.0 / len(sites))
+    assert adm.run_auc([pair], constant_score, {}) == pytest.approx(0.5)

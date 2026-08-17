@@ -11,7 +11,7 @@ Only configs judged by both vendors are kept, so every shipped label is a cross-
 label. Per-capability agreement and Cohen's kappa are written to data/pre/LABEL_QUALITY.md as a
 reliability characterization (the label source is judge opinion, so its agreement must be reported).
 
-Base config fields (instance_id, source, provenance, task_or_role_spec, declared_capabilities) come
+Base config fields (instance_id, source, provenance, declared_capabilities) come
 from data/pre_staging/<src>.json when present, otherwise from the harvest-input fields preserved in
 the existing data/pre/<src>.json labels. Only excess_set and minimal_reference are (re)derived here.
 
@@ -22,6 +22,10 @@ from __future__ import annotations
 import json
 import sys
 from pathlib import Path
+
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+
+from pre_spec_features import deidentify_rows, write_json_rows  # noqa: E402
 
 REPO = Path(__file__).resolve().parents[1]
 PRE = REPO / "data" / "pre"
@@ -46,22 +50,22 @@ def cohen_kappa(a: list[int], b: list[int]) -> float:
 
 
 def load_base(src: str) -> list[dict]:
+    """Base config rows for one source, de-identified either way.
+
+    Only ``excess_set`` and ``minimal_reference`` are re-derived downstream, so every other field
+    the released row carries has to survive this function. An earlier version rebuilt a four-key
+    row here and dropped ``spec_tokens``, which ``pre_instance_from_dict`` requires, so a ``--write``
+    would have replaced valid released data with data the PRE loader cannot read. Passing rows
+    through ``deidentify_rows`` keeps the release shape in both directions: a staging row still
+    carrying raw prose loses it and gains the derived features, and an already-derived release row
+    passes through unchanged.
+    """
     sp = STAGING / f"{src}.json"
     if sp.exists():
-        return json.load(open(sp, encoding="utf-8"))
+        return deidentify_rows(json.load(open(sp, encoding="utf-8")))
     lp = PRE / f"{src}.json"
     if lp.exists():
-        rows = json.load(open(lp, encoding="utf-8"))
-        return [
-            {
-                "instance_id": r["instance_id"],
-                "source": r["source"],
-                "provenance": r["provenance"],
-                "task_or_role_spec": r["task_or_role_spec"],
-                "declared_capabilities": r["declared_capabilities"],
-            }
-            for r in rows
-        ]
+        return deidentify_rows(json.load(open(lp, encoding="utf-8")))
     raise FileNotFoundError(f"no base for {src}: need {sp} or {lp}")
 
 
@@ -116,20 +120,15 @@ def main() -> None:
             for n in declared:
                 gv.append(0 if n in gpt[iid] else 1)
                 cv.append(0 if n in claude[iid] else 1)
-            merged.append({
-                "instance_id": iid,
-                "source": r["source"],
-                "provenance": r["provenance"],
-                "task_or_role_spec": r["task_or_role_spec"],
-                "declared_capabilities": r["declared_capabilities"],
-                "minimal_reference": sorted(needed),
-                "labels": {
-                    "excess_set": excess,
-                    "label_source": "llm_judge",
-                    "judges": [GPT_MODEL, CLAUDE_MODEL],
-                    "merge_rule": "excess iff both judges agree the capability is not needed",
-                },
-            })
+            row = dict(r)  # carry every base field; only the two below are re-derived here
+            row["minimal_reference"] = sorted(needed)
+            row["labels"] = {
+                "excess_set": excess,
+                "label_source": "llm_judge",
+                "judges": [GPT_MODEL, CLAUDE_MODEL],
+                "merge_rule": "excess iff both judges agree the capability is not needed",
+            }
+            merged.append(row)
         pooled_g += gv
         pooled_c += cv
         ncap = len(gv)
@@ -139,7 +138,7 @@ def main() -> None:
         mex = round(sum(len(m["labels"]["excess_set"]) for m in merged) / denom, 3) if denom else 0.0
         summary.append((src, len(merged), dropped, ncap, agree, k, mex))
         if write:
-            json.dump(merged, open(PRE / f"{src}.json", "w", encoding="utf-8"), ensure_ascii=False)
+            write_json_rows(merged, PRE / f"{src}.json")
         print(f"{src}: dual_judged={len(merged)} dropped={dropped} caps={ncap} "
               f"cap_agree={agree} kappa={k} mean_excess={mex}")
 

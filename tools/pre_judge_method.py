@@ -100,14 +100,29 @@ def make_complete(label: str):
     raise SystemExit(f"unknown model label {label!r}; known: {sorted(BEDROCK_MODELS)}")
 
 
-def load_board_instances() -> list[dict]:
-    """Every committed board config (data/pre/*.json). Instance ids must be globally unique."""
+def load_board_instances(input_dir: Path = None) -> list[dict]:
+    """Every board config in `input_dir` (default data/pre). Instance ids must be globally unique.
+
+    The released corpus under data/pre is de-identified and cannot rebuild a judge prompt, so a
+    caller judging fresh output points this at a prose-retaining harvest instead.
+    """
+    root = PRE_DIR if input_dir is None else Path(input_dir)
     seen: dict[str, dict] = {}
-    for path in sorted(PRE_DIR.glob("*.json")):
+    for path in sorted(root.glob("*.json")):
         for row in json.load(open(path, encoding="utf-8")):
             iid = row["instance_id"]
             if iid in seen:
-                raise SystemExit(f"duplicate instance_id {iid!r} in data/pre/*.json (at {path.name})")
+                raise SystemExit(f"duplicate instance_id {iid!r} in {root}/*.json (at {path.name})")
+            if "task_or_role_spec" not in row:
+                raise SystemExit(
+                    f"{path.name} carries no task_or_role_spec. The released PRE corpus is "
+                    "de-identified: the prose was replaced by spec_tokens, so a judge prompt cannot "
+                    "be rebuilt from it. Produce a prose-retaining corpus outside the repository "
+                    "and point this tool at it:\n"
+                    "  python tools/pre_harvest_<source>.py --retain-prose <DIR>/<source>.json\n"
+                    f"  python tools/{Path(__file__).name} --input-dir <DIR>\n"
+                    "To merge the committed judge votes into labels instead, which does run on the "
+                    "release, use tools/pre_merge_judges.py.")
             seen[iid] = {
                 "instance_id": iid,
                 "source": row["source"],
@@ -153,9 +168,12 @@ def main() -> None:
                     help="board label; known: " + ", ".join(sorted(BEDROCK_MODELS)))
     ap.add_argument("--limit", type=int, default=None, help="cap configs (pilot); omit for the full board")
     ap.add_argument("--workers", type=int, default=8, help="concurrent API calls")
+    ap.add_argument("--input-dir", default=None,
+                    help="directory of prose-retaining config JSON; default data/pre (de-identified, "
+                         "so the default cannot rebuild a judge prompt)")
     args = ap.parse_args()
 
-    full_instances = load_board_instances()  # always the full board; --limit only caps what is judged
+    full_instances = load_board_instances(args.input_dir)  # always the full board; --limit only caps what is judged
     to_judge = full_instances[: args.limit] if args.limit is not None else full_instances
     resolved_id = BEDROCK_MODELS.get(args.model, args.model)
 

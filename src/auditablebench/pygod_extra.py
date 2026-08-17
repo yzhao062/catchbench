@@ -39,12 +39,16 @@ def _pygod_extra_node_scores(
     Follows the same chunked full-batch + self-loop-isolated-nodes pattern as
     ``graph_ad.pygod_node_scores``. Node features are standardized across the whole set before
     training. Runs are grouped into chunks capped at ``max_chunk_nodes`` total nodes; each chunk
-    is fit full-batch (one disconnected PyG Batch, no neighbor sampling). Self-loops are added
-    only for truly isolated nodes to avoid PyG's NeighborLoader index crash on sparse graphs.
+    is fit full-batch as one disconnected ``Data``, built by ``graph_ad.flat_disconnected``, whose
+    docstring explains why a PyG ``Batch`` here scores only the first few nodes of the chunk.
+    Self-loops are added only for truly isolated nodes to avoid PyG's NeighborLoader index crash on
+    sparse graphs.
     """
     import torch
-    from torch_geometric.data import Batch, Data
+    from torch_geometric.data import Data
     from sklearn.preprocessing import StandardScaler
+
+    from auditablebench.graph_ad import flat_disconnected
 
     torch.manual_seed(seed)
     np.random.seed(seed)
@@ -71,7 +75,7 @@ def _pygod_extra_node_scores(
     def _fit_chunk(members: list) -> None:
         if not members:
             return
-        batch = Batch.from_data_list([datas[i] for i in members])
+        joined, membership = flat_disconnected(datas, members)
         detector = detector_cls(
             hid_dim=hid_dim,
             num_layers=num_layers,
@@ -81,9 +85,8 @@ def _pygod_extra_node_scores(
             verbose=0,
             **detector_kwargs,
         )
-        detector.fit(batch)
+        detector.fit(joined)
         scores = np.asarray(detector.decision_score_, dtype=float)
-        membership = batch.batch.numpy()
         for local_k, gi in enumerate(members):
             results[gi] = scores[membership == local_k]
 

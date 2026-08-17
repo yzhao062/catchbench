@@ -31,17 +31,22 @@ Leakage and distribution checks, reported as first-class results (see ``gold_rep
     candidate pool degree sits above that floor, but only because the injector targets steps that
     have dependencies: a has-dep eligibility baseline scores almost the same, so the lift is target
     SELECTION, a construction leak. ``gold_matched_breakdown`` controls for it by ranking only within
-    the injector's eligible pool, where has-dep and degree fall to the matched floor and the
-    dependency-span signal is what survives (for stale-state). That matched comparison holds
-    eligibility and degree fixed but cannot control the missing-predecessor marker above, so it is
-    a selection control, not a full artifact control.
+    the injector's eligible pool, where the dependency-span signal is what survives (for
+    stale-state). Inside that pool has-dep lands exactly on the matched floor for stale-state
+    (0.350 against 0.350), which is the leak closing. Degree does NOT: eligible steps still differ
+    in how many dependencies they carry, so degree reads 0.394 on stale-state and 0.225 overall
+    against a 0.308 floor. The pool equalizes eligibility and only eligibility, and it cannot
+    control the missing-predecessor marker above, so it is a selection control rather than a full
+    artifact control.
   - Stale-state preserves run-level edge count; dropped-grounding removes one edge; stale-state also
     shifts the run-level max-span distribution by construction. All are reported paired, clean
     versus injected.
   - Labels are the injection site, correct by construction and independent of any detector.
   - Caveat: SWE-Gym dependencies are INFERRED, so a redirected edge is a dependency-misattribution
     proxy for a true stale read. The named-value corpus is the fix for both the proxy and the
-    construction leakage; the degree-matched selection control is the nearer partial check.
+    construction leakage; the eligibility-matched selection control is the nearer partial check.
+    It equalizes eligibility only: eligible steps still differ in degree, so it is a
+    selection control rather than a degree match.
 """
 from __future__ import annotations
 
@@ -52,7 +57,6 @@ from auditablebench import _reuse  # noqa: F401  side effect: sets sys.path for 
 import numpy as np  # noqa: E402
 
 import agent_graph_swegym as swegym  # noqa: E402  SWE-Gym step loader (resolved / unresolved)
-from agent_failure_localization import _rank_metrics  # noqa: E402  shared ranking metrics
 
 from auditablebench.graph_ad import pygod_node_scores  # noqa: E402
 
@@ -191,7 +195,9 @@ class GoldLocalization:
 
 
 def _scored(task: GoldLocalization, per_graph: List[np.ndarray]) -> Mapping[str, float]:
-    metrics = _rank_metrics(np.concatenate(per_graph), task.groups, task.injected_row)
+    task.setup()
+    groups = sorted(set(task.groups.tolist()))
+    metrics = _kind_summary(_ranks(task, per_graph), groups)
     return dict(zip(_METRIC_NAMES, (float(v) for v in metrics)))
 
 
@@ -245,11 +251,12 @@ class GoldRandom:
 
     def evaluate(self, task: GoldLocalization) -> Mapping[str, float]:
         task.setup()
+        groups = sorted(set(task.groups.tolist()))
         rows = []
         for seed in range(50):
             rng = np.random.RandomState(seed)
             draw = [rng.rand(len(X)) for X, _ in task.graphs]
-            rows.append(_rank_metrics(np.concatenate(draw), task.groups, task.injected_row))
+            rows.append(_kind_summary(_ranks(task, draw), groups))
         mean = np.mean(rows, axis=0)
         return dict(zip(_METRIC_NAMES, (float(v) for v in mean)))
 
@@ -282,22 +289,24 @@ def gold_localization_methods() -> list:
     ]
 
 
-def _ranks(task: GoldLocalization, per_graph: List[np.ndarray]) -> dict:
-    """Per-run 1-based rank of the injected node."""
+def _ranks(task: GoldLocalization, per_graph: List[np.ndarray], pools: dict | None = None) -> dict:
+    """Per-run expected metric triple under uniform tie-breaking, optionally within candidate pools."""
     scores = np.concatenate(per_graph)
     out = {}
     for gi in sorted(set(task.groups.tolist())):
         rows = np.where(task.groups == gi)[0]
-        order = rows[np.argsort(-scores[rows], kind="stable")]
-        out[gi] = int(np.where(order == task.injected_row[gi])[0][0]) + 1
+        positions = np.arange(len(rows)) if pools is None else np.asarray(pools[gi], dtype=int)
+        pool_rows = rows[positions]
+        inj_local = int(np.where(pool_rows == task.injected_row[gi])[0][0])
+        out[gi] = _tie_aware(scores[pool_rows], inj_local)
     return out
 
 
 def _kind_summary(ranks: dict, subset: list) -> tuple:
-    rs = np.array([ranks[gi] for gi in subset], dtype=float)
-    if not len(rs):
+    if not subset:
         return (float("nan"),) * 3
-    return float(np.mean(rs == 1)), float(np.mean(rs <= 3)), float(np.mean(1.0 / rs))
+    metrics = np.array([ranks[gi] for gi in subset], dtype=float)
+    return tuple(float(value) for value in metrics.mean(axis=0))
 
 
 def _row(label: str, o: tuple, s: tuple, d: tuple) -> str:
@@ -385,15 +394,7 @@ def _matched_floor(pools: dict, subset: list) -> tuple:
 def _matched_metrics(task: GoldLocalization, per_graph: List[np.ndarray], pools: dict,
                      subset: list) -> tuple:
     """Tie-aware Top-1 / Top-3 / MRR for one method, ranking only within each run's matched pool."""
-    if not subset:
-        return (float("nan"),) * 3
-    scores = np.concatenate(per_graph)
-    acc = np.zeros(3)
-    for gi in subset:
-        rows = np.where(task.groups == gi)[0]
-        pool_rows = rows[pools[gi]]
-        acc += _tie_aware(scores[pool_rows], pools[gi].index(task.targets[gi]))
-    return tuple(float(v) for v in acc / len(subset))
+    return _kind_summary(_ranks(task, per_graph, pools), subset)
 
 
 def gold_breakdown(task: GoldLocalization, methods: list) -> str:
@@ -404,7 +405,7 @@ def gold_breakdown(task: GoldLocalization, methods: list) -> str:
     all_gi = sorted(set(task.groups.tolist()))
     stale = [gi for gi in all_gi if task.kinds[gi] == "stale"]
     dropped = [gi for gi in all_gi if task.kinds[gi] == "dropped"]
-    lines = [f"\nGold per-fault breakdown (Top-1/Top-3/MRR), {len(stale)} stale + {len(dropped)} dropped:",
+    lines = [f"\nGold per-fault breakdown (Top-1/Top-3/MRR, tie-aware), {len(stale)} stale + {len(dropped)} dropped:",
              f"  {'method':24s}{'overall':>20s}{'stale-state':>20s}{'dropped-grounding':>22s}"]
     for m in methods:
         if not hasattr(m, "scores") or m.method_id == "random":
@@ -416,13 +417,14 @@ def gold_breakdown(task: GoldLocalization, methods: list) -> str:
 
 
 def gold_matched_breakdown(task: GoldLocalization, methods: list) -> str:
-    """Degree-matched (selection-matched) leakage control: re-rank each method only among the steps
-    the injector could have targeted for that run's fault kind. The full-pool board carries a
-    construction leak (the injected step always has a dependency, so detect-the-eligible baselines
-    lift for free). Inside the matched pool the eligibility / degree artifact is held constant, so
-    has-dep and degree fall to the matched random floor; a genuine dependency signal is what
-    survives. Reported per fault kind, tie-aware so constant-score baselines do not win on sort
-    order (see ``_tie_aware``)."""
+    """Eligibility-matched leakage control: re-rank each method only among the steps the injector
+    could have targeted for that run's fault kind. The full-pool board carries a construction leak,
+    since the injected step always has a dependency and detect-the-eligible baselines lift for free.
+    Inside the matched pool that eligibility artifact is held constant and has-dep lands on the
+    matched random floor for stale-state; a genuine dependency signal is what survives. Degree is
+    NOT equalized, because eligible steps still differ in how many dependencies they carry, so read
+    its row as a partial check rather than a matched one. Reported per fault kind, tie-aware so
+    constant-score baselines do not win on sort order (see ``_tie_aware``)."""
     task.setup()
     pools = _matched_pools(task)
     all_gi = sorted(set(task.groups.tolist()))
@@ -430,7 +432,7 @@ def gold_matched_breakdown(task: GoldLocalization, methods: list) -> str:
     dropped = [gi for gi in all_gi if task.kinds[gi] == "dropped"]
     pool_sz = float(np.mean([len(pools[gi]) for gi in all_gi]))
     lines = [
-        f"\nGold degree-matched control (rank within the injector's eligible pool only, "
+        f"\nGold eligibility-matched control (rank within the injector's eligible pool only, "
         f"mean {pool_sz:.1f} candidates/run, tie-aware): Top-1/Top-3/MRR",
         f"  {'method':24s}{'overall':>20s}{'stale-state':>20s}{'dropped-grounding':>22s}",
         _row("random (matched)", _matched_floor(pools, all_gi),
@@ -504,7 +506,7 @@ def _inject_paired(runs: List[list], seed: int = 0):
     """Cause-attribution substrate: for each run that affords BOTH faults, return a stale-injected copy
     and a dropped-injected copy of the SAME run. Because the two classes are drawn from identical runs,
     a classifier cannot separate them on run identity, only on the fault signature, so there is no
-    eligibility leak (the run-level analogue of the localization degree-matched control)."""
+    eligibility leak (the run-level analogue of the localization eligibility-matched control)."""
     rng = np.random.RandomState(seed)
     stale_steps, dropped_steps = [], []
     for original in runs:

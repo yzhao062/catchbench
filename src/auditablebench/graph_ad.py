@@ -24,6 +24,35 @@ import numpy as np
 Graph = Tuple[np.ndarray, np.ndarray]
 
 
+def flat_disconnected(datas: Sequence, members: Sequence[int]):
+    """Join several per-run graphs into one disconnected graph, without PyG's ``Batch`` wrapper.
+
+    ``Batch`` exposes a ``batch_size`` attribute equal to its graph count. PyGOD's ``DeepDetector``
+    reads that attribute off the object the loader yields and writes scores for only that many
+    nodes (``pygod/detector/base.py``: ``batch_size = sampled_data.batch_size`` then
+    ``decision_score_[node_idx[:batch_size]] = score``). Feeding it a ``Batch`` of g graphs
+    therefore scores the first g nodes of the chunk and silently leaves every other node at its
+    initial zero, which reads downstream as a detector that ranked nothing.
+
+    A plain ``Data`` carrying the same disconnected graph has no ``batch_size`` attribute, so the
+    loader supplies the true seed count and every node is scored. Returns the joined ``Data`` and an
+    integer membership vector giving each node's index into ``members``.
+    """
+    import torch
+    from torch_geometric.data import Data
+
+    xs, edges, membership, offset = [], [], [], 0
+    for local_k, gi in enumerate(members):
+        d = datas[gi]
+        n = int(d.x.shape[0])
+        xs.append(d.x)
+        edges.append(d.edge_index + offset)
+        membership.append(np.full(n, local_k, dtype=np.int64))
+        offset += n
+    joined = Data(x=torch.cat(xs, dim=0), edge_index=torch.cat(edges, dim=1))
+    return joined, np.concatenate(membership)
+
+
 def pygod_node_scores(
     graphs: Sequence[Graph], *, hid_dim: int = 32, epoch: int = 40, max_chunk_nodes: int = 3000,
     seed: int = 0,
@@ -33,14 +62,16 @@ def pygod_node_scores(
 
     Node features are standardized across the whole set before training (degrees and shares live on
     different scales). Runs are grouped into chunks of at most ``max_chunk_nodes`` nodes, and each
-    chunk is fit FULL-BATCH (one disconnected graph, no neighbor sampling). Full-batch keeps
+    chunk is fit FULL-BATCH as one disconnected ``Data`` built by :func:`flat_disconnected`, whose
+    docstring explains why a PyG ``Batch`` here scores only the chunk's first few nodes. Full-batch
+    keeps
     DOMINANT's dense O(n^2) adjacency reconstruction bounded by the chunk cap, and sidesteps a PyG
     minibatch-sampling index bug on graphs with many isolated nodes (the sparse dependency-only
     graphs the Gold board builds). A run's nodes always stay in one chunk, so its within-run ranking
     comes from a single model.
     """
     import torch
-    from torch_geometric.data import Batch, Data
+    from torch_geometric.data import Data
     from pygod.detector import DOMINANT
     from sklearn.preprocessing import StandardScaler
 
@@ -68,12 +99,11 @@ def pygod_node_scores(
     def _fit_chunk(members: list) -> None:
         if not members:
             return
-        batch = Batch.from_data_list([datas[i] for i in members])
+        joined, membership = flat_disconnected(datas, members)
         detector = DOMINANT(hid_dim=hid_dim, num_layers=2, epoch=epoch, batch_size=0,
                             gpu=-1, verbose=0)  # batch_size=0 => one full batch, no neighbor sampling
-        detector.fit(batch)
+        detector.fit(joined)
         scores = np.asarray(detector.decision_score_, dtype=float)
-        membership = batch.batch.numpy()
         for local_k, gi in enumerate(members):
             results[gi] = scores[membership == local_k]
 
