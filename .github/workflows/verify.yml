@@ -36,10 +36,11 @@ jobs:
           git clone --filter=blob:none https://github.com/yzhao062/grade.git ../grade
           git -C ../grade checkout --quiet 3839a57ac165d58a807fce0a3ff38346732ee936
           python -m pip install -e "../grade[experiments]"
-      # A silent skip would let the named-value contract rot unnoticed, which is what the
-      # pre-publication audit warned about, so seed 0 also asserts that nothing skipped.
-      # pipefail matters here: without it the exit status would be tee's, and a failing
-      # test would pass the step.
+      # A silent skip lets a contract rot unnoticed, which is what the pre-publication audit warned
+      # about, so seed 0 also asserts that nothing skipped. The graph-AD file is the one declared
+      # exception: it needs the torch stack, and the graph-ad job below installs that stack and runs
+      # the same file with skipping forbidden. Any other skip fails here.
+      # pipefail matters: without it the exit status is tee's, and a failing test passes the step.
       - name: Test with hash seed 0
         shell: bash
         env:
@@ -48,8 +49,10 @@ jobs:
         run: |
           set -o pipefail
           pytest tests -q -ra 2>&1 | tee result.txt
-          if grep -qE "[0-9]+ skipped" result.txt; then
-            echo "::error::a test skipped; the named-value contract must run in CI"
+          undeclared=$(grep -E "^SKIPPED " result.txt | grep -v "test_graph_ad_scores_every_node.py" || true)
+          if [ -n "$undeclared" ]; then
+            echo "::error::a test skipped outside the declared exception; a contract did not run"
+            echo "$undeclared"
             exit 1
           fi
       - name: Test with hash seed 1
@@ -57,6 +60,36 @@ jobs:
           PYTHONHASHSEED: "1"
           GRADE_DIR: ${{ github.workspace }}/../grade
         run: pytest tests -q -ra
+
+  # The PyGOD truncation regression is invisible from the board: the detector scored the first node
+  # of each chunk and left the rest at zero, and the board read that as a detector ranking nothing.
+  # Its test needs torch, which the matrix above does not carry, so this job carries it instead.
+  # Without this job the test would skip in every CI run and lock nothing.
+  graph-ad:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
+          cache: pip
+      # CPU wheels only. The default PyPI torch for Linux is the CUDA build, several gigabytes of
+      # download for a test that never touches a device. Install torch first so torch-geometric and
+      # pygod resolve against the build already present rather than pulling the CUDA one.
+      - name: Install the graph-AD stack (CPU wheels)
+        run: |
+          python -m pip install torch --index-url https://download.pytorch.org/whl/cpu
+          python -m pip install -e ".[graph-ad,dev]"
+      - name: Run the graph-AD contract
+        shell: bash
+        run: |
+          set -o pipefail
+          pytest tests/test_graph_ad_scores_every_node.py -q -ra 2>&1 | tee graph_ad.txt
+          if grep -qE "^SKIPPED " graph_ad.txt; then
+            echo "::error::the graph-AD contract skipped; the torch stack did not install"
+            exit 1
+          fi
 
   smoke:
     runs-on: ubuntu-latest
@@ -87,10 +120,15 @@ jobs:
           import json
           from pathlib import Path
 
-          post_paths = sorted(Path("data/llm_judge").glob("*.json"))
+          # legacy_run_keys.json shares the directory but is a key map, not a prediction cache. It
+          # gets its own contract below rather than an exemption, because a duplicate value in it
+          # would silently point two legacy keys at one canonical record.
+          legacy_path = Path("data/llm_judge/legacy_run_keys.json")
+          post_paths = [p for p in sorted(Path("data/llm_judge").glob("*.json")) if p != legacy_path]
           pre_paths = sorted(Path("data/pre/llm_judge_method").glob("*.json"))
           assert post_paths, "no POST prediction caches found"
           assert pre_paths, "no PRE prediction caches found"
+          assert legacy_path.exists(), "the legacy key map is missing; cached runs would not resolve"
 
           for path in post_paths:
               root = json.loads(path.read_text(encoding="utf-8"))
@@ -112,6 +150,17 @@ jobs:
                   )
                   assert isinstance(prediction["raw"], str), f"{path}: {run_id} has invalid raw"
 
+          legacy = json.loads(legacy_path.read_text(encoding="utf-8"))
+          assert isinstance(legacy.get("format"), str), f"{legacy_path}: missing format"
+          keys = legacy.get("keys")
+          assert isinstance(keys, dict) and keys, f"{legacy_path}: missing keys object"
+          assert all(isinstance(k, str) and isinstance(v, str) for k, v in keys.items()), (
+              f"{legacy_path}: every entry must map text to text"
+          )
+          assert len(set(keys.values())) == len(keys), (
+              f"{legacy_path}: two legacy keys resolve to one canonical record"
+          )
+
           for path in pre_paths:
               predictions = json.loads(path.read_text(encoding="utf-8"))
               assert isinstance(predictions, dict), f"{path}: root must be an object"
@@ -122,5 +171,8 @@ jobs:
                       f"{path}: {instance_id} entries must be text"
                   )
 
-          print(f"validated {len(post_paths)} POST caches and {len(pre_paths)} PRE caches")
+          print(
+              f"validated {len(post_paths)} POST caches, {len(pre_paths)} PRE caches, "
+              f"and {len(keys)} legacy key mappings"
+          )
           PY
