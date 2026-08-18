@@ -15,7 +15,7 @@ through ``pyod_extra`` and ``pygod_extra`` via ``run.py``.
   - pyod-flatten (ECOD)  : unsupervised PyOD on the flat per-run features (shallow tabular AD).
   - pygod (graph AD)     : unsupervised DOMINANT over the typed graph (generic graph AD).
   - guardian (recon-AE)  : GUARDIAN's unsupervised reconstruction autoencoder (agent-specific graph AD).
-  - auditable (structure): size plus the size-normalized dependency block (the structural signal
+  - auditable (size+deps): size plus the size-normalized dependency block (the dependency signal
                            auditable surfaces). Beating "size (flat)" is the benchmark's point.
   - full                 : flat plus execution plus raw dependency features (reference).
   - g-safeguard (sup GNN): G-Safeguard's supervised graph-classification GNN over the dependency graph.
@@ -191,7 +191,7 @@ def post_detection_methods() -> list:
         PyODFlatten(),
         PyGODDetection(),
         GuardianDetection(),
-        _LayerAUC("auditable (structure)", "flatdep"),
+        _LayerAUC("auditable (size+deps)", "flatdep"),
         _LayerAUC("full", "full"),
         GSafeguardDetection(),
     ]

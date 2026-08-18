@@ -13,7 +13,7 @@ Methods on the board:
                           baseline coincides with the position prior. That is the honest result,
                           and it is why a long-range gold-edge corpus is the planned next lever.
   - position            : the early-fault prior (faults cluster early), one monotone feature.
-  - structure (sup.)     : GRADE's supervised execution-structure ranker (agent activity and
+  - exec-rank (sup.)     : GRADE's supervised execution-feature ranker (agent activity and
                           handoff centrality), the published reference.
 
 This reuses GRADE's verified Who&When loader and localization eval for the reference methods,
@@ -139,5 +139,5 @@ def post_localization_methods() -> list:
         AuditableBlast(),
         _SeedModel("position", "position"),
         PyGODLocalization(),
-        _SeedModel("structure (sup.)", "structure"),
+        _SeedModel("exec-rank (sup.)", "structure"),
     ]

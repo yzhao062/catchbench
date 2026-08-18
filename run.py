@@ -18,6 +18,11 @@ import sys
 sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), "src"))
 
 from auditablebench.core import RunPipeline  # noqa: E402
+from auditablebench.corpora import (  # noqa: E402
+    revision_header,
+    verify_corpus_heads,
+    verify_pinned_fetches,
+)
 from auditablebench.detection import PostDetection, post_detection_methods  # noqa: E402
 from auditablebench.gold import (  # noqa: E402
     GoldAttribution,
@@ -47,6 +52,7 @@ from auditablebench.pygod_extra import pygod_extra_methods  # noqa: E402  more P
 
 
 def main() -> None:
+    revisions = verify_corpus_heads()
     tasks = [PreOverPrivilege(), PostLocalization(), PostDetection("swegym"), PostDetection("tau"),
              GoldLocalization(), GoldAttribution(), LiveStreaming("swegym"), LiveStreaming("tau"),
              LiveStaleState()]
@@ -56,10 +62,14 @@ def main() -> None:
                + gold_localization_methods() + gold_attribution_methods()
                + live_streaming_methods() + live_stale_methods())
 
-    print("AuditableBench :: PRE + POST + LIVE board(s)\n")
-    for task in tasks:
-        if hasattr(task, "corpus_line"):
-            print(task.corpus_line())
+    corpus_lines = [task.corpus_line() for task in tasks if hasattr(task, "corpus_line")]
+    verify_pinned_fetches()
+
+    print("AuditableBench :: PRE + POST + LIVE board(s)")
+    print(revision_header(revisions))
+    print()
+    for line in corpus_lines:
+        print(line)
 
     rows = RunPipeline(tasks, methods).run()
     print(RunPipeline.leaderboard(rows))
@@ -91,13 +101,16 @@ def main() -> None:
         "\nReading:"
         "\n- Localization (Who&When): the LLM-judge panel is the strongest post-hoc localizer here "
         "(GPT-5.5 0.452 Top-1 from the committed all-at-once cache), the expected result with the "
-        "full trace in hand; a clear capability gradient runs down to small models below the "
-        "position prior. Among methods that use no LLM, position is the honest floor, auditable's "
-        "blast coincides with it because Who&When assumes full-context dependencies, and GRADE's "
-        "supervised execution-structure ranker localizes beyond the prior. A long-range gold-edge "
+        "full trace in hand. The panel spans 0.127 to 0.452, but eight of the models sit in one "
+        "band from 0.333 up that 126 runs do not separate, so read the band rather than the "
+        "ordering inside it; only the smallest models are distinguishable, and they do not improve "
+        "on the position prior. Among methods that use no LLM, position is the honest floor, "
+        "auditable's blast coincides with it because Who&When assumes full-context dependencies, "
+        "and GRADE's supervised exec-rank method localizes beyond the prior on Top-3 (its Top-1 "
+        "margin over position does not resolve at this corpus size). A long-range gold-edge "
         "corpus is the next data lever."
         "\n- Detection (SWE-Gym, tau-bench): the question is whether the dependency structure "
-        "predicts failure beyond run size; compare 'auditable (structure)' against 'size (flat)'. "
+        "predicts failure beyond run size; compare 'auditable (size+deps)' against 'size (flat)'. "
         "The lift holds in the same direction on both corpora (large on SWE-Gym, modest on tau)."
         "\n- Unsupervised AD arena (PyOD flat vs PyGOD graph): after the batching repair (see "
         "graph_ad.flat_disconnected), the single-seed PyGOD family spans 0.547 to 0.850 on SWE-Gym "

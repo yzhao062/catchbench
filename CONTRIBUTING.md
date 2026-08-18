@@ -91,8 +91,9 @@ committed prediction file is the scored artifact.
 
 Corpora download from the Hugging Face Hub, and an upstream dataset can be rebuilt at the same name.
 Every corpus loader must pin an immutable dataset revision. Do not load from `main`, `latest`, or an
-unpinned default. The tau-bench loader is pinned to `382e57d`; new corpus adapters must follow the
-same rule.
+unpinned default. Record board corpora in `auditablebench.corpora`, which checks the Hub head, forces
+the full revision through GRADE's Hub calls, and verifies that each loader used the pinned path. New
+corpus adapters must follow the same rule.
 
 ## Reporting a result honestly
 

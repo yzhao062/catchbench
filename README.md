@@ -42,14 +42,13 @@ Auditing Agent Failures Across the PRE / LIVE / POST Lifecycle*. Preprint: arXiv
 (identifier pending). The repository has not yet been released publicly.
 
 `run.py` computes the boards from the inputs available to a checkout. A repository commit fixes the
-benchmark code, committed PRE artifacts, and cached LLM-judge predictions. The tau-bench loader also
-pins dataset commit `382e57d1784b55c5155f4ef394ef48f1c747a287`, which contains the converter fix
-used for the displayed board. The Who&When and SWE-Gym loaders do not request fixed dataset
-revisions, the sibling GRADE and `auditable` checkout revisions are not fixed by the setup, and Python
-dependencies are not locked. A later installation should reproduce the pipeline and board structure,
-but exact numerical agreement with the displayed values is not guaranteed if those upstream data,
-checkouts, or dependencies change. Archival reproduction requires recording those revisions and the
-resolved environment.
+benchmark code, committed PRE artifacts, and cached LLM-judge predictions. It also records immutable
+Hugging Face commits for Who&When, SWE-Gym, and tau-bench in `auditablebench.corpora`. Before scoring,
+the runner verifies that each dataset head still equals its recorded commit, forces GRADE's Hub calls
+through that full revision, and verifies the observed fetch or Who&When snapshot metadata. The printed
+board header records all three commits. Direct execution of GRADE outside this runner is not covered by
+the AuditableBench-side pin. The sibling GRADE and `auditable` checkout revisions are not fixed by the
+setup, and Python dependencies are not locked.
 
 ## Posture: Branded Name, Neutral Content
 
@@ -114,7 +113,7 @@ Rank the steps of a failed run by how likely each is the fault, scored against t
 | Mistral-Small | 0.135 | 0.421 | 0.363 |
 | Nova-Micro | 0.127 | 0.397 | 0.342 |
 | **Structural / baseline (no LLM)** | | | |
-| structure (supervised) | 0.211 | 0.614 | 0.454 |
+| exec-rank (sup.) | 0.211 | 0.614 | 0.454 |
 | `auditable` (blast share) | 0.159 | 0.516 | 0.407 |
 | position prior | 0.159 | 0.516 | 0.407 |
 | PyGOD (graph AD, DOMINANT) | 0.151 | 0.492 | 0.394 |
@@ -125,7 +124,7 @@ decisive step. The 11-model panel uses one all-at-once prompt per run, following
 predictions are cached and committed, so scoring the board makes no API call. GPT-5.5 has the highest
 Top-1 score here at 0.452. The four highest Top-1 scores range from 0.405 to 0.452; Llama and Qwen
 score from 0.333 to 0.349, while Mistral and Nova score from 0.127 to 0.135 and below the position prior.
-Among methods that use no LLM, the supervised execution-structure ranker beats the position prior
+Among methods that use no LLM, the supervised execution-feature ranker beats the position prior
 without an API call; `auditable`'s blast share ties the prior at displayed precision because this
 corpus assumes every step depends on all prior steps, and PyGOD DOMINANT trails it. The benchmark uses
 separate structural methods in LIVE settings, where a full-trace judge cannot run. Separating a
@@ -135,7 +134,7 @@ the corpus's full-context assumption.
 ### Failure Detection on SWE-Gym and tau-bench
 
 Predict whether a run failed, scored by ROC-AUC. The comparison asks whether the dependency
-structure of a run predicts failure beyond its raw size. Compare `auditable (structure)` against
+structure of a run predicts failure beyond its raw size. Compare `auditable (size+deps)` against
 `size (flat)`.
 
 SWE-Gym, 376 runs (188 failed, 188 resolved):
@@ -147,7 +146,7 @@ SWE-Gym, 376 runs (188 failed, 188 resolved):
 | PyOD-flatten (ECOD) | 0.765 |
 | PyGOD-DOMINANT (graph AD) | 0.487 |
 | GUARDIAN (recon-AE) | 0.767 |
-| `auditable` (structure) | 0.804 |
+| `auditable` (size+deps) | 0.804 |
 | full (reference) | 0.819 |
 | G-Safeguard (supervised GNN) | **0.828** |
 
@@ -160,7 +159,7 @@ tau-bench (MIT), 660 runs (363 failed, 297 resolved):
 | PyOD-flatten (ECOD) | 0.555 |
 | PyGOD-DOMINANT (graph AD) | 0.503 |
 | GUARDIAN (recon-AE) | 0.542 |
-| `auditable` (structure) | **0.665** |
+| `auditable` (size+deps) | **0.665** |
 | full (reference) | 0.665 |
 | G-Safeguard (supervised GNN) | 0.626 |
 

@@ -13,6 +13,11 @@ import os
 import sys
 from pathlib import Path
 
+from auditablebench.corpora import install_hub_revision_pins
+
+
+install_hub_revision_pins()
+
 
 _LOGGER = logging.getLogger(__name__)
 _REPOSITORY_ROOT = Path(__file__).resolve().parents[2]

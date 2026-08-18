@@ -268,12 +268,11 @@ def _run_whoandwhen(result: dict, path: Path, seeds: Sequence[int]) -> None:
 
     # GRADE returns one metric triple per split seed for the registered supervised reference.
     structure = _seed_metrics(task.X, task.y, task.groups, task.mistake_row, "structure")
-    if len(structure) != len(seeds) or list(seeds) != list(range(len(structure))):
-        raise ValueError("Who&When supervised reference is defined for seeds 0 through 4")
-    leader = section.setdefault("structure (sup.)", {})
+    structure_seeds = range(len(structure))  # fixed by GRADE, independent of the PyGOD seed sweep
+    leader = section.setdefault("exec-rank (sup.)", {})
     leader["seeds"] = {
         str(seed): {name: float(value) for name, value in zip(METRICS, row)}
-        for seed, row in zip(seeds, structure)
+        for seed, row in zip(structure_seeds, structure)
     }
     for column, field in enumerate(METRICS):
         leader[field] = _summary(structure[:, column])
@@ -430,7 +429,7 @@ def _run_leaders(result: dict, path: Path, seeds: Sequence[int]) -> None:
 
     # One value per CV split seed, with the five held-out fold AUCs averaged within seed.
     structure_per_seed = _cv(task.layers["flatdep"], task.y).mean(axis=1)
-    section["auditable (structure)"] = {
+    section["auditable (size+deps)"] = {
         "roc_auc": _summary(structure_per_seed),
         "seeds": {str(seed): {"roc_auc": float(value)}
                   for seed, value in zip(seeds, structure_per_seed)},

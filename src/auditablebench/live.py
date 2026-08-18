@@ -20,7 +20,7 @@ built-in validity check, not a separate number to reconcile.
 
   - random              : floor (~0.5 at every prefix).
   - size (flat)          : prefix size and counts only, the trivial baseline.
-  - auditable (structure): size plus the size-normalized dependency block (the structural signal
+  - auditable (size+deps): size plus the size-normalized dependency block (the dependency signal
                           ``auditable`` surfaces over the growing prefix). Reading it EARLIER than
                           size is the early-warning claim.
   - full                 : flat plus execution plus raw dependency features (reference).
@@ -220,7 +220,7 @@ def live_streaming_methods() -> list:
     return [
         RandomLive(),
         _PrefixLayerAUC("size (flat)", "flat"),
-        _PrefixLayerAUC("auditable (structure)", "flatdep"),
+        _PrefixLayerAUC("auditable (size+deps)", "flatdep"),
         _PrefixLayerAUC("full", "full"),
         _PrefixECOD(),
         _OnlineScore("dep-span (online)", _mean_span),

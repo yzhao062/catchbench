@@ -38,6 +38,7 @@ import agent_graph_characterization as ww  # noqa: E402  the Who&When loader (ra
 
 _METRIC_NAMES = ("top1", "top3", "mrr")
 _CACHE_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "..", "data", "llm_judge")
+_LEGACY_KEY_MAP_PATH = os.path.join(_CACHE_DIR, "legacy_run_keys.json")
 
 
 @lru_cache(maxsize=1)
@@ -62,23 +63,19 @@ def load_judge_runs() -> List[dict]:
             continue
         history = t.get("history", [])
         texts = [str(history[s["idx"]].get("content", "")) for s in steps]  # idx == history index
-        runs.append({"steps": steps, "texts": texts, "mistake": ms})
-    for i, run in enumerate(runs):  # stable load order (sorted glob + fixed filter), verified to match
-        run["key"] = f"{i:03d}-{_content_digest(run)}"  # the board's load_failed_runs order run for run
+        runs.append({"steps": steps, "texts": texts, "mistake": ms,
+                     "key": "sha256-" + _source_digest(t)})
     return runs
 
 
-def _content_digest(run: dict) -> str:
-    parts = [f"{s['agent']}/{s['kind']}/{hashlib.md5(t.encode('utf-8')).hexdigest()[:8]}"
-             for s, t in zip(run["steps"], run["texts"])]
-    return hashlib.md5(("|".join(parts) + f"#{len(run['steps'])}").encode("utf-8")).hexdigest()[:12]
+def _source_digest(task: dict) -> str:
+    """Canonical full-record digest, stable under corpus reordering and file additions."""
+    payload = json.dumps(task, sort_keys=True, separators=(",", ":"), ensure_ascii=False)
+    return hashlib.sha256(payload.encode("utf-8")).hexdigest()
 
 
 def run_key(run: dict) -> str:
-    """The stable per-run cache key set by ``load_judge_runs``: the load-order index (unique, and
-    identical between generation and scoring because both iterate the corpus deterministically)
-    prefixed onto a content digest. The index defeats true duplicate traces in the corpus, which
-    share a content digest; the digest guards against a corpus reordering going unnoticed."""
+    """The source-record content address set by ``load_judge_runs``."""
     return run["key"]
 
 
@@ -300,12 +297,35 @@ def cache_path(method: str, model: str) -> str:
     return os.path.join(_CACHE_DIR, f"whoandwhen__{method}__{safe_model}.json")
 
 
+@lru_cache(maxsize=1)
+def _legacy_key_map() -> dict[str, str]:
+    """Committed bridge from order-prefixed v1 keys to full-record content addresses."""
+    with open(_LEGACY_KEY_MAP_PATH, encoding="utf-8") as fh:
+        payload = json.load(fh)
+    mapping = payload.get("keys")
+    if not isinstance(mapping, dict) or not all(
+            isinstance(old, str) and isinstance(new, str) for old, new in mapping.items()):
+        raise ValueError(f"invalid legacy LLM-judge key map: {_LEGACY_KEY_MAP_PATH}")
+    return mapping
+
+
 def load_cache(method: str, model: str) -> Optional[dict]:
     path = cache_path(method, model)
     if not os.path.exists(path):
         return None
     with open(path, encoding="utf-8") as fh:
-        return json.load(fh)
+        cache = json.load(fh)
+    predictions = cache.get("predictions") if isinstance(cache, dict) else None
+    if not isinstance(predictions, dict):
+        return cache
+    mapping = _legacy_key_map()
+    normalized = {}
+    for key, prediction in predictions.items():
+        content_key = mapping.get(key, key)
+        if content_key in normalized and normalized[content_key] != prediction:
+            raise ValueError(f"legacy cache keys collide at {content_key}")
+        normalized[content_key] = prediction
+    return {**cache, "predictions": normalized}
 
 
 # --- the board method -------------------------------------------------------------
