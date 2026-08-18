@@ -74,13 +74,28 @@ jobs:
         with:
           python-version: "3.12"
           cache: pip
-      # CPU wheels only. The default PyPI torch for Linux is the CUDA build, several gigabytes of
-      # download for a test that never touches a device. Install torch first so torch-geometric and
+      # CPU wheels only: the default PyPI torch for Linux is the CUDA build, several gigabytes of
+      # download for a test that never touches a device. torch goes in first so torch-geometric and
       # pygod resolve against the build already present rather than pulling the CUDA one.
-      - name: Install the graph-AD stack (CPU wheels)
+      #
+      # The torch version is pinned rather than floated because pip's torch-geometric is the pure
+      # Python layer only. PyGOD's DOMINANT samples through NeighborLoader, which needs the compiled
+      # pyg-lib backend, and those wheels live on a separate index that lags the torch release: on
+      # 2026-08-18 the CPU index already carried torch 2.13.0 while data.pyg.org carried nothing for
+      # it. Floating torch would leave this job green until the next torch release and red after.
+      - name: Install the graph-AD stack (CPU wheels, pinned to a torch pyg-lib publishes for)
+        env:
+          TORCH_VERSION: "2.12.1"
         run: |
-          python -m pip install torch --index-url https://download.pytorch.org/whl/cpu
+          python -m pip install "torch==${TORCH_VERSION}" --index-url https://download.pytorch.org/whl/cpu
+          python -m pip install pyg_lib -f "https://data.pyg.org/whl/torch-${TORCH_VERSION}+cpu.html"
           python -m pip install -e ".[graph-ad,dev]"
+      # A stack that half-installed would surface as an ImportError inside a test rather than as a
+      # setup failure, so the versions are printed and the backend import is asserted here.
+      - name: Report the resolved stack
+        run: |
+          python -c "import torch, torch_geometric, pyg_lib, pygod; print('torch', torch.__version__); print('torch_geometric', torch_geometric.__version__); print('pyg_lib', pyg_lib.__version__); print('pygod', pygod.__version__)"
+          python -c "import torch_geometric.typing as t; assert t.WITH_PYG_LIB, 'pyg-lib did not register; NeighborSampler would fail'; print('pyg-lib backend registered')"
       - name: Run the graph-AD contract
         shell: bash
         run: |
