@@ -66,9 +66,12 @@ def check_pre_board() -> None:
     flag_none = dict(FlagNoneMethod().evaluate(task))
     assert flag_all["recall"] == 1.0, f"flag_all recall changed: {flag_all}"
     assert flag_all["f1"] == 0.601, f"flag_all F1 changed: {flag_all}"
-    assert flag_none == {"precision": 0.0, "recall": 0.0, "f1": 0.0}, (
+    assert flag_none == {"precision": 0.0, "recall": 0.0, "f1": 0.0, "coverage": 1.0}, (
         f"flag_none floor changed: {flag_none}"
     )
+    # Every method that answers the whole corpus must say so. A silently missing or partial
+    # coverage value is how an abstaining method gets compared against a complete one.
+    assert flag_all["coverage"] == 1.0, f"flag_all coverage changed: {flag_all}"
     print(f"PRE configs: {len(task.instances)} {dict(counts)}")
     print(f"PRE floors: flag_all={flag_all}, flag_none={flag_none}")
 

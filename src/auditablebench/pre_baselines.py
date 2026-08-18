@@ -86,7 +86,10 @@ class LlmJudgeNeededMethod:
                 continue
             needed = {name for name in names if name in declared_by_id[instance_id]}
             flagged[instance_id] = declared_by_id[instance_id] - needed
-        return pre_score(flagged, task.instances)
+        # A configuration missing from the cache is one whose reply did not parse, so this judge
+        # never issued a judgment on it. It abstains instead of being recorded as flagging nothing,
+        # and pre_score reports what that abstention costs in coverage.
+        return pre_score(flagged, task.instances, evaluable=set(flagged))
 
 
 def _llm_judge_methods() -> list:

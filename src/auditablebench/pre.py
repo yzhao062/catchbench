@@ -52,9 +52,26 @@ def validate_pre_instance(o: PreInstance) -> None:
     }, "label_source"
 
 
-def pre_score(flagged: dict, instances: list[PreInstance]) -> dict[str, float]:
+def pre_score(flagged: dict, instances: list[PreInstance],
+              evaluable: set[str] | None = None) -> dict[str, float]:
+    """Micro-averaged precision, recall, and F1 over declared capabilities, with coverage.
+
+    ``evaluable`` names the configurations the method actually judged. Anything outside it is an
+    abstention: it leaves the denominator instead of counting as "flagged nothing". Scoring an
+    unanswered configuration as a silent negative measures the harness that failed to read the
+    answer rather than the method. That distinction is not hypothetical here. The held-out judge
+    answered all 1187 configurations, but five of its replies named a capability whose spelling did
+    not match the declared roster, and a strict all-or-nothing parser discarded those five whole
+    judgments. One of them, a 622-capability MCP server, carries 337 excess labels, which is 11.7%
+    of the corpus positive class, so the discard alone moved the pooled comparison.
+
+    ``coverage`` is returned on every row, including the rows that answer everything, so a method
+    scored on a smaller denominator can never be compared silently against one scored on the full
+    corpus. Head-to-head claims should be made on a common evaluable set, not on these cells.
+    """
+    scored = [i for i in instances if evaluable is None or i.instance_id in evaluable]
     tp = fp = fn = 0
-    for inst in instances:
+    for inst in scored:
         gt = set(inst.labels["excess_set"])
         pred = set(flagged.get(inst.instance_id, set()))
         tp += len(pred & gt)
@@ -63,7 +80,9 @@ def pre_score(flagged: dict, instances: list[PreInstance]) -> dict[str, float]:
     p = tp / (tp + fp) if tp + fp else 0.0
     r = tp / (tp + fn) if tp + fn else 0.0
     f1 = 2 * p * r / (p + r) if p + r else 0.0
-    return {"precision": round(p, 3), "recall": round(r, 3), "f1": round(f1, 3)}
+    cov = len(scored) / len(instances) if instances else 0.0
+    return {"precision": round(p, 3), "recall": round(r, 3), "f1": round(f1, 3),
+            "coverage": round(cov, 3)}
 
 
 def _fixture_instances() -> list[PreInstance]:
@@ -223,12 +242,22 @@ def pre_source_breakdown(task: "PreOverPrivilege", methods: list) -> str:
     mw = max([len("method")] + [len(m.method_id) for m in scored])  # fit the widest method id
     header = f"  {'method':{mw}s}" + "".join(f"{g:>13s}" for g in cols) + f"{'overall':>13s}"
     lines = ["\n[PRE] pre_over_privilege :: F1 by source", header]
+    abstentions: list[str] = []
     for m in scored:
-        cells = "".join(f"{m.evaluate(subtasks[g])['f1']:>13.3f}" for g in cols)
-        overall = m.evaluate(task)["f1"]
-        lines.append(f"  {m.method_id:{mw}s}{cells}{overall:>13.3f}")
+        per_source = {g: m.evaluate(subtasks[g]) for g in cols}
+        cells = "".join(f"{per_source[g]['f1']:>13.3f}" for g in cols)
+        overall = m.evaluate(task)
+        lines.append(f"  {m.method_id:{mw}s}{cells}{overall['f1']:>13.3f}")
+        # A cell scored on fewer configs than the column holds is not comparable to one that is not,
+        # so name it here rather than letting the F1 stand alone.
+        thin = [f"{g} {round(per_source[g]['coverage'] * len(groups[g]))}/{len(groups[g])}"
+                for g in cols if per_source[g]["coverage"] < 1.0]
+        if thin:
+            abstentions.append(f"{m.method_id}: {', '.join(thin)}")
 
     legend = ", ".join(f"{g} n={len(groups[g])} ({_PRE_LABEL_SOURCE.get(g, '?')})" for g in cols)
     lines.append(f"  label source per column: {legend}")
     lines.append("  pooled F1 mixes these label sources; read per source, not just overall.")
+    for note in abstentions:
+        lines.append(f"  abstained (scored on fewer configs, not comparable cell to cell): {note}")
     return "\n".join(lines)
