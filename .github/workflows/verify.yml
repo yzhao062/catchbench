@@ -37,14 +37,14 @@ jobs:
           git -C ../grade checkout --quiet 3839a57ac165d58a807fce0a3ff38346732ee936
           python -m pip install -e "../grade[experiments]"
       # A silent skip lets a contract rot unnoticed, which is what the pre-publication audit warned
-      # about, so seed 0 also asserts that nothing skipped. Three files are declared exceptions, and
-      # the list is an allowlist so a fourth one cannot appear without a deliberate edit here.
+      # about, so seed 0 also asserts that nothing skipped. Four files are declared exceptions, and
+      # the list is an allowlist so a fifth one cannot appear without a deliberate edit here.
       #   test_graph_ad_scores_every_node.py needs the torch stack. The graph-ad job below installs
       #     that stack and runs the same file with skipping forbidden, so the contract still runs.
-      #   test_emit_stats_table.py and test_emit_boards_table.py each hold one cross-repository case
-      #     that reads the paper sources through CATCHBENCH_PAPER_DIR. The paper lives in a separate
-      #     private repository that CI has no access to, so those two cases cannot run here; every
-      #     other case in both files does.
+      #   test_emit_stats_table.py, test_emit_boards_table.py and test_emit_transfer_table.py each
+      #     hold one cross-repository case that reads the paper sources through
+      #     CATCHBENCH_PAPER_DIR. The paper lives in a separate private repository that CI has no
+      #     access to, so those three cases cannot run here; every other case in all three does.
       # Any other skip fails this step. The same script then checks the README test badge against
       # the collected count, because that badge is hand-typed and nothing else recomputes it.
       # pipefail matters: without it the exit status is tee's, and a failing test passes the step.
@@ -73,6 +73,7 @@ jobs:
               "tests/test_graph_ad_scores_every_node.py": 10,  # whole file; needs the torch stack
               "tests/test_emit_stats_table.py": 1,             # one cross-repository case
               "tests/test_emit_boards_table.py": 1,            # one cross-repository case
+              "tests/test_emit_transfer_table.py": 1,          # one cross-repository case
           }
 
           ANSI = re.compile(r"\x1b\[[0-9;]*[A-Za-z]")
