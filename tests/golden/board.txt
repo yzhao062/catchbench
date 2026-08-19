@@ -1,0 +1,242 @@
+AuditableBench :: PRE + POST + LIVE board(s)
+Corpus revisions :: Who&When=59b9fcba1aaed7bbf206b5f4d3c68b8face2f49c | SWE-Gym=baf3a4e4bff514d48ddc08a93a2ade5c126212c7 | tau-bench=382e57d1784b55c5155f4ef394ef48f1c747a287
+
+PRE over_privilege: 1187 configs across 6 corpora {'crewai': 298, 'injecagent': 340, 'mcp': 144, 'n8n': 219, 'sweagent': 130, 'synthetic': 56}
+Who&When: 126 failed runs, 1099 steps (11% faults), human mistake_step labels.
+swegym: 376 runs (188 failed, 188 resolved), run-level outcome labels.
+tau: 660 runs (363 failed, 297 resolved), run-level outcome labels.
+swegym-gold: 188 clean SWE-Gym runs, one injected fault each (82 stale-state, 106 dropped-grounding), injection-site labels (deps INFERRED, characterized as a proxy).
+swegym-gold: 166 runs affording both faults, each injected with a stale-state and a dropped-grounding copy (paired), cause attribution by ROC-AUC.
+swegym: 376 runs (>=4 steps; 188 failed, 188 resolved), streaming prefixes [25%, 50%, 75%, 100%], run-level outcome labels.
+tau: 660 runs (>=4 steps; 363 failed, 297 resolved), streaming prefixes [25%, 50%, 75%, 100%], run-level outcome labels.
+swegym-gold: 82 stale-state injections over real SWE-Gym runs (paired clean controls), online detection at FPR [5%, 10%].
+
+[PRE] pre_over_privilege :: multi
+  method                          precision    recall        f1  coverage
+  flag_all                            0.430     1.000     0.601     1.000
+  flag_none                           0.000     0.000     0.000     1.000
+  flag_risky_perms                    0.418     0.564     0.480     1.000
+  owasp_excess_permissions            0.504     0.506     0.505     1.000
+  owasp_excess_functionality          0.538     0.796     0.642     1.000
+  owasp_privilege_escalation          0.811     0.010     0.020     1.000
+  unrequested_high_impact             0.633     0.148     0.240     1.000
+  sensitive_access                    0.763     0.016     0.030     1.000
+  owasp_asi_combined                  0.511     0.910     0.654     1.000
+  oracle_privilege_diff               1.000     1.000     1.000     1.000
+  llm_judge_needed(llama-3.3-70b)     0.594     0.839     0.695     0.996
+
+[POST] post_localization :: whoandwhen
+  method                                         top1      top3       mrr
+  random                                        0.119     0.346     0.324
+  auditable (blast)                             0.159     0.516     0.407
+  position                                      0.159     0.516     0.407
+  pygod (graph AD)                              0.048     0.302     0.258
+  exec-rank (sup.)                              0.211     0.614     0.454
+  llm-judge all-at-once (claude-opus-4.8)       0.421     0.698     0.605
+  llm-judge all-at-once (deepseek-r1)           0.405     0.754     0.606
+  llm-judge all-at-once (gemini)                0.357     0.722     0.572
+  llm-judge all-at-once (gemma-3-12b)           0.206     0.524     0.427
+  llm-judge all-at-once (gpt-5.4)               0.413     0.714     0.601
+  llm-judge all-at-once (gpt-5.5)               0.452     0.667     0.618
+  llm-judge all-at-once (gpt-oss-20b)           0.333     0.595     0.521
+  llm-judge all-at-once (llama-3.3-70b)         0.333     0.579     0.515
+  llm-judge all-at-once (mistral-small)         0.135     0.421     0.363
+  llm-judge all-at-once (nova-micro)            0.127     0.397     0.342
+  llm-judge all-at-once (qwen3-32b)             0.349     0.659     0.541
+  llm-judge binary-search (claude-opus-4.8)     0.357     0.357     0.357
+  llm-judge binary-search (deepseek-r1)         0.405     0.405     0.405
+  llm-judge binary-search (gemini)              0.357     0.357     0.357
+  llm-judge binary-search (gemma-3-12b)         0.159     0.159     0.159
+  llm-judge binary-search (gpt-5.4)             0.365     0.365     0.365
+  llm-judge binary-search (gpt-5.5)             0.421     0.421     0.421
+  llm-judge binary-search (llama-3.3-70b)       0.222     0.222     0.222
+  llm-judge binary-search (mistral-small)       0.214     0.214     0.214
+  llm-judge binary-search (nova-micro)          0.167     0.167     0.167
+  llm-judge binary-search (qwen3-32b)           0.127     0.127     0.127
+  llm-judge step-by-step (claude-opus-4.8)      0.389     0.389     0.389
+  llm-judge step-by-step (deepseek-r1)          0.317     0.317     0.317
+  llm-judge step-by-step (gemini)               0.341     0.341     0.341
+  llm-judge step-by-step (gemma-3-12b)          0.230     0.230     0.230
+  llm-judge step-by-step (gpt-5.4)              0.381     0.381     0.381
+  llm-judge step-by-step (gpt-5.5)              0.397     0.397     0.397
+  llm-judge step-by-step (llama-3.3-70b)        0.222     0.222     0.222
+  llm-judge step-by-step (mistral-small)        0.190     0.190     0.190
+  llm-judge step-by-step (nova-micro)           0.167     0.167     0.167
+  llm-judge step-by-step (qwen3-32b)            0.254     0.254     0.254
+
+[POST] post_detection :: swegym
+  method                  roc_auc
+  random                    0.483
+  size (flat)               0.663
+  pyod-flatten (ECOD)       0.765
+  pygod (graph AD)          0.547
+  guardian (recon-AE)       0.767
+  auditable (size+deps)     0.804
+  full                      0.819
+  g-safeguard (sup GNN)     0.828
+  pyod-iforest              0.571
+  pyod-knn                  0.446
+  pyod-lof                  0.584
+  pyod-copod                0.625
+  pyod-hbos                 0.319
+  pygod-conad               0.750
+  pygod-anomalydae          0.592
+  pygod-gaan                0.850
+
+[POST] post_detection :: tau
+  method                  roc_auc
+  random                    0.498
+  size (flat)               0.619
+  pyod-flatten (ECOD)       0.555
+  pygod (graph AD)          0.550
+  guardian (recon-AE)       0.542
+  auditable (size+deps)     0.665
+  full                      0.665
+  g-safeguard (sup GNN)     0.626
+  pyod-iforest              0.561
+  pyod-knn                  0.575
+  pyod-lof                  0.504
+  pyod-copod                0.593
+  pyod-hbos                 0.562
+  pygod-conad               0.552
+  pygod-anomalydae          0.490
+  pygod-gaan                0.517
+
+[POST] gold_localization :: swegym-gold
+  method                       top1      top3       mrr
+  random                      0.032     0.099     0.128
+  position                    0.000     0.000     0.078
+  degree                      0.045     0.247     0.216
+  has-dep (control)           0.078     0.234     0.217
+  max-span (control)          0.309     0.417     0.407
+  auditable (dep-anomaly)     0.309     0.414     0.402
+  pygod (graph AD)            0.165     0.362     0.329
+
+[POST] gold_attribution :: swegym-gold
+  method                      roc_auc
+  random                        0.498
+  max-span (higher=stale)       0.675
+  edge-count (higher=stale)     0.566
+
+[LIVE] live_streaming :: swegym
+  method               prefix_auc
+  random                    0.483
+  size (flat)               0.657
+  auditable (size+deps)     0.779
+  full                      0.818
+  pyod (ECOD)               0.763
+  dep-span (online)         0.534
+
+[LIVE] live_streaming :: tau
+  method               prefix_auc
+  random                    0.498
+  size (flat)               0.622
+  auditable (size+deps)     0.639
+  full                      0.645
+  pyod (ECOD)               0.554
+  dep-span (online)         0.541
+
+[LIVE] live_stale_state :: swegym-gold
+  method                    tpr@5fpr tpr@10fpr
+  random                       0.024     0.024
+  dep-count (control)          0.061     0.061
+  raw-span                     0.122     0.159
+  auditable (span z-score)     0.061     0.110
+
+[PRE] pre_over_privilege :: F1 by source
+  method                                crewai          n8n          mcp   injecagent     sweagent    synthetic      overall
+  flag_all                               0.388        0.154        0.654        0.750        0.574        0.763        0.601
+  flag_none                              0.000        0.000        0.000        0.000        0.000        0.000        0.000
+  flag_risky_perms                       0.326        0.095        0.575        0.827        0.025        0.803        0.480
+  owasp_excess_permissions               0.327        0.052        0.566        0.801        0.007        0.825        0.505
+  owasp_excess_functionality             0.451        0.514        0.632        0.957        0.574        0.539        0.642
+  owasp_privilege_escalation             0.000        0.000        0.018        0.065        0.000        0.000        0.020
+  unrequested_high_impact                0.066        0.041        0.211        0.605        0.000        0.248        0.240
+  sensitive_access                       0.014        0.000        0.058        0.000        0.000        0.000        0.030
+  owasp_asi_combined                     0.448        0.411        0.644        0.961        0.570        0.842        0.654
+  oracle_privilege_diff                  1.000        1.000        1.000        1.000        1.000        1.000        1.000
+  llm_judge_needed(llama-3.3-70b)        0.518        0.362        0.744        0.990        0.467        0.972        0.695
+  label source per column: crewai n=298 (llm_judge), n8n n=219 (llm_judge), mcp n=144 (llm_judge), injecagent n=340 (roster_relabel), sweagent n=130 (declared_minus_used), synthetic n=56 (synthetic_inject)
+  pooled F1 mixes these label sources; read per source, not just overall.
+  abstained (scored on fewer configs, not comparable cell to cell): llm_judge_needed(llama-3.3-70b): n8n 215/219, mcp 143/144
+
+Gold per-fault breakdown (Top-1/Top-3/MRR, tie-aware), 82 stale + 106 dropped:
+  method                               overall         stale-state     dropped-grounding
+  position                0.000/0.000/0.078   0.000/0.000/0.064     0.000/0.000/0.090
+  degree                  0.045/0.247/0.216   0.073/0.402/0.305     0.023/0.127/0.148
+  has-dep (control)       0.078/0.234/0.217   0.173/0.489/0.388     0.005/0.036/0.085
+  max-span (control)      0.309/0.417/0.407   0.703/0.911/0.822     0.005/0.036/0.085
+  auditable (dep-anomaly) 0.309/0.414/0.402   0.703/0.904/0.813     0.005/0.036/0.085
+  pygod (graph AD)        0.165/0.362/0.329   0.256/0.573/0.454     0.094/0.198/0.232
+
+Gold eligibility-matched control (rank within the injector's eligible pool only, mean 7.4 candidates/run, tie-aware): Top-1/Top-3/MRR
+  method                               overall         stale-state     dropped-grounding
+  random (matched)        0.308/0.622/0.505   0.350/0.640/0.534     0.277/0.609/0.482
+  position                0.330/0.622/0.512   0.341/0.646/0.531     0.321/0.604/0.498
+  degree                  0.225/0.516/0.421   0.394/0.668/0.568     0.095/0.398/0.307
+  has-dep (control)       0.195/0.471/0.389   0.350/0.640/0.534     0.075/0.340/0.277
+  max-span (control)      0.394/0.610/0.542   0.805/0.959/0.884     0.075/0.340/0.277
+  auditable (dep-anomaly) 0.391/0.599/0.537   0.799/0.934/0.873     0.075/0.340/0.277
+  pygod (graph AD)        0.404/0.681/0.564   0.622/0.841/0.739     0.236/0.557/0.429
+
+Gold distributional check (paired clean -> injected, run-level):
+  valid dep-edges (all): mean 8.5 -> 7.9 (delta -0.6)
+  valid dep-edges (stale-state): mean 9.2 -> 9.2 (delta +0.0)
+  valid dep-edges (dropped-grounding): mean 7.9 -> 6.9 (delta -1.0)
+  max dep-span      : mean 8.6 -> 9.4, p95 24.9 -> 29.3 (53/188 runs increased)
+  Edge count is unchanged for stale-state and decreases by one for dropped-grounding; stale-state also lengthens max-span by construction. These run-level shifts are reported, not hidden; localization still requires finding the step.
+
+Gold seed robustness (5 injection seeds, Top-1 mean +/- std):
+  method                           stale-state     dropped-grounding
+  position                       0.000+/-0.000         0.000+/-0.000
+  degree                         0.063+/-0.006         0.029+/-0.008
+  has-dep (control)              0.173+/-0.000         0.005+/-0.000
+  max-span (control)             0.653+/-0.028         0.005+/-0.000
+  auditable (dep-anomaly)        0.653+/-0.028         0.005+/-0.000
+  pygod (graph AD)               0.249+/-0.039         0.072+/-0.024
+  matched stale max-span 0.795+/-0.020 vs floor 0.350+/-0.000 (selection-controlled mechanism signal, stable across seeds; construction leakage is measured separately by tools/gold_artifact_diagnostic.py)
+
+Gold attribution seed robustness (5 paired-injection seeds, ROC-AUC mean +/- std):
+  max-span (higher=stale)     0.671+/-0.005
+  edge-count (higher=stale)   0.566+/-0.000
+
+LIVE streaming early-warning (ROC-AUC by prefix; t2d = earliest prefix with AUC>=0.70):
+  method                       25%     50%     75%    100%     t2d
+  random                     0.483   0.483   0.483   0.483   >100%
+  size (flat)                0.629   0.663   0.673   0.663   >100%
+  auditable (size+deps)      0.742   0.766   0.804   0.804     25%
+  full                       0.813   0.816   0.826   0.819     25%
+  pyod (ECOD)                0.756   0.762   0.767   0.765     25%
+  dep-span (online)          0.364   0.534   0.589   0.648   >100%
+
+LIVE streaming early-warning (ROC-AUC by prefix; t2d = earliest prefix with AUC>=0.70):
+  method                       25%     50%     75%    100%     t2d
+  random                     0.498   0.498   0.498   0.498   >100%
+  size (flat)                0.632   0.618   0.620   0.619   >100%
+  auditable (size+deps)      0.632   0.617   0.640   0.665   >100%
+  full                       0.642   0.628   0.644   0.665   >100%
+  pyod (ECOD)                0.546   0.553   0.562   0.555   >100%
+  dep-span (online)          0.503   0.530   0.565   0.568   >100%
+
+LIVE stale-state online detection (n=82 paired runs; TPR at target FPR, realized clean-flag rate in parens):
+  method                         tpr@5% (real fpr)    tpr@10% (real fpr)
+  random                              0.024 (6.1%)         0.024 (11.0%)
+  dep-count (control)                 0.061 (6.1%)          0.061 (6.1%)
+  raw-span                            0.122 (6.1%)         0.159 (11.0%)
+  auditable (span z-score)            0.061 (6.1%)         0.110 (11.0%)
+
+LIVE stale-state seed robustness (5 injection seeds, TPR mean +/- std):
+  method                                  tpr@5%             tpr@10%
+  random                           0.024+/-0.000       0.024+/-0.000
+  dep-count (control)              0.061+/-0.000       0.061+/-0.000
+  raw-span                         0.098+/-0.017       0.151+/-0.012
+  auditable (span z-score)         0.054+/-0.012       0.124+/-0.012
+
+Reading:
+- Localization (Who&When): the LLM-judge panel is the strongest post-hoc localizer here (GPT-5.5 0.452 Top-1 from the committed all-at-once cache), the expected result with the full trace in hand. The panel spans 0.127 to 0.452, but eight of the models sit in one band from 0.333 up that 126 runs do not separate, so read the band rather than the ordering inside it; only the smallest models are distinguishable, and they do not improve on the position prior. Among methods that use no LLM, position is the honest floor, auditable's blast coincides with it because Who&When assumes full-context dependencies, and GRADE's supervised exec-rank method localizes beyond the prior on Top-3 (its Top-1 margin over position does not resolve at this corpus size). A long-range gold-edge corpus is the next data lever.
+- Detection (SWE-Gym, tau-bench): the question is whether the dependency structure predicts failure beyond run size; compare 'auditable (size+deps)' against 'size (flat)'. The lift holds in the same direction on both corpora (large on SWE-Gym, modest on tau).
+- Unsupervised AD arena (PyOD flat vs PyGOD graph): after the batching repair (see graph_ad.flat_disconnected), the single-seed PyGOD family spans 0.547 to 0.850 on SWE-Gym and 0.490 to 0.552 on tau-bench, and DOMINANT stays below the position prior on Who&When localization. The SWE-Gym maximum does NOT establish an ordering: its five-seed range overlaps the supervised references, and scoring only between runs of exactly equal node count establishes no beyond-size advantage on the matchable subset (tools/pygod_seed_stability.py). No off-the-shelf detector establishes a task-relevant board lead, and neither does the task-aware structural method against the better ones: on SWE-Gym its paired tests against ECOD and against GUARDIAN both fail to separate (Holm p=0.404 and p=0.376), and failing to separate is not evidence that they are equal. G-Safeguard appears here as the supervised graph comparator (0.828 displayed, 0.824 +/- 0.007 over five cross-validation seeds).
+- Gold (injected dependency faults): READ AS MECHANISM DIAGNOSTICS, per fault kind. Stale-state (redirect a dependency to an earlier superseded event on the SAME file) is found by the dependency-span detector (dep-anomaly keyed to max-span, ~0.703 Top-1 stale); dropped-grounding is not localized by the span/count baselines (~0 Top-1). dep-anomaly is keyed to the stale-span mechanism (shown beside the max-span control). Leak check, two levels (gold_matched_breakdown): ranking within the injector's eligible pool holds selection fixed (stale has-dep 0.350 = floor 0.350, degree 0.394 just above) while the dependency-span signal clears it (stale max-span 0.805 vs floor 0.350), stable across 5 injection seeds (gold_seed_robustness). But a broken-predecessor baseline separates BOTH fault kinds perfectly on this file-level substrate (82/82 stale + 106/106 dropped unique Top-1, 0/188 clean; tools/gold_artifact_diagnostic.py), so the substrate fails the no-artifact-leakage bar and Gold scores are mechanism evidence pending a named-value substrate. See gold_breakdown / gold_matched_breakdown / gold_report / gold_seed_robustness below.
+- Gold attribution (cause): given a faulty run, is the cause stale-state or dropped-grounding? Paired design (the same run is injected both ways, so the label is the fault, not the run, no eligibility leak). The two faults leave opposite traces: a stale read lengthens the max dependency span (ROC-AUC 0.675 for stale), dropped grounding removes an edge (edge-count 0.566), against a 0.498 random floor. The structure separates the two causes, each feature keyed to one mechanism, completing the POST localization / prediction / attribution triad.
+- LIVE streaming (early warning): can a method separate failing from resolved runs before the trace is complete? Three settings. SUPERVISED CV on the prefix feature layers: on SWE-Gym the dependency-structure block clears ROC-AUC 0.74 at the 25% prefix (t2d 25%) while run size never does; on tau-bench it is weak and late, the same domain split the detection board shows. BATCH-UNSUPERVISED: an off-the-shelf ECOD over the run population's prefix flat vectors also fires early on SWE-Gym (0.76 at 25%, t2d 25%), so early warning is available without labels. STRICT PER-RUN ONLINE: a one-scalar mean dependency span from a run's own prefix is length-confounded and does NOT (0.36 at 25%). So the early signal comes from supervised structure or batch-unsupervised flat prefix vectors, not from a single online scalar. The 100% column is the POST-style detection check on the LIVE-filtered population. LIVE keeps runs of >=4 steps and POST keeps >=2, but the current SWE-Gym and tau-bench populations coincide, so the two agree today rather than by construction. See live_breakdown below.
+- LIVE stale-state (online detection): the SAME Gold stale-state injection, but detected online at a fixed false-positive rate instead of localized post-hoc. It is HARD: at a realized ~6% FPR the causal span z-score catches only ~6% of stale reads (~11% at ~11% FPR), and the raw span does a little better (~12% / ~16%), both far below the ~0.703 WITHIN-run localization on Gold. Spotting one superseded same-file read online, against clean runs' natural long-range dependencies and without false-alarming, is an open challenge; per-run normalization does not help here (the raw span edges out the z-score). The hardness is stable across 5 injection seeds (live_stale_robustness).

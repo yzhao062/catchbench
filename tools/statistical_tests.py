@@ -1113,9 +1113,54 @@ def _pre_claims(args: argparse.Namespace) -> tuple[list[dict[str, Any]], dict[st
                 "total_configurations": len(instances),
                 "is_label_identity": oracle_matches == len(instances),
             },
+            "declaration_order_leak": _declaration_order_leak(instances, source_labels),
         }
     }
     return claims, reported
+
+
+def _declaration_order_leak(instances, source_labels) -> dict[str, Any]:
+    """Score the rule "keep the first declared capability, flag every later one", per source.
+
+    The harvester that built the injecagent split wrote each configuration as the user's own tool
+    followed by the attacker's, so the label is recoverable from position alone. A rule that reads
+    no name, no description, and no permission scores a perfect F1 there, above every method that
+    reads the configuration. That is a property of the corpus rather than of the rule, and the paper
+    says so; this records the number so a reader can check the claim against an artifact instead of
+    against prose. It is an exact construction diagnostic on the released corpus rather than a
+    population-level method comparison, so it carries no interval and joins no Holm family.
+    Determinism is not the reason: resampling configurations would still give a spread.
+    """
+    per_source: dict[str, Any] = {}
+    for source in PRE_SOURCES:
+        tp = fp = fn = 0
+        members = [instance for instance, label in zip(instances, source_labels.tolist())
+                   if label == source]
+        for instance in members:
+            truth = set(instance.labels["excess_set"])
+            # A declared capability is a record, and excess_set holds its name, so the rule keeps
+            # the first record and flags the names of the rest.
+            predicted = {capability["name"] for capability in instance.declared_capabilities[1:]}
+            tp += len(predicted & truth)
+            fp += len(predicted - truth)
+            fn += len(truth - predicted)
+        precision = tp / (tp + fp) if tp + fp else 0.0
+        recall = tp / (tp + fn) if tp + fn else 0.0
+        per_source[source] = {
+            "configurations": len(members),
+            "true_positive": tp,
+            "false_positive": fp,
+            "false_negative": fn,
+            "precision": precision,
+            "recall": recall,
+            "f1": (2 * precision * recall / (precision + recall)) if precision + recall else 0.0,
+        }
+    return {
+        "rule": "flag every declared capability after the first",
+        "reads": "declaration order only; no name, description, or permission",
+        "per_source": per_source,
+        "perfect_sources": sorted(s for s, v in per_source.items() if v["f1"] == 1.0),
+    }
 
 
 def _localization_claims(args: argparse.Namespace) -> tuple[list[dict], list[dict]]:

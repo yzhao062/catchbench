@@ -12,6 +12,7 @@ and LIVE boards download their corpora from the
 Hugging Face Hub on first run; the PyGOD baseline needs torch + pygod + a pyg-lib / torch-sparse
 backend.
 """
+import argparse
 import os
 import sys
 
@@ -23,35 +24,73 @@ from auditablebench.corpora import (  # noqa: E402
     verify_corpus_heads,
     verify_pinned_fetches,
 )
-from auditablebench.detection import PostDetection, post_detection_methods  # noqa: E402
-from auditablebench.gold import (  # noqa: E402
-    GoldAttribution,
-    GoldLocalization,
-    gold_attribution_methods,
-    gold_attribution_robustness,
-    gold_breakdown,
-    gold_localization_methods,
-    gold_matched_breakdown,
-    gold_report,
-    gold_seed_robustness,
-)
-from auditablebench.live import (  # noqa: E402
-    LiveStaleState,
-    LiveStreaming,
-    live_breakdown,
-    live_stale_breakdown,
-    live_stale_methods,
-    live_stale_robustness,
-    live_streaming_methods,
-)
-from auditablebench.llm_judge import discovered_llm_judge_methods  # noqa: E402  cached LLM-judge panel
-from auditablebench.post import PostLocalization, post_localization_methods  # noqa: E402
 from auditablebench.pre import PreOverPrivilege, pre_methods, pre_source_breakdown  # noqa: E402
-from auditablebench.pyod_extra import pyod_extra_methods  # noqa: E402  more PyOD tabular detectors
-from auditablebench.pygod_extra import pygod_extra_methods  # noqa: E402  more PyGOD graph detectors
+
+# The POST, LIVE, and Gold modules bind the GRADE checkout bridge at import time. Importing them here
+# would make even the PRE board unrunnable without GRADE, a torch stack, and 320 MB of corpora, which
+# is what forced a newcomer's first command to be the nine-minute one. PRE scores offline from
+# committed records in well under a second, so those imports live inside the branch that needs them.
+
+
+def _pre_board() -> None:
+    """Score the PRE board alone: offline, no GRADE bridge, no download, no model call.
+
+    This is the fast path a reader should meet first. It reproduces the PRE block of the full board
+    exactly, because it builds the same task with the same methods; the only thing it skips is the
+    corpus preflight, which PRE does not use.
+    """
+    task = PreOverPrivilege()
+    methods = pre_methods()
+    print("AuditableBench :: PRE board (offline; no GRADE bridge, no corpus download)")
+    print()
+    print(task.corpus_line())
+    rows = RunPipeline([task], methods).run()
+    print(RunPipeline.leaderboard(rows))
+    print(pre_source_breakdown(task, methods))
+    print(
+        "\nReading: flag_all is the floor a method must beat to earn its false alarms, and the "
+        "per-source columns are the result. The pooled row mixes four label processes, so read it "
+        "last. Run 'python run.py' for the POST, LIVE, and Gold boards; those need the GRADE "
+        "checkout bridge and download their corpora on first use."
+    )
 
 
 def main() -> None:
+    parser = argparse.ArgumentParser(description="Run the AuditableBench boards.")
+    parser.add_argument(
+        "--task", choices=["all", "pre"], default="all",
+        help="'pre' scores the offline PRE board only, in about a second, with no GRADE checkout "
+             "and no corpus download. 'all' (the default) scores every board and is unchanged.")
+    args = parser.parse_args()
+    if args.task == "pre":
+        return _pre_board()
+
+    from auditablebench.detection import PostDetection, post_detection_methods
+    from auditablebench.gold import (
+        GoldAttribution,
+        GoldLocalization,
+        gold_attribution_methods,
+        gold_attribution_robustness,
+        gold_breakdown,
+        gold_localization_methods,
+        gold_matched_breakdown,
+        gold_report,
+        gold_seed_robustness,
+    )
+    from auditablebench.live import (
+        LiveStaleState,
+        LiveStreaming,
+        live_breakdown,
+        live_stale_breakdown,
+        live_stale_methods,
+        live_stale_robustness,
+        live_streaming_methods,
+    )
+    from auditablebench.llm_judge import discovered_llm_judge_methods  # cached LLM-judge panel
+    from auditablebench.post import PostLocalization, post_localization_methods
+    from auditablebench.pyod_extra import pyod_extra_methods  # more PyOD tabular detectors
+    from auditablebench.pygod_extra import pygod_extra_methods  # more PyGOD graph detectors
+
     revisions = verify_corpus_heads()
     tasks = [PreOverPrivilege(), PostLocalization(), PostDetection("swegym"), PostDetection("tau"),
              GoldLocalization(), GoldAttribution(), LiveStreaming("swegym"), LiveStreaming("tau"),
@@ -119,8 +158,10 @@ def main() -> None:
         "overlaps the supervised references, and scoring only between runs of exactly equal node "
         "count establishes no beyond-size advantage on the matchable subset "
         "(tools/pygod_seed_stability.py). No off-the-shelf detector "
-        "establishes a task-relevant board lead; the task-aware structural features carry the "
-        "reliable signal. G-Safeguard appears here as the supervised graph comparator (0.828 "
+        "establishes a task-relevant board lead, and neither does the task-aware structural method "
+        "against the better ones: on SWE-Gym its paired tests against ECOD and against GUARDIAN "
+        "both fail to separate (Holm p=0.404 and p=0.376), and failing to separate is not evidence "
+        "that they are equal. G-Safeguard appears here as the supervised graph comparator (0.828 "
         "displayed, 0.824 +/- 0.007 over five cross-validation seeds)."
         "\n- Gold (injected dependency faults): READ AS MECHANISM DIAGNOSTICS, per fault kind. "
         "Stale-state (redirect a dependency to an earlier superseded event on the SAME file) is found "

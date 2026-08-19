@@ -37,9 +37,14 @@ jobs:
           git -C ../grade checkout --quiet 3839a57ac165d58a807fce0a3ff38346732ee936
           python -m pip install -e "../grade[experiments]"
       # A silent skip lets a contract rot unnoticed, which is what the pre-publication audit warned
-      # about, so seed 0 also asserts that nothing skipped. The graph-AD file is the one declared
-      # exception: it needs the torch stack, and the graph-ad job below installs that stack and runs
-      # the same file with skipping forbidden. Any other skip fails here.
+      # about, so seed 0 also asserts that nothing skipped. Two files are declared exceptions, and
+      # the list is an allowlist so a third one cannot appear without a deliberate edit here.
+      #   test_graph_ad_scores_every_node.py needs the torch stack. The graph-ad job below installs
+      #     that stack and runs the same file with skipping forbidden, so the contract still runs.
+      #   test_emit_stats_table.py holds one cross-repository case that reads the paper sources
+      #     through CATCHBENCH_PAPER_DIR. The paper lives in a separate private repository that CI
+      #     has no access to, so that single case cannot run here; its other 42 cases do.
+      # Any other skip fails this step.
       # pipefail matters: without it the exit status is tee's, and a failing test passes the step.
       - name: Test with hash seed 0
         shell: bash
@@ -49,12 +54,55 @@ jobs:
         run: |
           set -o pipefail
           pytest tests -q -ra 2>&1 | tee result.txt
-          undeclared=$(grep -E "^SKIPPED " result.txt | grep -v "test_graph_ad_scores_every_node.py" || true)
-          if [ -n "$undeclared" ]; then
-            echo "::error::a test skipped outside the declared exception; a contract did not run"
-            echo "$undeclared"
-            exit 1
-          fi
+          python - <<'PY'
+          import pathlib, re, sys
+
+          # Two files may skip, and only these two, each with a declared ceiling on how many cases.
+          # Three earlier versions of this check were each bypassable, and all three bypasses were
+          # demonstrated rather than imagined:
+          #   a whole-line substring filter exempted any skip whose *reason* named an allowed file,
+          #     and any new file whose name merely contained an allowed one;
+          #   reducing the path to a base name exempted tests/elsewhere/test_emit_stats_table.py;
+          #   matching a literal line prefix missed every class under --color=yes, because pytest
+          #     then starts the line with an ESC sequence and "SKIPPED" is no longer first.
+          # Hence: strip ANSI, anchor the path to tests/<name> exactly, and cap the count so a file
+          # cannot quietly grow from one skipped case to forty.
+          ALLOWED = {
+              "tests/test_graph_ad_scores_every_node.py": 10,  # whole file; needs the torch stack
+              "tests/test_emit_stats_table.py": 1,             # one cross-repository case
+          }
+
+          ANSI = re.compile(r"\x1b\[[0-9;]*[A-Za-z]")
+          report = pathlib.Path("result.txt").read_text(encoding="utf-8", errors="replace")
+          problems = []
+          for raw in report.splitlines():
+              line = ANSI.sub("", raw).strip()
+              if line.startswith(("XFAIL", "XPASS")):
+                  # An xfail does not assert its contract and prints its own class, so a skip-only
+                  # guard never sees it. There are none today; this keeps it that way.
+                  problems.append(("xfail is not permitted; make it pass or delete it", line))
+                  continue
+              if not line.startswith("SKIPPED"):
+                  continue
+              # SKIPPED [n] path/to/test_x.py:347: reason
+              hit = re.match(r"SKIPPED\s+\[(\d+)\]\s+(.+?):\d+:", line)
+              if not hit:
+                  problems.append(("a SKIPPED line this check cannot parse, so it cannot be cleared",
+                                   line))
+                  continue
+              count, path = int(hit.group(1)), hit.group(2).replace("\\", "/")
+              allowed = next((cap for name, cap in ALLOWED.items()
+                              if path == name or path.endswith("/" + name)), None)
+              if allowed is None:
+                  problems.append(("undeclared skip, so a contract did not run", line))
+              elif count > allowed:
+                  problems.append((f"declared file skipped {count} case(s), over its cap of "
+                                   f"{allowed}; raise the cap deliberately or fix the skip", line))
+
+          for why, line in problems:
+              print(f"::error::{why}: {line}")
+          sys.exit(1 if problems else 0)
+          PY
       - name: Test with hash seed 1
         env:
           PYTHONHASHSEED: "1"
@@ -119,6 +167,32 @@ jobs:
         run: python -m pip install -e .
       - name: Run offline smoke check
         run: python tools/ci_smoke.py
+      # ci_smoke.py builds the PRE task directly and asserts the corpus counts and the two floors.
+      # It never runs the CLI, so it would not notice `--task pre` breaking, and that path is the
+      # first command the README gives a newcomer. This job has no GRADE checkout and no corpora,
+      # which is exactly the environment the path claims to work in, so running it here proves the
+      # claim rather than restating it. Roughly two seconds.
+      - name: Score the PRE board through the documented offline command
+        shell: bash
+        run: |
+          set -o pipefail
+          python run.py --task pre | tee pre.txt
+          # Every scored line must already appear in the committed board. A drift in the PRE board,
+          # or a fast path that quietly stops agreeing with the full run, fails here.
+          python - <<'PY'
+          import pathlib, sys
+          golden = set(l.rstrip() for l in
+                       pathlib.Path("tests/golden/board.txt").read_text(encoding="utf-8").split("\n"))
+          scored = [l.rstrip() for l in pathlib.Path("pre.txt").read_text(encoding="utf-8").split("\n")
+                    if l.startswith("  ") and any(c.isdigit() for c in l)]
+          missing = [l for l in scored if l not in golden]
+          print(f"{len(scored)} scored line(s); {len(missing)} absent from the golden board")
+          if not scored:
+              sys.exit("the PRE command scored nothing, so this check proved nothing")
+          for line in missing:
+              print("MISSING:", line)
+          sys.exit(1 if missing else 0)
+          PY
 
   cache-integrity:
     runs-on: ubuntu-latest

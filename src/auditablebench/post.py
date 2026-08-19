@@ -22,6 +22,7 @@ and adds the ``auditable`` baseline through ``auditable``'s public kernel, all b
 """
 from __future__ import annotations
 
+from functools import cached_property
 from typing import Mapping
 
 from auditablebench import _reuse  # noqa: F401  side effect: sets sys.path for grade + auditable
@@ -37,12 +38,19 @@ from agent_failure_localization import (  # noqa: E402  GRADE's verified Who&Whe
 )
 from auditable.graph import downstream_reach  # noqa: E402  auditable's public kernel
 from auditable.graph.session import DependencyEdge, SessionGraph, Step  # noqa: E402
+from auditablebench.llm_judge import load_judge_runs  # noqa: E402  the judges' own Who&When records
 
 _METRIC_NAMES = ("top1", "top3", "mrr")
 
 
 class PostLocalization:
-    """POST / localization Task over Who&When failed runs with human ``mistake_step`` labels."""
+    """POST / localization Task over Who&When failed runs with human ``mistake_step`` labels.
+
+    After ``setup`` the task view is ``runs`` (typed steps and the run's dependency graph), ``X``
+    (structural features), ``y`` / ``groups`` / ``mistake_row`` (the labels and the pooling arrays a
+    metric needs), and ``step_texts`` for a method that reads the trace itself rather than its
+    structure.
+    """
 
     task_id = "post_localization"
     pillar = "POST"
@@ -58,6 +66,52 @@ class PostLocalization:
         self.runs = load_failed_runs()
         self.X, self.y, self.groups, self.mistake_row = _pool(self.runs)
         self._loaded = True
+
+    @cached_property
+    def step_texts(self) -> tuple[tuple[str, ...], ...]:
+        """The raw text of every step, aligned to ``runs``: ``step_texts[i][j]`` is what the agent
+        said or the tool returned at ``runs[i]["steps"][j]``.
+
+        The LLM-judge rows lead this board, and they reach the trace through their own loader. A
+        view with structural features alone would leave an outside text-reading localizer, the
+        obvious entrant here, unable to read the input those baselines read. These are the judges'
+        own strings: ``llm_judge.load_judge_runs`` returns the same 126 Who&When records at the same
+        pinned revision, filtered and ordered to match ``runs``. That loader is memoized, so this
+        adds no corpus, no download, and no second parse on a board run.
+
+        Step content only. A Who&When history entry holds ``content``, ``role``, and ``name``. The
+        annotations (``mistake_step``, ``mistake_agent``, ``mistake_reason``, ``ground_truth``) are
+        task-level fields that stay in the loader and are unreachable from what is returned here.
+
+        Built on first read rather than in ``setup``, so a structural method never pays for it. The
+        1099 strings run about 1.5 MB across the 126 runs, and they are the loader's own string
+        objects, so this holds references to them rather than copies.
+        """
+        self.setup()
+        judge_runs = load_judge_runs()
+        aligned = len(judge_runs) == len(self.runs) and all(
+            len(judged["steps"]) == len(scored["steps"])
+            # One text per step. The step lists can agree while the text list is short, and that
+            # would shift every text after the gap onto the wrong step.
+            and len(judged["texts"]) == len(judged["steps"])
+            # The decisive-step label is the only field both loaders carry, so it is the only
+            # identity available. It separates two runs whose step signatures coincide, which the
+            # signature check alone does not: swapping two same-shaped runs passes that check and
+            # attaches each run's words to the other. Two runs identical in signature AND in
+            # decisive step would still pass, and closing that needs a shared record key, which
+            # load_failed_runs does not currently expose.
+            and judged["mistake"] == scored["mistake"]
+            and all(a["idx"] == b["idx"] and a["agent"] == b["agent"]
+                    for a, b in zip(judged["steps"], scored["steps"]))
+            for judged, scored in zip(judge_runs, self.runs)
+        )
+        if not aligned:
+            raise RuntimeError(
+                "Who&When text records do not line up with the scored runs, so step text would be "
+                "attributed to the wrong steps. load_judge_runs and load_failed_runs must select "
+                "the same records in the same order."
+            )
+        return tuple(tuple(run["texts"]) for run in judge_runs)
 
     def corpus_line(self) -> str:
         self.setup()

@@ -7275,6 +7275,69 @@
           "source": "synthetic"
         }
       ],
+      "declaration_order_leak": {
+        "per_source": {
+          "crewai": {
+            "configurations": 298,
+            "f1": 0.44594594594594594,
+            "false_negative": 45,
+            "false_positive": 201,
+            "precision": 0.33,
+            "recall": 0.6875,
+            "true_positive": 99
+          },
+          "injecagent": {
+            "configurations": 340,
+            "f1": 1.0,
+            "false_negative": 0,
+            "false_positive": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "true_positive": 510
+          },
+          "mcp": {
+            "configurations": 144,
+            "f1": 0.6697566628041716,
+            "false_negative": 12,
+            "false_positive": 1413,
+            "precision": 0.5055983205038489,
+            "recall": 0.9917638984214139,
+            "true_positive": 1445
+          },
+          "n8n": {
+            "configurations": 219,
+            "f1": 0.10610079575596817,
+            "false_negative": 26,
+            "false_positive": 311,
+            "precision": 0.06042296072507553,
+            "recall": 0.43478260869565216,
+            "true_positive": 20
+          },
+          "sweagent": {
+            "configurations": 130,
+            "f1": 0.5973645680819911,
+            "false_negative": 13,
+            "false_positive": 812,
+            "precision": 0.4297752808988764,
+            "recall": 0.9792,
+            "true_positive": 612
+          },
+          "synthetic": {
+            "configurations": 56,
+            "f1": 0.6468085106382979,
+            "false_negative": 35,
+            "false_positive": 48,
+            "precision": 0.6129032258064516,
+            "recall": 0.6846846846846847,
+            "true_positive": 76
+          }
+        },
+        "perfect_sources": [
+          "injecagent"
+        ],
+        "reads": "declaration order only; no name, description, or permission",
+        "rule": "flag every declared capability after the first"
+      },
       "flag_all_identity": {
         "all_seven_cells_match": true,
         "cells": [

@@ -49,7 +49,7 @@ The shipped task IDs and scores are:
 
 | Task ID | Question and score |
 |---|---|
-| `post_localization` | Rank failed-run steps against Who&When's human `mistake_step`: Top-1, Top-3, and MRR. |
+| `post_localization` | Rank failed-run steps against Who&When's human `mistake_step`: Top-1, Top-3, and MRR. The view carries the structural features and the raw step text, so a method may read either. |
 | `post_detection` | Predict failed versus resolved runs on SWE-Gym and tau-bench: ROC-AUC. |
 | `gold_attribution` | Separate stale-state from dropped-grounding in paired Gold injections: ROC-AUC. |
 | `gold_localization` | Rank steps against the Gold injection site: Top-1, Top-3, and MRR. |
@@ -60,6 +60,22 @@ The shipped task IDs and scores are:
 The planned missing-guardrail audit has no shipped task ID. Do not place a planned name in
 `supports`. Some detailed reports read a board-specific method such as `auc_curve` or `detail` in
 addition to `evaluate`; follow the existing methods for that board.
+
+A text-reading localizer is a supported entrant on `post_localization`. `task.step_texts[i][j]` is
+the raw text of `task.runs[i]["steps"][j]`. It comes from the same loader and the same pinned
+records the LLM-judge rows read, so reading it costs no extra download and no new dependency. The
+judge prompt is not the identical string: `_trace_block` collapses whitespace and truncates a step
+at 1500 characters, while `step_texts` hands you the untouched text. The attribute is built on first
+access rather than in `setup()`, and its 1099 strings run about 1.5 MB across the 126 runs. It is
+aligned to `task.runs`, so concatenating per-run scores in that order lines up with `task.groups`
+and `task.mistake_row` the way the shipped baselines do.
+
+`step_texts` itself carries step content alone. Who&When's annotations (`mistake_step`,
+`mistake_agent`, `mistake_reason`, `ground_truth`) are task-level fields that the loader keeps and
+that no returned string exposes. The task view is a different matter: it does carry the label, as
+`task.y` and `task.mistake_row`, because the shipped metrics need it. The rule above against forming
+predictions from evaluation labels therefore still binds a text-reading method exactly as it binds a
+structural one.
 
 ## Adding a corpus or adapter
 
@@ -97,11 +113,17 @@ corpus adapters must follow the same rule.
 
 ## Reporting a result honestly
 
-Generate all reported numbers by running:
+Generate board numbers by running:
 
 ```bash
 python run.py
 ```
+
+The other reported numbers come from their own tools rather than from the board:
+`tools/statistical_tests.py` for every inferential claim, `tools/whoandwhen_split_report.py` and
+`tools/gold_artifact_diagnostic.py` for population counts, `tools/pre_merge_judges.py` for judge
+agreement, and `tools/pre_pii_scan.py` for the scan. Corpus composition and licence values are read
+from the committed records. Name the tool wherever you report its number.
 
 Do not type numbers directly into the README or paper. A result must come from the runner with the
 submitted code and committed caches. Report per-source results. If a board combines labels made by

@@ -1,19 +1,61 @@
+<div align="center">
+
 # AuditableBench
 
-A benchmark for finding and attributing agent failures over real agent traces.
+**A benchmark for finding and attributing agent failures over real agent traces.**
+
+[![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
+[![Python](https://img.shields.io/badge/python-3.10%20%7C%203.12-blue.svg)](pyproject.toml)
+[![Tests](https://img.shields.io/badge/tests-186-brightgreen.svg)](tests)
+[![Boards](https://img.shields.io/badge/boards-PRE%20%7C%20LIVE%20%7C%20POST-orange.svg)](#the-boards)
+
+[Quickstart](#quickstart) · [The Boards](#the-boards) · [Task List](#the-full-task-list) · [Add a Method](#how-a-method-plugs-in) · [Full Install](#the-full-board)
+
+</div>
 
 A run is audited at one of three moments, and the benchmark limits each question to the evidence
 available then: before it runs you have only the plan and harness (is it over-privileged?); while it
 runs you have a growing prefix (is it about to fail?); after it runs you have the whole trace (which
 step broke it, did it fail, what kind of fault was it). AuditableBench is built around those three
 information states. Its specific contribution is to organize auditing by information state across
-PRE, LIVE, and
-POST, with one shared `Task` and `Method` interface. Earlier agent-auditing benchmarks include
+PRE, LIVE, and POST, with one shared `Task` and `Method` interface.
+
+## Quickstart
+
+The PRE board scores offline from committed records. No model key, no corpus download, no GRADE
+checkout, and no torch. It is a real board, not a toy: these are the same numbers the full run
+prints.
+
+```bash
+git clone https://github.com/yzhao062/auditablebench.git
+cd auditablebench
+python -m pip install -e ".[dev]"
+python run.py --task pre        # about a second
+```
+
+You get eleven scored rows over 1187 declared agent configurations, and a per-source breakdown,
+because a pooled F1 over four different label processes hides more than it shows. Three of the
+eleven rows are references rather than methods: the `flag_all` and `flag_none` floors, and an
+oracle that reads the answer.
+
+> [!TIP]
+> Read the `flag_all` row first. A method earns its false alarms only by clearing that floor, and on
+> `sweagent` nothing here does: flagging everything ties the best method.
+
+The POST, LIVE, and Gold boards need the GRADE bridge and about 320 MB of corpora, and take roughly
+nine minutes. That path is under [The Full Board](#the-full-board).
+
+<details>
+<summary>How this compares to earlier agent-auditing benchmarks</summary>
+
+Earlier agent-auditing benchmarks include
 [R-Judge](https://arxiv.org/abs/2401.10019), which evaluates safety-risk awareness from agent
 interaction records, and [Agent Security Bench](https://arxiv.org/abs/2410.02644), which evaluates
 attacks and defenses for LLM-based agents. AuditableBench differs in the lifecycle organization and
 shared interface, in the spirit of ADBench for tabular anomaly detection and BOND for graph anomaly
 detection.
+
+</details>
 
 ## The Dataset Is the Asset
 
@@ -116,7 +158,7 @@ Rank the steps of a failed run by how likely each is the fault, scored against t
 | exec-rank (sup.) | 0.211 | 0.614 | 0.454 |
 | `auditable` (blast share) | 0.159 | 0.516 | 0.407 |
 | position prior | 0.159 | 0.516 | 0.407 |
-| PyGOD (graph AD, DOMINANT) | 0.151 | 0.492 | 0.394 |
+| PyGOD (graph AD, DOMINANT) | 0.048 | 0.302 | 0.258 |
 | random | 0.119 | 0.346 | 0.324 |
 
 How to read it. The direct LLM control shows a failed trace to a model and asks it to name the
@@ -126,7 +168,9 @@ Top-1 score here at 0.452. The four highest Top-1 scores range from 0.405 to 0.4
 score from 0.333 to 0.349, while Mistral and Nova score from 0.127 to 0.135 and below the position prior.
 Among methods that use no LLM, the supervised execution-feature ranker beats the position prior
 without an API call; `auditable`'s blast share ties the prior at displayed precision because this
-corpus assumes every step depends on all prior steps, and PyGOD DOMINANT trails it. The benchmark uses
+corpus assumes every step depends on all prior steps. PyGOD DOMINANT is the one entry that scores
+below chance. Its 0.048 Top-1 sits under the 0.119 random floor: the reconstruction-error ranking
+does worse here than picking a step at random. The benchmark uses
 separate structural methods in LIVE settings, where a full-trace judge cannot run. Separating a
 dependency signal from raw position requires traces in which long-range dependencies diverge from
 the corpus's full-context assumption.
@@ -144,7 +188,7 @@ SWE-Gym, 376 runs (188 failed, 188 resolved):
 | random | 0.483 |
 | size (flat) | 0.663 |
 | PyOD-flatten (ECOD) | 0.765 |
-| PyGOD-DOMINANT (graph AD) | 0.487 |
+| PyGOD-DOMINANT (graph AD) | 0.547 |
 | GUARDIAN (recon-AE) | 0.767 |
 | `auditable` (size+deps) | 0.804 |
 | full (reference) | 0.819 |
@@ -157,28 +201,40 @@ tau-bench (MIT), 660 runs (363 failed, 297 resolved):
 | random | 0.498 |
 | size (flat) | 0.619 |
 | PyOD-flatten (ECOD) | 0.555 |
-| PyGOD-DOMINANT (graph AD) | 0.503 |
+| PyGOD-DOMINANT (graph AD) | 0.550 |
 | GUARDIAN (recon-AE) | 0.542 |
 | `auditable` (size+deps) | **0.665** |
 | full (reference) | 0.665 |
 | G-Safeguard (supervised GNN) | 0.626 |
 
-How to read it. The size-normalized dependency block beats the size-only baseline on both
-corpora (+0.141 on SWE-Gym, +0.046 on tau-bench), so the structural signal predicts failure
-beyond run length in both corpora. The lift is larger on SWE-Gym than on tau-bench. On tau-bench the
+How to read it. The size-normalized dependency block scores above the size-only baseline on both
+corpora (+0.141 on SWE-Gym, +0.046 on tau-bench), but only one of those is an established ordering.
+On SWE-Gym the paired test separates the two (Holm p=0.0001), so the structural signal predicts
+failure beyond run length there. On tau-bench the same test does not resolve the pair (Holm
+p=0.068), so read that +0.046 as a point estimate and not as a result. On tau-bench the
 structural block and full-feature reference tie at the displayed precision (0.665), so the full vector
 shows no displayed gain there. On SWE-Gym, PyOD ECOD exceeds the linear size model (0.765 over 0.663),
 and the dependency-structure method scores higher again at 0.804.
 
 AuditableBench runs a wider unsupervised arena behind the headline table: the PyOD tabular family
 (Isolation Forest, KNN, LOF, COPOD, HBOS) and the PyGOD graph family (DOMINANT, CONAD, AnomalyDAE,
-GAAN). On SWE-Gym the tabular detectors span ROC-AUC 0.32 to 0.63 and the graph detectors cluster near
-0.49, all below the size
-baseline; on tau-bench they remain below the size baseline. GUARDIAN, the agent-specific reconstruction
-autoencoder, scores 0.767 next to ECOD at 0.765. Reading the typed graph with an
-off-the-shelf detector does not outperform the task-aware dependency features in these tests, and a
-supervised network trained on the graph features (G-Safeguard) tops SWE-Gym. These results favor the
-task-aware features over the tested off-the-shelf graph detectors.
+GAAN). On SWE-Gym the tabular detectors span ROC-AUC 0.319 to 0.625, all below the 0.663 size
+baseline. The graph family spans 0.547 to 0.850, and two of its members clear that baseline: CONAD at
+0.750 and GAAN at 0.850. On tau-bench both families stay below the 0.619 size baseline, 0.504 to
+0.593 for the tabular set and 0.490 to 0.552 for the graph set. GUARDIAN, the agent-specific
+reconstruction autoencoder, scores 0.767 next to ECOD at 0.765.
+
+Read that SWE-Gym graph maximum carefully. GAAN's 0.850 is a single-seed number, and its five-seed
+range overlaps the supervised references. Ranking only within runs of exactly equal node count leaves
+it no advantage beyond run size on the matchable subset (`tools/pygod_seed_stability.py`). The same
+family fares worse on the other boards. DOMINANT lands under the random floor on Who&When
+localization, and every PyGOD entry stays below the size baseline on tau-bench. No off-the-shelf
+detector establishes a task-relevant board lead. Neither does the task-aware structural method
+against the better ones: on SWE-Gym its paired tests against ECOD and against GUARDIAN both fail to
+separate (Holm p=0.404 and p=0.376), and failing to separate is not evidence that they are equal.
+G-Safeguard is
+the supervised graph comparator, holding the highest displayed SWE-Gym value at 0.828 and
+0.824 +/- 0.007 over five cross-validation seeds.
 
 ### Baselines and Lineage
 
@@ -191,8 +247,9 @@ temporal graph autoencoder, is implemented here as a directed-GCN attribute-reco
 autoencoder over the per-run graph; the explicit adjacency-reconstruction term and the
 information-bottleneck compression are simplified, as the code documents. G-Safeguard (Wang et al.,
 2025, arXiv:2502.11127) uses a GNN to detect anomalies on a multi-agent utterance graph; here it is
-implemented as a supervised graph-classification GNN over the dependency graph. It tops the SWE-Gym
-detection board at 0.828.
+implemented as a supervised graph-classification GNN over the dependency graph. Its 0.828 is the
+highest displayed value on the SWE-Gym table, though the paired test against the full-feature
+reference does not resolve the two (Holm p=1).
 
 ### Gold: Injected Faults on Real Runs
 
@@ -210,11 +267,11 @@ kind because the two injected mechanisms behave differently and the aggregate hi
 |---|---|---|---|
 | random (seed-averaged) | 0.032 | -- | -- |
 | position (leak check) | 0.000 | 0.000 | 0.000 |
-| degree (leak check) | 0.016 | 0.000 | 0.028 |
-| has-dep (control) | 0.000 | 0.000 | 0.000 |
-| max-span (control) | 0.309 | 0.707 | 0.000 |
-| `auditable` (dep-anomaly) | 0.309 | **0.707** | 0.000 |
-| PyGOD (graph AD) | 0.000 | 0.000 | 0.000 |
+| degree (leak check) | 0.045 | 0.073 | 0.023 |
+| has-dep (control) | 0.078 | 0.173 | 0.005 |
+| max-span (control) | 0.309 | 0.703 | 0.005 |
+| `auditable` (dep-anomaly) | 0.309 | **0.703** | 0.005 |
+| PyGOD (graph AD) | 0.165 | 0.256 | 0.094 |
 
 The injector can target only steps that meet the precondition for the selected fault kind, so the
 full-pool table mixes fault localization with target eligibility. The eligible-pool control re-ranks
@@ -231,28 +288,32 @@ on sort order.
 | has-dep | 0.195 | 0.350 | 0.075 |
 | max-span | 0.394 | **0.805** | 0.075 |
 | `auditable` (dep-anomaly) | 0.391 | 0.799 | 0.075 |
-| PyGOD (graph AD) | 0.311 | 0.359 | 0.274 |
+| PyGOD (graph AD) | **0.404** | 0.622 | 0.236 |
 
 How to read it. In the full pool, a dependency-span detector localizes stale-state injections at
-0.707 Top-1 against the 0.032 random floor. Within the eligible pool, `has-dep` equals the stale-state
+0.703 Top-1 against the 0.032 random floor. Within the eligible pool, `has-dep` equals the stale-state
 floor at 0.350, degree scores 0.394 against that floor, and max-span scores 0.805. This control removes
 the target-selection advantage but does not remove the construction artifact below. For
 dropped-grounding, position is the only displayed score above the matched floor, at 0.321 against
 0.277. The dependency-aware detector is essentially the raw `max-span` control, so it is
-keyed to the stale-state mechanism rather than presented as a general detector. PyGOD scores 0.359
-against the 0.350 stale-state floor and 0.274 against the 0.277 dropped-grounding floor.
+keyed to the stale-state mechanism rather than presented as a general detector. PyGOD splits the same
+way. In the eligible pool it reaches 0.622 on stale-state against the 0.350 floor, which carries its
+0.404 overall to the top of that column. Its dropped-grounding score of 0.236 sits below that fault
+kind's 0.277 floor. The overall lead comes from one mechanism, the same one the span detector is
+keyed to.
 
 ### The Injection: Where It Holds Up, and Where It Does Not Yet
 
 The injection checks include both the measured signal and its known limitations:
 
 - **One detectable mechanism.** Stale-state (redirect a dependency to an earlier superseded
-  event on the same file) is localized at 0.707 Top-1, and 0.671 +/- 0.022 across five injection seeds.
+  event on the same file) is localized at 0.703 Top-1, and 0.653 +/- 0.028 across five injection seeds.
   Dropped-grounding (remove a required dependency) is realized but not localized by the span/count
   baselines.
-- **Leakage check, two levels.** In the full pool, position, degree, and `has-dep` score 0.000, 0.016,
-  and 0.000 overall against the 0.032 random floor. Ranking within the exact eligible pool controls
-  target selection. On stale-state, `has-dep` equals the matched floor at 0.350, degree scores 0.394,
+- **Leakage check, two levels.** In the full pool, position, degree, and `has-dep` score 0.000, 0.045,
+  and 0.078 overall against the 0.032 random floor. Two of the three controls clear that floor on
+  target eligibility alone. Ranking within the exact eligible pool controls target selection.
+  On stale-state, `has-dep` equals the matched floor at 0.350, degree scores 0.394,
   and the dependency-span detector scores 0.805, with 0.795 +/- 0.020 across seeds. That controls
   selection, not construction: the
   clean substrate wires every file event to its immediate same-file predecessor, both injections break
@@ -297,7 +358,7 @@ threshold.
 **LIVE online stale-state detection (catch it live).** The same Gold stale-state injection, detected
 online at a fixed false-positive rate instead of localized post-hoc. The prefix-only span
 z-score catches about 6% of stale reads at a realized 6% false-positive rate (0.054 +/- 0.012 across
-seeds), far below the 0.71 within-run localization. At the displayed 5% target, the z-score ties the
+seeds), far below the 0.703 within-run localization. At the displayed 5% target, the z-score ties the
 dependency-count control in the representative seed, while the raw-span method scores higher. The
 tested methods do not reliably identify one stale read online at this false-positive budget.
 
@@ -337,29 +398,39 @@ operation, scope, and allowlist controls the schema does not express, so `sensit
 narrower LLM02 exposure heuristic; and a deprecated or duplicate extension needs deployment history.
 The board scores each rule and the union, so coverage is visible rather than asserted:
 
-| Method | Precision | Recall | F1 |
-|---|---|---|---|
-| flag-all (floor) | 0.430 | 1.000 | 0.601 |
-| flag-none (floor) | 0.000 | 0.000 | 0.000 |
-| risky-permission scan | 0.418 | 0.564 | 0.480 |
-| `owasp_excess_permissions` | 0.504 | 0.506 | 0.505 |
-| `owasp_excess_functionality` | 0.538 | 0.796 | 0.642 |
-| `owasp_privilege_escalation` | 0.811 | 0.010 | 0.020 |
-| `unrequested_high_impact` | 0.633 | 0.148 | 0.240 |
-| `sensitive_access` | 0.763 | 0.016 | 0.030 |
-| `owasp_asi_combined` | 0.511 | 0.910 | **0.654** |
-| LLM judge, held out (Llama-3.3-70B) | 0.594 | 0.741 | **0.659** |
-| oracle (declared minus minimal) | 1.000 | 1.000 | 1.000 |
+| Method | Precision | Recall | F1 | Coverage |
+|---|---|---|---|---|
+| flag-all (floor) | 0.430 | 1.000 | 0.601 | 1.000 |
+| flag-none (floor) | 0.000 | 0.000 | 0.000 | 1.000 |
+| risky-permission scan | 0.418 | 0.564 | 0.480 | 1.000 |
+| `owasp_excess_permissions` | 0.504 | 0.506 | 0.505 | 1.000 |
+| `owasp_excess_functionality` | 0.538 | 0.796 | 0.642 | 1.000 |
+| `owasp_privilege_escalation` | 0.811 | 0.010 | 0.020 | 1.000 |
+| `unrequested_high_impact` | 0.633 | 0.148 | 0.240 | 1.000 |
+| `sensitive_access` | 0.763 | 0.016 | 0.030 | 1.000 |
+| `owasp_asi_combined` | 0.511 | 0.910 | **0.654** | 1.000 |
+| LLM judge, held out (Llama-3.3-70B) | 0.594 | 0.839 | **0.695** | 0.996 |
+| oracle (declared minus minimal) | 1.000 | 1.000 | 1.000 | 1.000 |
+
+Coverage is the share of the 1187 configurations a method actually judged. Every rule answers all of
+them; the held-out judge abstains on 5, so its precision, recall, and F1 are computed over 1182. Rows
+on different denominators are not comparable cell for cell. The per-source section below says why the
+judge abstains and where.
 
 How to read it. The combined OWASP/CWE scanner is the strongest rule-based method (0.654 F1, 0.910
-recall), compared with 0.659 F1 for the held-out LLM judge. Its predictions include unnecessary read
-and unknown capabilities through the excessive-functionality rule, not just risky permission levels.
+recall), against 0.695 F1 for the held-out LLM judge on the 1182 configs it answered. Its predictions
+include unnecessary read and unknown capabilities through the excessive-functionality rule, not just
+risky permission levels.
 The three rules make 37 privilege-escalation, 59 sensitive-access, and 676 unrequested-high-impact
 predictions over the full 1187-config board. Their low overall recall shows that each identifies a
 limited slice of the aggregate excess set. The corpus labels one undifferentiated excess
 set with no per-category annotation, so it cannot say how prevalent each standard category is, and
 these rules' precision is measured over those small-to-moderate samples rather than a category-level
-ground truth. The held-out judge scores above every rule at the displayed precision. The crewai, n8n,
+ground truth. Three rules print a higher precision than the judge: `owasp_privilege_escalation`
+at 0.811, `sensitive_access` at 0.763, and `unrequested_high_impact` at 0.633 against its 0.594.
+Read those as printed values rather than as a ranking, because the judge abstains and so is scored
+on a different set of configurations, which is the same reason the coverage column exists.
+The crewai, n8n,
 and mcp labels were made by two other judges (GPT-5.5 and Claude), so the Llama-3.3-70B baseline did not
 create its own evaluation labels. The scanners are keyword-based and language-limited: a task spec in
 a language outside the keyword lists falls back to the read-only floor and over-flags.
@@ -371,19 +442,27 @@ per-rule per-source numbers print from `run.py`):
 |---|---|---|---|---|---|---|
 | risky-permission scan | 0.326 | 0.095 | 0.575 | 0.827 | 0.025 | 0.803 |
 | `owasp_asi_combined` | 0.448 | 0.411 | 0.644 | 0.961 | 0.570 | 0.842 |
-| LLM judge, held out | 0.518 | 0.357 | 0.662 | 0.990 | 0.467 | 0.972 |
+| LLM judge, held out | 0.518 | 0.362 | 0.744 | 0.990 | 0.467 | 0.972 |
 | oracle | 1.000 | 1.000 | 1.000 | 1.000 | 1.000 | 1.000 |
 
 Label origin per column: crewai, n8n, and mcp carry cross-vendor LLM-judge labels (Cohen's kappa 0.666,
 `data/pre/LABEL_QUALITY.md`); injecagent is a roster relabel; sweagent is declared-minus-used; the
 synthetic set is injection. The held-out judge lands near the top on injecagent (0.990) and synthetic
-(0.972), where the labels are constructed, and only moderate on the judge-labeled corpora (0.36 to
-0.66). Using a different scoring judge avoids direct label reuse: either label-making judge would
+(0.972), where the labels are constructed, and lands between 0.36 and 0.74 on the judge-labeled
+corpora. Using a different scoring judge avoids direct label reuse: either label-making judge would
 inherit perfect recall on the intersection labels and an inflated F1 by construction. This separation
 does not turn the constructed labels into human ground truth. In n8n, where the mean excess ratio is
-0.084, the non-oracle methods in the table score from 0.095 to 0.411 F1. The held-out judge parsed 1182
-of the 1187 configs; the 5 it could not parse are scored as flagging nothing, which counts against its
-recall.
+0.084, the non-oracle methods in the table score from 0.095 to 0.411 F1.
+
+The held-out judge answered all 1187 configs. Five of its replies named a capability whose spelling
+did not match the declared roster. The parser that built the committed cache is all-or-nothing, so
+one unmatched name throws out the whole judgment, and those five never reached the cache. The judge
+abstains on them. They leave the denominator rather than counting as silent negatives. A reply nobody
+could read is a fact about the parser, and scoring it as an empty prediction would charge the method
+for it. The judge's scores therefore cover 1182 of 1187 configs, the coverage 0.996 on the board
+above. The abstentions land in two columns: n8n is scored on 215 of 219 and mcp on 143 of 144. One of
+them is large, a 622-capability MCP server carrying 337 of the corpus's 2893 excess labels. A
+head-to-head claim between the judge and a rule therefore needs a common evaluable set.
 
 ## The Full Task List
 
@@ -411,11 +490,15 @@ Planned:
 - **Missing-guardrail plan audit** (PRE, *is the plan safe*): flag removed or weakened guardrails in a
   declared plan.
 
-## Run It
+## The Full Board
+
+Every board, including POST, LIVE, and Gold. Budget about nine minutes and 320 MB on the first run;
+later runs reuse the revision-keyed cache.
 
 ```bash
 git clone https://github.com/yzhao062/auditablebench.git
 git clone https://github.com/yzhao062/grade.git
+git -C grade checkout 3839a57ac165d58a807fce0a3ff38346732ee936   # the pinned commit CI uses
 cd auditablebench
 python -m pip install -e "../grade[experiments]"
 python -m pip install -e ".[full]"
@@ -427,10 +510,39 @@ the reference methods, and computes the `auditable` baseline through `auditable`
 kernel (`SessionGraph` plus `downstream_reach`). SWE-Gym and tau-bench download from the Hugging
 Face Hub on first run. GRADE is not on PyPI, and its experiment modules are not included in its
 wheel, so keep its checkout next to this repository as shown above. Alternatively, set `GRADE_DIR`
-to its checkout. The `full` extra installs the dataset stack and all benchmark baselines, including
-PyOD and PyGOD. PyGOD is the heavy dependency: it needs `torch`, `torch_geometric`, and a compatible
-`pyg-lib` / `torch-sparse` backend for the installed PyTorch build. These heavy dependencies load only
-when their baselines run.
+to its checkout.
+
+> [!IMPORTANT]
+> The `full` extra does not finish the graph-AD install on its own. PyGOD's `NeighborSampler` needs
+> a compiled backend that has to match your exact PyTorch build, and PyG publishes that index later
+> than PyTorch publishes the build. Install the pair explicitly:
+>
+> ```bash
+> python -m pip install "torch==2.12.1" --index-url https://download.pytorch.org/whl/cpu
+> python -m pip install pyg_lib -f https://data.pyg.org/whl/torch-2.12.1+cpu.html
+> python -m pip install -e ".[graph-ad,dev]"
+> ```
+>
+> Skip this and the PyGOD rows raise on import rather than scoring. Every other board is unaffected,
+> and the heavy dependencies load only when their baselines run.
+
+<details>
+<summary>What each verification command checks</summary>
+
+| Command | What it proves | Needs |
+|---|---|---|
+| `python run.py --task pre` | The PRE board reproduces, offline | nothing |
+| `python tools/ci_smoke.py` | Imports resolve; PRE floors hold | nothing |
+| `pytest tests -q` | Every contract test, with no silent skips | GRADE checkout |
+| `python run.py` | Every board reproduces | GRADE + corpora |
+| `python tools/check_board.py` | The board still matches the committed golden | GRADE + corpora |
+| `python tools/check_board.py --readme-only` | Every number in this file is a board cell | nothing |
+| `python tools/print_corpus_revisions.py` | The three corpus commits are the pinned ones | network |
+
+The `--readme-only` check is why the tables above can be trusted: every numeric cell in this README
+is compared against the committed board output, with no tolerance. A hand-typed number fails it.
+
+</details>
 
 ## How a Method Plugs In
 
