@@ -4,7 +4,7 @@ import sys
 
 sys.path.insert(0, os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "src"))
 
-from auditablebench.corpora import CORPUS_REVISIONS, verify_corpus_heads  # noqa: E402
+from catchbench.corpora import CORPUS_REVISIONS, verify_corpus_heads  # noqa: E402
 
 
 def main() -> None:

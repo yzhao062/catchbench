@@ -25,7 +25,7 @@ from __future__ import annotations
 from functools import cached_property
 from typing import Mapping
 
-from auditablebench import _reuse  # noqa: F401  side effect: sets sys.path for grade + auditable
+from catchbench import _reuse  # noqa: F401  side effect: sets sys.path for grade + auditable
 
 import numpy as np  # noqa: E402
 
@@ -38,7 +38,7 @@ from agent_failure_localization import (  # noqa: E402  GRADE's verified Who&Whe
 )
 from auditable.graph import downstream_reach  # noqa: E402  auditable's public kernel
 from auditable.graph.session import DependencyEdge, SessionGraph, Step  # noqa: E402
-from auditablebench.llm_judge import load_judge_runs  # noqa: E402  the judges' own Who&When records
+from catchbench.llm_judge import load_judge_runs  # noqa: E402  the judges' own Who&When records
 
 _METRIC_NAMES = ("top1", "top3", "mrr")
 
@@ -177,7 +177,7 @@ class PyGODLocalization:
 
     def evaluate(self, task: PostLocalization) -> Mapping[str, float]:
         task.setup()
-        from auditablebench.graph_ad import full_context_edges, pygod_node_scores
+        from catchbench.graph_ad import full_context_edges, pygod_node_scores
 
         graphs = [(_step_matrix(run), full_context_edges(len(run["steps"]))) for run in task.runs]
         per_run = pygod_node_scores(graphs)

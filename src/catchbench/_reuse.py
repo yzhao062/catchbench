@@ -13,7 +13,7 @@ import os
 import sys
 from pathlib import Path
 
-from auditablebench.corpora import install_hub_revision_pins
+from catchbench.corpora import install_hub_revision_pins
 
 
 install_hub_revision_pins()
@@ -66,7 +66,7 @@ def _resolve_grade() -> str:
             return source
 
     raise ImportError(
-        "AuditableBench needs GRADE's experiment modules, which are not distributed in GRADE's "
+        "CatchBench needs GRADE's experiment modules, which are not distributed in GRADE's "
         "wheel. Clone GRADE next to this repository and install its experiment dependencies:\n"
         "  git clone https://github.com/yzhao062/grade.git ../grade\n"
         "  python -m pip install -e \"../grade[experiments]\"\n"
@@ -94,7 +94,7 @@ def _resolve_auditable() -> str:
                 return source
 
     raise ImportError(
-        "AuditableBench requires auditable>=0.2.0. Install it with "
+        "CatchBench requires auditable>=0.2.0. Install it with "
         "`python -m pip install \"auditable>=0.2.0\"`, or set AUDITABLE_DIR to a source "
         "checkout containing src/auditable."
     )

@@ -26,10 +26,31 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "tools"))
 import emit_stats_table as est  # noqa: E402
 
 
+def _claim(family, index, verdict, metric="f1"):
+    """One synthetic claim carrying every field the contrast matrix prints.
+
+    The counts tests only ever read ``verdict``, so the rest exists to drive ``contrasts()``. The
+    values are deliberately unlike the real board's, so a test that accidentally reads the shipped
+    results instead of this fixture fails rather than agreeing by coincidence.
+    """
+    return {
+        "id": "%s.case%d" % (family, index),
+        "family": family,
+        "label": "%s: entrant %d vs floor" % (family, index),
+        "metric": metric,
+        "verdict": verdict,
+        "estimate": {"a": 0.5 + index / 100, "b": 0.4, "a_name": "entrant %d" % index,
+                     "b_name": "floor", "difference_a_minus_b": 0.1 + index / 100},
+        "interval": {"low": 0.01, "high": 0.2, "level": 0.95,
+                     "method": "paired percentile bootstrap", "axis": "run-level sampling"},
+        "test": {"name": "paired test", "p_raw": 0.001, "p_adjusted_holm": 0.004 * (index + 1)},
+    }
+
+
 DATA = {
     "claims": (
-        [{"verdict": "separates_as_stated"}] * 3
-        + [{"verdict": "does_not_separate"}] * 2
+        [_claim("alpha_family", i, "separates_as_stated") for i in range(3)]
+        + [_claim("beta_family", i, "does_not_separate") for i in range(2)]
     ),
     "comparison_families": [
         {"id": "alpha_family", "size": 3, "description": "Three alpha contrasts."},
@@ -63,6 +84,8 @@ Total & {total} & \\\\
 
 \\section{{Something Else}}
 Total & 1187 & configurations in the PRE corpus. \\\\
+
+{contrasts}
 """
 
 FIRST_ROW = "\\texttt{alpha\\_family} & 3 & Three alpha contrasts. \\\\"
@@ -77,6 +100,10 @@ def _appendix(rows_text=None, **overrides):
         "separating": n["separating"],
         "not_separating": n["not_separating"],
         "rows": est.rows(DATA) if rows_text is None else rows_text,
+        # The contrast block is compared byte for byte, so the current fixture has to carry the
+        # generated text verbatim. Without it every case below would fail on the missing block
+        # rather than on the corruption it exists to catch.
+        "contrasts": est.contrasts(DATA),
     }
     fields.update(overrides)
     return APPENDIX_TEMPLATE.format(**fields)
@@ -318,7 +345,7 @@ def test_spelled_family_count_is_accepted(tmp_path, families, word):
     hyphen and read ``Twenty-one`` as ``one``. Both reported a correct paper as stale.
     """
     data = {
-        "claims": [{"verdict": "does_not_separate"}],
+        "claims": [_claim(f"family_{i}", 0, "does_not_separate") for i in range(families)],
         "comparison_families": [{"id": f"family_{i}", "size": 1, "description": f"Family {i}."}
                                 for i in range(families)],
     }
@@ -330,9 +357,138 @@ def test_spelled_family_count_is_accepted(tmp_path, families, word):
     (tmp_path / "09_appendix.tex").write_text(
         APPENDIX_TEMPLATE.format(families=word, total=count["total"],
                                  separating=count["separating"],
-                                 not_separating=count["not_separating"], rows=est.rows(data)),
+                                 not_separating=count["not_separating"], rows=est.rows(data),
+                                 contrasts=est.contrasts(data)),
         encoding="utf-8")
     assert est.check(data, tmp_path) == 0
+
+
+# --- the contrast matrix, which is the printed home of every claim ------------------------------
+#
+# The family table pins how multiplicity is defined and pins no number. Before this block existed a
+# body cut could delete a claim's only printed estimate, interval, adjusted p, and verdict and this
+# checker stayed green, so "the checker passed" was not evidence the claim was still printed.
+
+
+def test_every_claim_appears_in_the_generated_block():
+    block = est.contrasts(DATA)
+    for claim in DATA["claims"]:
+        assert est._tex(claim["label"]) in block, claim["id"]
+    assert block.count(r"\\") >= len(DATA["claims"])
+
+
+def test_a_deleted_contrast_row_fails(paper):
+    _edit(paper, "09_appendix.tex", r"alpha\_family: entrant 1 vs floor & 0.510", "% removed")
+    assert est.check(DATA, paper) == 1
+
+
+def test_an_altered_contrast_value_fails(paper):
+    _edit(paper, "09_appendix.tex", "$+0.100$", "$+0.900$", count=1)
+    assert est.check(DATA, paper) == 1
+
+
+def test_an_altered_verdict_word_fails(paper):
+    _edit(paper, "09_appendix.tex", "unresolved", "separates", count=1)
+    assert est.check(DATA, paper) == 1
+
+
+def test_a_missing_contrast_block_fails(paper):
+    path = paper / "09_appendix.tex"
+    text = path.read_text(encoding="utf-8")
+    start = text.index(est._CONTRASTS_BEGIN)
+    path.write_text(text[:start], encoding="utf-8")
+    assert est.check(DATA, paper) == 1
+
+
+def test_a_commented_out_contrast_marker_fails(paper):
+    """A marker behind a percent sign is not a marker, the same rule the section labels follow."""
+    _edit(paper, "09_appendix.tex", est._CONTRASTS_END, "% " + est._CONTRASTS_END)
+    assert est.check(DATA, paper) == 1
+
+
+def test_a_duplicated_contrast_marker_fails(paper):
+    """Two begin markers make the bounded span ambiguous, so it is reported rather than guessed."""
+    _edit(paper, "09_appendix.tex", est._CONTRASTS_BEGIN,
+          est._CONTRASTS_BEGIN + "\n" + est._CONTRASTS_BEGIN, count=1)
+    assert est.check(DATA, paper) == 1
+
+
+def test_contrast_rows_reordered_fails(paper):
+    path = paper / "09_appendix.tex"
+    text = path.read_text(encoding="utf-8")
+    first = r"alpha\_family: entrant 0 vs floor & 0.500 & 0.400 & $+0.100$"
+    second = r"alpha\_family: entrant 1 vs floor & 0.510 & 0.400 & $+0.110$"
+    assert first in text and second in text
+    path.write_text(text.replace(first, "PLACEHOLDER").replace(second, first)
+                    .replace("PLACEHOLDER", second), encoding="utf-8")
+    assert est.check(DATA, paper) == 1
+
+
+def test_a_family_whose_declared_size_disagrees_refuses_to_render():
+    """A family that declares three contrasts and carries two must not print a short table."""
+    data = {
+        "claims": [_claim("alpha_family", 0, "separates_as_stated")],
+        "comparison_families": [{"id": "alpha_family", "size": 3, "description": "Three."}],
+    }
+    with pytest.raises(SystemExit):
+        est.contrasts(data)
+
+
+def test_a_family_with_no_claims_refuses_to_render():
+    data = {
+        "claims": [],
+        "comparison_families": [{"id": "ghost_family", "size": 0, "description": "None."}],
+    }
+    with pytest.raises(SystemExit):
+        est.contrasts(data)
+
+
+def test_a_label_needing_unhandled_escaping_refuses_to_render():
+    """Guessing at a backslash or a brace would emit a row that compiles into something else."""
+    claim = _claim("alpha_family", 0, "separates_as_stated")
+    claim["label"] = r"entrant \textbf{x} vs floor"
+    data = {"claims": [claim],
+            "comparison_families": [{"id": "alpha_family", "size": 1, "description": "One."}]}
+    with pytest.raises(SystemExit):
+        est.contrasts(data)
+
+
+def test_ampersand_and_percent_in_a_label_are_escaped():
+    claim = _claim("alpha_family", 0, "separates_as_stated")
+    claim["label"] = "Who&When 25% vs floor"
+    data = {"claims": [claim],
+            "comparison_families": [{"id": "alpha_family", "size": 1, "description": "One."}]}
+    assert r"Who\&When 25\% vs floor" in est.contrasts(data)
+
+
+def test_no_generated_contrast_line_carries_a_literal_tab():
+    """A mangled backslash turns \\times into a tab and prints ``imes`` in the PDF."""
+    assert "\t" not in est.contrasts(DATA)
+
+
+def test_a_family_with_several_metrics_names_the_metric_on_each_row():
+    """Three rows reading the same pair with three different numbers would name nothing."""
+    claims = [_claim("mixed_family", i, "separates_as_stated", metric=m)
+              for i, m in enumerate(("top1", "top3", "mrr"))]
+    for claim in claims:
+        claim["label"] = "exec-rank vs position"
+    data = {"claims": claims,
+            "comparison_families": [{"id": "mixed_family", "size": 3, "description": "Mixed."}]}
+    block = est.contrasts(data)
+    for metric in ("top1", "top3", "mrr"):
+        assert "exec-rank vs position (%s)" % metric in block
+    assert "metric on each row" in block
+
+
+def test_a_single_metric_family_keeps_the_metric_in_the_header_only():
+    block = est.contrasts(DATA)
+    assert r"alpha\_family: entrant 0 vs floor (f1)" not in block
+    assert r"$\cdot$ f1 $\cdot$" in block
+
+
+def test_the_group_header_uses_no_bar_character():
+    """A bare | is an em dash under OT1, which is both wrong here and a dash the style forbids."""
+    assert "|" not in est.contrasts(DATA)
 
 
 def test_shipped_results_match_configured_paper():

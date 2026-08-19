@@ -1,7 +1,7 @@
 """Regenerate the LLM-judge prediction cache using GPT-5.5 through the Codex CLI as the backend.
 
 This is the opt-in generation path for the LLM-judge localization baselines (see
-``auditablebench.llm_judge``). It is the ONLY place live LLM calls happen; the board scores from the
+``catchbench.llm_judge``). It is the ONLY place live LLM calls happen; the board scores from the
 committed JSON cache this writes, so running the benchmark never needs an API key or a Codex
 subscription. We drive GPT-5.5 with ``codex exec`` (no OpenAI API key is configured on this machine,
 and the Codex subscription is the available GPT-5.5 access), capturing only the model's final message
@@ -26,7 +26,7 @@ import tempfile
 
 sys.path.insert(0, os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "src"))
 
-from auditablebench import llm_judge as lj  # noqa: E402
+from catchbench import llm_judge as lj  # noqa: E402
 
 MODEL = "gpt-5.5"  # the Codex-configured model; recorded in the cache provenance
 _NEUTRAL_CWD = tempfile.gettempdir()

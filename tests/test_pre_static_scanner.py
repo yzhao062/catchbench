@@ -1,4 +1,4 @@
-"""Tests for the PRE static over-privilege scanner (auditablebench.pre_static_scanner).
+"""Tests for the PRE static over-privilege scanner (catchbench.pre_static_scanner).
 
 Covers the tokenizer corner cases, the per-rule semantics, and the union, including the specific
 false negatives a review flagged: acronym tokenization, short security tokens, composite unrequested
@@ -10,7 +10,7 @@ import unittest
 
 sys.path.insert(0, os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "src"))
 
-from auditablebench import pre_static_scanner as s  # noqa: E402
+from catchbench import pre_static_scanner as s  # noqa: E402
 
 
 def cap(name, level="read", ctype="tool"):

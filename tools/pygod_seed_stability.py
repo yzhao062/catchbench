@@ -121,11 +121,11 @@ def _seed_everything(seed: int) -> None:
 def _pygod_scores(detector: str, graphs: Sequence, seed: int):
     _seed_everything(seed)
     if detector == "pygod (graph AD)":
-        from auditablebench.graph_ad import pygod_node_scores
+        from catchbench.graph_ad import pygod_node_scores
 
         return pygod_node_scores(graphs, seed=seed)
 
-    from auditablebench.pygod_extra import _pygod_extra_node_scores
+    from catchbench.pygod_extra import _pygod_extra_node_scores
     if detector == "pygod-conad":
         from pygod.detector import CONAD
 
@@ -183,8 +183,8 @@ def _run_detection(result: dict, path: Path, seeds: Sequence[int], corpora: Sequ
     from scipy.stats import spearmanr
     from sklearn.metrics import roc_auc_score
 
-    from auditablebench.detection import PostDetection
-    from auditablebench.graph_ad import nx_to_graph
+    from catchbench.detection import PostDetection
+    from catchbench.graph_ad import nx_to_graph
 
     for corpus in corpora:
         print(f"loading detection corpus {corpus}", flush=True)
@@ -233,8 +233,8 @@ def _run_detection(result: dict, path: Path, seeds: Sequence[int], corpora: Sequ
 
 
 def _run_whoandwhen(result: dict, path: Path, seeds: Sequence[int]) -> None:
-    from auditablebench.graph_ad import full_context_edges
-    from auditablebench.post import PostLocalization
+    from catchbench.graph_ad import full_context_edges
+    from catchbench.post import PostLocalization
     from agent_failure_localization import _rank_metrics, _seed_metrics, _step_matrix
 
     print("loading Who&When localization", flush=True)
@@ -280,7 +280,7 @@ def _run_whoandwhen(result: dict, path: Path, seeds: Sequence[int]) -> None:
 
 
 def _run_gold(result: dict, path: Path, seeds: Sequence[int]) -> None:
-    from auditablebench.gold import (
+    from catchbench.gold import (
         GoldLocalization,
         _kind_summary,
         _matched_pools,
@@ -370,7 +370,7 @@ def _gsafeguard_seed_auc(graphs: Sequence, labels: np.ndarray, seed: int,
     from torch_geometric.data import Batch
     from torch_geometric.nn import GCNConv, global_mean_pool
 
-    from auditablebench.agent_detectors import _to_data
+    from catchbench.agent_detectors import _to_data
 
     _seed_everything(seed)
     labels = np.asarray(labels)
@@ -415,8 +415,8 @@ def _gsafeguard_seed_auc(graphs: Sequence, labels: np.ndarray, seed: int,
 
 
 def _run_leaders(result: dict, path: Path, seeds: Sequence[int]) -> None:
-    from auditablebench.detection import PostDetection
-    from auditablebench.graph_ad import nx_to_graph
+    from catchbench.detection import PostDetection
+    from catchbench.graph_ad import nx_to_graph
     from agent_failure_detection import _cv
 
     if list(seeds) != list(range(5)):

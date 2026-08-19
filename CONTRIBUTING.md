@@ -1,6 +1,6 @@
-# Contributing to AuditableBench
+# Contributing to CatchBench
 
-AuditableBench welcomes new methods and corpora. A contribution must keep the board fair,
+CatchBench welcomes new methods and corpora. A contribution must keep the board fair,
 deterministic, and reproducible from the public repository.
 
 ## Adding a method
@@ -16,14 +16,14 @@ supervised method may read labels only through an out-of-sample split in which e
 held out from training.
 
 This runnable example is the `RandomDetection` baseline from
-`src/auditablebench/detection.py`, with its required imports:
+`src/catchbench/detection.py`, with its required imports:
 
 ```python
 from typing import Mapping
 
 import numpy as np
 
-from auditablebench.detection import PostDetection
+from catchbench.detection import PostDetection
 
 
 class RandomDetection:
@@ -107,7 +107,7 @@ committed prediction file is the scored artifact.
 
 Corpora download from the Hugging Face Hub, and an upstream dataset can be rebuilt at the same name.
 Every corpus loader must pin an immutable dataset revision. Do not load from `main`, `latest`, or an
-unpinned default. Record board corpora in `auditablebench.corpora`, which checks the Hub head, forces
+unpinned default. Record board corpora in `catchbench.corpora`, which checks the Hub head, forces
 the full revision through GRADE's Hub calls, and verifies that each loader used the pinned path. New
 corpus adapters must follow the same rule.
 

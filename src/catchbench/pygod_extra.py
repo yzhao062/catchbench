@@ -48,7 +48,7 @@ def _pygod_extra_node_scores(
     from torch_geometric.data import Data
     from sklearn.preprocessing import StandardScaler
 
-    from auditablebench.graph_ad import flat_disconnected
+    from catchbench.graph_ad import flat_disconnected
 
     torch.manual_seed(seed)
     np.random.seed(seed)
@@ -116,7 +116,7 @@ class _PyGODExtraDetection:
 
     def evaluate(self, task) -> dict:
         from sklearn.metrics import roc_auc_score
-        from auditablebench.graph_ad import nx_to_graph
+        from catchbench.graph_ad import nx_to_graph
 
         task.setup()
         graphs = [nx_to_graph(g) for g in task.graphs]

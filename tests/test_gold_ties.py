@@ -5,7 +5,7 @@ import numpy as np
 import pytest
 
 try:
-    from auditablebench import gold
+    from catchbench import gold
 except ImportError as exc:  # pragma: no cover - exercised only without a GRADE checkout
     pytest.skip(f"needs a GRADE checkout: {exc}", allow_module_level=True)
 

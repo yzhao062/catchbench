@@ -33,7 +33,7 @@ from __future__ import annotations
 
 from typing import Mapping
 
-from auditablebench import _reuse  # noqa: F401  side effect: sets sys.path for grade + auditable
+from catchbench import _reuse  # noqa: F401  side effect: sets sys.path for grade + auditable
 
 import numpy as np  # noqa: E402
 
@@ -121,7 +121,7 @@ class PyGODDetection:
     def evaluate(self, task: PostDetection) -> Mapping[str, float]:
         from sklearn.metrics import roc_auc_score
 
-        from auditablebench.graph_ad import nx_to_graph, pygod_node_scores
+        from catchbench.graph_ad import nx_to_graph, pygod_node_scores
 
         task.setup()
         graphs = [nx_to_graph(graph) for graph in task.graphs]
@@ -141,8 +141,8 @@ class GuardianDetection:
     def evaluate(self, task: PostDetection) -> Mapping[str, float]:
         from sklearn.metrics import roc_auc_score
 
-        from auditablebench.agent_detectors import guardian_run_scores
-        from auditablebench.graph_ad import nx_to_graph
+        from catchbench.agent_detectors import guardian_run_scores
+        from catchbench.graph_ad import nx_to_graph
 
         task.setup()
         scores = guardian_run_scores([nx_to_graph(graph) for graph in task.graphs])
@@ -159,8 +159,8 @@ class GSafeguardDetection:
     supports = {"post_detection"}
 
     def evaluate(self, task: PostDetection) -> Mapping[str, float]:
-        from auditablebench.agent_detectors import gsafeguard_cv_auc
-        from auditablebench.graph_ad import nx_to_graph
+        from catchbench.agent_detectors import gsafeguard_cv_auc
+        from catchbench.graph_ad import nx_to_graph
 
         task.setup()
         return {"roc_auc": gsafeguard_cv_auc([nx_to_graph(graph) for graph in task.graphs], task.y)}

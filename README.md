@@ -1,12 +1,12 @@
 <div align="center">
 
-# AuditableBench
+# CatchBench
 
 **A benchmark for finding and attributing agent failures over real agent traces.**
 
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 [![Python](https://img.shields.io/badge/python-3.10%20%7C%203.12-blue.svg)](pyproject.toml)
-[![Tests](https://img.shields.io/badge/tests-186-brightgreen.svg)](tests)
+[![Tests](https://img.shields.io/badge/tests-233-brightgreen.svg)](tests)
 [![Boards](https://img.shields.io/badge/boards-PRE%20%7C%20LIVE%20%7C%20POST-orange.svg)](#the-boards)
 
 [Quickstart](#quickstart) · [The Boards](#the-boards) · [Task List](#the-full-task-list) · [Add a Method](#how-a-method-plugs-in) · [Full Install](#the-full-board)
@@ -16,7 +16,7 @@
 A run is audited at one of three moments, and the benchmark limits each question to the evidence
 available then: before it runs you have only the plan and harness (is it over-privileged?); while it
 runs you have a growing prefix (is it about to fail?); after it runs you have the whole trace (which
-step broke it, did it fail, what kind of fault was it). AuditableBench is built around those three
+step broke it, did it fail, what kind of fault was it). CatchBench is built around those three
 information states. Its specific contribution is to organize auditing by information state across
 PRE, LIVE, and POST, with one shared `Task` and `Method` interface.
 
@@ -27,8 +27,8 @@ checkout, and no torch. It is a real board, not a toy: these are the same number
 prints.
 
 ```bash
-git clone https://github.com/yzhao062/auditablebench.git
-cd auditablebench
+git clone https://github.com/yzhao062/catchbench.git
+cd catchbench
 python -m pip install -e ".[dev]"
 python run.py --task pre        # about a second
 ```
@@ -51,7 +51,7 @@ nine minutes. That path is under [The Full Board](#the-full-board).
 Earlier agent-auditing benchmarks include
 [R-Judge](https://arxiv.org/abs/2401.10019), which evaluates safety-risk awareness from agent
 interaction records, and [Agent Security Bench](https://arxiv.org/abs/2410.02644), which evaluates
-attacks and defenses for LLM-based agents. AuditableBench differs in the lifecycle organization and
+attacks and defenses for LLM-based agents. CatchBench differs in the lifecycle organization and
 shared interface, in the spirit of ADBench for tabular anomaly detection and BOND for graph anomaly
 detection.
 
@@ -73,23 +73,23 @@ method implementation; this repository provides the benchmark tasks and comparis
 | Cell | Role | Asset |
 |---|---|---|
 | Tool | the SDK people build on | [`auditable`](https://github.com/yzhao062/auditable) |
-| Evidence | the benchmark methods compete on | **AuditableBench** (this repo) |
+| Evidence | the benchmark methods compete on | **CatchBench** (this repo) |
 | Knowledge | the curated reading list | [`awesome-auditable-ai`](https://github.com/yzhao062/awesome-auditable-ai) |
 | Method | graph construction and reused loaders | [`GRADE`](https://github.com/yzhao062/grade) |
 
 ## Paper
 
-An accompanying manuscript is in preparation under the title *AuditableBench: A Benchmark for
+An accompanying manuscript is in preparation under the title *CatchBench: A Benchmark for
 Auditing Agent Failures Across the PRE / LIVE / POST Lifecycle*. Preprint: arXiv:XXXX.XXXXX
 (identifier pending). The repository has not yet been released publicly.
 
 `run.py` computes the boards from the inputs available to a checkout. A repository commit fixes the
 benchmark code, committed PRE artifacts, and cached LLM-judge predictions. It also records immutable
-Hugging Face commits for Who&When, SWE-Gym, and tau-bench in `auditablebench.corpora`. Before scoring,
+Hugging Face commits for Who&When, SWE-Gym, and tau-bench in `catchbench.corpora`. Before scoring,
 the runner verifies that each dataset head still equals its recorded commit, forces GRADE's Hub calls
 through that full revision, and verifies the observed fetch or Who&When snapshot metadata. The printed
 board header records all three commits. Direct execution of GRADE outside this runner is not covered by
-the AuditableBench-side pin. The sibling GRADE and `auditable` checkout revisions are not fixed by the
+the CatchBench-side pin. The sibling GRADE and `auditable` checkout revisions are not fixed by the
 setup, and Python dependencies are not locked.
 
 ## Posture: Branded Name, Neutral Content
@@ -216,7 +216,7 @@ structural block and full-feature reference tie at the displayed precision (0.66
 shows no displayed gain there. On SWE-Gym, PyOD ECOD exceeds the linear size model (0.765 over 0.663),
 and the dependency-structure method scores higher again at 0.804.
 
-AuditableBench runs a wider unsupervised arena behind the headline table: the PyOD tabular family
+CatchBench runs a wider unsupervised arena behind the headline table: the PyOD tabular family
 (Isolation Forest, KNN, LOF, COPOD, HBOS) and the PyGOD graph family (DOMINANT, CONAD, AnomalyDAE,
 GAAN). On SWE-Gym the tabular detectors span ROC-AUC 0.319 to 0.625, all below the 0.663 size
 baseline. The graph family spans 0.547 to 0.850, and two of its members clear that baseline: CONAD at
@@ -496,10 +496,10 @@ Every board, including POST, LIVE, and Gold. Budget about nine minutes and 320 M
 later runs reuse the revision-keyed cache.
 
 ```bash
-git clone https://github.com/yzhao062/auditablebench.git
+git clone https://github.com/yzhao062/catchbench.git
 git clone https://github.com/yzhao062/grade.git
 git -C grade checkout 3839a57ac165d58a807fce0a3ff38346732ee936   # the pinned commit CI uses
-cd auditablebench
+cd catchbench
 python -m pip install -e "../grade[experiments]"
 python -m pip install -e ".[full]"
 python run.py
@@ -561,7 +561,7 @@ class MyDetector:
 ```
 
 The same `Task` feeds every method, so the comparison is apples to apples and the dataset, not
-the method, is the fixed point. See `src/auditablebench/core.py` for the contract and
+the method, is the fixed point. See `src/catchbench/core.py` for the contract and
 `detection.py` / `post.py` for the implemented baselines.
 
 ## Status and Release

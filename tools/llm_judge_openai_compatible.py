@@ -4,7 +4,7 @@ This is the reproducible-anywhere generation path. Point it at any OpenAI-compat
 a local open-weights model on DGX Spark (vLLM or Ollama), LM Studio, or the OpenAI API itself. Unlike
 the Codex CLI backend, the served model and endpoint are fully specified, so a second party can rerun
 the exact baseline without a Codex subscription. The prompt templates, parsing, and scoring live in
-``auditablebench.llm_judge`` and are shared with every backend.
+``catchbench.llm_judge`` and are shared with every backend.
 
 Serve a local judge on DGX Spark, then point this at it, for example:
     # on DGX Spark (Ollama):     ollama serve  &&  ollama run qwen2.5:72b
@@ -30,7 +30,7 @@ import urllib.request
 
 sys.path.insert(0, os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "src"))
 
-from auditablebench import llm_judge as lj  # noqa: E402
+from catchbench import llm_judge as lj  # noqa: E402
 
 
 def make_complete(base_url: str, model: str, api_key: str, max_tokens: int = 512, timeout: int = 240):

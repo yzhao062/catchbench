@@ -12,7 +12,7 @@ Gateway configuration comes from the environment, so no endpoint or secret is co
   - AWS_BEARER_TOKEN_BEDROCK  (or standard AWS credentials)
 
 The prompt templates, parsing, scoring, caching, resume, and checkpointing all live in
-``auditablebench.llm_judge`` and are shared across every backend. Calls run concurrently
+``catchbench.llm_judge`` and are shared across every backend. Calls run concurrently
 (``--workers``); the committed cache records model and prompt provenance. The board scores from the
 cache, so generation is paid once and the benchmark itself stays zero-API and deterministic.
 
@@ -30,7 +30,7 @@ from urllib.parse import urlparse
 
 sys.path.insert(0, os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "src"))
 
-from auditablebench import llm_judge as lj  # noqa: E402
+from catchbench import llm_judge as lj  # noqa: E402
 
 # Short board label -> provider model id.
 GATEWAY_MODELS = {

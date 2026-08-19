@@ -32,7 +32,7 @@ from __future__ import annotations
 
 from typing import List, Mapping, Sequence
 
-from auditablebench import _reuse  # noqa: F401  side effect: sets sys.path for grade + auditable
+from catchbench import _reuse  # noqa: F401  side effect: sets sys.path for grade + auditable
 
 import numpy as np  # noqa: E402
 
@@ -41,7 +41,7 @@ import agent_graph_swegym as swegym  # noqa: E402  SWE-Gym step loader (resolved
 import agent_graph_tau_bench as tau  # noqa: E402  tau-bench step loader (db_match outcome)
 from agent_failure_detection import _cv, _layer_matrices  # noqa: E402  shared detection eval
 
-from auditablebench.gold import _inject, _load_clean_runs  # noqa: E402  reuse the stale-state injection
+from catchbench.gold import _inject, _load_clean_runs  # noqa: E402  reuse the stale-state injection
 
 _PREFIXES = (0.25, 0.5, 0.75, 1.0)
 _DETECT_BAR = 0.70  # ROC-AUC a prefix must clear to count as "detected" for time-to-detection

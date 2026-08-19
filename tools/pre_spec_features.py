@@ -13,7 +13,7 @@ SRC_DIR = ROOT / "src"
 if str(SRC_DIR) not in sys.path:
     sys.path.insert(0, str(SRC_DIR))
 
-from auditablebench.pre_static_scanner import derive_spec_features  # noqa: E402
+from catchbench.pre_static_scanner import derive_spec_features  # noqa: E402
 
 
 def deidentify_row(row: dict[str, Any]) -> dict[str, Any]:

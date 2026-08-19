@@ -11,8 +11,8 @@ real pair downloads the Who&When corpus and this suite is the ninety-second one.
 """
 import pytest
 
-from auditablebench.post import PostLocalization
-import auditablebench.post as post_module
+from catchbench.post import PostLocalization
+import catchbench.post as post_module
 
 
 def _steps(*pairs):

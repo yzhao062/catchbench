@@ -7,7 +7,7 @@ from pathlib import Path
 
 from pre_spec_features import ROOT, deidentify_rows, write_json_rows
 
-from auditablebench.pre_static_scanner import redact_spec_identifiers
+from catchbench.pre_static_scanner import redact_spec_identifiers
 
 
 CORPUS_FILES = (

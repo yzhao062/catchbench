@@ -26,7 +26,7 @@ from pre_spec_features import (
 ROOT = Path(__file__).resolve().parents[1]
 OUT_PATH = ROOT / "data" / "pre_staging" / "mcp.json"
 REGISTRY_URL = "https://registry.modelcontextprotocol.io/v0/servers"
-USER_AGENT = "auditablebench-mcp-harvester/0.1"
+USER_AGENT = "catchbench-mcp-harvester/0.1"
 PROTOCOL_VERSION = "2025-06-18"
 RAW_STAGING_KEYS = {
     "instance_id",
@@ -360,7 +360,7 @@ def list_tools(spec: ServerSpec) -> tuple[ServerSpec, list[dict[str, Any]], str 
         "params": {
             "protocolVersion": PROTOCOL_VERSION,
             "capabilities": {},
-            "clientInfo": {"name": "auditablebench-mcp-harvester", "version": "0.1"},
+            "clientInfo": {"name": "catchbench-mcp-harvester", "version": "0.1"},
         },
     }
     try:

@@ -27,7 +27,7 @@ jobs:
           cache: pip
       - name: Install package and test runner
         run: python -m pip install -e ".[dev]" pytest
-      # The named-value contract tests import auditablebench.namedvalue, which needs GRADE's
+      # The named-value contract tests import catchbench.namedvalue, which needs GRADE's
       # experiment/ modules. Those are not in GRADE's wheel, so the checkout bridge is the only
       # way to get them. Importing costs no download: the corpus fetch lives inside a function.
       # The commit is pinned so a GRADE change cannot silently alter this repository's CI.
@@ -37,14 +37,16 @@ jobs:
           git -C ../grade checkout --quiet 3839a57ac165d58a807fce0a3ff38346732ee936
           python -m pip install -e "../grade[experiments]"
       # A silent skip lets a contract rot unnoticed, which is what the pre-publication audit warned
-      # about, so seed 0 also asserts that nothing skipped. Two files are declared exceptions, and
-      # the list is an allowlist so a third one cannot appear without a deliberate edit here.
+      # about, so seed 0 also asserts that nothing skipped. Three files are declared exceptions, and
+      # the list is an allowlist so a fourth one cannot appear without a deliberate edit here.
       #   test_graph_ad_scores_every_node.py needs the torch stack. The graph-ad job below installs
       #     that stack and runs the same file with skipping forbidden, so the contract still runs.
-      #   test_emit_stats_table.py holds one cross-repository case that reads the paper sources
-      #     through CATCHBENCH_PAPER_DIR. The paper lives in a separate private repository that CI
-      #     has no access to, so that single case cannot run here; its other 42 cases do.
-      # Any other skip fails this step.
+      #   test_emit_stats_table.py and test_emit_boards_table.py each hold one cross-repository case
+      #     that reads the paper sources through CATCHBENCH_PAPER_DIR. The paper lives in a separate
+      #     private repository that CI has no access to, so those two cases cannot run here; every
+      #     other case in both files does.
+      # Any other skip fails this step. The same script then checks the README test badge against
+      # the collected count, because that badge is hand-typed and nothing else recomputes it.
       # pipefail matters: without it the exit status is tee's, and a failing test passes the step.
       - name: Test with hash seed 0
         shell: bash
@@ -57,7 +59,7 @@ jobs:
           python - <<'PY'
           import pathlib, re, sys
 
-          # Two files may skip, and only these two, each with a declared ceiling on how many cases.
+          # Three files may skip, and only these three, each with a declared ceiling on how many cases.
           # Three earlier versions of this check were each bypassable, and all three bypasses were
           # demonstrated rather than imagined:
           #   a whole-line substring filter exempted any skip whose *reason* named an allowed file,
@@ -70,6 +72,7 @@ jobs:
           ALLOWED = {
               "tests/test_graph_ad_scores_every_node.py": 10,  # whole file; needs the torch stack
               "tests/test_emit_stats_table.py": 1,             # one cross-repository case
+              "tests/test_emit_boards_table.py": 1,            # one cross-repository case
           }
 
           ANSI = re.compile(r"\x1b\[[0-9;]*[A-Za-z]")
@@ -98,6 +101,31 @@ jobs:
               elif count > allowed:
                   problems.append((f"declared file skipped {count} case(s), over its cap of "
                                    f"{allowed}; raise the cap deliberately or fix the skip", line))
+
+          # The README carries a test-count badge. It is hand-typed, nothing recomputes it, and it
+          # had drifted 31 tests behind before this check existed. Compare against the COLLECTED
+          # count rather than the passed count: this job runs without torch and without the paper
+          # checkout, so how many pass here differs from a full local run, while how many exist
+          # does not.
+          # Take the last line that actually yields outcome counts rather than the last line
+          # containing " in ", so a trailing warning or a skip reason cannot be read as the summary.
+          OUTCOME = re.compile(r"(\d+) (passed|failed|skipped|error|xfailed|xpassed)")
+          collected = 0
+          for raw in report.splitlines():
+              found = OUTCOME.findall(ANSI.sub("", raw))
+              if found and " in " in ANSI.sub("", raw):
+                  collected = sum(int(n) for n, _ in found)
+          badge = re.search(r"badge/tests-(\d+)-",
+                            pathlib.Path("README.md").read_text(encoding="utf-8"))
+          if not badge:
+              problems.append(("the README test badge is missing or no longer parseable",
+                               "README.md"))
+          elif not collected:
+              problems.append(("could not read a test count out of the pytest summary",
+                               summary[-1] if summary else "(no summary line)"))
+          elif int(badge.group(1)) != collected:
+              problems.append((f"the README test badge says {badge.group(1)} but pytest collected "
+                               f"{collected}; update the badge", "README.md"))
 
           for why, line in problems:
               print(f"::error::{why}: {line}")

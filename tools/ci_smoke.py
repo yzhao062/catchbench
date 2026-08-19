@@ -14,13 +14,13 @@ if str(SRC) not in sys.path:
     sys.path.insert(0, str(SRC))
 
 SKIPPED = {
-    "auditablebench._reuse": "requires local GRADE and auditable checkout bridges",
-    "auditablebench.detection": "requires the GRADE checkout bridge",
-    "auditablebench.gold": "requires the GRADE and auditable checkout bridges",
-    "auditablebench.live": "requires the GRADE checkout bridge",
-    "auditablebench.llm_judge": "requires the GRADE checkout bridge",
-    "auditablebench.namedvalue": "requires the GRADE checkout bridge",
-    "auditablebench.post": "requires the GRADE and auditable checkout bridges",
+    "catchbench._reuse": "requires local GRADE and auditable checkout bridges",
+    "catchbench.detection": "requires the GRADE checkout bridge",
+    "catchbench.gold": "requires the GRADE and auditable checkout bridges",
+    "catchbench.live": "requires the GRADE checkout bridge",
+    "catchbench.llm_judge": "requires the GRADE checkout bridge",
+    "catchbench.namedvalue": "requires the GRADE checkout bridge",
+    "catchbench.post": "requires the GRADE and auditable checkout bridges",
 }
 
 EXPECTED_COUNTS = {
@@ -34,7 +34,7 @@ EXPECTED_COUNTS = {
 
 
 def check_imports() -> None:
-    package = importlib.import_module("auditablebench")
+    package = importlib.import_module("catchbench")
     names = sorted(m.name for m in pkgutil.iter_modules(package.__path__, package.__name__ + "."))
     unknown_skips = set(SKIPPED) - set(names)
     assert not unknown_skips, f"skip list names missing from package: {sorted(unknown_skips)}"
@@ -51,7 +51,7 @@ def check_imports() -> None:
 
 
 def check_pre_board() -> None:
-    from auditablebench.pre import FlagAllMethod, FlagNoneMethod, PreOverPrivilege
+    from catchbench.pre import FlagAllMethod, FlagNoneMethod, PreOverPrivilege
 
     task = PreOverPrivilege()
     task.setup()

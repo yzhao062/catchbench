@@ -25,7 +25,7 @@ import sys
 
 os.environ.setdefault("KMP_DUPLICATE_LIB_OK", "TRUE")
 
-from auditablebench import gold  # noqa: E402
+from catchbench import gold  # noqa: E402
 
 
 def artifact_positions(steps):

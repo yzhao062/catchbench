@@ -24,7 +24,7 @@ import sys
 
 os.environ.setdefault("KMP_DUPLICATE_LIB_OK", "TRUE")
 
-from auditablebench import namedvalue as nv  # noqa: E402
+from catchbench import namedvalue as nv  # noqa: E402
 
 
 def _load_checker():

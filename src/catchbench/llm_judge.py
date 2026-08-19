@@ -28,7 +28,7 @@ import re
 from functools import lru_cache
 from typing import Callable, List, Mapping, Optional
 
-from auditablebench import _reuse  # noqa: F401  side effect: sets sys.path for grade + auditable
+from catchbench import _reuse  # noqa: F401  side effect: sets sys.path for grade + auditable
 
 import numpy as np  # noqa: E402
 
@@ -478,7 +478,7 @@ def regenerate_cache(method: str, model: str, complete: Callable[[str], str],
     def _flush() -> None:
         os.makedirs(_CACHE_DIR, exist_ok=True)
         out = {
-            "provenance": {"benchmark": "AuditableBench", "board": "post_localization",
+            "provenance": {"benchmark": "CatchBench", "board": "post_localization",
                            "corpus": "whoandwhen", "method": method, "model": model,
                            "n_runs": len(runs), "prompt_sha": prompt_sha,
                            "paper": "Zhang et al. 2025 (Who&When), arXiv:2505.00212"},

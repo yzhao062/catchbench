@@ -314,7 +314,7 @@ def run_source(source: str, complete, model: str, workers: int, limit: int | Non
 
 
 def validate_outputs(sources: list[str]) -> None:
-    from auditablebench.pre import pre_instance_from_dict, validate_pre_instance
+    from catchbench.pre import pre_instance_from_dict, validate_pre_instance
 
     for source in sources:
         rows = _read_json(OUT_DIR / f"{source}.json")

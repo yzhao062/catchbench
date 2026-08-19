@@ -23,7 +23,7 @@ from collections import defaultdict
 from dataclasses import dataclass, field
 from typing import Any, Dict, List, Optional, Sequence, Tuple
 
-from auditablebench import _reuse  # noqa: F401  side effect: sys.path for grade + auditable
+from catchbench import _reuse  # noqa: F401  side effect: sys.path for grade + auditable
 
 import agent_graph_tau_bench as tau  # noqa: E402
 

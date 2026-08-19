@@ -8,7 +8,7 @@ the baseline non-circular, so the method never scores against a label its own fa
 
 It writes two files per model:
   - ``data/pre/llm_judge_method/<label>.json``       {instance_id: [needed_capability_names]}
-    The board reads exactly this (``auditablebench.pre_baselines.LlmJudgeNeededMethod`` builds one
+    The board reads exactly this (``catchbench.pre_baselines.LlmJudgeNeededMethod`` builds one
     method per file and treats each value as that judge's NEEDED list; excess = declared - needed).
   - ``data/pre/llm_judge_method_votes/<label>.json``  {instance_id: {raw, needed, status, ...}}
     Raw provenance plus the resume cache; never read by the board.

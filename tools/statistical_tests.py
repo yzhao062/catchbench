@@ -138,8 +138,8 @@ PRE_EQUIVALENCE_MARGIN = 0.05
 
 JSON_SCHEMA: dict[str, Any] = {
     "$schema": "https://json-schema.org/draft/2020-12/schema",
-    "$id": "https://auditablebench.example/statistical-tests.schema.json",
-    "title": "AuditableBench ordering-claim audit",
+    "$id": "https://catchbench.example/statistical-tests.schema.json",
+    "title": "CatchBench ordering-claim audit",
     "type": "object",
     "required": [
         "schema_version", "settings", "comparison_families", "claims",
@@ -479,8 +479,8 @@ def _gsafeguard_oof(graphs_nx: Sequence, labels: np.ndarray) -> tuple[np.ndarray
     from torch_geometric.data import Batch
     from torch_geometric.nn import GCNConv, global_mean_pool
 
-    from auditablebench.agent_detectors import _to_data
-    from auditablebench.graph_ad import nx_to_graph
+    from catchbench.agent_detectors import _to_data
+    from catchbench.graph_ad import nx_to_graph
 
     graphs = [nx_to_graph(graph) for graph in graphs_nx]
     labels = np.asarray(labels)
@@ -609,12 +609,12 @@ def _pre_count_matrix(instances: Sequence, predictions: dict[str, set[str]]) -> 
 
 
 def _pre_prediction_maps(task) -> dict[str, dict[str, set[str]]]:
-    from auditablebench.pre import FlagAllMethod, FlagNoneMethod, pre_methods
-    from auditablebench.pre_baselines import (
+    from catchbench.pre import FlagAllMethod, FlagNoneMethod, pre_methods
+    from catchbench.pre_baselines import (
         FlagRiskyPermsMethod, LlmJudgeNeededMethod, PrivilegeDiffOracleMethod,
         _RISKY_PERMISSION_LEVELS,
     )
-    from auditablebench.pre_static_scanner import _RuleScanner
+    from catchbench.pre_static_scanner import _RuleScanner
 
     task.setup()
     methods = pre_methods()
@@ -793,7 +793,7 @@ def _pre_score_summary(counts: np.ndarray) -> dict[str, Any]:
 
 
 def _pre_claims(args: argparse.Namespace) -> tuple[list[dict[str, Any]], dict[str, Any]]:
-    from auditablebench.pre import PreOverPrivilege, _pre_logical_source
+    from catchbench.pre import PreOverPrivilege, _pre_logical_source
 
     task = PreOverPrivilege()
     task.setup()
@@ -1164,13 +1164,13 @@ def _declaration_order_leak(instances, source_labels) -> dict[str, Any]:
 
 
 def _localization_claims(args: argparse.Namespace) -> tuple[list[dict], list[dict]]:
-    from auditablebench import _reuse  # noqa: F401  installs GRADE's experiment path
+    from catchbench import _reuse  # noqa: F401  installs GRADE's experiment path
 
     from agent_failure_localization import _oof_scores, _step_matrix
 
-    from auditablebench.graph_ad import full_context_edges, pygod_node_scores
-    from auditablebench.llm_judge import _score_vector, load_cache, load_judge_runs, run_key
-    from auditablebench.post import PostLocalization, _auditable_blast, post_localization_methods
+    from catchbench.graph_ad import full_context_edges, pygod_node_scores
+    from catchbench.llm_judge import _score_vector, load_cache, load_judge_runs, run_key
+    from catchbench.post import PostLocalization, _auditable_blast, post_localization_methods
 
     task = PostLocalization()
     task.setup()
@@ -1420,9 +1420,9 @@ def _auc_claim(
 
 
 def _post_detection_claims(args: argparse.Namespace) -> list[dict]:
-    from auditablebench.agent_detectors import guardian_run_scores
-    from auditablebench.detection import PostDetection
-    from auditablebench.graph_ad import nx_to_graph
+    from catchbench.agent_detectors import guardian_run_scores
+    from catchbench.detection import PostDetection
+    from catchbench.graph_ad import nx_to_graph
 
     corpora: dict[str, tuple[np.ndarray, dict[str, dict[str, Any]]]] = {}
     for corpus in ("swegym", "tau"):
@@ -1472,7 +1472,7 @@ def _post_detection_claims(args: argparse.Namespace) -> list[dict]:
 
 
 def _live_claims(args: argparse.Namespace) -> list[dict]:
-    from auditablebench.live import LiveStreaming, _mean_span, _prefix_steps
+    from catchbench.live import LiveStreaming, _mean_span, _prefix_steps
 
     all_entries: dict[str, tuple[np.ndarray, dict[float, dict[str, dict[str, Any]]]]] = {}
     for corpus in ("swegym", "tau"):
@@ -1573,11 +1573,11 @@ def _live_claims(args: argparse.Namespace) -> list[dict]:
 
 
 def _gold_claims(args: argparse.Namespace) -> list[dict]:
-    from auditablebench.gold import (
+    from catchbench.gold import (
         GoldAttribution, GoldLocalization, _matched_pools, _ranks, _run_edges, _run_maxspan,
         gold_localization_methods,
     )
-    from auditablebench.graph_ad import pygod_node_scores
+    from catchbench.graph_ad import pygod_node_scores
 
     task = GoldLocalization(seed=0)
     task.setup()
@@ -1949,7 +1949,7 @@ def main() -> int:
     if "detection" in args.sections:
         corrections.append(_holm_correction_audit(claims))
     mismatches = [claim["id"] for claim in claims if not claim["matches_stated_claim"]]
-    from auditablebench.corpora import CORPUS_REVISIONS
+    from catchbench.corpora import CORPUS_REVISIONS
 
     package_versions = {}
     for package in ("numpy", "scipy", "scikit-learn", "torch", "torch-geometric", "pygod", "pyod"):

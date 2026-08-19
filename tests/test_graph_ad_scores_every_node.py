@@ -16,7 +16,7 @@ pytest.importorskip("pygod")
 
 from torch_geometric.data import Data  # noqa: E402
 
-from auditablebench.graph_ad import flat_disconnected, pygod_node_scores  # noqa: E402
+from catchbench.graph_ad import flat_disconnected, pygod_node_scores  # noqa: E402
 
 
 def _toy_graphs(n_graphs=6, n_nodes=12, n_feat=3, seed=0):

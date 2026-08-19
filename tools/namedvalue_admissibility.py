@@ -22,7 +22,7 @@ from collections import Counter, defaultdict
 
 os.environ.setdefault("KMP_DUPLICATE_LIB_OK", "TRUE")
 
-from auditablebench import namedvalue as nv  # noqa: E402
+from catchbench import namedvalue as nv  # noqa: E402
 
 T975_4 = 2.776  # t(0.975, df=4): seed-block CI half-width over 5 seeds
 SEEDS = (0, 1, 2, 3, 4)

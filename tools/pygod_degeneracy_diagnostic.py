@@ -30,9 +30,9 @@ import numpy as np
 
 sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), os.pardir, "src"))
 
-from auditablebench import graph_ad  # noqa: E402
-from auditablebench.gold import GoldLocalization  # noqa: E402
-from auditablebench.graph_ad import pygod_node_scores  # noqa: E402
+from catchbench import graph_ad  # noqa: E402
+from catchbench.gold import GoldLocalization  # noqa: E402
+from catchbench.graph_ad import pygod_node_scores  # noqa: E402
 
 
 def _legacy_batch_joiner(datas, members):

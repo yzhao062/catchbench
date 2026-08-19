@@ -1,4 +1,4 @@
-"""AuditableBench-Gold: grounded fault injection over real agent run-graphs.
+"""CatchBench-Gold: grounded fault injection over real agent run-graphs.
 
 The contribution here is the injection itself, so it is built to hold up (BOND's discipline: the
 synthesis must be defensible, not a convenient artifact) and reported honestly, including where it
@@ -52,13 +52,13 @@ from __future__ import annotations
 
 from typing import List, Mapping, Tuple
 
-from auditablebench import _reuse  # noqa: F401  side effect: sets sys.path for grade + auditable
+from catchbench import _reuse  # noqa: F401  side effect: sets sys.path for grade + auditable
 
 import numpy as np  # noqa: E402
 
 import agent_graph_swegym as swegym  # noqa: E402  SWE-Gym step loader (resolved / unresolved)
 
-from auditablebench.graph_ad import pygod_node_scores  # noqa: E402
+from catchbench.graph_ad import pygod_node_scores  # noqa: E402
 
 _METRIC_NAMES = ("top1", "top3", "mrr")
 Graph = Tuple[np.ndarray, np.ndarray]  # (node features [n, d], edge_index [2, m])

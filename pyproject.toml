@@ -3,9 +3,9 @@ requires = ["setuptools>=61"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "auditablebench"
+name = "catchbench"
 version = "0.1.0"
-description = "AuditableBench: a benchmark for agent auditing across the PRE / LIVE / POST lifecycle."
+description = "CatchBench: a benchmark for agent auditing across the PRE / LIVE / POST lifecycle."
 readme = "README.md"
 requires-python = ">=3.10"
 license = { text = "MIT" }

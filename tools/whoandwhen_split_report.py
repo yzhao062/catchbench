@@ -33,7 +33,7 @@ EXPECTED_EXCLUDED = 58
 
 def main() -> int:
     sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), os.pardir, "src"))
-    from auditablebench import _reuse  # noqa: F401  side effect: puts GRADE on sys.path
+    from catchbench import _reuse  # noqa: F401  side effect: puts GRADE on sys.path
     import agent_graph_characterization as ww
 
     ww._ensure_corpus()

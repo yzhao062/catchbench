@@ -1,4 +1,4 @@
-"""Run the AuditableBench seed board(s) and print the leaderboard.
+"""Run the CatchBench seed board(s) and print the leaderboard.
 
     python run.py
 
@@ -18,13 +18,13 @@ import sys
 
 sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), "src"))
 
-from auditablebench.core import RunPipeline  # noqa: E402
-from auditablebench.corpora import (  # noqa: E402
+from catchbench.core import RunPipeline  # noqa: E402
+from catchbench.corpora import (  # noqa: E402
     revision_header,
     verify_corpus_heads,
     verify_pinned_fetches,
 )
-from auditablebench.pre import PreOverPrivilege, pre_methods, pre_source_breakdown  # noqa: E402
+from catchbench.pre import PreOverPrivilege, pre_methods, pre_source_breakdown  # noqa: E402
 
 # The POST, LIVE, and Gold modules bind the GRADE checkout bridge at import time. Importing them here
 # would make even the PRE board unrunnable without GRADE, a torch stack, and 320 MB of corpora, which
@@ -41,7 +41,7 @@ def _pre_board() -> None:
     """
     task = PreOverPrivilege()
     methods = pre_methods()
-    print("AuditableBench :: PRE board (offline; no GRADE bridge, no corpus download)")
+    print("CatchBench :: PRE board (offline; no GRADE bridge, no corpus download)")
     print()
     print(task.corpus_line())
     rows = RunPipeline([task], methods).run()
@@ -56,7 +56,7 @@ def _pre_board() -> None:
 
 
 def main() -> None:
-    parser = argparse.ArgumentParser(description="Run the AuditableBench boards.")
+    parser = argparse.ArgumentParser(description="Run the CatchBench boards.")
     parser.add_argument(
         "--task", choices=["all", "pre"], default="all",
         help="'pre' scores the offline PRE board only, in about a second, with no GRADE checkout "
@@ -65,8 +65,8 @@ def main() -> None:
     if args.task == "pre":
         return _pre_board()
 
-    from auditablebench.detection import PostDetection, post_detection_methods
-    from auditablebench.gold import (
+    from catchbench.detection import PostDetection, post_detection_methods
+    from catchbench.gold import (
         GoldAttribution,
         GoldLocalization,
         gold_attribution_methods,
@@ -77,7 +77,7 @@ def main() -> None:
         gold_report,
         gold_seed_robustness,
     )
-    from auditablebench.live import (
+    from catchbench.live import (
         LiveStaleState,
         LiveStreaming,
         live_breakdown,
@@ -86,10 +86,10 @@ def main() -> None:
         live_stale_robustness,
         live_streaming_methods,
     )
-    from auditablebench.llm_judge import discovered_llm_judge_methods  # cached LLM-judge panel
-    from auditablebench.post import PostLocalization, post_localization_methods
-    from auditablebench.pyod_extra import pyod_extra_methods  # more PyOD tabular detectors
-    from auditablebench.pygod_extra import pygod_extra_methods  # more PyGOD graph detectors
+    from catchbench.llm_judge import discovered_llm_judge_methods  # cached LLM-judge panel
+    from catchbench.post import PostLocalization, post_localization_methods
+    from catchbench.pyod_extra import pyod_extra_methods  # more PyOD tabular detectors
+    from catchbench.pygod_extra import pygod_extra_methods  # more PyGOD graph detectors
 
     revisions = verify_corpus_heads()
     tasks = [PreOverPrivilege(), PostLocalization(), PostDetection("swegym"), PostDetection("tau"),
@@ -104,7 +104,7 @@ def main() -> None:
     corpus_lines = [task.corpus_line() for task in tasks if hasattr(task, "corpus_line")]
     verify_pinned_fetches()
 
-    print("AuditableBench :: PRE + POST + LIVE board(s)")
+    print("CatchBench :: PRE + POST + LIVE board(s)")
     print(revision_header(revisions))
     print()
     for line in corpus_lines:
