@@ -1,4 +1,4 @@
-"""CatchBench: the benchmark for agent auditing across the PRE / LIVE / POST lifecycle.
+"""CatchBench: the benchmark for auditing agent failures across the full lifecycle.
 
 The public arena where methods compete at finding and attributing agent failures over real
 agent traces. Organized along the agent lifecycle (PRE deploy gate, LIVE real-time, POST

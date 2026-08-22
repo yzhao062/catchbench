@@ -83,9 +83,8 @@ method implementation; this repository provides the benchmark tasks and comparis
 
 ## Paper
 
-An accompanying manuscript is in preparation under the title *CatchBench: A Benchmark for
-Auditing Agent Failures Across the PRE / LIVE / POST Lifecycle*. It is not yet posted; this section
-carries the preprint link once it is. Every number the manuscript reports is regenerated from this
+An accompanying manuscript is in preparation under the title *CatchBench: When Can an Agent Failure
+Be Caught?*. It is not yet posted; this section carries the preprint link once it is. Every number the manuscript reports is regenerated from this
 repository by the tools named in [The Full Board](#the-full-board), so the code is
 checkable ahead of the write-up.
 

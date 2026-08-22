@@ -5,7 +5,7 @@ build-backend = "hatchling.build"
 [project]
 name = "catchbench"
 version = "0.1.1"
-description = "CatchBench: a benchmark for agent auditing across the PRE / LIVE / POST lifecycle."
+description = "CatchBench: a benchmark for auditing agent failures across the full lifecycle."
 readme = "README.md"
 requires-python = ">=3.10"
 license = { text = "MIT" }
