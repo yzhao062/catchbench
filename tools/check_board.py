@@ -89,6 +89,68 @@ def normalize(text: str) -> list[str]:
     return [line.rstrip() for line in text.replace("\r\n", "\n").split("\n")]
 
 
+# Rows whose score comes from a torch model. Everything else on this board reproduces exactly across
+# platforms, which is not an assumption: the first CI run of this comparison, on ubuntu-latest
+# against a golden generated on Windows, moved these two lines and nothing else.
+#
+#     g-safeguard (sup GNN)   0.828 -> 0.829
+#     pygod-anomalydae        0.490 -> 0.487
+#
+# A second, independent CI run produced the same two values, so this is a stable difference between
+# platforms rather than nondeterminism between runs. The cause is underneath torch: a different BLAS,
+# a different reduction order, a different build.
+#
+# The tolerance is 0.005, smaller than the seed variance the paper already reports for the larger of
+# the two rows, 0.824 +/- 0.007 for g-safeguard over five joint split and initialization seeds. A
+# difference this check now tolerates is one the paper already tells a reader to expect, and a
+# difference large enough to move a claim still fails.
+#
+# Everything outside these rows stays byte-exact. Widening the tolerance to the whole board would
+# leave it unable to see a real regression in the rule methods, which are exact by construction and
+# are most of the board.
+TORCH_ROW_PREFIXES = ("guardian (", "g-safeguard (", "pygod")
+NEURAL_TOLERANCE = 0.005
+
+_FLOAT = re.compile(r"-?\d+\.\d+")
+
+
+def _is_torch_row(line: str) -> bool:
+    return line.lstrip().startswith(TORCH_ROW_PREFIXES)
+
+
+def within_neural_tolerance(want_line: str, got_line: str) -> bool:
+    """True when two rows differ only in a torch model's score, by at most NEURAL_TOLERANCE.
+
+    The label, the column layout, and the count of numbers all have to match. Only the values may
+    move, and only on a row this board scores with a torch model.
+    """
+    if not (_is_torch_row(want_line) and _is_torch_row(got_line)):
+        return False
+    a, b = _FLOAT.findall(want_line), _FLOAT.findall(got_line)
+    if not a or len(a) != len(b):
+        return False
+    if _FLOAT.sub("#", want_line) != _FLOAT.sub("#", got_line):
+        return False
+    return all(abs(float(x) - float(y)) <= NEURAL_TOLERANCE for x, y in zip(a, b))
+
+
+def reconcile_neural_rows(want: list[str], got: list[str]) -> tuple[list[str], list[str], int]:
+    """Fold tolerated torch-row differences into agreement, and report how many were folded.
+
+    Only same-length boards are reconciled. A board that gained or lost a line changed structurally,
+    and that is never a float-kernel difference.
+    """
+    if len(want) != len(got):
+        return want, got, 0
+    folded = 0
+    merged = list(want)
+    for i, (a, b) in enumerate(zip(want, got)):
+        if a != b and within_neural_tolerance(a, b):
+            merged[i] = b
+            folded += 1
+    return merged, got, folded
+
+
 # ---------------------------------------------------------------------------------------------
 # Text normalization shared by both sides
 # ---------------------------------------------------------------------------------------------
@@ -920,9 +982,12 @@ def main() -> int:
     else:
         want = normalize(golden_path.read_text(encoding="utf-8"))
         got = normalize(produced)
+        want, got, folded = reconcile_neural_rows(want, got)
         if want == got:
             scored = sum(1 for line in got if line.startswith("["))
-            print(f"board matches the golden: {len(got)} lines, {scored} scored blocks")
+            tolerated = ("" if not folded else
+                         f"; {folded} torch row(s) within {NEURAL_TOLERANCE} of the golden")
+            print(f"board matches the golden: {len(got)} lines, {scored} scored blocks{tolerated}")
         else:
             diff = list(difflib.unified_diff(want, got, fromfile="golden", tofile="run.py",
                                              lineterm=""))

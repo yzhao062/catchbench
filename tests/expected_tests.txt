@@ -15,6 +15,14 @@
 #   python tools/check_test_report.py --report local.xml --update
 # The update keeps the marker of every test already listed and gives a new one
 # 'always'; change that by hand when the test needs torch or the paper repository.
+always       tests/test_board_tolerance.py::test_a_board_that_gained_a_line_is_never_reconciled
+always       tests/test_board_tolerance.py::test_a_non_torch_row_fails_on_the_last_digit
+always       tests/test_board_tolerance.py::test_a_torch_row_beyond_the_tolerance_still_fails
+always       tests/test_board_tolerance.py::test_a_torch_row_whose_label_changed_is_not_reconciled
+always       tests/test_board_tolerance.py::test_the_exact_values_ci_produced_reconcile[g-safeguard (sup GNN)     0.828-g-safeguard (sup GNN)     0.829]
+always       tests/test_board_tolerance.py::test_the_exact_values_ci_produced_reconcile[pygod-anomalydae          0.490-pygod-anomalydae          0.487]
+always       tests/test_board_tolerance.py::test_the_tolerance_is_smaller_than_the_published_seed_variance
+always       tests/test_board_tolerance.py::test_the_two_rows_ci_moved_are_still_in_the_golden
 always       tests/test_check_board.py::test_a_bare_zero_is_a_value_and_not_a_placeholder
 always       tests/test_check_board.py::test_a_recorded_exemption_claims_a_non_board_table
 always       tests/test_check_board.py::test_a_stale_exemption_fails

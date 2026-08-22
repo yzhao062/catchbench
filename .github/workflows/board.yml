@@ -97,21 +97,20 @@ jobs:
           git -C ../grade-board checkout --quiet 3839a57ac165d58a807fce0a3ff38346732ee936
           python -m pip install -e "../grade-board[experiments]"
 
+      # The board is computed once and then compared, rather than computed by the comparison and
+      # computed again by the failure handler. The first version did the latter, and a drift turned a
+      # 28-minute step into 47 minutes of runner time for an artifact the first run already had.
+      - name: Score the board
+        env:
+          GRADE_DIR: ${{ github.workspace }}/../grade-board
+          PYTHONHASHSEED: "0"
+        run: python run.py > board-produced.txt
+
       - name: Compare the board against the golden
-        env:
-          GRADE_DIR: ${{ github.workspace }}/../grade-board
-          PYTHONHASHSEED: "0"
-        run: python tools/check_board.py
+        run: python tools/check_board.py --produced board-produced.txt
 
-      # The board prints the corpus revisions it scored. Keeping the produced output as an artifact
-      # means a mismatch can be inspected without re-running the whole board.
-      - name: Keep the produced board on failure
-        if: failure()
-        env:
-          GRADE_DIR: ${{ github.workspace }}/../grade-board
-          PYTHONHASHSEED: "0"
-        run: python run.py > board-produced.txt || true
-
+      # The board prints the corpus revisions it scored, so keeping it means a mismatch can be read
+      # without re-running anything.
       - name: Upload the produced board
         if: failure()
         uses: actions/upload-artifact@v6
