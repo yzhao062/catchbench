@@ -33,6 +33,11 @@ full = [
     "datasets",
 ]
 dev = ["pytest"]
+# Regenerating the README figures under figure-src/. Deliberately not in `full` or `dev`: the gate
+# that keeps a committed figure honest, tools/check_readme_figures.py, parses the PNG's own text
+# chunks by hand and imports nothing beyond the standard library, so the whole test suite runs
+# without either package. Only redrawing needs them.
+figures = ["matplotlib", "pillow"]
 
 [project.scripts]
 catchbench = "catchbench.cli:main"

@@ -140,8 +140,10 @@ needs-paper  tests/test_emit_boards_table.py::test_shipped_board_matches_configu
 always       tests/test_emit_boards_table.py::test_the_figure_counts_read_the_node_after_each_state_label
 always       tests/test_emit_boards_table.py::test_the_floor_is_excluded_from_the_range
 always       tests/test_emit_boards_table.py::test_the_header_row_is_not_compared_as_content
+needs-paper  tests/test_emit_boards_table.py::test_the_papers_figure_board_is_the_golden_board
 always       tests/test_emit_boards_table.py::test_the_shipped_board_still_carries_every_declared_block
 always       tests/test_emit_boards_table.py::test_the_table_is_found_in_the_results_section_too
+needs-paper  tests/test_emit_boards_table.py::test_the_two_figure_pipelines_read_the_board_identically
 always       tests/test_emit_stats_table.py::test_a_commented_out_contrast_marker_fails
 always       tests/test_emit_stats_table.py::test_a_decoy_end_marker_before_the_start_is_not_used
 always       tests/test_emit_stats_table.py::test_a_deleted_contrast_row_fails
@@ -302,6 +304,10 @@ always       tests/test_pre_static_scanner.py::UnionAndFactoryTest::test_scanner
 always       tests/test_pre_static_scanner.py::UnionAndFactoryTest::test_union_equals_component_rules
 always       tests/test_pre_static_scanner.py::UnrequestedHighImpactRuleTest::test_composite_unrequested_action_flagged
 always       tests/test_pre_static_scanner.py::UnrequestedHighImpactRuleTest::test_requested_action_not_flagged
+always       tests/test_readme_figures.py::test_a_changed_registered_verdict_makes_the_pre_figure_stale
+always       tests/test_readme_figures.py::test_a_moved_board_number_makes_the_live_figure_stale
+always       tests/test_readme_figures.py::test_a_renamed_board_section_is_a_hard_failure
+always       tests/test_readme_figures.py::test_committed_figures_match_their_semantic_inputs
 always       tests/test_statistical_tests.py::test_exact_mcnemar_uses_discordant_pairs
 always       tests/test_statistical_tests.py::test_holm_enforces_monotonicity
 always       tests/test_statistical_tests.py::test_paired_delong_identical_scores
@@ -350,6 +356,7 @@ always       tests/test_third_party_notices.py::test_the_index_records_the_diges
 always       tests/test_third_party_notices.py::test_the_unanticipated_licence_is_reported_even_when_nothing_else_is_wrong
 always       tests/test_tools_are_not_stdlib_shadows.py::test_the_check_test_report_imports_are_covered
 always       tests/test_tools_are_not_stdlib_shadows.py::test_tool_name_does_not_shadow_a_stdlib_module[check_board]
+always       tests/test_tools_are_not_stdlib_shadows.py::test_tool_name_does_not_shadow_a_stdlib_module[check_readme_figures]
 always       tests/test_tools_are_not_stdlib_shadows.py::test_tool_name_does_not_shadow_a_stdlib_module[check_test_report]
 always       tests/test_tools_are_not_stdlib_shadows.py::test_tool_name_does_not_shadow_a_stdlib_module[ci_smoke]
 always       tests/test_tools_are_not_stdlib_shadows.py::test_tool_name_does_not_shadow_a_stdlib_module[emit_asset_manifest]

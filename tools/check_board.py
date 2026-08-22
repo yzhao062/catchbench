@@ -1,72 +1,82 @@
-"""Run the scoring board and compare it against the committed golden output.
+"""Run the scoring board and check the README against committed evidence.
 
-Every number the paper reports comes from ``run.py``. Until now nothing checked that ``run.py`` still
-produces those numbers: ``ci_smoke.py`` covers the PRE board only, and POST, LIVE, and Gold are in
-its skip list because they need the GRADE bridge and three corpus downloads. A refactor could move a
-published cell and no test would notice. That is the gap this closes.
+``run.py`` produces the scoring board. Until now nothing checked that it still produced the
+committed output: ``ci_smoke.py`` covers the PRE board only, and POST, LIVE, and Gold are in its skip
+list because they need the GRADE bridge and three corpus downloads. A refactor could move a
+published cell and no test would notice. The board comparison closes that gap. It is byte-exact
+except for the explicitly named torch rows, where ``NEURAL_TOLERANCE`` documents and bounds a
+cross-platform kernel difference.
 
-The comparison is exact, on the whole printed board. A label rename fails it, which is intended: a
-board line changing is either a result moving or a deliberate edit, and both should be looked at by
-a person. ``--update`` regenerates the golden, and the diff it produces belongs in the commit
-message.
+The README half does three narrower things. It extracts every numeric pipe table from ``README.md``
+and compares each cell exactly against the committed golden board. It scans every decimal numeral
+outside pipe tables and fenced code blocks; a numeral must either equal a parsed golden cell at its
+displayed precision or be claimed exactly once by ``PROSE_NUMBER_ALLOWLIST``, with a one-line
+reason. Allowances and claim licences use unique content substrings, not line numbers, so unrelated
+insertions do not invalidate them. Finally, it scans prose paragraphs under ``The Boards`` for the
+comparison spellings in ``COMPARATIVE_WORD``. Every paragraph it finds must map through
+``CLAIM_LICENSES`` to claim IDs in ``tools/statistical_tests_results.json``.
 
-The board is only half of what ships. ``README.md`` carries hand-typed copies of the same tables,
-and those copies drift: a PyGOD localization row sat at three times its scored value, and the PRE
-judge row was wrong on recall and F1, while the board itself was correct the whole time.
-CONTRIBUTING.md already says "Do not type numbers directly into the README", and nothing enforced
-it. The second half of this checker does: it extracts every numeric table from ``README.md`` and
-compares each cell, at the printed precision, against the committed golden board.
+For a registered claim, ``separates_as_stated`` licenses an ordering. A
+``does_not_separate`` verdict licenses only disclosure: the paragraph must also contain one of the
+explicit phrases in ``NON_SEPARATION_PHRASES``. Without such a phrase, the same verdict makes a bare
+ordering fail.
 
-Two rules govern that second half.
+The comparison scan is a registry gate, not natural-language understanding. It catches a new
+paragraph that uses one of the registered comparison spellings, a removed content licence, a missing
+claim ID, and a non-separating claim presented without an explicit disclosure phrase. It cannot catch
+a comparison phrased without those spellings, inspect prose outside ``The Boards``, or prove that a
+registered ID semantically names every method and metric asserted in a paragraph. Reviewers still
+have to check that mapping. It also cannot distinguish assertion from disclosure when one sentence
+contains both. Such a sentence is treated as disclosure, so the rule errs toward passing it. A new
+comparison added to an already licensed paragraph can likewise escape the registry.
 
-*No tolerance.* A cell matches when its printed text matches. ``0.703`` and ``0.707`` are a failure,
-and so are ``0.71`` and ``0.710``. A tolerance would hide exactly the small movements the check
-exists to catch.
+Two rules govern the README check.
 
-*Fail closed.* Every numeric README table must be claimed by exactly one entry in ``TABLE_SPECS``
-(or, deliberately, by ``NON_BOARD_TABLES``). Every row of a claimed table must be declared with the
-golden row it copies. A table that cannot be parsed, a table no spec claims, a spec that claims no
-table or two, an undeclared row, a row declared but absent, a golden block or column a spec names
-but the golden does not have: each is a failure with a message, never a silent skip. A checker that
-quietly matches nothing is worse than no checker, because it reads as coverage. So a table added to
-the README in the future fails this check the moment it contains one numeric cell, and keeps failing
-until someone either maps it to a golden block in ``TABLE_SPECS`` or records in ``NON_BOARD_TABLES``,
-with a reason, that it is not a board table.
+*No README-table tolerance.* A cell matches when its printed text matches. ``0.703`` and ``0.707``
+are a failure, and so are ``0.71`` and ``0.710``. Prose can print fewer decimal places; there a
+golden cell is rounded to the precision the prose chose before comparison.
+
+*Fail closed.* Every numeric README table must be claimed exactly once by ``TABLE_SPECS`` (or by a
+reasoned ``NON_BOARD_TABLES`` entry), and every non-board prose numeral must be claimed exactly once
+by its registry. Every comparator paragraph in scope must have one content licence. A table,
+numeral, paragraph, allowance, licence, golden source, or claim ID that matches nothing or matches
+more than once is a failure, never a silent skip.
 
 Usage::
 
-    python tools/check_board.py               # run the board, compare both halves, exit 1 on any drift
-    python tools/check_board.py --readme-only # compare README against the committed golden (seconds)
+    python tools/check_board.py               # run the board, then check the README
+    python tools/check_board.py --readme-only # check README tables, prose, and claims (seconds)
+    python tools/check_board.py --board-only  # run or compare only the expensive scoring board
     python tools/check_board.py --produced F  # compare a saved board, plus the README
     python tools/check_board.py --update      # regenerate the golden from the current code
 
-Every mode checks the README, ``--update`` included: regenerating the golden is exactly when the
-README goes stale, so that run reports the drift and exits non-zero after writing the new golden.
-The CI board job runs this file with no arguments, so it now gates both halves without a workflow
-change.
+The default and ``--update`` modes check both halves. ``--board-only`` exists for the slow board CI
+workflow because the fast verify workflow checks the README on every push and pull request.
 
 The board takes roughly nine minutes and needs the GRADE checkout bridge, the torch stack for the
-PyGOD rows, and about 320 MB of corpora at their pinned revisions. Those revisions are printed in
-the board's own header, so a golden mismatch caused by a moved corpus is self-diagnosing. The README
-half needs none of that: it reads two files.
+PyGOD rows, and about 320 MB of corpora at their pinned revisions. The README half needs none of
+that: it reads the README, golden board, and committed statistical results.
 """
 from __future__ import annotations
 
 import argparse
 import difflib
+import json
 import os
 import re
 import subprocess
 import sys
 from collections import Counter
 from dataclasses import dataclass, field
+from decimal import Decimal, InvalidOperation, ROUND_HALF_EVEN
 from pathlib import Path
-from typing import Mapping, Sequence
+from typing import Any, Mapping, Sequence
 
 ROOT = Path(__file__).resolve().parent.parent
 GOLDEN = ROOT / "tests" / "golden" / "board.txt"
 RUNNER = ROOT / "run.py"
 README = ROOT / "README.md"
+STATISTICAL_RESULTS = ROOT / "tools" / "statistical_tests_results.json"
 
 
 def produce() -> str:
@@ -687,6 +697,792 @@ NON_BOARD_TABLES: tuple[Exemption, ...] = ()
 
 
 # ---------------------------------------------------------------------------------------------
+# README prose -> board values, reasoned allowances, and statistical claim licences
+# ---------------------------------------------------------------------------------------------
+
+# Dates and versions are kept whole before the ordinary decimal alternatives are tried. The word
+# boundaries deliberately admit numerals after punctuation (Top-1, GPT-5.5, LLM06:2025) while
+# excluding digits embedded directly in a word. Those identifier and version occurrences are still
+# prose numerals; the allowlist records why they are not board cells.
+_PROSE_NUMBER = re.compile(
+    r"(?<![A-Za-z0-9%])(?:\d{4}-\d{2}-\d{2}|\d+(?:\.\d+){2,}|\d+\.\d+|\d+)"
+    r"(?:[eE][+-]?\d+)?%?(?![A-Za-z0-9])"
+)
+_PLAIN_DECIMAL = re.compile(r"^\d+\.\d+%?$")
+_FENCE = re.compile(r"^(`{3,}|~{3,})")
+_URL_ESCAPE = re.compile(r"%[0-9A-Fa-f]{2}")
+_HTML_IMAGE = re.compile(r"^<img\b.*>\s*$", re.IGNORECASE)
+
+
+@dataclass(frozen=True)
+class ProseNumber:
+    """One decimal numeral outside a pipe table and fenced code block."""
+
+    value: str
+    line: int
+    column: int
+    ordinal: int  # zero-based among equal values on the same line
+
+
+@dataclass(frozen=True)
+class ProseNumberAllowance:
+    """Non-board prose numerals near one unique content substring, with their reason."""
+
+    name: str
+    context_contains: str
+    values: tuple[str, ...]
+    reason: str
+
+
+@dataclass(frozen=True)
+class ProseParagraph:
+    """One prose paragraph in the board discussion."""
+
+    start_line: int
+    end_line: int
+    text: str
+
+
+@dataclass(frozen=True)
+class ClaimLicense:
+    """The statistical claim IDs licensed for one uniquely anchored README paragraph."""
+
+    name: str
+    paragraph_contains: str
+    claim_ids: tuple[str, ...]
+
+
+def _logical_markdown_line(line: str) -> str:
+    """Strip indentation and Markdown quote leaders for structural parsing."""
+    logical = line.lstrip()
+    while logical.startswith(">"):
+        logical = logical[1:].lstrip()
+    return logical
+
+
+def scan_prose_numbers(text: str) -> tuple[list[ProseNumber], list[str]]:
+    """Return prose numerals and the normalized source lines they came from."""
+    lines = text.replace("\r\n", "\n").split("\n")
+    numbers: list[ProseNumber] = []
+    fence_char = ""
+    fence_width = 0
+    for line_number, line in enumerate(lines, start=1):
+        logical = _logical_markdown_line(line)
+        marker = _FENCE.match(logical)
+        if marker:
+            token = marker.group(1)
+            if not fence_char:
+                fence_char, fence_width = token[0], len(token)
+            elif token[0] == fence_char and len(token) >= fence_width:
+                fence_char, fence_width = "", 0
+            continue
+        if fence_char or logical.startswith("|") or _HTML_IMAGE.fullmatch(logical):
+            continue
+        seen: Counter[str] = Counter()
+        # Mask URL percent escapes without changing columns. Otherwise ``%20`` next to ``3.12``
+        # becomes the invented numeral ``203.12``.
+        numeric_line = _URL_ESCAPE.sub("   ", line)
+        for match in _PROSE_NUMBER.finditer(numeric_line):
+            value = match.group(0)
+            numbers.append(ProseNumber(value=value, line=line_number, column=match.start() + 1,
+                                       ordinal=seen[value]))
+            seen[value] += 1
+    return numbers, lines
+
+
+def _scan_prose_contexts(text: str) -> list[ProseParagraph]:
+    """Return non-table, non-code content blocks with whitespace normalized.
+
+    These blocks give numeral allowances a content neighborhood that survives line-number changes
+    and ordinary paragraph reflow. Blank lines, headings, tables, and code fences are boundaries.
+    """
+    lines = text.replace("\r\n", "\n").split("\n")
+    contexts: list[ProseParagraph] = []
+    parts: list[str] = []
+    start_line = 0
+    fence_char = ""
+    fence_width = 0
+
+    def flush(end_line: int) -> None:
+        nonlocal parts, start_line
+        if parts:
+            contexts.append(ProseParagraph(start_line, end_line, " ".join(parts)))
+        parts, start_line = [], 0
+
+    for line_number, line in enumerate(lines, start=1):
+        logical = _logical_markdown_line(line)
+        marker = _FENCE.match(logical)
+        if marker:
+            flush(line_number - 1)
+            token = marker.group(1)
+            if not fence_char:
+                fence_char, fence_width = token[0], len(token)
+            elif token[0] == fence_char and len(token) >= fence_width:
+                fence_char, fence_width = "", 0
+            continue
+        if fence_char:
+            continue
+        if not logical or logical.startswith("|") or _HTML_IMAGE.fullmatch(logical):
+            flush(line_number - 1)
+            continue
+        if logical.startswith("#"):
+            flush(line_number - 1)
+            contexts.append(ProseParagraph(line_number, line_number, logical))
+            continue
+        if not parts:
+            start_line = line_number
+        parts.append(logical)
+    flush(len(lines))
+    return contexts
+
+
+def _golden_cell_values(blocks: Mapping[str, GoldenBlock]) -> tuple[str, ...]:
+    """Extract decimal components from parsed golden cells, excluding titles, labels, and notes."""
+    values: list[str] = []
+    seen_blocks: set[int] = set()
+    for block in blocks.values():
+        if id(block) in seen_blocks:
+            continue
+        seen_blocks.add(id(block))
+        for row in block.rows.values():
+            for cell in row:
+                values.extend(match.group(0) for match in _PROSE_NUMBER.finditer(cell))
+    return tuple(values)
+
+
+def _matches_golden_precision(value: str, golden_values: Sequence[str]) -> bool:
+    """Whether a prose value is a golden cell printed or rounded to the prose precision."""
+    if value in golden_values:
+        return True
+    if not _PLAIN_DECIMAL.fullmatch(value):
+        return False
+    percent = value.endswith("%")
+    raw = value[:-1] if percent else value
+    places = len(raw.rsplit(".", 1)[1])
+    quantum = Decimal(1).scaleb(-places)
+    try:
+        wanted = Decimal(raw)
+    except InvalidOperation:
+        return False
+    for candidate in golden_values:
+        if bool(candidate.endswith("%")) != percent or not _PLAIN_DECIMAL.fullmatch(candidate):
+            continue
+        candidate_raw = candidate[:-1] if percent else candidate
+        try:
+            rounded = Decimal(candidate_raw).quantize(quantum, rounding=ROUND_HALF_EVEN)
+        except InvalidOperation:
+            continue
+        if rounded == wanted:
+            return True
+    return False
+
+
+def check_prose_numbers(readme_text: str, blocks: Mapping[str, GoldenBlock],
+                        allowances: Sequence[ProseNumberAllowance]) -> tuple[list[Problem], int, int,
+                                                                             int]:
+    """Check every prose numeral. Returns problems, seen, board-backed, and allowed counts."""
+    numbers, lines = scan_prose_numbers(readme_text)
+    contexts = _scan_prose_contexts(readme_text)
+    golden_values = _golden_cell_values(blocks)
+    problems: list[Problem] = []
+    claims: dict[tuple[int, int], list[str]] = {}
+    seen_names: set[str] = set()
+
+    by_context_value: dict[tuple[int, str], list[ProseNumber]] = {}
+    for number in numbers:
+        containing = [context for context in contexts
+                      if context.start_line <= number.line <= context.end_line]
+        if len(containing) == 1:
+            by_context_value.setdefault((id(containing[0]), number.value), []).append(number)
+
+    for allowance in allowances:
+        if allowance.name in seen_names:
+            problems.append(Problem("allowance-duplicate",
+                                    f"prose-number allowance name {allowance.name!r} appears twice"))
+            continue
+        seen_names.add(allowance.name)
+        if not allowance.reason.strip() or "\n" in allowance.reason:
+            problems.append(Problem("allowance-reason",
+                                    f"{allowance.name}: reason must be one non-empty line"))
+            continue
+        if not allowance.values:
+            problems.append(Problem("allowance-empty",
+                                    f"{allowance.name}: allowance claims no values"))
+            continue
+        if not allowance.context_contains.strip() or "\n" in allowance.context_contains:
+            problems.append(Problem(
+                "allowance-anchor",
+                f"{allowance.name}: content anchor must be one non-empty line"))
+            continue
+        matched = [(context, context.text.count(allowance.context_contains))
+                   for context in contexts if allowance.context_contains in context.text]
+        match_count = sum(count for _, count in matched)
+        if match_count != 1:
+            first_line = matched[0][0].start_line if matched else None
+            problems.append(Problem("allowance-unmatched",
+                                    f"{allowance.name}: content anchor "
+                                    f"{allowance.context_contains!r} occurs {match_count} times; "
+                                    "it must occur exactly once", line=first_line))
+            continue
+        context = matched[0][0]
+        anchor_lines = [line_number for line_number in range(context.start_line,
+                                                              context.end_line + 1)
+                        if allowance.context_contains
+                        in _logical_markdown_line(lines[line_number - 1])]
+        anchor_line = anchor_lines[0] if len(anchor_lines) == 1 else context.start_line
+        requested: Counter[str] = Counter()
+        for value in allowance.values:
+            occurrence = requested[value]
+            requested[value] += 1
+            candidates = sorted(
+                by_context_value.get((id(context), value), []),
+                key=lambda number: (abs(number.line - anchor_line), number.line, number.column),
+            )
+            if occurrence >= len(candidates):
+                problems.append(Problem(
+                    "allowance-unmatched",
+                    f"{allowance.name}: expected occurrence {occurrence + 1} of {value!r} near "
+                    f"content anchor {allowance.context_contains!r}", line=context.start_line))
+                continue
+            number = candidates[occurrence]
+            claims.setdefault((number.line, number.column), []).append(allowance.name)
+
+    board_backed = 0
+    allowed = 0
+    for number in numbers:
+        claimers = claims.get((number.line, number.column), [])
+        board_match = _matches_golden_precision(number.value, golden_values)
+        if board_match:
+            board_backed += 1
+            if claimers:
+                problems.append(Problem(
+                    "number-double-claimed",
+                    f"prose numeral {number.value!r} is a golden value and is also claimed by "
+                    f"{', '.join(claimers)}", line=number.line))
+            continue
+        if not claimers:
+            problems.append(Problem(
+                "unclaimed-number",
+                f"prose numeral {number.value!r} is not a golden board cell at the printed "
+                "precision and no PROSE_NUMBER_ALLOWLIST entry claims it",
+                line=number.line))
+        elif len(claimers) > 1:
+            problems.append(Problem(
+                "number-double-claimed",
+                f"prose numeral {number.value!r} is claimed by {', '.join(claimers)}",
+                line=number.line))
+        else:
+            allowed += 1
+    return problems, len(numbers), board_backed, allowed
+
+
+# A deliberately small lexical surface. The phrases around above/below/under avoid treating
+# navigational prose such as "the table below" as a statistical comparison. Expanding this regex is
+# a policy change and needs corresponding content licences.
+COMPARATIVE_WORD = re.compile(
+    r"\b(?:beat(?:s|en)?|best|better|clear(?:s|ed)?|exceed(?:s|ed)?|higher|highest|lead|"
+    r"lower|lowest|opposite|outperform(?:s|ed)?|strongest|worse|worst)\b"
+    r"|\b(?:above|below|under)\s+(?:chance|the|a|an|\d)\b"
+    r"|\b(?:sit(?:s)?|land(?:s)?|stay(?:s)?|fall(?:s)?)\s+(?:above|below|under)\b"
+    r"|\b(?:tie(?:s|d)?)\s+(?:at|the|with)\b"
+    r"|\b(?:range(?:s|d)?|score(?:s|d)?|span(?:s|ned)?)\s+from\b"
+    r"|\btop of (?:the|that|its)\b",
+    re.IGNORECASE,
+)
+
+# A non-separating claim is accepted only when its paragraph says so explicitly. Keep this tuple
+# named and literal: adding a euphemism here changes which negative claims the gate treats as honest
+# disclosure rather than unsupported ordering.
+NON_SEPARATION_PHRASES = (
+    r"do not separate",
+    r"does not separate",
+    r"fail to separate",
+    r"fails to separate",
+    r"failing to separate",
+    r"declines to separate",
+    r"do not resolve",
+    r"does not resolve",
+    r"does not improve on",
+    r"do not improve on",
+    r"not as a result",
+    r"not a result",
+    r"next to",
+    r"none of the reported methods reaches",
+    r"unresolved",
+    r"tie(?:s|d)?\s+(?:at|the|with)",
+)
+NON_SEPARATION_WORD = re.compile(
+    r"\b(?:" + "|".join(NON_SEPARATION_PHRASES) + r")\b",
+    re.IGNORECASE,
+)
+
+
+def scan_comparative_paragraphs(text: str) -> list[ProseParagraph]:
+    """Find lexical comparison paragraphs inside the README's ``The Boards`` section."""
+    lines = text.replace("\r\n", "\n").split("\n")
+    paragraphs: list[ProseParagraph] = []
+    paragraph: list[str] = []
+    start_line = 0
+    in_boards = False
+    fence_char = ""
+    fence_width = 0
+
+    def flush(end_line: int) -> None:
+        nonlocal paragraph, start_line
+        if paragraph:
+            prose = " ".join(part.strip() for part in paragraph)
+            if COMPARATIVE_WORD.search(prose) or NON_SEPARATION_WORD.search(prose):
+                paragraphs.append(ProseParagraph(start_line, end_line, prose))
+        paragraph, start_line = [], 0
+
+    for line_number, line in enumerate(lines, start=1):
+        logical = _logical_markdown_line(line)
+        marker = _FENCE.match(logical)
+        if marker:
+            flush(line_number - 1)
+            token = marker.group(1)
+            if not fence_char:
+                fence_char, fence_width = token[0], len(token)
+            elif token[0] == fence_char and len(token) >= fence_width:
+                fence_char, fence_width = "", 0
+            continue
+        if fence_char:
+            continue
+        if logical.startswith("## ") and not logical.startswith("### "):
+            flush(line_number - 1)
+            in_boards = norm_label(logical[3:]) == "the boards"
+            continue
+        if not in_boards:
+            continue
+        if (not logical or logical.startswith("#") or logical.startswith("|")
+                or _HTML_IMAGE.fullmatch(logical)
+                or (re.match(r"^(?:[-*+] |\d+[.)] )", logical) and paragraph)):
+            flush(line_number - 1)
+            if (not logical or logical.startswith(("#", "|"))
+                    or _HTML_IMAGE.fullmatch(logical)):
+                continue
+        if not paragraph:
+            start_line = line_number
+        paragraph.append(logical)
+    flush(len(lines))
+    return paragraphs
+
+
+def _claim_index(data: Mapping[str, Any]) -> tuple[dict[str, Mapping[str, Any]], Counter[str]]:
+    claims = data.get("claims")
+    if not isinstance(claims, list):
+        return {}, Counter()
+    counts: Counter[str] = Counter(
+        claim.get("id") for claim in claims
+        if isinstance(claim, Mapping) and isinstance(claim.get("id"), str)
+    )
+    index = {
+        claim["id"]: claim for claim in claims
+        if isinstance(claim, Mapping) and isinstance(claim.get("id"), str)
+        and counts[claim["id"]] == 1
+    }
+    return index, counts
+
+
+def check_comparative_claims(readme_text: str, statistical_data: Mapping[str, Any],
+                             licenses: Sequence[ClaimLicense]) -> tuple[list[Problem], int, int]:
+    """Validate content licences and verdicts. Returns problems, paragraphs seen, and licensed.
+
+    ``separates_as_stated`` licenses an ordering. ``does_not_separate`` licenses only a paragraph
+    carrying a phrase from :data:`NON_SEPARATION_PHRASES`. This lexical rule cannot distinguish an
+    assertion from disclosure when the same sentence contains both; it treats that sentence as
+    disclosure and therefore errs toward passing it.
+    """
+    paragraphs = scan_comparative_paragraphs(readme_text)
+    claims, claim_counts = _claim_index(statistical_data)
+    problems: list[Problem] = []
+    claimed: dict[int, list[str]] = {}
+    seen_names: set[str] = set()
+
+    if not isinstance(statistical_data.get("claims"), list):
+        problems.append(Problem("claim-schema",
+                                "statistical results must contain a list named 'claims'"))
+
+    for license_ in licenses:
+        if license_.name in seen_names:
+            problems.append(Problem("licence-duplicate",
+                                    f"claim licence name {license_.name!r} appears twice"))
+            continue
+        seen_names.add(license_.name)
+        if not license_.claim_ids:
+            problems.append(Problem("licence-empty",
+                                    f"{license_.name}: licence names no claim IDs"))
+            continue
+        if not license_.paragraph_contains.strip() or "\n" in license_.paragraph_contains:
+            problems.append(Problem(
+                "licence-anchor",
+                f"{license_.name}: content anchor must be one non-empty line"))
+            continue
+        matched = [(paragraph, paragraph.text.count(license_.paragraph_contains))
+                   for paragraph in paragraphs
+                   if license_.paragraph_contains in paragraph.text]
+        match_count = sum(count for _, count in matched)
+        if match_count != 1:
+            first_line = matched[0][0].start_line if matched else None
+            problems.append(Problem(
+                "licence-unmatched",
+                f"{license_.name}: content anchor {license_.paragraph_contains!r} occurs "
+                f"{match_count} times in comparative paragraphs; it must occur exactly once",
+                line=first_line))
+            continue
+        paragraph = matched[0][0]
+        claimed.setdefault(id(paragraph), []).append(license_.name)
+        disclosure = NON_SEPARATION_WORD.search(paragraph.text)
+        for claim_id in license_.claim_ids:
+            if claim_counts.get(claim_id, 0) > 1:
+                problems.append(Problem(
+                    "claim-duplicate",
+                    f"{license_.name}: claim ID {claim_id!r} occurs {claim_counts[claim_id]} times",
+                    line=paragraph.start_line))
+                continue
+            claim = claims.get(claim_id)
+            if claim is None:
+                problems.append(Problem(
+                    "claim-missing",
+                    f"{license_.name}: no statistical claim has ID {claim_id!r}",
+                    line=paragraph.start_line))
+                continue
+            verdict = claim.get("verdict")
+            if verdict == "separates_as_stated":
+                continue
+            if verdict == "does_not_separate" and disclosure:
+                continue
+            if verdict == "does_not_separate":
+                problems.append(Problem(
+                    "claim-not-separating",
+                    f"{license_.name}: {claim_id} has verdict 'does_not_separate', but the "
+                    "paragraph has no explicit phrase from NON_SEPARATION_PHRASES",
+                    line=paragraph.start_line))
+                continue
+            problems.append(Problem(
+                "claim-verdict",
+                f"{license_.name}: {claim_id} has unsupported verdict {verdict!r}",
+                line=paragraph.start_line))
+
+    for paragraph in paragraphs:
+        claimers = claimed.get(id(paragraph), [])
+        if not claimers:
+            word = COMPARATIVE_WORD.search(paragraph.text) or NON_SEPARATION_WORD.search(
+                paragraph.text)
+            problems.append(Problem(
+                "unlicensed-comparison",
+                f"paragraph {paragraph.start_line}-{paragraph.end_line} contains comparative "
+                f"word {word.group(0)!r} but no CLAIM_LICENSES content anchor claims it",
+                line=paragraph.start_line))
+        elif len(claimers) > 1:
+            problems.append(Problem(
+                "comparison-double-licensed",
+                f"paragraph {paragraph.start_line}-{paragraph.end_line} is claimed by "
+                f"{', '.join(claimers)}", line=paragraph.start_line))
+    return problems, len(paragraphs), len(claimed)
+
+
+# Populated below from the current README. Each allowance claims the exact occurrences named in its
+# value tuple near one unique content anchor. Entries are grouped only when they share one reason.
+def _declared_test_count() -> tuple[str, ...]:
+    """The contract-test count the README badge must display, read from the manifest.
+
+    Pinning the number here as a literal made every added test fail this checker until someone
+    edited two files, which is how an allowance becomes a nuisance and then gets deleted. The value
+    the badge must show is already decided by ``tests/expected_tests.txt``, and
+    ``tools/check_test_report.py`` fails when the badge disagrees with it. Reading it here keeps this
+    checker fail-closed on the same fact without a second copy of the number: a badge showing
+    anything other than the declared count is not claimed by this allowance and fails as an
+    unclaimed numeral.
+    """
+
+    manifest = ROOT / "tests" / "expected_tests.txt"
+    try:
+        lines = manifest.read_text(encoding="utf-8").splitlines()
+    except OSError:
+        return ()
+    declared = sum(1 for line in lines
+                   if re.match(r"^(always|needs-\S+)\s+\S", line))
+    return (str(declared),) if declared else ()
+
+
+PROSE_NUMBER_ALLOWLIST: tuple[ProseNumberAllowance, ...] = (
+    ProseNumberAllowance("python-badge", "badge/python-", ("3.10", "3.12"),
+                         "Supported Python versions displayed by the badge."),
+    ProseNumberAllowance("test-badge", "badge/tests-", _declared_test_count(),
+                         "Contract-test count displayed by the badge, read from the manifest."),
+    ProseNumberAllowance("headline-localization-count", "Eight of the eleven post-hoc judges",
+                         ("126",), "Who&When run count supporting the headline disclosure."),
+    ProseNumberAllowance("release-current", "Release 0.1.1", ("0.1.1",),
+                         "Package release version."),
+    ProseNumberAllowance("release-previous", "0.1.0 wheel", ("0.1.0",),
+                         "Earlier package release version."),
+    ProseNumberAllowance("quickstart-config-count", "eleven scored rows over 1187",
+                         ("1187",),
+                         "Count of committed PRE configurations."),
+    ProseNumberAllowance("download-size", "The POST, LIVE, and Gold boards need",
+                         ("320",),
+                         "Approximate corpus download size in megabytes."),
+    ProseNumberAllowance("rjudge-arxiv", "[R-Judge]", ("2401.10019",),
+                         "arXiv paper identifier."),
+    ProseNumberAllowance("asb-arxiv", "[Agent Security Bench]", ("2410.02644",),
+                         "arXiv paper identifier."),
+    ProseNumberAllowance("synthetic-record-count", "56 authored", ("56",),
+                         "Count of CatchBench-authored synthetic records."),
+    ProseNumberAllowance(
+        "licence-counts-a", "committed PRE records",
+        ("1187", "663", "626", "24", "2.0", "9", "3.0"),
+        "Record and licence-version counts in the data licensing audit."),
+    ProseNumberAllowance(
+        "licence-counts-b", "remaining 524",
+        ("2", "4.0", "1", "3.0", "1", "1.1", "524"),
+        "Record counts and licence versions in the data licensing audit."),
+    ProseNumberAllowance("licence-audit-date", "were checked", ("524", "2026-08-21"),
+                         "Audited record count and audit date."),
+    ProseNumberAllowance("licence-recheck-count", "found that 106", ("106",),
+                         "Count found by the licence re-check."),
+    ProseNumberAllowance("noassertion-count", "All 524", ("524",),
+                         "Count of records marked NOASSERTION."),
+    ProseNumberAllowance("restricted-licence-versions", "records stay in the release",
+                         ("3.0", "3.0", "4.0", "1.1", "1.1", "11", "1.1"),
+                         "Licence version identifiers."),
+    ProseNumberAllowance("licence-link-fragment", "why-the-gpl-30-and-cc-by-40",
+                         ("30", "40"),
+                         "Markdown fragment encodes licence version identifiers."),
+    ProseNumberAllowance("localization-corpus-counts", "126 failed runs",
+                         ("126", "1099", "11%"),
+                         "Who&When run, step, and fault-rate counts."),
+    ProseNumberAllowance("judge-panel-count", "11-model panel", ("11",),
+                         "Count of judge models in the panel."),
+    ProseNumberAllowance("localization-band-run-count", "band from 0.333",
+                         ("126",), "Who&When run count supporting the band disclosure."),
+    ProseNumberAllowance("gpt-model-version", "GPT-5.5 has the highest", ("5.5",),
+                         "Model version in a method name."),
+    ProseNumberAllowance("localization-metric-name", "Top-1 score here",
+                         ("1", "1", "3"), "Metric indices repeated in prose."),
+    ProseNumberAllowance("localization-metric-name-random", "Top-1 sits", ("1",),
+                         "Metric index in prose."),
+    ProseNumberAllowance("swegym-run-counts", "SWE-Gym, 376 runs",
+                         ("376", "188", "188"),
+                         "SWE-Gym total, failed, and resolved run counts."),
+    ProseNumberAllowance("tau-run-counts", "tau-bench, 660 runs",
+                         ("660", "363", "297"),
+                         "tau-bench total, failed, and resolved run counts."),
+    ProseNumberAllowance("detection-differences", "corpora (+",
+                         ("0.141", "0.046"),
+                         "Displayed paired ROC-AUC point-estimate differences."),
+    ProseNumberAllowance("swegym-holm-p", "Holm p=0.0001", ("0.0001",),
+                         "Holm-adjusted p-value."),
+    ProseNumberAllowance("tau-holm-p-and-difference", "p=0.068",
+                         ("0.068", "0.046"),
+                         "Holm-adjusted p-value and explicitly qualified point estimate."),
+    ProseNumberAllowance("guardian-holm-p", "p=0.376", ("0.376",),
+                         "Holm-adjusted p-value."),
+    ProseNumberAllowance("gsafeguard-seed-mean", "cross-validation seeds", ("0.824",),
+                         "Five-seed mean reported in the golden reading notes."),
+    ProseNumberAllowance("dominant-publication-year", "Ding et al.", ("2019",),
+                         "Publication year."),
+    ProseNumberAllowance("guardian-citation", "GUARDIAN (Zhou et al.",
+                         ("2025", "2505.19234"),
+                         "Publication year and arXiv identifier."),
+    ProseNumberAllowance("gsafeguard-citation", "G-Safeguard (Wang et al.",
+                         ("2025", "2502.11127"),
+                         "Publication year and arXiv identifier."),
+    ProseNumberAllowance("gsafeguard-holm-p", "Holm p=1", ("1",),
+                         "Holm-adjusted p-value."),
+    ProseNumberAllowance("gold-run-count", "There are 188 clean SWE-Gym runs", ("188",),
+                         "Count of clean SWE-Gym runs used for injection."),
+    ProseNumberAllowance("gold-fault-counts", "fault each: 82 stale-state", ("82", "106"),
+                         "Counts of injected faults by mechanism."),
+    ProseNumberAllowance("eligible-candidate-count", "mean of 7.4", ("7.4",),
+                         "Mean eligible candidate count from the golden board heading."),
+    ProseNumberAllowance("gold-metric-name", "Top-1 against", ("1",),
+                         "Metric index in prose."),
+    ProseNumberAllowance("gold-seed-metric-name", "Top-1,", ("1",),
+                         "Metric index in prose."),
+    ProseNumberAllowance("gold-seed-mean", "0.795 +/-", ("0.795",),
+                         "Selection-controlled five-seed mean in the golden reading notes."),
+    ProseNumberAllowance("artifact-target-counts-a", "uniquely ranks all",
+                         ("82", "106"), "Counts of injected targets by mechanism."),
+    ProseNumberAllowance("artifact-target-counts-b", "flagging 0 of 188",
+                         ("1", "0", "188"),
+                         "Metric index and clean-run diagnostic counts."),
+    ProseNumberAllowance("edge-count-shifts-a", "valid dependency-edge count",
+                         ("9.2", "7.9"), "Mean dependency-edge counts in the shift diagnostic."),
+    ProseNumberAllowance("edge-count-shifts-b", "run-level shift", ("6.9",),
+                         "Mean dependency-edge count after injection."),
+    ProseNumberAllowance("span-shift", "board's span line",
+                         ("188", "8.6", "9.4", "53", "82"),
+                         "Mean span values and affected-run counts in the shift diagnostic."),
+    ProseNumberAllowance("attribution-pair-count", "166 paired", ("166",),
+                         "Count of paired cause-attribution runs."),
+    ProseNumberAllowance("attribution-seed-mean", "0.671 +/-", ("0.671",),
+                         "Five-seed cause-attribution mean in the golden reading notes."),
+    ProseNumberAllowance("online-realized-rates", "6% of stale reads", ("6%", "6%"),
+                         "Approximate realized true-positive and false-positive rates."),
+    ProseNumberAllowance("online-target-rate", "displayed 5%", ("5%",),
+                         "Target false-positive-rate threshold."),
+    ProseNumberAllowance("pre-config-count", "It runs over 1187 configurations", ("1187",),
+                         "Count of PRE configurations."),
+    ProseNumberAllowance("label-kappa", "overall Cohen's kappa", ("0.666",),
+                         "Inter-rater agreement statistic."),
+    ProseNumberAllowance("owasp-edition", "LLM06:2025", ("2025",),
+                         "OWASP category edition year."),
+    ProseNumberAllowance("coverage-total", "share of the 1187", ("1187",),
+                         "Total PRE configuration count."),
+    ProseNumberAllowance("coverage-abstentions", "held-out judge abstains on 5",
+                         ("5", "1182"), "Abstention and evaluable-configuration counts."),
+    ProseNumberAllowance("judge-evaluable-count", "1182 configs", ("1182",),
+                         "Count of configurations evaluated by the held-out judge."),
+    ProseNumberAllowance("rule-prediction-counts", "three rules make",
+                         ("37", "59", "676"), "Prediction counts for the three named rules."),
+    ProseNumberAllowance("rule-board-count", "1187-config board", ("1187",),
+                         "Total PRE configuration count."),
+    ProseNumberAllowance("judge-model-versions", "other judges",
+                         ("5.5", "3.3"), "Model versions in judge names."),
+    ProseNumberAllowance("source-label-kappa", "Label origin per column", ("0.666",),
+                         "Inter-rater agreement statistic."),
+    ProseNumberAllowance("injecagent-shortcut-counts", "all 340 injecagent configurations",
+                         ("340", "510", "0.106"),
+                         "Corpus construction diagnostic counts and cross-source score."),
+    ProseNumberAllowance("mcp-oracle-f1", "where the mean excess ratio is", ("0.084",),
+                         "Per-source oracle F1 not emitted as a mapped scoring-board cell."),
+    ProseNumberAllowance("judge-answer-count", "all 1187", ("1187",),
+                         "Count of held-out judge replies."),
+    ProseNumberAllowance("judge-coverage-counts", "cover 1182 of 1187",
+                         ("1182", "1187"), "Evaluable and total configuration counts."),
+    ProseNumberAllowance("abstention-source-counts", "n8n is scored on",
+                         ("215", "219", "143", "144"),
+                         "Evaluable and total counts for the two affected sources."),
+    ProseNumberAllowance("large-server-counts", "622-capability",
+                         ("622", "337", "2893"),
+                         "Capability and excess-label counts for the cited server."),
+    ProseNumberAllowance("task-list-localization-metrics", "Fault localization** (POST",
+                         ("1", "3"), "Metric indices in the task list."),
+    ProseNumberAllowance("task-list-gold-metrics", "Gold fault localization** (POST",
+                         ("1", "3"), "Metric indices in the task list."),
+    ProseNumberAllowance("task-list-pre-count", "Over-privilege audit** (PRE", ("1187",),
+                         "Count of PRE configurations."),
+    ProseNumberAllowance("full-board-download-size", "Every board, including POST", ("320",),
+                         "Approximate corpus download size in megabytes."),
+    ProseNumberAllowance("retained-cache-count", "31 Who&When", ("31",),
+                         "Count of retained Who&When judge caches."),
+)
+
+
+# Populated below with distinctive content from each README paragraph. A non-separating ID remains
+# registered when it is the evidence the prose invokes, so the disclosure phrase is checked rather
+# than hiding the statistical contract as an omission.
+_LOCALIZATION_BAND_CLAIMS = (
+    "loc.band.gpt-5.5.vs.claude-opus-4.8",
+    "loc.band.gpt-5.5.vs.gpt-5.4",
+    "loc.band.gpt-5.5.vs.deepseek-r1",
+    "loc.band.gpt-5.5.vs.gemini",
+    "loc.band.gpt-5.5.vs.qwen3-32b",
+    "loc.band.gpt-5.5.vs.gpt-oss-20b",
+    "loc.band.gpt-5.5.vs.llama-3.3-70b",
+    "loc.band.claude-opus-4.8.vs.gpt-5.4",
+    "loc.band.claude-opus-4.8.vs.deepseek-r1",
+    "loc.band.claude-opus-4.8.vs.gemini",
+    "loc.band.claude-opus-4.8.vs.qwen3-32b",
+    "loc.band.claude-opus-4.8.vs.gpt-oss-20b",
+    "loc.band.claude-opus-4.8.vs.llama-3.3-70b",
+    "loc.band.gpt-5.4.vs.deepseek-r1",
+    "loc.band.gpt-5.4.vs.gemini",
+    "loc.band.gpt-5.4.vs.qwen3-32b",
+    "loc.band.gpt-5.4.vs.gpt-oss-20b",
+    "loc.band.gpt-5.4.vs.llama-3.3-70b",
+    "loc.band.deepseek-r1.vs.gemini",
+    "loc.band.deepseek-r1.vs.qwen3-32b",
+    "loc.band.deepseek-r1.vs.gpt-oss-20b",
+    "loc.band.deepseek-r1.vs.llama-3.3-70b",
+    "loc.band.gemini.vs.qwen3-32b",
+    "loc.band.gemini.vs.gpt-oss-20b",
+    "loc.band.gemini.vs.llama-3.3-70b",
+    "loc.band.qwen3-32b.vs.gpt-oss-20b",
+    "loc.band.qwen3-32b.vs.llama-3.3-70b",
+    "loc.band.gpt-oss-20b.vs.llama-3.3-70b",
+)
+
+_TAU_THRESHOLD_CLAIMS = tuple(
+    f"live.tau.bar.{prefix}.{method}"
+    for prefix in ("25", "50", "75", "100")
+    for method in ("size (flat)", "auditable (size+deps)", "full", "pyod (ECOD)",
+                   "dep-span (online)")
+)
+
+CLAIM_LICENSES: tuple[ClaimLicense, ...] = (
+    ClaimLicense(
+        "Who&When localization comparisons",
+        "band from 0.333 up that 126 runs do not separate",
+        _LOCALIZATION_BAND_CLAIMS + (
+            "loc.gpt55.vs.random",
+            "loc.gpt55.vs.auditable (blast)",
+            "loc.gpt55.vs.position",
+            "loc.gpt55.vs.pygod (graph AD)",
+            "loc.gpt55.vs.exec-rank (sup.)",
+            "loc.exec.vs.position.top1",
+            "loc.exec.vs.position.top3",
+            "loc.exec.vs.position.mrr",
+            "loc.position.vs.mistral-small",
+            "loc.position.vs.nova-micro",
+        ),
+    ),
+    ClaimLicense("headline detection comparison",
+                 "size-normalized dependency block scores above the size-only baseline",
+                 ("det.swe.auditable.vs.size", "det.tau.auditable.vs.size",
+                  "det.tau.auditable.vs.full", "det.swe.auditable.vs.ecod")),
+    ClaimLicense("unsupervised arena comparison",
+                 "GUARDIAN, the agent-specific reconstruction autoencoder",
+                 ("det.swe.guardian.vs.ecod",)),
+    ClaimLicense("G-Safeguard displayed maximum",
+                 "Neither does the task-aware structural method against the better ones",
+                 ("det.swe.auditable.vs.ecod", "det.swe.auditable.vs.guardian",
+                  "det.swe.gsafeguard.vs.full")),
+    ClaimLicense("G-Safeguard lineage maximum",
+                 "paired test against the full-feature reference does not resolve the two",
+                 ("det.swe.gsafeguard.vs.full",)),
+    ClaimLicense("Gold displayed floor comparisons",
+                 "dependency-span detector localizes stale-state injections",
+                 ("gold.maxspan.stale.floor",)),
+    ClaimLicense("Gold leakage-control comparisons",
+                 "Leakage check, two levels",
+                 ("gold.maxspan.stale.floor", "gold.hasdep.dropped.floor")),
+    ClaimLicense("Gold cause-attribution comparisons",
+                 "the two injections leave opposite traces",
+                 ("gold.attribution.max-span (higher=stale)",
+                  "gold.attribution.edge-count (higher=stale)")),
+    ClaimLicense("LIVE early-warning comparisons",
+                 "none of the reported methods reaches the 0.70 time-to-detection threshold",
+                 ("live.swe25.auditable.vs.size",) + _TAU_THRESHOLD_CLAIMS),
+    ClaimLicense("LIVE domain-split figure comparison",
+                 "same methods on the same features land on opposite sides of the bar",
+                 ("live.swe25.auditable.vs.size",)),
+    ClaimLicense("LIVE online stale-state comparison",
+                 "far below the 0.703 within-run localization",
+                 ("gold.maxspan.stale.floor",)),
+    ClaimLicense("PRE pooled comparisons",
+                 "combined OWASP/CWE scanner is the strongest rule-based method",
+                 ("pre.combined.vs.heldout_judge",
+                   "pre.precision.owasp_privilege_escalation.vs.base_rate",
+                   "pre.precision.unrequested_high_impact.vs.base_rate",
+                   "pre.precision.sensitive_access.vs.base_rate")),
+    ClaimLicense("PRE per-source comparisons",
+                 "registered paired test declines to separate the best method from the floor",
+                 ("pre.source.crewai.best.vs.flag_all", "pre.source.n8n.best.vs.flag_all",
+                  "pre.source.mcp.best.vs.flag_all", "pre.source.injecagent.best.vs.flag_all",
+                  "pre.source.sweagent.best.vs.flag_all",
+                  "pre.source.synthetic.best.vs.flag_all")),
+    ClaimLicense("PRE declaration-order diagnostic comparison",
+                 "above the 0.990 held-out judge and above every other method",
+                 ("pre.source.injecagent.best.vs.flag_all",)),
+    ClaimLicense("PRE n8n displayed range comparison",
+                 "non-oracle methods in the table score from 0.095 to 0.411",
+                 ("pre.source.n8n.best.vs.flag_all",)),
+)
+
+
+# ---------------------------------------------------------------------------------------------
 # The comparison
 # ---------------------------------------------------------------------------------------------
 
@@ -824,6 +1620,11 @@ class Result:
     tables_numeric: int = 0     # of those, the ones carrying at least one number
     tables_claimed: int = 0     # of those, the ones a spec or an exemption claimed
     cells_compared: int = 0     # README cells compared against a golden cell
+    prose_numbers_seen: int = 0
+    prose_numbers_board: int = 0
+    prose_numbers_allowed: int = 0
+    comparative_paragraphs: int = 0
+    comparative_licensed: int = 0
 
     @property
     def ok(self) -> bool:
@@ -832,19 +1633,27 @@ class Result:
 
 def check_readme_detailed(readme_text: str, golden_text: str,
                           specs: Sequence[TableSpec] | None = None,
-                          exemptions: Sequence[Exemption] | None = None) -> Result:
-    """Compare every numeric table in the README against the golden board.
+                          exemptions: Sequence[Exemption] | None = None,
+                          number_allowances: Sequence[ProseNumberAllowance] | None = None,
+                          claim_licenses: Sequence[ClaimLicense] | None = None,
+                          statistical_data: Mapping[str, Any] | None = None) -> Result:
+    """Check README tables, prose numerals, and comparative claims against committed evidence.
 
     Returns one :class:`Problem` per disagreement, plus the counts that say how much was looked at.
     An empty problem list means every numeric table was claimed by a spec, every declared row was
     found, and every mapped cell printed exactly what the board printed. The counts are reported
     because "no problems" and "nothing checked" are the same output otherwise.
 
-    The two registries are read at call time rather than bound as defaults, so a test can point the
-    shipped entry points at a fixture registry and exercise the same path CI runs.
+    The registries are read at call time rather than bound as defaults, so a test can point the
+    shipped entry points at fixture registries and exercise the same path CI runs.
     """
     specs = TABLE_SPECS if specs is None else specs
     exemptions = NON_BOARD_TABLES if exemptions is None else exemptions
+    number_allowances = (PROSE_NUMBER_ALLOWLIST if number_allowances is None
+                         else number_allowances)
+    claim_licenses = CLAIM_LICENSES if claim_licenses is None else claim_licenses
+    if statistical_data is None:
+        statistical_data = json.loads(STATISTICAL_RESULTS.read_text(encoding="utf-8"))
     blocks, counts = parse_golden(golden_text)
     tables, problems = parse_readme(readme_text)
     result = Result(problems=problems, tables_seen=len(tables),
@@ -903,41 +1712,73 @@ def check_readme_detailed(readme_text: str, golden_text: str,
                                     f"{table.heading!r}). Map it to a golden block, or record it "
                                     "in NON_BOARD_TABLES with a reason.", line=table.line))
     result.tables_claimed = len(claimed)
+
+    number_problems, seen, board_backed, allowed = check_prose_numbers(
+        readme_text, blocks, number_allowances)
+    problems.extend(number_problems)
+    result.prose_numbers_seen = seen
+    result.prose_numbers_board = board_backed
+    result.prose_numbers_allowed = allowed
+
+    claim_problems, comparative_seen, comparative_licensed = check_comparative_claims(
+        readme_text, statistical_data, claim_licenses)
+    problems.extend(claim_problems)
+    result.comparative_paragraphs = comparative_seen
+    result.comparative_licensed = comparative_licensed
     return result
 
 
 def check_readme(readme_text: str, golden_text: str,
                  specs: Sequence[TableSpec] | None = None,
-                 exemptions: Sequence[Exemption] | None = None) -> list[Problem]:
+                 exemptions: Sequence[Exemption] | None = None,
+                 number_allowances: Sequence[ProseNumberAllowance] | None = None,
+                 claim_licenses: Sequence[ClaimLicense] | None = None,
+                 statistical_data: Mapping[str, Any] | None = None) -> list[Problem]:
     """The problem list alone, for callers that do not need the counts."""
-    return check_readme_detailed(readme_text, golden_text, specs, exemptions).problems
+    return check_readme_detailed(readme_text, golden_text, specs, exemptions, number_allowances,
+                                 claim_licenses, statistical_data).problems
 
 
 def readme_report(result: Result) -> str:
     if result.ok:
         return (f"README matches the golden board: {result.cells_compared} cell(s) across "
                 f"{result.tables_claimed} table(s); {result.tables_numeric} numeric table(s) in "
-                f"README.md, all claimed")
+                f"README.md, all claimed; {result.prose_numbers_seen} prose numeral(s), "
+                f"{result.prose_numbers_board} board-backed and "
+                f"{result.prose_numbers_allowed} allowed; "
+                f"{result.comparative_paragraphs} comparative paragraph(s), all licensed")
     lines = [f"README DRIFT: {len(result.problems)} problem(s)", ""]
     lines += [p.render() for p in sorted(result.problems, key=lambda p: (p.line or 0, p.kind))]
     lines += ["",
               f"({result.cells_compared} cell(s) compared, across {result.tables_claimed} of "
               f"{result.tables_numeric} numeric table(s). A low count next to a long problem list "
               "means whole tables went unchecked.)",
-              "Every number in README.md must be a copy of a cell the board printed. Regenerate the "
-              "board with `python run.py`, copy the values, and do not round them: this check "
-              "compares the printed text, with no tolerance."]
+              f"Prose numerals: {result.prose_numbers_seen} seen, "
+              f"{result.prose_numbers_board} board-backed at printed precision, "
+              f"{result.prose_numbers_allowed} allowed with reasons.",
+              f"Comparative paragraphs: {result.comparative_paragraphs} seen, "
+              f"{result.comparative_licensed} claimed by content licences."]
     return "\n".join(lines)
 
 
-def run_readme_check(readme_path: Path, golden_path: Path) -> tuple[int, str]:
-    """Check one README against one golden file. Returns (exit code, report)."""
+def run_readme_check(readme_path: Path, golden_path: Path,
+                     statistical_path: Path = STATISTICAL_RESULTS) -> tuple[int, str]:
+    """Check one README against the golden and statistical results. Return code and report."""
     if not readme_path.exists():
         return 1, f"no README at {readme_path}"
     if not golden_path.exists():
         return 1, f"no golden at {golden_path}; create it with --update"
-    result = check_readme_detailed(readme_path.read_text(encoding="utf-8"),
-                                   golden_path.read_text(encoding="utf-8"))
+    if not statistical_path.exists():
+        return 1, f"no statistical results at {statistical_path}"
+    try:
+        statistical_data = json.loads(statistical_path.read_text(encoding="utf-8"))
+    except (json.JSONDecodeError, UnicodeDecodeError) as exc:
+        return 1, f"invalid statistical results at {statistical_path}: {exc}"
+    if not isinstance(statistical_data, Mapping):
+        return 1, f"invalid statistical results at {statistical_path}: top level is not an object"
+    result = check_readme_detailed(
+        readme_path.read_text(encoding="utf-8"), golden_path.read_text(encoding="utf-8"),
+        statistical_data=statistical_data)
     return (0 if result.ok else 1), readme_report(result)
 
 
@@ -953,16 +1794,26 @@ def main() -> int:
                              "from CI can be checked this way without spending nine minutes")
     parser.add_argument("--readme-only", action="store_true",
                         help="check README.md against the committed golden and skip the board run")
+    parser.add_argument("--board-only", action="store_true",
+                        help="run or compare only the scoring board; the fast CI job checks README")
     parser.add_argument("--readme", type=Path, default=README,
                         help="README to check (default: the one in this checkout)")
     parser.add_argument("--golden", type=Path, default=GOLDEN,
                         help="golden board to compare against (default: tests/golden/board.txt)")
+    parser.add_argument("--claims", type=Path, default=STATISTICAL_RESULTS,
+                        help="statistical claim results (default: "
+                             "tools/statistical_tests_results.json)")
     args = parser.parse_args()
+
+    if args.readme_only and args.board_only:
+        parser.error("--readme-only and --board-only are mutually exclusive")
+    if args.update and args.board_only:
+        parser.error("--update must also report whether README copies became stale")
 
     golden_path = args.golden
 
     if args.readme_only:
-        code, report = run_readme_check(args.readme, golden_path)
+        code, report = run_readme_check(args.readme, golden_path, args.claims)
         print(report)
         return code
 
@@ -1004,7 +1855,10 @@ def main() -> int:
                   "header first: a moved corpus produces drift that is not a code change.")
             board_code = 1
 
-    readme_code, report = run_readme_check(args.readme, golden_path)
+    if args.board_only:
+        return board_code
+
+    readme_code, report = run_readme_check(args.readme, golden_path, args.claims)
     print()
     print(report)
     if readme_code and args.update:

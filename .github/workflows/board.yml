@@ -106,8 +106,10 @@ jobs:
           PYTHONHASHSEED: "0"
         run: python run.py > board-produced.txt
 
+      # README tables, prose numbers, and claims run in verify.yml on every push and pull request.
+      # Keep this tens-of-minutes workflow responsible only for the scoring board.
       - name: Compare the board against the golden
-        run: python tools/check_board.py --produced board-produced.txt
+        run: python tools/check_board.py --produced board-produced.txt --board-only
 
       # The board prints the corpus revisions it scored, so keeping it means a mismatch can be read
       # without re-running anything.

@@ -60,8 +60,15 @@ The first runner job answers it. Two outcomes:
   that the runner is the authority. A local run will then show that same difference, which is
   expected rather than drift.
 
-Do not respond by loosening `check_board.py` into a tolerance comparison. Exact comparison is what
-makes the check worth having; a tolerance hides the small real movements it exists to catch.
+Do not respond by widening `check_board.py`'s tolerance. Exact comparison is what makes the check
+worth having; a tolerance hides the small real movements it exists to catch. One narrow exception is
+already in place and should stay narrow: the three row prefixes in `TORCH_ROW_PREFIXES` reconcile
+within `NEURAL_TOLERANCE`, because the golden was generated on Windows and ubuntu CI reproduces two
+of those values one digit apart from the float kernels underneath torch. Two independent CI runs
+produced the same two values, so the difference is between platforms rather than between runs.
+`tests/test_board_tolerance.py` holds that hole open no wider: a torch row that moves further fails,
+a non-torch row fails on its last digit, a renamed method is never reconciled, and the tolerance may
+not exceed the seed variance the paper publishes.
 
 ## Regenerating the golden
 

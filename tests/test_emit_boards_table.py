@@ -11,6 +11,8 @@ paper rather than copying the real ones, so a legitimate edit to either cannot t
 real pair is checked separately, behind an environment variable, so the unit suite carries no hidden
 dependency on a sibling checkout.
 """
+import ast
+import importlib.util
 import json
 import os
 import sys
@@ -326,3 +328,109 @@ def test_shipped_board_matches_configured_paper():
         pytest.skip("set CATCHBENCH_PAPER_DIR to run the cross-repository integration check")
     (preamble, blocks), claims, families = ebt.load()
     assert ebt.check(Path(configured), ebt.rows_latex(preamble, blocks, claims, families)) == 0
+
+
+def test_the_papers_figure_board_is_the_golden_board():
+    """The paper's figures read a copy of the board, and nothing else holds the copy equal.
+
+    ``tools/emit_boards_table.py`` checks the manuscript's LaTeX tables against this repository's
+    golden board, so a stale table fails. Its figures do not go through that path: they are drawn by
+    ``<paper>/figure/make_*.py``, which parse ``<paper>/figure/board.txt``, a committed copy. The two
+    files were byte-identical when this test was written, which is luck rather than enforcement. A
+    board regenerated here and a copy left behind there would put a stale number into a figure, and a
+    figure is the one place in the manuscript where no checker reads the value.
+
+    Opt-in through the same environment variable as the other cross-repository checks, for the reason
+    given on ``test_shipped_board_matches_configured_paper``.
+    """
+    configured = os.environ.get("CATCHBENCH_PAPER_DIR")
+    if not configured:
+        pytest.skip("set CATCHBENCH_PAPER_DIR to run the cross-repository integration check")
+    copy = Path(configured) / "figure" / "board.txt"
+    assert copy.is_file(), f"the paper's figure pipeline reads {copy}, which is absent"
+    golden = Path(__file__).resolve().parents[1] / "tests" / "golden" / "board.txt"
+    want = golden.read_text(encoding="utf-8").replace("\r\n", "\n")
+    got = copy.read_text(encoding="utf-8").replace("\r\n", "\n")
+    assert got == want, (
+        f"{copy} differs from {golden}; the manuscript's figures would be drawn from a stale board. "
+        "Copy the golden over it and redraw the figures.")
+
+
+def _named_number_rows(value, found=None):
+    """Every ``name -> numbers`` pair anywhere in a nested result, ignoring how it is grouped."""
+    found = {} if found is None else found
+    if isinstance(value, dict):
+        for key, item in value.items():
+            row = None
+            if isinstance(key, str) and isinstance(item, (int, float)) and not isinstance(item, bool):
+                row = (item,)
+            elif (isinstance(key, str) and isinstance(item, (list, tuple))
+                    and item and all(isinstance(x, (int, float)) for x in item)):
+                row = tuple(item)
+            if row is None:
+                _named_number_rows(item, found)
+            else:
+                found.setdefault(key, set()).add(tuple(round(float(x), 6) for x in row))
+    elif isinstance(value, (list, tuple)):
+        for item in value:
+            _named_number_rows(item, found)
+    return found
+
+
+def test_the_two_figure_pipelines_read_the_board_identically():
+    """Two copies of the board parser exist, so hold them equal where it matters: the numbers.
+
+    ``figure-src/board_data.py`` here draws the README figures and ``<paper>/figure/board_data.py``
+    draws the manuscript's. Both parse the same board through their own copy of the same accessors.
+    A board whose section headers or column layout changed would need the identical edit in two
+    repositories, and the second is the edit that gets made a week later or not at all. The failure
+    is silent: both files keep parsing and one starts reading the wrong column, so a README figure
+    and a manuscript figure print different numbers for one board.
+
+    What is compared is the set of ``method -> values`` rows each side pulls out, not the containers
+    it returns them in. The two APIs already differ and should be free to: ``live_prefix`` here
+    returns the prefixes, the threshold and a per-corpus mapping, where the manuscript's returns one
+    mapping per corpus. Neither shape changes a number. Comparing the shapes instead would make this
+    test fail on refactoring, which is how a check gets deleted rather than fixed.
+    """
+    configured = os.environ.get("CATCHBENCH_PAPER_DIR")
+    if not configured:
+        pytest.skip("set CATCHBENCH_PAPER_DIR to run the cross-repository integration check")
+    here = Path(__file__).resolve().parents[1] / "figure-src" / "board_data.py"
+    there = Path(configured) / "figure" / "board_data.py"
+    assert here.is_file() and there.is_file(), f"expected both {here} and {there}"
+
+    def load(path, name):
+        spec = importlib.util.spec_from_file_location(name, path)
+        module = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(module)
+        return module
+
+    mine = load(here, "_figure_board_data_benchmark")
+    theirs = load(there, "_figure_board_data_paper")
+
+    board = (Path(__file__).resolve().parents[1] / "tests" / "golden" / "board.txt").read_text(
+        encoding="utf-8")
+    assert mine._sections(board) == theirs._sections(board), (
+        "the two copies split the board into different sections")
+
+    # (accessor, arguments). detection is per corpus on both copies; the other two read the whole
+    # board. The corpus names are the ones the golden prints as scored-block scenarios.
+    accessors = (("detection", ("swegym",)), ("detection", ("tau",)),
+                 ("live_prefix", ()), ("pre_by_source", ()))
+    assert all(callable(getattr(mine, a, None)) and callable(getattr(theirs, a, None))
+               for a, _ in accessors), f"expected {sorted({a for a, _ in accessors})} on both copies"
+
+    disagree = []
+    for name, args in accessors:
+        label = f"{name}({', '.join(args)})" if args else f"{name}()"
+        want = _named_number_rows(getattr(theirs, name)(*args))
+        got = _named_number_rows(getattr(mine, name)(*args))
+        assert want, f"the manuscript copy's {label} exposed no numeric rows to compare"
+        for row in sorted(set(want) | set(got)):
+            if want.get(row) != got.get(row):
+                disagree.append(f"{label}:{row}")
+    assert disagree == [], (
+        "the two figure pipelines read different numbers off the same board for: "
+        + ", ".join(disagree)
+        + ". A README figure and a manuscript figure would disagree.")

@@ -14,16 +14,18 @@ below is one corruption, asserted on the specific problem the checker is suppose
 "some problem was reported". A test that only asserts a non-empty list passes for the wrong reason
 as soon as an unrelated check fires.
 
-The fixtures are a miniature board and a miniature README written here, not the real files. A real
-README is edited constantly and a test bound to its current text would go red on an honest edit; a
-test bound to its current numbers would go green when those numbers are wrong, which is the failure
-being fixed. The one test that does touch a shipped file reads ``tests/golden/board.txt`` and checks
-that every block and column named in ``TABLE_SPECS`` exists there. It never reads ``README.md``.
+The table fixtures are a miniature board and a miniature README written here, so an ordinary README
+edit does not invalidate all of the table-corruption tests. The prose extension also has targeted
+checks against the shipped README: its registry must account for every current prose numeral, a
+one-digit mutation must fail, and every member of the disputed localization band must report its
+committed verdict. Those assertions are deliberately specific because matching no prose at all is
+the false green they prevent.
 
 ``CHECK_BOARD_TOOLS`` points the import at a different copy of the checker. That is the seam used to
 mutation-test the checker itself: copy ``tools/check_board.py``, break one check in the copy, and
 run this file against it. Every mutation must turn this suite red.
 """
+import json
 import os
 import subprocess
 import sys
@@ -38,6 +40,8 @@ sys.path.insert(0, _TOOLS)
 import check_board as cb  # noqa: E402
 
 REAL_GOLDEN = Path(__file__).resolve().parents[1] / "tests" / "golden" / "board.txt"
+REAL_README = Path(__file__).resolve().parents[1] / "README.md"
+REAL_STATS = Path(__file__).resolve().parents[1] / "tools" / "statistical_tests_results.json"
 
 
 # --------------------------------------------------------------------------------------------
@@ -220,7 +224,8 @@ def edit(text, old, new):
 
 
 def run(readme=README, golden=GOLDEN, specs=SPECS, exemptions=()):
-    return cb.check_readme_detailed(readme, golden, specs, exemptions)
+    return cb.check_readme_detailed(
+        readme, golden, specs, exemptions, MINI_NUMBER_ALLOWLIST, (), {"claims": []})
 
 
 def kinds(result):
@@ -241,6 +246,34 @@ def readme_line(text, needle):
     return hits[0]
 
 
+MINI_NUMBER_ALLOWLIST = (
+    cb.ProseNumberAllowance("fixture-localization-counts", "126 failed",
+                            ("126", "1099"),
+                            "Fixture run and step counts."),
+    cb.ProseNumberAllowance("fixture-detection-a-counts", "376 runs",
+                            ("376", "188", "188"),
+                            "Fixture corpus-A run counts."),
+    cb.ProseNumberAllowance("fixture-detection-b-counts", "660 runs",
+                            ("660", "363", "297"),
+                            "Fixture corpus-B run counts."),
+)
+
+CLAIM_README = """\
+# Demo
+
+## The Boards
+
+### Result
+
+Alpha beats Beta.
+"""
+CLAIM_DATA = {
+    "claims": [{"id": "demo.alpha.vs.beta", "verdict": "separates_as_stated"}],
+}
+CLAIM_LICENSE = cb.ClaimLicense("demo ordering", "Alpha beats Beta",
+                                ("demo.alpha.vs.beta",))
+
+
 # --------------------------------------------------------------------------------------------
 # The clean fixture, and what "clean" means
 # --------------------------------------------------------------------------------------------
@@ -248,6 +281,56 @@ def readme_line(text, needle):
 
 def test_clean_fixture_passes():
     assert run().problems == []
+
+    # The shipped prose-number registry is populated against the current README. Comparative
+    # wording defects are checked separately below, so they cannot mask a number-registry hole.
+    blocks, _ = cb.parse_golden(REAL_GOLDEN.read_text(encoding="utf-8"))
+    number_problems, seen, board_backed, allowed = cb.check_prose_numbers(
+        REAL_README.read_text(encoding="utf-8"), blocks, cb.PROSE_NUMBER_ALLOWLIST)
+    assert number_problems == []
+    assert (seen, board_backed, allowed) == (212, 85, 127)
+
+    # A comparative paragraph with a registered separating claim is the green claim-gate case.
+    claim_result = cb.check_readme_detailed(
+        CLAIM_README, "", specs=(), exemptions=(), number_allowances=(),
+        claim_licenses=(CLAIM_LICENSE,), statistical_data=CLAIM_DATA)
+    assert claim_result.problems == []
+
+    # Content anchors are unaffected by unrelated insertions above them.
+    real = REAL_README.read_text(encoding="utf-8")
+    golden = REAL_GOLDEN.read_text(encoding="utf-8")
+    baseline = cb.check_readme_detailed(real, golden)
+    shifted = cb.check_readme_detailed("\n" * 20 + real, golden)
+
+    assert baseline.problems == []
+    assert shifted.problems == []
+    assert cb.readme_report(shifted) == cb.readme_report(baseline)
+
+    # Removing one paragraph stales only the allowances and licence anchored inside it.
+    real = REAL_README.read_text(encoding="utf-8")
+    start = real.index("How to read it. The direct LLM control")
+    end = real.index("\n\n### Failure Detection", start)
+    changed = real[:start] + real[end + 2:]
+    result = cb.check_readme_detailed(changed, REAL_GOLDEN.read_text(encoding="utf-8"))
+
+    assert len(result.problems) == 6
+    assert {problem.kind for problem in result.problems} == {
+        "allowance-unmatched", "licence-unmatched"}
+    assert all(any(name in problem.message for name in (
+        "judge-panel-count", "localization-band-run-count", "gpt-model-version",
+        "localization-metric-name", "localization-metric-name-random",
+        "Who&When localization comparisons",
+    )) for problem in result.problems)
+
+    # Duplicating an anchor cannot silently absorb a second copy of the same numbers.
+    text = "# Demo\n\n126 failed and 1099 steps.\n\n126 failed and 1099 steps.\n"
+    allowance = cb.ProseNumberAllowance(
+        "counts", "126 failed", ("126", "1099"), "Fixture counts.")
+    problems, _, _, _ = cb.check_prose_numbers(text, {}, (allowance,))
+
+    ambiguous = [problem for problem in problems if problem.kind == "allowance-unmatched"]
+    assert len(ambiguous) == 1
+    assert "occurs 2 times" in ambiguous[0].message
 
 
 def test_clean_fixture_actually_compares_cells():
@@ -290,6 +373,19 @@ def test_changed_digit_fails():
     assert len(problems) == 1
     assert problems[0].line == readme_line(text, "GPT-5.5 |")
     assert "'0.451'" in problems[0].message and "'0.452'" in problems[0].message
+
+    # The same corruption in prose must go red. This uses the current README and shipped registry,
+    # not a table fixture, so it proves the hole this extension closes.
+    real = REAL_README.read_text(encoding="utf-8")
+    assert real.count("score here at 0.452.") == 1
+    changed = real.replace("score here at 0.452.", "score here at 0.453.")
+    blocks, _ = cb.parse_golden(REAL_GOLDEN.read_text(encoding="utf-8"))
+    prose_problems, _, _, _ = cb.check_prose_numbers(
+        changed, blocks, cb.PROSE_NUMBER_ALLOWLIST)
+    hits = [problem for problem in prose_problems if problem.kind == "unclaimed-number"]
+    assert len(hits) == 1
+    assert hits[0].line == readme_line(changed, "Top-1 score here")
+    assert "'0.453'" in hits[0].message
 
 
 def test_truncated_precision_fails():
@@ -428,6 +524,13 @@ def test_a_stale_exemption_fails():
     exemption = cb.Exemption(name="corpus sizes", header=("corpus", "runs"),
                              reason="counts of the input corpora, not scored cells")
     assert len(only(run(exemptions=(exemption,)), "exemption-unmatched")) == 1
+
+    # Removing a paragraph's registered licence leaves its comparative word visible and goes red.
+    claim_problems, seen, licensed = cb.check_comparative_claims(
+        CLAIM_README, CLAIM_DATA, ())
+    assert (seen, licensed) == (1, 0)
+    assert len(claim_problems) == 1
+    assert claim_problems[0].kind == "unlicensed-comparison"
 
 
 def test_spec_that_matches_no_table_fails():
@@ -584,6 +687,64 @@ def test_removed_golden_row_fails():
     problems = only(run(golden=text), "unresolved")
     assert "has no row 'position'" in problems[0].message
 
+    # A claim result moving under a still-registered paragraph is the statistical analogue.
+    flipped = {"claims": [{"id": "demo.alpha.vs.beta",
+                            "verdict": "does_not_separate"}]}
+    claim_problems, seen, licensed = cb.check_comparative_claims(
+        CLAIM_README, flipped, (CLAIM_LICENSE,))
+    assert (seen, licensed) == (1, 1)
+    assert len(claim_problems) == 1
+    assert claim_problems[0].kind == "claim-not-separating"
+    assert "does_not_separate" in claim_problems[0].message
+
+    # The same negative verdict is valid when the prose explicitly discloses non-separation.
+    readme = CLAIM_README.replace("Alpha beats Beta.",
+                                  "Alpha and Beta do not separate, so their ordering is not a result.")
+    data = {"claims": [{"id": "demo.alpha.vs.beta",
+                        "verdict": "does_not_separate"}]}
+    license_ = cb.ClaimLicense("demo disclosure", "Alpha and Beta do not separate",
+                               ("demo.alpha.vs.beta",))
+
+    problems, seen, licensed = cb.check_comparative_claims(readme, data, (license_,))
+    assert problems == []
+    assert (seen, licensed) == (1, 1)
+
+    # The documented ambiguous case errs toward disclosure.
+    readme = CLAIM_README.replace("Alpha beats Beta.",
+                                  "Alpha beats Beta, but the test does not separate them.")
+    data = {"claims": [{"id": "demo.alpha.vs.beta",
+                        "verdict": "does_not_separate"}]}
+    license_ = cb.ClaimLicense("mixed sentence", "Alpha beats Beta",
+                               ("demo.alpha.vs.beta",))
+
+    problems, _, _ = cb.check_comparative_claims(readme, data, (license_,))
+    assert problems == []
+    assert "errs toward passing" in cb.check_comparative_claims.__doc__
+
+    # Replacing the corrected disclosure with the old ordering invalidates its content licence.
+    real = REAL_README.read_text(encoding="utf-8")
+    corrected = (
+        "The panel spans 0.127 to 0.452, but eight of the eleven models sit in one\n"
+        "band from 0.333 up that 126 runs do not separate, so read the band rather than the "
+        "ordering inside it.\n"
+        "Only the smallest models are distinguishable, and they do not improve on the position "
+        "prior."
+    )
+    old = (
+        "The four highest Top-1 scores range from 0.405 to 0.452; Llama and Qwen score from "
+        "0.333 to 0.349,\n"
+        "while Mistral and Nova score from 0.127 to 0.135 and below the position prior."
+    )
+    assert real.count(corrected) == 1
+    changed = real.replace(corrected, old)
+
+    result = cb.check_readme_detailed(changed, REAL_GOLDEN.read_text(encoding="utf-8"))
+    stale = [problem for problem in result.problems
+             if problem.kind == "licence-unmatched"
+             and "Who&When localization comparisons" in problem.message]
+    assert len(stale) == 1
+    assert not result.ok
+
 
 def test_renamed_golden_column_fails():
     text = edit(GOLDEN, "  method                                 top1      top3       mrr",
@@ -664,6 +825,17 @@ def test_shipped_specs_resolve_against_the_committed_golden():
                     missing.append(f"{spec.name}: {label} / {column}: {why}")
     assert missing == []
 
+    # The shipped localization disclosure registers every member of the disputed 8-model band. Its
+    # explicit non-separation wording makes all 28 committed negative verdicts valid disclosures.
+    stats = json.loads(REAL_STATS.read_text(encoding="utf-8"))
+    claim_problems, _, _ = cb.check_comparative_claims(
+        REAL_README.read_text(encoding="utf-8"), stats, cb.CLAIM_LICENSES)
+    assert claim_problems == []
+    localization = next(license_ for license_ in cb.CLAIM_LICENSES
+                        if license_.name == "Who&When localization comparisons")
+    assert len([claim_id for claim_id in localization.claim_ids
+                if claim_id.startswith("loc.band.")]) == 28
+
 
 def test_shipped_specs_cover_every_column_they_claim():
     for spec in cb.TABLE_SPECS:
@@ -708,6 +880,8 @@ def fixture_registry(monkeypatch):
     """
     monkeypatch.setattr(cb, "TABLE_SPECS", SPECS)
     monkeypatch.setattr(cb, "NON_BOARD_TABLES", ())
+    monkeypatch.setattr(cb, "PROSE_NUMBER_ALLOWLIST", MINI_NUMBER_ALLOWLIST)
+    monkeypatch.setattr(cb, "CLAIM_LICENSES", ())
 
 
 def test_main_exits_zero_on_a_clean_readme(tmp_path, fixture_registry, monkeypatch):

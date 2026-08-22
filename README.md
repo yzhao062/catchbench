@@ -2,23 +2,33 @@
 
 # CatchBench
 
-**A benchmark for finding and attributing agent failures over real agent traces.**
+**When can an agent failure be caught?**
+
+A benchmark for auditing agents across three information states: the declared configuration before a
+run, a growing prefix while it runs, and the finished trace after it ends.
 
 [![Code license](https://img.shields.io/badge/code%20license-MIT-blue.svg)](LICENSE)
 [![Python](https://img.shields.io/badge/python-3.10%20%7C%203.12-blue.svg)](pyproject.toml)
-[![Tests](https://img.shields.io/badge/tests-374-brightgreen.svg)](tests)
+[![Tests](https://img.shields.io/badge/tests-381-brightgreen.svg)](tests/expected_tests.txt)
 [![Boards](https://img.shields.io/badge/boards-PRE%20%7C%20LIVE%20%7C%20POST-orange.svg)](#the-boards)
 
 [Quickstart](#quickstart) · [The Boards](#the-boards) · [Task List](#the-full-task-list) · [Add a Method](#how-a-method-plugs-in) · [Full Install](#the-full-board)
 
+<img src="assets/hero-masks.png" alt="One fixed agent run seen through three lifecycle evidence masks. PRE reads only the declared plan and harness; LIVE adds a growing prefix of the execution trace; POST reads the whole trace and the outcome. The run never changes." width="100%">
+
 </div>
 
-A run is audited at one of three moments, and the benchmark limits each question to the evidence
-available then: before it runs you have only the plan and harness (is it over-privileged?); while it
-runs you have a growing prefix (is it about to fail?); after it runs you have the whole trace (which
-step broke it, did it fail, what kind of fault was it). CatchBench is built around those three
-information states. Its specific contribution is to organize auditing by information state across
-PRE, LIVE, and POST, with one shared `Task` and `Method` interface.
+An audit is limited by the record more often than by the method. CatchBench holds the run fixed and
+varies what the auditor may read: before it runs you have only the plan and harness (is it
+over-privileged?); while it runs you have a growing prefix (is it about to fail?); after it runs you
+have the whole trace (which step broke it, did it fail, what kind of fault was it). Seven boards over
+five scenarios share one `Task` and `Method` interface.
+
+Several of the answers are negative, and they are on the boards rather than in a limitations section.
+On tau-bench every entrant's time-to-detection reads `>100%`: none reaches the early-warning bar at
+any prefix, including the full trace. On two of six PRE sources the best method fails to establish a
+lead over flagging every capability. Eight of the eleven post-hoc judges sit in one band that 126
+runs do not separate, so the ordering inside it is not a result.
 
 ## Quickstart
 
@@ -43,8 +53,9 @@ eleven rows are references rather than methods: the `flag_all` and `flag_none` f
 oracle that reads the answer.
 
 > [!TIP]
-> Read the `flag_all` row first. A method earns its false alarms only by clearing that floor, and on
-> `sweagent` nothing here does: flagging everything ties the best method.
+> Read the `flag_all` row first. A method earns its false alarms only by clearing that floor. On two
+> of the six sources none does: on `sweagent` flagging everything ties the best method, and on `mcp`
+> the best method's lead over the floor does not resolve.
 
 The POST, LIVE, and Gold boards need the GRADE bridge and about 320 MB of corpora, and take roughly
 nine minutes. That path is under [The Full Board](#the-full-board).
@@ -84,9 +95,17 @@ method implementation; this repository provides the benchmark tasks and comparis
 ## Paper
 
 An accompanying manuscript is in preparation under the title *CatchBench: When Can an Agent Failure
-Be Caught?*. It is not yet posted; this section carries the preprint link once it is. Every number the manuscript reports is regenerated from this
-repository by the tools named in [The Full Board](#the-full-board), so the code is
-checkable ahead of the write-up.
+Be Caught?*. It is not yet posted; this section carries the preprint link once it is.
+
+Every number the manuscript reports is regenerated from this repository, so the code is checkable
+ahead of the write-up. The board-derived tables come from `run.py` through
+`tools/emit_boards_table.py`; the significance tables from `tools/statistical_tests.py` through
+`tools/emit_stats_table.py`; the transfer table from `tools/emit_transfer_table.py`; and the
+remaining reported quantities from `tools/whoandwhen_split_report.py`,
+`tools/pre_merge_judges.py`, and `tools/gold_artifact_diagnostic.py`. The three `emit_*` tools take a
+`--check` flag that exits non-zero and prints the delta when the manuscript is stale; the last three
+print their quantities and are compared by reading. All of it runs locally rather than in CI, for the
+reason given under [The Full Board](#the-full-board).
 
 `run.py` computes the boards from the inputs available to a checkout. A repository commit fixes the
 benchmark code, committed PRE artifacts, and cached LLM-judge predictions. It also records immutable
@@ -94,8 +113,9 @@ Hugging Face commits for Who&When, SWE-Gym, and tau-bench in `catchbench.corpora
 the runner verifies that each dataset head still equals its recorded commit, forces GRADE's Hub calls
 through that full revision, and verifies the observed fetch or Who&When snapshot metadata. The printed
 board header records all three commits. Direct execution of GRADE outside this runner is not covered by
-the CatchBench-side pin. The sibling GRADE and `auditable` checkout revisions are not fixed by the
-setup, and Python dependencies are not locked.
+the CatchBench-side pin. The documented setup and both workflows pin the GRADE commit, but the runner
+does not verify the sibling checkout's revision at run time, the `auditable` revision is not pinned at
+all, and the remaining Python dependencies are not locked.
 
 ### Data and Generated-Artifact Licensing
 
@@ -112,8 +132,12 @@ carry a licence their upstream states in a README or package manifest, which is 
 are higher than an earlier reading of the same data. All 524 are recorded as `NOASSERTION` and marked
 unfinished in [THIRD_PARTY_LICENSES.md](THIRD_PARTY_LICENSES.md).
 
-The GPL-3.0, AGPL-3.0, CC-BY-4.0, and BUSL-1.1 records stay in the release,
-their licence texts ship in [`third_party/licenses/`](third_party/licenses/), and
+The GPL-3.0, AGPL-3.0, CC-BY-4.0, and BUSL-1.1 records stay in the release. The first three ship
+their licence texts in [`third_party/licenses/`](third_party/licenses/); the BUSL-1.1 record's notice
+is reproduced inline in
+[THIRD_PARTY_LICENSES.md](THIRD_PARTY_LICENSES.md#the-busl-11-record) instead, because BUSL-1.1 is a
+template whose Parameters block each licensor fills in, so one shared copy would state somebody
+else's terms.
 [THIRD_PARTY_LICENSES.md](THIRD_PARTY_LICENSES.md#why-the-gpl-30-and-cc-by-40-records-are-in-the-release)
 sets out exactly what those records carry and why, so a reader can judge the position rather than
 take it. Every licence value the committed records declare is either carried as local text or
@@ -149,6 +173,11 @@ through, and the evidence available at each fixes which audit is possible. A met
 state cannot read another's evidence, so the pillars are separate tracks, not interchangeable views of
 one dataset.
 
+<img src="assets/hero-boards.png" alt="The lifecycle contract: for each of PRE, LIVE and POST, the admissible evidence, the audit question it permits, and the boards scored under it." width="100%">
+
+The board identities in that figure are the ones `run.py` prints and `tests/golden/board.txt`
+records. A reader can go from an audit question to its scored block without a lookup table.
+
 - **PRE** (only the plan and harness exist): the audit is static, for over-privilege and missing
   guardrails. **Over-privilege implemented; missing-guardrail planned.**
 - **LIVE** (a growing prefix is visible, the outcome is not): the audit is predictive and runs under a
@@ -181,10 +210,10 @@ Rank the steps of a failed run by how likely each is the fault, scored against t
 | Method | Top-1 | Top-3 | MRR |
 |---|---|---|---|
 | **LLM-judge panel (all-at-once)** | | | |
-| GPT-5.5 | **0.452** | 0.667 | **0.618** |
+| GPT-5.5 | 0.452 | 0.667 | 0.618 |
 | Claude-Opus-4.8 | 0.421 | 0.698 | 0.605 |
 | GPT-5.4 | 0.413 | 0.714 | 0.601 |
-| DeepSeek-R1 | 0.405 | **0.754** | 0.606 |
+| DeepSeek-R1 | 0.405 | 0.754 | 0.606 |
 | Gemini | 0.357 | 0.722 | 0.572 |
 | Qwen3-32B | 0.349 | 0.659 | 0.541 |
 | GPT-oss-20B | 0.333 | 0.595 | 0.521 |
@@ -202,10 +231,12 @@ Rank the steps of a failed run by how likely each is the fault, scored against t
 How to read it. The direct LLM control shows a failed trace to a model and asks it to name the
 decisive step. The 11-model panel uses one all-at-once prompt per run, following Who&When's protocol;
 predictions are cached and committed, so scoring the board makes no API call. GPT-5.5 has the highest
-Top-1 score here at 0.452. The four highest Top-1 scores range from 0.405 to 0.452; Llama and Qwen
-score from 0.333 to 0.349, while Mistral and Nova score from 0.127 to 0.135 and below the position prior.
-Among methods that use no LLM, the supervised execution-feature ranker beats the position prior
-without an API call; `auditable`'s blast share ties the prior at displayed precision because this
+Top-1 score here at 0.452. The panel spans 0.127 to 0.452, but eight of the eleven models sit in one
+band from 0.333 up that 126 runs do not separate, so read the band rather than the ordering inside it.
+Only the smallest models are distinguishable, and they do not improve on the position prior.
+Among methods that use no LLM, the supervised execution-feature ranker localizes beyond the prior on
+Top-3 without an API call; its Top-1 margin over position does not resolve at this corpus size.
+`auditable`'s blast share ties the prior at displayed precision because this
 corpus assumes every step depends on all prior steps. PyGOD DOMINANT is the one entry that scores
 below chance. Its 0.048 Top-1 sits under the 0.119 random floor: the reconstruction-error ranking
 does worse here than picking a step at random. The benchmark uses
@@ -230,7 +261,7 @@ SWE-Gym, 376 runs (188 failed, 188 resolved):
 | GUARDIAN (recon-AE) | 0.767 |
 | `auditable` (size+deps) | 0.804 |
 | full (reference) | 0.819 |
-| G-Safeguard (supervised GNN) | **0.828** |
+| G-Safeguard (supervised GNN) | 0.828 |
 
 tau-bench, 660 runs (363 failed, 297 resolved):
 
@@ -241,7 +272,7 @@ tau-bench, 660 runs (363 failed, 297 resolved):
 | PyOD-flatten (ECOD) | 0.555 |
 | PyGOD-DOMINANT (graph AD) | 0.550 |
 | GUARDIAN (recon-AE) | 0.542 |
-| `auditable` (size+deps) | **0.665** |
+| `auditable` (size+deps) | 0.665 |
 | full (reference) | 0.665 |
 | G-Safeguard (supervised GNN) | 0.626 |
 
@@ -308,7 +339,7 @@ kind because the two injected mechanisms behave differently and the aggregate hi
 | degree (leak check) | 0.045 | 0.073 | 0.023 |
 | has-dep (control) | 0.078 | 0.173 | 0.005 |
 | max-span (control) | 0.309 | 0.703 | 0.005 |
-| `auditable` (dep-anomaly) | 0.309 | **0.703** | 0.005 |
+| `auditable` (dep-anomaly) | 0.309 | 0.703 | 0.005 |
 | PyGOD (graph AD) | 0.165 | 0.256 | 0.094 |
 
 The injector can target only steps that meet the precondition for the selected fault kind, so the
@@ -324,9 +355,9 @@ on sort order.
 | position | 0.330 | 0.341 | 0.321 |
 | degree | 0.225 | 0.394 | 0.095 |
 | has-dep | 0.195 | 0.350 | 0.075 |
-| max-span | 0.394 | **0.805** | 0.075 |
+| max-span | 0.394 | 0.805 | 0.075 |
 | `auditable` (dep-anomaly) | 0.391 | 0.799 | 0.075 |
-| PyGOD (graph AD) | **0.404** | 0.622 | 0.236 |
+| PyGOD (graph AD) | 0.404 | 0.622 | 0.236 |
 
 How to read it. In the full pool, a dependency-span detector localizes stale-state injections at
 0.703 Top-1 against the 0.032 random floor. Within the eligible pool, `has-dep` equals the stale-state
@@ -363,8 +394,10 @@ The injection checks include both the measured signal and its known limitations:
 - **Distribution shifts.** Stale-state preserves the valid dependency-edge
   count (mean 9.2, unchanged); dropped-grounding removes exactly one valid dependency edge (mean 7.9 to
   6.9), so treat edge count as a reported run-level shift for the dropped half, not as matched.
-  Stale-state lengthens the run-level max dependency span by construction (mean 8.6 to 9.4, 53 of 188
-  runs increased). Localization still requires finding the step.
+  Stale-state also lengthens the run-level max dependency span by construction. The board's span line
+  is not split by fault kind: across all 188 paired runs the mean rises from 8.6 to 9.4 and 53
+  increase, and only 82 of those runs carry a stale-state injection. Localization still requires
+  finding the step.
 - **Constructed labels.** The label records the step modified by the injector and is independent of
   detector output. It identifies the programmed modification, not a human-verified natural fault.
 - **Characterized caveat.** SWE-Gym dependencies are inferred, not gold value-flow, so a redirected
@@ -392,6 +425,14 @@ prefix also fires early (0.76), but a raw per-run span signal does not (0.36, le
 early signal appears in the tested supervised or batch-unsupervised prefix features, not in the
 single online scalar. On tau-bench, none of the reported methods reaches the 0.70 time-to-detection
 threshold.
+
+<img src="assets/board_live_prefix.png" alt="Failure ROC-AUC against observed trace prefix, on SWE-Gym and tau-bench, for six LIVE entrants against the 0.70 early-warning threshold." width="620">
+
+Read each curve against the dashed 0.70 line within its own panel, and read the two panels against
+each other rather than pooling them: the same methods on the same features land on opposite sides of
+the bar, which is the domain split the detection board shows too. The online per-run span is the
+lowest curve at the shortest prefix in both panels, and it is the only setting that is genuinely
+online. Drawn by `figure-src/board_live_prefix.py` from `tests/golden/board.txt`.
 
 **LIVE online stale-state detection (catch it live).** The same Gold stale-state injection, detected
 online at a fixed false-positive rate instead of localized post-hoc. The prefix-only span
@@ -483,11 +524,34 @@ per-rule per-source numbers print from `run.py`):
 | LLM judge, held out | 0.518 | 0.362 | 0.744 | 0.990 | 0.467 | 0.972 |
 | oracle | 1.000 | 1.000 | 1.000 | 1.000 | 1.000 | 1.000 |
 
+<img src="assets/board_pre_source.png" alt="Per-source PRE F1: each source's flag-everything floor and the best method on that source, with the registered test verdict shown as separates or unresolved." width="640">
+
+Each row compares one source's best method against that same source's floor, which is the only
+comparison the labels support. The floor itself moves by nearly a factor of five across the six
+sources, so a pooled F1 says little about whether a method earned its false alarms anywhere. The two rows drawn
+in grey are the ones where the registered paired test declines to separate the best method from the
+floor, and they are drawn without an ordering on purpose. Drawn by `figure-src/board_pre_source.py`
+from `tests/golden/board.txt` and `tools/statistical_tests_results.json`.
+
 Label origin per column: crewai, n8n, and mcp carry cross-vendor LLM-judge labels (Cohen's kappa 0.666,
 `data/pre/LABEL_QUALITY.md`); injecagent is a roster relabel; sweagent is declared-minus-used; the
 synthetic set is injection. The held-out judge lands near the top on injecagent (0.990) and synthetic
 (0.972), where the labels are constructed, and lands between 0.36 and 0.74 on the judge-labeled
-corpora. Using a different scoring judge avoids direct label reuse: either label-making judge would
+corpora.
+
+The injecagent column carries a shortcut, and it is worth stating plainly rather than leaving for a
+reader to find. The harvester wrote each configuration's legitimate tool first and the attacker tools
+after it, and the released records preserve that order. So on all 340 injecagent configurations the
+first declared capability is exactly the minimum and the rest are exactly the excess. A rule that
+reads nothing but list position, keeping the first capability and flagging the tail, scores 1.000 F1
+there: 510 true positives, no false positives, no false negatives. That is above the 0.990 held-out
+judge and above every other method in the table. The same rule scores 0.446 on crewai and 0.106 on
+n8n, which is how we know the shortcut lives in that corpus rather than in the rule.
+`tools/statistical_tests_results.json` records it under
+`reported_quantities.pre.declaration_order_leak`. Read the injecagent column as a property of its
+construction, not as a difficulty ranking.
+
+Using a different scoring judge avoids direct label reuse: either label-making judge would
 inherit perfect recall on the intersection labels and an inflated F1 by construction. This separation
 does not turn the constructed labels into human ground truth. In n8n, where the mean excess ratio is
 0.084, the non-oracle methods in the table score from 0.095 to 0.411 F1.
@@ -530,8 +594,9 @@ Planned:
 
 ## The Full Board
 
-Every board, including POST, LIVE, and Gold. Budget about nine minutes and 320 MB on the first run;
-later runs reuse the revision-keyed cache.
+Every board, including POST, LIVE, and Gold. Budget about nine minutes and 320 MB on the first run.
+Later runs reuse the revision-keyed cache, but every run still re-resolves the three dataset heads
+against the Hub and refuses to score if any has moved, so the full board needs network each time.
 
 ```bash
 git clone https://github.com/yzhao062/catchbench.git
@@ -539,6 +604,12 @@ git clone https://github.com/yzhao062/grade.git
 git -C grade checkout 3839a57ac165d58a807fce0a3ff38346732ee936   # the pinned commit CI uses
 cd catchbench
 python -m pip install -e "../grade[experiments]"
+
+# Pinned torch first, then its matching compiled backend. See the note below for why the order
+# matters; installing ".[full]" on its own resolves an unpinned torch that pyg-lib has no wheel for.
+python -m pip install "torch==2.12.1" --index-url https://download.pytorch.org/whl/cpu
+python -m pip install pyg_lib -f https://data.pyg.org/whl/torch-2.12.1+cpu.html
+
 python -m pip install -e ".[full]"
 catchbench
 ```
@@ -551,18 +622,17 @@ wheel, so keep its checkout next to this repository as shown above. Alternativel
 to its checkout.
 
 > [!IMPORTANT]
-> The `full` extra does not finish the graph-AD install on its own. PyGOD's `NeighborSampler` needs
-> a compiled backend that has to match your exact PyTorch build, and PyG publishes that index later
-> than PyTorch publishes the build. Install the pair explicitly:
+> Why the two pinned lines come before `.[full]`. The `full` extra declares `torch` without a
+> version, so on its own pip resolves whatever torch is newest. PyGOD's `NeighborSampler` needs a
+> compiled backend matched to your exact PyTorch build, and PyG publishes that index later than
+> PyTorch publishes the build, so the newest torch is usually the one pyg-lib has no wheel for.
+> Installing the pinned pair first satisfies the `full` extra's unpinned requirement, and pip then
+> leaves the working build in place. Both workflows install in this order, and
+> `tests/test_workflow_pins.py` holds the two pinned versions equal to each other.
 >
-> ```bash
-> python -m pip install "torch==2.12.1" --index-url https://download.pytorch.org/whl/cpu
-> python -m pip install pyg_lib -f https://data.pyg.org/whl/torch-2.12.1+cpu.html
-> python -m pip install -e ".[graph-ad,dev]"
-> ```
->
-> Skip this and the PyGOD rows raise on import rather than scoring. Every other board is unaffected,
-> and the heavy dependencies load only when their baselines run.
+> Get the order wrong and the PyGOD rows raise on import rather than scoring. Every other board is
+> unaffected, and the heavy dependencies load only when their baselines run. To recover without
+> reinstalling everything, rerun the two pinned lines above.
 
 <details>
 <summary>What each verification command checks</summary>
@@ -571,14 +641,36 @@ to its checkout.
 |---|---|---|
 | `catchbench --task pre` | The PRE board reproduces, offline | nothing |
 | `python tools/ci_smoke.py` | Imports resolve; PRE floors hold | nothing |
-| `pytest tests --ignore=tests/canary -q` | Every contract test, with no silent skips | GRADE checkout |
-| `catchbench` | Every board reproduces | GRADE + corpora |
+| `pytest tests --ignore=tests/canary -q -ra` | Every contract test, with every skip named | GRADE checkout, the graph-AD stack, and `CATCHBENCH_PAPER_DIR` |
+| `catchbench` | Every board reproduces | GRADE + corpora + network |
 | `python tools/check_board.py` | The board still matches the committed golden | GRADE + corpora |
-| `python tools/check_board.py --readme-only` | Every number in this file is a board cell | nothing |
+| `python tools/check_board.py --readme-only` | Every number in the tables below is a board cell | nothing |
 | `python tools/print_corpus_revisions.py` | The three corpus commits are the pinned ones | network |
 
-The `--readme-only` check is why the tables above can be trusted: every numeric cell in this README
-is compared against the committed board output, with no tolerance. A hand-typed number fails it.
+The `--readme-only` check is why the tables above can be trusted: every numeric cell in a README
+table is compared against the committed board output, with no tolerance. A hand-typed table value
+fails it. Prose figures are outside its scope, and so is emphasis: the comparison strips markup, so
+bolding a cell cannot be checked by it.
+
+Run the suite with `-ra` rather than plain `-q`. Five contract tests are marked `needs-paper` in
+[`tests/expected_tests.txt`](tests/expected_tests.txt) and skip unless `CATCHBENCH_PAPER_DIR` points
+at a checkout of the manuscript repository. Three of them hold the manuscript's tables equal to
+these boards. The other two hold its figures equal: one compares the board copy the manuscript's
+figure scripts read against `tests/golden/board.txt`, and one runs both figure pipelines' board
+parsers over the same board and compares the numbers they extract, because each repository carries
+its own copy of that parser and a figure is the one place in a paper where no checker reads the
+value.
+
+**No workflow sets that variable**, because the manuscript repository is not public, so CI does not
+currently fail when the paper falls behind the board. That comparison is run locally before a
+submission. Plain `-q` reports the five as a bare skip count and never names them, which is the one
+way this suite can look complete while the paper-side checks are not running.
+
+The full board comparison is not exact everywhere. Three row prefixes (`guardian (`, `g-safeguard (`,
+`pygod`) reconcile within 0.005, because the golden was generated on Windows and ubuntu CI reproduces
+two of their values one digit apart from the float kernels underneath torch. Every other row stays
+byte-exact, and `tests/test_board_tolerance.py` fails if the tolerance widens past the seed variance
+the paper publishes.
 
 </details>
 

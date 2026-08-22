@@ -1,0 +1,817 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>CatchBench lifecycle hero candidates</title>
+  <style>
+    :root {
+      color-scheme: dark;
+      --canvas: #11181e;
+      --surface: #182229;
+      --surface-raised: #1e2a32;
+      --ink: #f4f1e8;
+      --muted: #aeb8bd;
+      --line: #53616a;
+      --masked: #303a40;
+      --pre: #6f8fbd;
+      --live: #00a087;
+      --post: #e64b35;
+      --fault: #f39b7f;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html,
+    body {
+      width: 100%;
+      height: 100%;
+      margin: 0;
+      overflow: hidden;
+      background: var(--canvas);
+      color: var(--ink);
+      font-family: Arial, Helvetica, sans-serif;
+    }
+
+    body {
+      opacity: 0;
+    }
+
+    body[data-ready="true"] {
+      opacity: 1;
+    }
+
+    .candidate {
+      display: none;
+      width: 1280px;
+      height: 760px;
+      padding: 38px 44px 34px;
+      background: var(--canvas);
+      position: relative;
+    }
+
+    body[data-candidate="timeline"] .timeline,
+    body[data-candidate="masks"] .masks,
+    body[data-candidate="boards"] .boards {
+      display: block;
+    }
+
+    .topline {
+      display: flex;
+      align-items: baseline;
+      gap: 18px;
+      margin-bottom: 10px;
+    }
+
+    .brand {
+      flex: 0 0 auto;
+      position: relative;
+      z-index: 2;
+      color: var(--fault);
+      font-size: 19px;
+      font-weight: 800;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+    }
+
+    .kicker {
+      flex: 0 1 auto;
+      color: var(--muted);
+      font-size: 17px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    h1 {
+      max-width: 1120px;
+      margin: 0;
+      font-size: 38px;
+      line-height: 1.08;
+      letter-spacing: -0.025em;
+    }
+
+    .dek {
+      margin: 9px 0 22px;
+      color: var(--muted);
+      font-size: 21px;
+      line-height: 1.28;
+    }
+
+    .phase-pre {
+      --phase: var(--pre);
+    }
+
+    .phase-live {
+      --phase: var(--live);
+    }
+
+    .phase-post {
+      --phase: var(--post);
+    }
+
+    .trace {
+      border: 1px solid var(--line);
+      border-top: 5px solid var(--ink);
+      background: var(--surface);
+      padding: 16px 18px 18px;
+    }
+
+    .trace-heading {
+      display: grid;
+      grid-template-columns: 1.4fr 6.4fr 1.25fr;
+      gap: 8px;
+      margin-bottom: 9px;
+      color: var(--muted);
+      font-size: 14px;
+      font-weight: 800;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+
+    .trace-heading span:last-child {
+      text-align: center;
+    }
+
+    .trace-cells {
+      display: grid;
+      grid-template-columns: 1.4fr repeat(7, 1fr) 1.25fr;
+      gap: 8px;
+    }
+
+    .trace-cell {
+      min-width: 0;
+      border: 1px solid #748089;
+      border-radius: 3px;
+      background: #202b32;
+      padding: 12px 7px 11px;
+      text-align: center;
+      color: var(--ink);
+      font-size: 15px;
+      font-weight: 800;
+      letter-spacing: 0.025em;
+      line-height: 1.05;
+      text-transform: uppercase;
+    }
+
+    .trace-cell.declared {
+      border-style: dashed;
+      background: #263039;
+    }
+
+    .trace-cell.fault {
+      border: 3px solid var(--fault);
+      padding-top: 10px;
+      color: #fff6ef;
+    }
+
+    .trace-cell.outcome {
+      border: 3px solid var(--post);
+      padding-top: 10px;
+      color: #ffd8cf;
+    }
+
+    .trace-note {
+      display: grid;
+      grid-template-columns: 1.4fr repeat(7, 1fr) 1.25fr;
+      gap: 8px;
+      margin-top: 7px;
+      color: var(--fault);
+      font-size: 13px;
+      font-weight: 800;
+      letter-spacing: 0.045em;
+      text-align: center;
+      text-transform: uppercase;
+    }
+
+    .trace-note span {
+      grid-column: 6;
+    }
+
+    .phase-label {
+      color: var(--phase);
+      font-size: 29px;
+      font-weight: 900;
+      letter-spacing: 0.04em;
+    }
+
+    .evidence-name {
+      color: var(--ink);
+      font-size: 18px;
+      font-weight: 800;
+      line-height: 1.15;
+      text-transform: uppercase;
+    }
+
+    .question {
+      margin: 0;
+      color: var(--ink);
+      font-size: 20px;
+      font-weight: 700;
+      line-height: 1.23;
+    }
+
+    .board-id {
+      color: var(--muted);
+      font-family: Consolas, "Courier New", monospace;
+      font-size: 14px;
+      line-height: 1.25;
+    }
+
+    .board-source {
+      position: absolute;
+      right: 44px;
+      bottom: 17px;
+      color: #7f8b91;
+      font-family: Consolas, "Courier New", monospace;
+      font-size: 12px;
+      z-index: 2;
+    }
+
+    /* Candidate: timeline-led. */
+    .timeline .trace {
+      margin-top: 18px;
+    }
+
+    .timeline-lenses {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      margin-top: 18px;
+    }
+
+    .timeline-lens {
+      min-height: 228px;
+      border-top: 5px solid var(--phase);
+      border-bottom: 1px solid var(--line);
+      padding: 14px 10px 12px 0;
+    }
+
+    .lens-head {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 12px;
+    }
+
+    .coverage-track {
+      display: grid;
+      grid-template-columns: 1.4fr repeat(7, 1fr) 1.25fr;
+      gap: 3px;
+      height: 22px;
+      margin: 0 0 15px;
+    }
+
+    .coverage-track span {
+      border: 1px solid #56636b;
+      background: var(--masked);
+    }
+
+    .coverage-track span.open {
+      border-color: var(--phase);
+      background: color-mix(in srgb, var(--phase) 42%, var(--surface));
+    }
+
+    .coverage-track span.boundary {
+      border-right: 5px solid var(--ink);
+    }
+
+    .timeline-lens .question {
+      min-height: 72px;
+      margin-bottom: 11px;
+    }
+
+    .fixed-footer {
+      position: absolute;
+      left: 44px;
+      bottom: 15px;
+      color: var(--ink);
+      font-size: 16px;
+      font-weight: 800;
+      letter-spacing: 0.035em;
+      text-transform: uppercase;
+    }
+
+    .fixed-footer b {
+      color: var(--live);
+    }
+
+    /* Candidate: evidence-mask-led. */
+    .masks {
+      --readable: #29b6a6;
+    }
+
+    .masks h1 {
+      max-width: 920px;
+    }
+
+    .masks .topline {
+      gap: 0;
+    }
+
+    .masks .brand,
+    .masks .board-source {
+      display: none;
+    }
+
+    .masks-layout {
+      display: grid;
+      grid-template-columns: 790px 1fr;
+      gap: 24px;
+      margin-top: 18px;
+    }
+
+    .mask-stage {
+      border: 1px solid var(--line);
+      background: var(--surface);
+    }
+
+    .masks .trace {
+      border: 0;
+      border-bottom: 1px solid var(--line);
+      border-top: 5px solid var(--ink);
+      padding: 13px 14px 13px;
+    }
+
+    .masks .trace-cell {
+      padding-right: 3px;
+      padding-left: 3px;
+      font-size: 12px;
+    }
+
+    .mask-matrix {
+      display: grid;
+      grid-template-columns: 118px 1.2fr 2.45fr 1.55fr 1.1fr;
+      gap: 5px;
+      padding: 13px 14px 15px;
+    }
+
+    .matrix-head {
+      min-height: 37px;
+      display: flex;
+      align-items: end;
+      justify-content: center;
+      padding: 3px 3px 7px;
+      border-bottom: 1px solid var(--line);
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: 0.06em;
+      text-align: center;
+      text-transform: uppercase;
+    }
+
+    .matrix-phase {
+      min-height: 67px;
+      display: flex;
+      align-items: center;
+      border-right: 4px solid var(--phase);
+    }
+
+    .matrix-cell {
+      min-height: 67px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid #4b5961;
+      background: var(--masked);
+      color: #8f9a9f;
+      font-size: 14px;
+      font-weight: 800;
+      letter-spacing: 0.05em;
+      text-align: center;
+      text-transform: uppercase;
+    }
+
+    .matrix-cell.readable {
+      border: 2px solid var(--readable);
+      background: color-mix(in srgb, var(--readable) 34%, var(--surface));
+      color: var(--ink);
+    }
+
+    .matrix-cell.growing {
+      border: 2px solid var(--readable);
+      background: linear-gradient(
+        to right,
+        color-mix(in srgb, var(--readable) 34%, var(--surface)) 0 58%,
+        var(--masked) 58% 100%
+      );
+      color: var(--ink);
+    }
+
+    .mask-questions {
+      display: grid;
+      grid-template-rows: repeat(3, 1fr);
+      gap: 11px;
+    }
+
+    .mask-question {
+      border-left: 6px solid var(--phase);
+      background: var(--surface);
+      padding: 15px 15px 12px;
+    }
+
+    .mask-question .evidence-name {
+      margin: 4px 0 9px;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .mask-question .question {
+      font-size: 18px;
+      line-height: 1.2;
+    }
+
+    .mask-question .board-id {
+      margin-top: 8px;
+      font-size: 12px;
+    }
+
+    .mask-key {
+      display: flex;
+      gap: 18px;
+      margin-top: 11px;
+      color: var(--muted);
+      font-size: 14px;
+      font-weight: 700;
+    }
+
+    .key-swatch {
+      display: inline-block;
+      width: 18px;
+      height: 12px;
+      margin-right: 6px;
+      vertical-align: -1px;
+      border: 1px solid var(--line);
+      background: var(--masked);
+    }
+
+    .key-swatch.readable {
+      border: 2px solid var(--readable);
+      background: color-mix(in srgb, var(--readable) 34%, var(--surface));
+    }
+
+    .key-swatch.growing {
+      border: 2px solid var(--readable);
+      background: linear-gradient(
+        to right,
+        color-mix(in srgb, var(--readable) 34%, var(--surface)) 0 58%,
+        var(--masked) 58% 100%
+      );
+    }
+
+    /* Candidate: board-led. */
+    .boards .dek {
+      margin-bottom: 15px;
+    }
+
+    .boards .trace {
+      padding-top: 12px;
+      padding-bottom: 13px;
+    }
+
+    .boards .trace-note {
+      display: none;
+    }
+
+    .board-table {
+      display: grid;
+      grid-template-columns: 145px repeat(3, 1fr);
+      margin-top: 15px;
+      border-top: 1px solid var(--line);
+      border-left: 1px solid var(--line);
+    }
+
+    .table-cell {
+      min-width: 0;
+      border-right: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
+      padding: 12px 15px;
+      background: var(--surface);
+    }
+
+    .table-label {
+      display: flex;
+      align-items: center;
+      color: var(--muted);
+      font-size: 13px;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .table-phase {
+      border-top: 5px solid var(--phase);
+      padding-top: 8px;
+    }
+
+    .table-phase .evidence-name {
+      margin-top: 3px;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .question-row {
+      min-height: 86px;
+    }
+
+    .question-row .question {
+      font-size: 18px;
+    }
+
+    .boards-row {
+      min-height: 151px;
+    }
+
+    .boards-list {
+      display: grid;
+      gap: 7px;
+    }
+
+    .boards-list .board-id {
+      border-left: 3px solid var(--phase);
+      padding-left: 8px;
+      color: #d8dedf;
+      font-size: 13px;
+    }
+
+    .boards .fixed-footer {
+      bottom: 16px;
+    }
+
+    @media print {
+      * {
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="candidate timeline" aria-label="Timeline-led CatchBench hero candidate">
+    <div class="topline">
+      <span class="brand">CatchBench</span>
+      <span class="kicker">the audit question moves with the evidence boundary</span>
+    </div>
+    <h1>A fixed agent run, audited before, during, and after execution.</h1>
+    <p class="dek">The benchmark holds the task, harness, and execution fixed. It changes only what the auditor may read.</p>
+
+    <section class="trace" data-trace>
+      <div class="trace-heading"><span>declared</span><span>execution trace</span><span>outcome</span></div>
+      <div class="trace-cells">
+        <div class="trace-cell declared">plan +<br>harness</div>
+        <div class="trace-cell">read</div>
+        <div class="trace-cell">search</div>
+        <div class="trace-cell">edit</div>
+        <div class="trace-cell">test</div>
+        <div class="trace-cell fault">stale<br>read</div>
+        <div class="trace-cell">edit</div>
+        <div class="trace-cell">test</div>
+        <div class="trace-cell outcome">failure</div>
+      </div>
+      <div class="trace-note"><span>fault enters here</span></div>
+    </section>
+
+    <section class="timeline-lenses">
+      <article class="timeline-lens phase-pre">
+        <div class="lens-head"><span class="phase-label" data-phase="PRE"></span><span class="evidence-name">declaration only</span></div>
+        <div class="coverage-track" aria-label="Only the declaration is readable">
+          <span class="open"></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span>
+        </div>
+        <p class="question">Does the harness grant more authority than the task needs?</p>
+        <div class="board-id" data-board-key="PRE:pre_over_privilege"></div>
+      </article>
+
+      <article class="timeline-lens phase-live">
+        <div class="lens-head"><span class="phase-label" data-phase="LIVE"></span><span class="evidence-name">growing prefix</span></div>
+        <div class="coverage-track" aria-label="A growing prefix is readable and the future is masked">
+          <span class="open"></span><span class="open"></span><span class="open"></span><span class="open boundary"></span><span></span><span></span><span></span><span></span><span></span>
+        </div>
+        <p class="question">Is a failure coming without spending the false-alarm budget?</p>
+        <div class="board-id" data-board-key="LIVE:live_streaming"></div>
+      </article>
+
+      <article class="timeline-lens phase-post">
+        <div class="lens-head"><span class="phase-label" data-phase="POST"></span><span class="evidence-name">complete record</span></div>
+        <div class="coverage-track" aria-label="The complete record is readable">
+          <span class="open"></span><span class="open"></span><span class="open"></span><span class="open"></span><span class="open"></span><span class="open"></span><span class="open"></span><span class="open"></span><span class="open"></span>
+        </div>
+        <p class="question">Which step caused the failure, and what kind of fault was it?</p>
+        <div class="board-id" data-board-key="POST:post_localization"></div>
+      </article>
+    </section>
+
+    <div class="fixed-footer"><b>fixed run</b> · different admissible evidence · separate scores</div>
+    <div class="board-source">board identities: tests/golden/board.txt</div>
+  </main>
+
+  <main class="candidate masks" aria-label="Evidence-mask-led CatchBench hero candidate">
+    <div class="topline">
+      <span class="brand">CatchBench</span>
+      <span class="kicker">a fixed run seen through lifecycle evidence masks</span>
+    </div>
+    <h1>The mask changes. The run does not.</h1>
+    <p class="dek">Readable evidence expands across the lifecycle; the outcome remains hidden until the run is complete.</p>
+
+    <div class="masks-layout">
+      <section>
+        <div class="mask-stage">
+          <div class="trace" data-trace>
+            <div class="trace-heading"><span>declared</span><span>execution trace</span><span>outcome</span></div>
+            <div class="trace-cells">
+              <div class="trace-cell declared">plan +<br>harness</div>
+              <div class="trace-cell">read</div>
+              <div class="trace-cell">search</div>
+              <div class="trace-cell">edit</div>
+              <div class="trace-cell">test</div>
+              <div class="trace-cell fault">stale<br>read</div>
+              <div class="trace-cell">edit</div>
+              <div class="trace-cell">test</div>
+              <div class="trace-cell outcome">failure</div>
+            </div>
+          </div>
+
+          <div class="mask-matrix" aria-label="Evidence available at each audit state">
+            <div class="matrix-head"></div>
+            <div class="matrix-head">plan + harness</div>
+            <div class="matrix-head">observed prefix</div>
+            <div class="matrix-head">later steps</div>
+            <div class="matrix-head">outcome</div>
+
+            <div class="matrix-phase phase-pre"><span class="phase-label" data-phase="PRE"></span></div>
+            <div class="matrix-cell readable">readable</div>
+            <div class="matrix-cell">masked</div>
+            <div class="matrix-cell">masked</div>
+            <div class="matrix-cell">masked</div>
+
+            <div class="matrix-phase phase-live"><span class="phase-label" data-phase="LIVE"></span></div>
+            <div class="matrix-cell readable">readable</div>
+            <div class="matrix-cell growing">grows</div>
+            <div class="matrix-cell">masked</div>
+            <div class="matrix-cell">masked</div>
+
+            <div class="matrix-phase phase-post"><span class="phase-label" data-phase="POST"></span></div>
+            <div class="matrix-cell readable">readable</div>
+            <div class="matrix-cell readable">readable</div>
+            <div class="matrix-cell readable">readable</div>
+            <div class="matrix-cell readable">readable</div>
+          </div>
+        </div>
+        <div class="mask-key"><span><i class="key-swatch readable"></i>readable now</span><span><i class="key-swatch growing"></i>growing prefix</span><span><i class="key-swatch"></i>withheld by the task contract</span></div>
+      </section>
+
+      <section class="mask-questions">
+        <article class="mask-question phase-pre">
+          <span class="phase-label" data-phase="PRE"></span>
+          <div class="evidence-name">authority audit</div>
+          <p class="question">Is the declared plan over-privileged?</p>
+          <div class="board-id" data-board-key="PRE:pre_over_privilege"></div>
+        </article>
+        <article class="mask-question phase-live">
+          <span class="phase-label" data-phase="LIVE"></span>
+          <div class="evidence-name">early warning</div>
+          <p class="question">Is a failure approaching within an alarm budget?</p>
+          <div class="board-id" data-board-key="LIVE:live_stale_state"></div>
+        </article>
+        <article class="mask-question phase-post">
+          <span class="phase-label" data-phase="POST"></span>
+          <div class="evidence-name">forensic audit</div>
+          <p class="question">Where did the failure begin?</p>
+          <div class="board-id" data-board-key="POST:post_localization"></div>
+        </article>
+      </section>
+    </div>
+    <div class="fixed-footer"><b>same run</b> · evidence opens over time · outcome sealed until post</div>
+    <div class="board-source">board identities: tests/golden/board.txt</div>
+  </main>
+
+  <main class="candidate boards" aria-label="Board-led CatchBench hero candidate">
+    <div class="topline">
+      <span class="brand">CatchBench</span>
+      <span class="kicker">the lifecycle is the benchmark contract</span>
+    </div>
+    <h1>Hold the run fixed. Score only what the auditor could know.</h1>
+    <p class="dek">A fixed trace feeds separate boards because each audit moment admits different evidence.</p>
+
+    <section class="trace" data-trace>
+      <div class="trace-heading"><span>declared</span><span>execution trace</span><span>outcome</span></div>
+      <div class="trace-cells">
+        <div class="trace-cell declared">plan +<br>harness</div>
+        <div class="trace-cell">read</div>
+        <div class="trace-cell">search</div>
+        <div class="trace-cell">edit</div>
+        <div class="trace-cell">test</div>
+        <div class="trace-cell fault">stale<br>read</div>
+        <div class="trace-cell">edit</div>
+        <div class="trace-cell">test</div>
+        <div class="trace-cell outcome">failure</div>
+      </div>
+      <div class="trace-note"><span>fault enters here</span></div>
+    </section>
+
+    <section class="board-table" aria-label="Evidence, question, and scored boards by lifecycle state">
+      <div class="table-cell table-label">audit state</div>
+      <div class="table-cell table-phase phase-pre"><div class="phase-label" data-phase="PRE"></div><div class="evidence-name">before execution</div></div>
+      <div class="table-cell table-phase phase-live"><div class="phase-label" data-phase="LIVE"></div><div class="evidence-name">during execution</div></div>
+      <div class="table-cell table-phase phase-post"><div class="phase-label" data-phase="POST"></div><div class="evidence-name">after execution</div></div>
+
+      <div class="table-cell table-label">admissible evidence</div>
+      <div class="table-cell question-row phase-pre"><p class="question">Declared plan and harness</p></div>
+      <div class="table-cell question-row phase-live"><p class="question">Growing trace prefix; outcome withheld</p></div>
+      <div class="table-cell question-row phase-post"><p class="question">Complete trace and outcome</p></div>
+
+      <div class="table-cell table-label">audit question</div>
+      <div class="table-cell question-row phase-pre"><p class="question">Too much authority?</p></div>
+      <div class="table-cell question-row phase-live"><p class="question">Failure coming within the alarm budget?</p></div>
+      <div class="table-cell question-row phase-post"><p class="question">Which step and which cause?</p></div>
+
+      <div class="table-cell table-label">scored boards</div>
+      <div class="table-cell boards-row phase-pre"><div class="boards-list" data-board-list="PRE"></div></div>
+      <div class="table-cell boards-row phase-live"><div class="boards-list" data-board-list="LIVE"></div></div>
+      <div class="table-cell boards-row phase-post"><div class="boards-list" data-board-list="POST"></div></div>
+    </section>
+
+    <div class="fixed-footer"><b>same specimen</b> · lifecycle information states · no cross-state leakage</div>
+    <div class="board-source">board identities: tests/golden/board.txt</div>
+  </main>
+
+  <script>
+    const allowedCandidates = new Set(["timeline", "masks", "boards"]);
+    const requestedCandidate = new URLSearchParams(location.search).get("candidate") || "timeline";
+
+    async function render() {
+      if (!allowedCandidates.has(requestedCandidate)) {
+        throw new Error(`Unknown candidate: ${requestedCandidate}`);
+      }
+
+      const response = await fetch("/tests/golden/board.txt", { cache: "no-store" });
+      if (!response.ok) {
+        throw new Error(`Board fetch failed: ${response.status}`);
+      }
+      const boardText = await response.text();
+      const sections = [...boardText.matchAll(/^\[(PRE|LIVE|POST)\]\s+([a-z_]+)\s+::\s+([^\r\n]+)$/gm)].map((match) => ({
+        phase: match[1],
+        task: match[2],
+        corpus: match[3].trim(),
+      }));
+      if (!sections.length) {
+        throw new Error("No board section headers found");
+      }
+
+      const sectionByKey = new Map();
+      for (const section of sections) {
+        const key = `${section.phase}:${section.task}`;
+        if (!sectionByKey.has(key)) sectionByKey.set(key, section);
+      }
+
+      document.querySelectorAll("[data-phase]").forEach((node) => {
+        const phase = node.dataset.phase;
+        if (!sections.some((section) => section.phase === phase)) {
+          throw new Error(`Phase missing from board: ${phase}`);
+        }
+        node.textContent = phase;
+      });
+
+      document.querySelectorAll("[data-board-key]").forEach((node) => {
+        const section = sectionByKey.get(node.dataset.boardKey);
+        if (!section) {
+          throw new Error(`Board missing from source: ${node.dataset.boardKey}`);
+        }
+        node.textContent = `[${section.phase}] ${section.task}`;
+      });
+
+      document.querySelectorAll("[data-board-list]").forEach((list) => {
+        const phase = list.dataset.boardList;
+        const tasks = [...new Set(sections.filter((section) => section.phase === phase).map((section) => section.task))];
+        if (!tasks.length) {
+          throw new Error(`No boards found for phase: ${phase}`);
+        }
+        for (const task of tasks) {
+          const item = document.createElement("div");
+          item.className = "board-id";
+          item.textContent = `[${phase}] ${task}`;
+          list.append(item);
+        }
+      });
+
+      document.body.dataset.candidate = requestedCandidate;
+      const active = document.querySelector(`.${requestedCandidate}`);
+      const visibleText = active.innerText;
+      document.documentElement.dataset.visibleDigits = /\d/.test(visibleText) ? "present" : "none";
+      document.documentElement.dataset.visibleNumberWords = /\b(?:zero|one|two|three|four|five|six|seven|eight|nine|ten|first|second|third)\b/i.test(visibleText) ? "present" : "none";
+      document.documentElement.dataset.boardSource = "tests/golden/board.txt";
+      document.documentElement.dataset.boardSections = String(sections.length);
+      document.body.dataset.ready = "true";
+    }
+
+    render().catch((error) => {
+      document.documentElement.dataset.renderError = error.message;
+      document.body.dataset.ready = "error";
+      document.body.textContent = error.message;
+    });
+  </script>
+</body>
+</html>

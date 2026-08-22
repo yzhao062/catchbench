@@ -12,6 +12,22 @@ permissions:
   contents: read
 
 jobs:
+  # This is separate from board.yml because it reads three committed files and finishes in seconds.
+  # verify.yml has no paths filter, so a README-only pull request or push cannot bypass it.
+  readme:
+    runs-on: ubuntu-latest
+    timeout-minutes: 2
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
+      - name: Check README tables, prose numbers, and comparative claims
+        env:
+          KMP_DUPLICATE_LIB_OK: "TRUE"
+          PYTHONHASHSEED: "0"
+        run: python tools/check_board.py --readme-only
+
   tests:
     runs-on: ubuntu-latest
     timeout-minutes: 10
