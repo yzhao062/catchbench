@@ -405,12 +405,27 @@ def test_the_workflow_checks_every_pytest_run_it_makes():
     runs = [line for line in lines if line.startswith("pytest ")]
     checks = [line for line in lines if line.startswith("python tools/check_test_report.py")]
 
-    assert len(runs) == 3, "seed 0, seed 1, and the graph-AD contract"
-    assert len(checks) == 3, "every run is checked, or the check is decoration"
+    assert len(runs) == 4, "seed 0, seed 1, the graph-AD contract, and the canary"
+    assert len(checks) == 4, "every run is checked, or the check is decoration"
     for run in runs:
         assert "--junit-xml=" in run and "-o junit_family=xunit1" in run and "-o addopts=" in run
     assert sum("--only tests/test_graph_ad_scores_every_node.py --require-pass" in check
                for check in checks) == 1
+
+    # The canary is the one check that does not need the report to be honest to be useful, so its
+    # shape is pinned here rather than left to a reader to notice going missing. A suite made to
+    # report failures as passes reports the canary as a pass, and the checker treats that as the
+    # error. It only works while the canary stays out of the suite the other three runs measure:
+    # collected there it would fail them, and declared in the manifest it would move the badge.
+    # Match the positional target, not the substring: --ignore=tests/canary on the two seed runs
+    # contains the same path.
+    canary_runs = [run for run in runs if run.startswith("pytest tests/canary ")]
+    assert len(canary_runs) == 1, "one canary run"
+    assert sum("--expect-failed" in check for check in checks) == 1
+    assert sum("--ignore=tests/canary" in run for run in runs) == 2, "both seeds skip the canary"
+    manifest = (WORKFLOW.parent.parent.parent / "tests" / "expected_tests.txt").read_text(
+        encoding="utf-8")
+    assert "tests/canary" not in manifest, "the canary is not a test this repository claims to run"
     # The shapes this rewrite removed. A reader who greps for them should find nothing.
     text = WORKFLOW.read_text(encoding="utf-8")
     assert "ALLOWED = {" not in text and "grep -qE" not in text

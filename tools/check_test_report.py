@@ -295,6 +295,38 @@ def check_sources(declared: dict[str, str], tests_dir: Path = TESTS_DIR,
     return problems
 
 
+def _check_canary(node: str, outcomes: dict[str, str], problems: list[tuple[str, str]],
+                  report: Path) -> int:
+    """The canary run had to fail, and this node id had to be what failed.
+
+    Everything else this file does reads a report the suite's own process wrote, and two adversarial
+    rounds established that such a report can be made to say anything. This is the one check that
+    does not depend on the report being honest to be useful. A conftest that turns failures into
+    passes turns the canary into a pass too, and a pass here is the error.
+
+    The manifest is deliberately not consulted: the canary is not one of the tests this repository
+    claims to run, and it must stay out of the declared set and out of the badge.
+    """
+    reported = outcomes.get(node)
+    if reported is None:
+        problems.append((f"the canary run did not report {node}, so it proved nothing about "
+                         "whether this suite can still report a failure", str(report)))
+    elif reported != "failed":
+        problems.append((f"the canary reported {reported!r} and must report 'failed'; a suite that "
+                         "cannot report this failure cannot be trusted to report a real one", node))
+    extra = sorted(set(outcomes) - {node})
+    for other in extra[:MAX_LISTED]:
+        problems.append(("the canary run collected a test that is not the canary", other))
+
+    for why, where in problems:
+        print(f"::error::{why}: {where}")
+    if problems:
+        print(f"{len(problems)} problem(s) against the canary")
+        return 1
+    print(f"canary: {node} reported failed, so this suite still reports failures")
+    return 0
+
+
 def check_badge(declared: dict[str, str], readme: Path = README) -> list[tuple[str, str]]:
     """The README test badge is hand-typed and nothing else recomputes it.
 
@@ -327,9 +359,15 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--readme", type=Path, default=README)
     parser.add_argument("--no-badge", action="store_true",
                         help="skip the README badge comparison")
+    parser.add_argument("--expect-failed", metavar="NODEID",
+                        help="canary mode: this run had to fail, and this node id had to be the "
+                             "test that failed; the manifest and badge are not consulted")
     args = parser.parse_args(argv)
 
     outcomes, problems = read_report(args.report)
+
+    if args.expect_failed:
+        return _check_canary(args.expect_failed, outcomes, problems, args.report)
 
     if args.update and not outcomes:
         # Without this, a run that collected nothing rewrites the manifest to empty and takes the

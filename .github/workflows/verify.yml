@@ -60,9 +60,24 @@ jobs:
         run: |
           rm -f seed0.xml
           status=0
-          pytest tests -q -ra --junit-xml=seed0.xml -o junit_family=xunit1 -o addopts= || status=$?
+          pytest tests --ignore=tests/canary -q -ra --junit-xml=seed0.xml -o junit_family=xunit1 -o addopts= || status=$?
           python tools/check_test_report.py --report seed0.xml
           exit "$status"
+      # Everything above reads a report the suite's own process writes, and an adversarial round
+      # showed that shape cannot be made sound: five lines in a conftest relabel every failure as a
+      # pass on the TestReport object, which the junit-xml is built from, so the terminal, the XML,
+      # and the exit status agree on a run that never happened. This step is the one check that does
+      # not need the report to be honest. tests/canary holds a test that must fail; the two runs
+      # above pass --ignore=tests/canary so it stays out of the suite and out of the manifest. A
+      # suite that has been made to report failures as passes reports this one as a pass too, and a
+      # pass here is the error. Chosen over mutating a real function, which costs a second full
+      # suite run per job and goes stale as the code moves.
+      - name: The suite must still be able to report a failure
+        shell: bash
+        run: |
+          rm -f canary.xml
+          pytest tests/canary -q --junit-xml=canary.xml -o junit_family=xunit1 -o addopts= || true
+          python tools/check_test_report.py --report canary.xml --expect-failed "tests/canary/test_the_suite_reports_failures.py::test_this_test_must_fail"
       - name: Test with hash seed 1
         shell: bash
         env:
@@ -71,7 +86,7 @@ jobs:
         run: |
           rm -f seed1.xml
           status=0
-          pytest tests -q -ra --junit-xml=seed1.xml -o junit_family=xunit1 -o addopts= || status=$?
+          pytest tests --ignore=tests/canary -q -ra --junit-xml=seed1.xml -o junit_family=xunit1 -o addopts= || status=$?
           python tools/check_test_report.py --report seed1.xml
           exit "$status"
 
