@@ -10,13 +10,24 @@ varies within a run.
 import numpy as np
 import pytest
 
-torch = pytest.importorskip("torch")
-pytest.importorskip("torch_geometric")
-pytest.importorskip("pygod")
+try:
+    import torch
+    from torch_geometric.data import Data
+    import pygod  # noqa: F401
 
-from torch_geometric.data import Data  # noqa: E402
+    from catchbench.graph_ad import flat_disconnected, pygod_node_scores
+except ImportError as exc:
+    _GRAPH_STACK_ERROR = exc
+else:
+    _GRAPH_STACK_ERROR = None
 
-from catchbench.graph_ad import flat_disconnected, pygod_node_scores  # noqa: E402
+# A module-level importorskip replaces this file's four test functions with one collection-time
+# skip, which makes the repository's collected count depend on whether the optional stack is
+# installed. A module marker keeps every node collectible while retaining the intended local skip.
+pytestmark = pytest.mark.skipif(
+    _GRAPH_STACK_ERROR is not None,
+    reason=f"needs the graph-ad extra: {_GRAPH_STACK_ERROR}",
+)
 
 
 def _toy_graphs(n_graphs=6, n_nodes=12, n_feat=3, seed=0):

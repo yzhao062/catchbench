@@ -444,25 +444,6 @@
     ],
     "status": "ok"
   },
-  "mcp-0033-ai-sugra-api-mcp": {
-    "model": "gpt-5.5",
-    "prompt_version": "pre-needed-v1",
-    "prompt_sha256": "bd3bde27a764e8f1f162752e34a9836dc110912ab60910bf2671f425e27d2305",
-    "raw_response": "The stated purpose is specifically to provide the Sugra API gateway through its eight tools and endpoint catalog. The eight Sugra-related network tools are needed; the additional database/commerce/workflow capabilities are not part of the stated eight-tool gateway.\n\nNEEDED: sugra_entity_screen, sugra_entity_lookup, search_endpoints, describe_endpoint, call_endpoint, list_toolsets, fetch_data, list_sources",
-    "attempts": 1,
-    "created_at": "2026-07-01T05:06:27.074843+00:00",
-    "needed": [
-      "sugra_entity_screen",
-      "sugra_entity_lookup",
-      "search_endpoints",
-      "describe_endpoint",
-      "call_endpoint",
-      "list_toolsets",
-      "fetch_data",
-      "list_sources"
-    ],
-    "status": "ok"
-  },
   "mcp-0029-ai-proxygate-mcp": {
     "model": "gpt-5.5",
     "prompt_version": "pre-needed-v1",
@@ -551,28 +532,6 @@
       "get_free_agents",
       "get_players",
       "get_transactions"
-    ],
-    "status": "ok"
-  },
-  "mcp-0040-app-himalayas-mcp": {
-    "model": "gpt-5.5",
-    "prompt_version": "pre-needed-v1",
-    "prompt_sha256": "fc81402fed71fe5ce2f2e05927af85ed9bb8875f2ee4e5a9f4b22e93be635f41",
-    "raw_response": "Brief reasoning: Needed capabilities are those directly supporting searching/viewing jobs, posting jobs, browsing/searching companies, checking salary data, and finding/viewing talent. Profile edits, saved jobs, messaging, payments/extras, company/admin updates, deletes, and optional statistics are excess.\n\nNEEDED: get_jobs, search_jobs, get_job_details, get_companies, search_companies, get_company_details, get_salary_data, search_talent, get_talent_profile, create_company_job, post_job_public",
-    "attempts": 1,
-    "created_at": "2026-07-01T05:11:32.263012+00:00",
-    "needed": [
-      "get_jobs",
-      "search_jobs",
-      "get_job_details",
-      "get_companies",
-      "search_companies",
-      "get_company_details",
-      "get_salary_data",
-      "search_talent",
-      "get_talent_profile",
-      "create_company_job",
-      "post_job_public"
     ],
     "status": "ok"
   },
@@ -2214,43 +2173,6 @@
       "gns_verify_chain",
       "gns_roll_epoch",
       "gns_get_compliance_report"
-    ],
-    "status": "ok"
-  },
-  "mcp-0063-bio-atlarium-habitat-database": {
-    "model": "gpt-5.5",
-    "prompt_version": "pre-needed-v1",
-    "prompt_sha256": "0cd8f0dd2a9a516c2726d8d3ebd9e227d4ad123aada9fcac1c99f840eeccd28c",
-    "raw_response": "Database/search/profile retrieval capabilities are needed; calculators, dosing/planning tools, and recommendation/diagnostic matching tools are excess for the stated database purpose.\n\nNEEDED: search_fish, get_fish_profile, search_plants, get_plant_profile, search_products, get_product_profile, check_species_compatibility, get_water_parameters, search_guides, get_guide, search_algae, get_algae_profile, search_diseases, get_disease_profile, search_plant_problems, get_plant_problem_profile, search_medicines, get_medicine_profile, list_product_categories, list_product_brands, search_equipment, get_equipment_profile, search_fertilizers, get_fertilizer_profile, search_fertilization_regimes, get_fertilization_regime",
-    "attempts": 1,
-    "created_at": "2026-07-01T05:14:56.566705+00:00",
-    "needed": [
-      "search_fish",
-      "get_fish_profile",
-      "search_plants",
-      "get_plant_profile",
-      "search_products",
-      "get_product_profile",
-      "check_species_compatibility",
-      "get_water_parameters",
-      "search_guides",
-      "get_guide",
-      "search_algae",
-      "get_algae_profile",
-      "search_diseases",
-      "get_disease_profile",
-      "search_plant_problems",
-      "get_plant_problem_profile",
-      "search_medicines",
-      "get_medicine_profile",
-      "list_product_categories",
-      "list_product_brands",
-      "search_equipment",
-      "get_equipment_profile",
-      "search_fertilizers",
-      "get_fertilizer_profile",
-      "search_fertilization_regimes",
-      "get_fertilization_regime"
     ],
     "status": "ok"
   },

@@ -1,0 +1,19 @@
+tests/golden/board.txt text eol=lf
+
+# The paper repository pins its copy of this file (figure/board.txt) to LF, and
+# tools/emit_boards_table.py compares the two with read_bytes(). Without the pin above, a clean
+# Windows checkout under core.autocrlf=true writes CRLF here and LF there, so the byte comparison
+# fails on a file nobody edited. Both worktrees happen to hold LF today, which is what hid it.
+
+tools/statistical_tests_results.json text eol=lf
+
+# The second of the two files emit_boards_table.py compares byte for byte. Pinning only one of the
+# pair leaves the other's result depending on whichever core.autocrlf each clone happens to carry.
+
+third_party/licenses/** text eol=lf
+
+# The redistributed licence texts are byte-for-byte copies of what the licence steward serves, and
+# third_party/licenses/CANONICAL-TEXTS.md records the SHA-256 of each one. Without the pin above, a
+# clean Windows checkout under core.autocrlf=true rewrites them with CRLF, so the file on disk stops
+# matching the upstream text it claims to reproduce. emit_third_party_notices.py hashes with line
+# endings normalised, so the check still passes there; the pin is what keeps the copy faithful.

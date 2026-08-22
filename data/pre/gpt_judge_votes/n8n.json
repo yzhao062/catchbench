@@ -135,16 +135,6 @@
     "needed": [],
     "status": "ok"
   },
-  "n8n-6287": {
-    "model": "gpt-5.5",
-    "prompt_version": "pre-needed-v1",
-    "prompt_sha256": "7fcf246ae7f7bd67590626a4429890ffc65c91112ace8376429c968361c550df",
-    "raw_response": "The workflow explicitly requires logging every processed email interaction to a Google Sheet, including request type, priority, status, response sent, follow-up, and notes. Therefore, Google Sheets write access is genuinely needed.\n\nNEEDED: Append or update row in sheet in Google Sheets | type: google_sheets | permission_level: write",
-    "attempts": 2,
-    "created_at": "2026-07-01T05:01:18.751458+00:00",
-    "status": "malformed",
-    "error": "unknown names: Append or update row in sheet in Google Sheets | type: google_sheets | permission_level: write"
-  },
   "n8n-5338": {
     "model": "gpt-5.5",
     "prompt_version": "pre-needed-v1",

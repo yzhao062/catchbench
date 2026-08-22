@@ -130,6 +130,15 @@ def _load_data_dir() -> list[PreInstance]:
     for p in sorted(glob.glob(os.path.join(_DATA_DIR, "*.json"))):
         with open(p, encoding="utf-8") as f:
             rows = json.load(f)
+        # Every file matched here is loaded as a corpus, so a note or a manifest dropped into this
+        # directory is read as one. Saying which file and what it is beats the TypeError that a
+        # dict produces four frames down.
+        if not isinstance(rows, list):
+            raise ValueError(
+                "%s holds a %s, and every data/pre/*.json is loaded as a list of PRE records; "
+                "keep non-corpus files outside this directory"
+                % (os.path.basename(p), type(rows).__name__)
+            )
         for r in rows:
             out.append(pre_instance_from_dict(r))
     return out

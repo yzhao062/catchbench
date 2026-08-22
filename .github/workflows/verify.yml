@@ -36,107 +36,44 @@ jobs:
           git clone --filter=blob:none https://github.com/yzhao062/grade.git ../grade
           git -C ../grade checkout --quiet 3839a57ac165d58a807fce0a3ff38346732ee936
           python -m pip install -e "../grade[experiments]"
-      # A silent skip lets a contract rot unnoticed, which is what the pre-publication audit warned
-      # about, so seed 0 also asserts that nothing skipped. Four files are declared exceptions, and
-      # the list is an allowlist so a fifth one cannot appear without a deliberate edit here.
-      #   test_graph_ad_scores_every_node.py needs the torch stack. The graph-ad job below installs
-      #     that stack and runs the same file with skipping forbidden, so the contract still runs.
-      #   test_emit_stats_table.py, test_emit_boards_table.py and test_emit_transfer_table.py each
-      #     hold one cross-repository case that reads the paper sources through
-      #     CATCHBENCH_PAPER_DIR. The paper lives in a separate private repository that CI has no
-      #     access to, so those three cases cannot run here; every other case in all three does.
-      # Any other skip fails this step. The same script then checks the README test badge against
-      # the collected count, because that badge is hand-typed and nothing else recomputes it.
-      # pipefail matters: without it the exit status is tee's, and a failing test passes the step.
+      # A contract that quietly stops running is the failure this repository has to notice, so both
+      # runs below are checked against tests/expected_tests.txt, the committed list of node ids
+      # this repository claims to run. tools/check_test_report.py carries the reasoning. The short
+      # version: every earlier version of this check read pytest's terminal summary, an adversarial
+      # review broke that shape eight ways, and six of the eight were the suite telling the check
+      # what it wanted to hear, because the summary is written by the process the suite configures.
+      # The junit-xml report names every node id with its outcome as an element rather than as a
+      # count, the manifest says which node ids must be there, and the comparison runs in both
+      # directions, so a missing contract is as loud as a failing one.
+      #   -o junit_family=xunit1: the xunit2 family drops the per-testcase `file` attribute, which
+      #     is what makes a node id reconstructable from the report.
+      #   -o addopts=: this job runs with the flags written here and not with whatever a
+      #     pyproject.toml addopts entry adds. PYTEST_ADDOPTS in the environment would still apply,
+      #     and setting it means editing this file, which a reviewer sees.
+      # The pytest exit status is held and re-raised after the check, so a failing run still fails
+      # the step and the check still gets to say what it saw.
       - name: Test with hash seed 0
         shell: bash
         env:
           PYTHONHASHSEED: "0"
           GRADE_DIR: ${{ github.workspace }}/../grade
         run: |
-          set -o pipefail
-          pytest tests -q -ra 2>&1 | tee result.txt
-          python - <<'PY'
-          import pathlib, re, sys
-
-          # Three files may skip, and only these three, each with a declared ceiling on how many cases.
-          # Three earlier versions of this check were each bypassable, and all three bypasses were
-          # demonstrated rather than imagined:
-          #   a whole-line substring filter exempted any skip whose *reason* named an allowed file,
-          #     and any new file whose name merely contained an allowed one;
-          #   reducing the path to a base name exempted tests/elsewhere/test_emit_stats_table.py;
-          #   matching a literal line prefix missed every class under --color=yes, because pytest
-          #     then starts the line with an ESC sequence and "SKIPPED" is no longer first.
-          # Hence: strip ANSI, anchor the path to tests/<name> exactly, and cap the count so a file
-          # cannot quietly grow from one skipped case to forty.
-          ALLOWED = {
-              "tests/test_graph_ad_scores_every_node.py": 10,  # whole file; needs the torch stack
-              "tests/test_emit_stats_table.py": 1,             # one cross-repository case
-              "tests/test_emit_boards_table.py": 1,            # one cross-repository case
-              "tests/test_emit_transfer_table.py": 1,          # one cross-repository case
-          }
-
-          ANSI = re.compile(r"\x1b\[[0-9;]*[A-Za-z]")
-          report = pathlib.Path("result.txt").read_text(encoding="utf-8", errors="replace")
-          problems = []
-          for raw in report.splitlines():
-              line = ANSI.sub("", raw).strip()
-              if line.startswith(("XFAIL", "XPASS")):
-                  # An xfail does not assert its contract and prints its own class, so a skip-only
-                  # guard never sees it. There are none today; this keeps it that way.
-                  problems.append(("xfail is not permitted; make it pass or delete it", line))
-                  continue
-              if not line.startswith("SKIPPED"):
-                  continue
-              # SKIPPED [n] path/to/test_x.py:347: reason
-              hit = re.match(r"SKIPPED\s+\[(\d+)\]\s+(.+?):\d+:", line)
-              if not hit:
-                  problems.append(("a SKIPPED line this check cannot parse, so it cannot be cleared",
-                                   line))
-                  continue
-              count, path = int(hit.group(1)), hit.group(2).replace("\\", "/")
-              allowed = next((cap for name, cap in ALLOWED.items()
-                              if path == name or path.endswith("/" + name)), None)
-              if allowed is None:
-                  problems.append(("undeclared skip, so a contract did not run", line))
-              elif count > allowed:
-                  problems.append((f"declared file skipped {count} case(s), over its cap of "
-                                   f"{allowed}; raise the cap deliberately or fix the skip", line))
-
-          # The README carries a test-count badge. It is hand-typed, nothing recomputes it, and it
-          # had drifted 31 tests behind before this check existed. Compare against the COLLECTED
-          # count rather than the passed count: this job runs without torch and without the paper
-          # checkout, so how many pass here differs from a full local run, while how many exist
-          # does not.
-          # Take the last line that actually yields outcome counts rather than the last line
-          # containing " in ", so a trailing warning or a skip reason cannot be read as the summary.
-          OUTCOME = re.compile(r"(\d+) (passed|failed|skipped|error|xfailed|xpassed)")
-          collected = 0
-          for raw in report.splitlines():
-              found = OUTCOME.findall(ANSI.sub("", raw))
-              if found and " in " in ANSI.sub("", raw):
-                  collected = sum(int(n) for n, _ in found)
-          badge = re.search(r"badge/tests-(\d+)-",
-                            pathlib.Path("README.md").read_text(encoding="utf-8"))
-          if not badge:
-              problems.append(("the README test badge is missing or no longer parseable",
-                               "README.md"))
-          elif not collected:
-              problems.append(("could not read a test count out of the pytest summary",
-                               summary[-1] if summary else "(no summary line)"))
-          elif int(badge.group(1)) != collected:
-              problems.append((f"the README test badge says {badge.group(1)} but pytest collected "
-                               f"{collected}; update the badge", "README.md"))
-
-          for why, line in problems:
-              print(f"::error::{why}: {line}")
-          sys.exit(1 if problems else 0)
-          PY
+          rm -f seed0.xml
+          status=0
+          pytest tests -q -ra --junit-xml=seed0.xml -o junit_family=xunit1 -o addopts= || status=$?
+          python tools/check_test_report.py --report seed0.xml
+          exit "$status"
       - name: Test with hash seed 1
+        shell: bash
         env:
           PYTHONHASHSEED: "1"
           GRADE_DIR: ${{ github.workspace }}/../grade
-        run: pytest tests -q -ra
+        run: |
+          rm -f seed1.xml
+          status=0
+          pytest tests -q -ra --junit-xml=seed1.xml -o junit_family=xunit1 -o addopts= || status=$?
+          python tools/check_test_report.py --report seed1.xml
+          exit "$status"
 
   # The PyGOD truncation regression is invisible from the board: the detector scored the first node
   # of each chunk and left the rest at zero, and the board read that as a detector ranking nothing.
@@ -173,15 +110,26 @@ jobs:
         run: |
           python -c "import torch, torch_geometric, pyg_lib, pygod; print('torch', torch.__version__); print('torch_geometric', torch_geometric.__version__); print('pyg_lib', pyg_lib.__version__); print('pygod', pygod.__version__)"
           python -c "import torch_geometric.typing as t; assert t.WITH_PYG_LIB, 'pyg-lib did not register; NeighborSampler would fail'; print('pyg-lib backend registered')"
+      # --runxfail is what makes this job an enforcement rather than a formality. Without it an
+      # xfail marker on these tests passes both dependency sets and enforces nothing: in the matrix
+      # job above the stack is missing, so skipif wins and the result is a declared skip, while
+      # here the stack is present and the four results arrive as XPASS, which a SKIPPED-only grep
+      # never sees. With --runxfail every assertion runs and reports its real outcome, so a broken
+      # graph contract fails here even if someone marks the file xfail somewhere else.
+      #
+      # --require-pass is the other half: the four node ids the manifest declares for this file
+      # must each report `passed` here. That is stricter than the grep it replaces, which read the
+      # terminal and so could be blinded by --no-summary while the file skipped in full.
       - name: Run the graph-AD contract
         shell: bash
         run: |
-          set -o pipefail
-          pytest tests/test_graph_ad_scores_every_node.py -q -ra 2>&1 | tee graph_ad.txt
-          if grep -qE "^SKIPPED " graph_ad.txt; then
-            echo "::error::the graph-AD contract skipped; the torch stack did not install"
-            exit 1
-          fi
+          rm -f graph_ad.xml
+          status=0
+          pytest tests/test_graph_ad_scores_every_node.py -q -ra --runxfail --color=no \
+            --junit-xml=graph_ad.xml -o junit_family=xunit1 -o addopts= || status=$?
+          python tools/check_test_report.py --report graph_ad.xml \
+            --only tests/test_graph_ad_scores_every_node.py --require-pass
+          exit "$status"
 
   smoke:
     runs-on: ubuntu-latest

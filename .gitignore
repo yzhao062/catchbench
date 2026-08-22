@@ -34,5 +34,10 @@ data/*
 *.pem
 *.key
 
-# CI scratch from the skip assertion in .github/workflows/verify.yml
-result.txt
+# CI scratch: the junit-xml reports tools/check_test_report.py reads, written by
+# .github/workflows/verify.yml and by the local regeneration command in
+# tests/expected_tests.txt.
+seed0.xml
+seed1.xml
+graph_ad.xml
+local.xml

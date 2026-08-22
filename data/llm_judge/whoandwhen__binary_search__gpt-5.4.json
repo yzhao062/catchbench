@@ -1,6 +1,6 @@
 {
   "provenance": {
-    "benchmark": "AuditableBench",
+    "benchmark": "CatchBench",
     "board": "post_localization",
     "corpus": "whoandwhen",
     "method": "binary_search",

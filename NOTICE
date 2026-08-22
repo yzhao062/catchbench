@@ -1,0 +1,86 @@
+CatchBench
+Copyright (c) 2026 Yue Zhao
+
+This distribution contains normalized material derived from third-party sources and retained model
+output generated from those sources. Exact files, upstream projects, source identifiers, licence
+status, and unresolved blocks are recorded in THIRD_PARTY_LICENSES.md and ASSET_MANIFEST.json.
+Each source identifier is typed there as an immutable revision or as a mutable identifier, because
+an n8n template ID and a SWE-bench submission label name a location whose content can change rather
+than fixed bytes.
+
+The redistributed licence texts travel with this repository rather than by link. Apache-2.0,
+GPL-3.0, and CC-BY-4.0 read the same for every project declaring them, so one copy of each covers
+every record: third_party/licenses/Apache-2.0.txt, GPL-3.0.txt, and CC-BY-4.0.txt, indexed with
+their SHA-256 digests and the projects they cover in third_party/licenses/CANONICAL-TEXTS.md. MIT
+names the copyright holder, so its notices are per project: the CrewAI and MCP notices are under
+third_party/licenses/, and the InjecAgent and Who&When code-project notices are reproduced inline in
+THIRD_PARTY_LICENSES.md. Records marked NOASSERTION, Other, or unverified declare no licence at all
+and remain unfinished. Five further projects declare MIT or Apache-2.0, but their pinned licence
+file could not be retrieved; each is marked UNRESOLVED where its notice would be, and the 6 records
+derived from them remain unfinished. CatchBench's MIT licence does not override any source terms.
+
+InjecAgent
+Copyright (c) 2023 Qiusi Zhan
+Licensed under the MIT License. The full notice is reproduced in THIRD_PARTY_LICENSES.md.
+
+Who&When associated code project
+Copyright (c) 2025 Ming Yin
+Licensed under the MIT License. This notice applies to the associated code project; the licence of
+the separately hosted Who&When dataset remains unresolved. See THIRD_PARTY_LICENSES.md.
+
+The following upstream NOTICE text accompanies MCP-derived records. It is reproduced verbatim;
+references to LICENSE within these blocks mean the pinned upstream LICENSE files identified in
+THIRD_PARTY_LICENSES.md, not CatchBench's root LICENSE.
+
+Helixar Security MCP Connector
+Copyright 2026 Helixar Limited
+
+This product includes software developed at Helixar Limited (https://helixar.ai).
+
+This product references the following external specifications and identifiers:
+
+  - HDP — Human Delegation Provenance Protocol
+    IETF draft: draft-helixar-hdp-agentic-delegation-00
+    Subject to IETF Trust Legal Provisions (https://trustee.ietf.org/license-info).
+
+  - Companion paper: "HDP: A Lightweight Cryptographic Protocol for Human
+    Delegation Provenance in Agentic AI Systems" — arXiv:2604.04522,
+    Asiri Dalugoda (2026), licensed CC BY 4.0.
+
+  - Reference implementation snapshot: Zenodo DOI 10.5281/zenodo.19332023
+    (the licence of any individual snapshot is recorded in its Zenodo metadata
+    and may differ from this product's licence).
+
+This product is licensed under the Apache License, Version 2.0 (see LICENSE).
+
+Vacation Rental Protocol — reference implementation (HemmaBo MCP server)
+Copyright 2026 HemmaBo / Rouiada Abbas
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License in the LICENSE file or at
+http://www.apache.org/licenses/LICENSE-2.0
+
+NOTICE — Evlek MCP Server
+
+The MIT license in the LICENSE file applies ONLY to the contents of this public
+repository: the MCP Registry manifest (server.json), documentation (README.md,
+TOOLS.md), configuration examples, and reference clients.
+
+SCOPE OF THE MIT LICENSE
+The MIT license does NOT cover the hosted Evlek service. The following remain
+proprietary and are NOT licensed under MIT:
+- the evlek.app web application and its source code
+- the Evlek iOS and Android applications
+- the listing database and its contents
+- AI prompts, prompt engineering, and model configurations
+- business logic, ranking, and data pipelines
+- brand assets, design system, and trade dress
+
+TRADEMARK
+"Evlek" is a trademark of Onur Dokuzoğlu. The MIT license grants no rights to
+use the "Evlek" name, logo, branding, or trade dress. For brand or trademark
+usage requests, contact: hello@evlek.app
+
+CONTACT
+hello@evlek.app https://evlek.app

@@ -1,0 +1,159 @@
+{
+  "licenses": [
+    "GPL-3.0"
+  ],
+  "min_run_words": 4,
+  "marker": "[upstream text removed: see THIRD_PARTY_LICENSES.md]",
+  "caches_examined": [
+    "data/pre/gpt_judge_votes/crewai.json",
+    "data/pre/gpt_judge_votes/mcp.json",
+    "data/pre/gpt_judge_votes/n8n.json",
+    "data/pre/llm_judge_method_votes/llama-3.3-70b.json"
+  ],
+  "records": [
+    {
+      "cache": "data/pre/gpt_judge_votes/crewai.json",
+      "instance_id": "crewai-0014",
+      "license": "GPL-3.0",
+      "source": "opahopa/crewai-factory-crew@2dbcb84e/config/coding_crew/agents.yaml",
+      "markers": 0,
+      "longest_span_words": 0
+    },
+    {
+      "cache": "data/pre/gpt_judge_votes/crewai.json",
+      "instance_id": "crewai-0015",
+      "license": "GPL-3.0",
+      "source": "opahopa/crewai-factory-crew@2dbcb84e/config/coding_crew/agents.yaml",
+      "markers": 0,
+      "longest_span_words": 0
+    },
+    {
+      "cache": "data/pre/gpt_judge_votes/crewai.json",
+      "instance_id": "crewai-0016",
+      "license": "GPL-3.0",
+      "source": "opahopa/crewai-factory-crew@2dbcb84e/config/coding_crew/agents.yaml",
+      "markers": 0,
+      "longest_span_words": 0
+    },
+    {
+      "cache": "data/pre/gpt_judge_votes/crewai.json",
+      "instance_id": "crewai-0017",
+      "license": "GPL-3.0",
+      "source": "opahopa/crewai-factory-crew@2dbcb84e/config/coding_crew/agents.yaml",
+      "markers": 0,
+      "longest_span_words": 0
+    },
+    {
+      "cache": "data/pre/gpt_judge_votes/crewai.json",
+      "instance_id": "crewai-0018",
+      "license": "GPL-3.0",
+      "source": "opahopa/crewai-factory-crew@2dbcb84e/config/design_crew/agents.yaml",
+      "markers": 0,
+      "longest_span_words": 0
+    },
+    {
+      "cache": "data/pre/gpt_judge_votes/crewai.json",
+      "instance_id": "crewai-0019",
+      "license": "GPL-3.0",
+      "source": "opahopa/crewai-factory-crew@2dbcb84e/config/design_crew/agents.yaml",
+      "markers": 0,
+      "longest_span_words": 0
+    },
+    {
+      "cache": "data/pre/gpt_judge_votes/crewai.json",
+      "instance_id": "crewai-0183",
+      "license": "GPL-3.0",
+      "source": "tom333/cv@a4696394/src/config/agents.yaml",
+      "markers": 0,
+      "longest_span_words": 0
+    },
+    {
+      "cache": "data/pre/gpt_judge_votes/crewai.json",
+      "instance_id": "crewai-0184",
+      "license": "GPL-3.0",
+      "source": "tom333/cv@a4696394/src/config/agents.yaml",
+      "markers": 0,
+      "longest_span_words": 0
+    },
+    {
+      "cache": "data/pre/gpt_judge_votes/crewai.json",
+      "instance_id": "crewai-0185",
+      "license": "GPL-3.0",
+      "source": "tom333/cv@a4696394/src/config/agents.yaml",
+      "markers": 0,
+      "longest_span_words": 0
+    },
+    {
+      "cache": "data/pre/llm_judge_method_votes/llama-3.3-70b.json",
+      "instance_id": "crewai-0014",
+      "license": "GPL-3.0",
+      "source": "opahopa/crewai-factory-crew@2dbcb84e/config/coding_crew/agents.yaml",
+      "markers": 1,
+      "longest_span_words": 5
+    },
+    {
+      "cache": "data/pre/llm_judge_method_votes/llama-3.3-70b.json",
+      "instance_id": "crewai-0015",
+      "license": "GPL-3.0",
+      "source": "opahopa/crewai-factory-crew@2dbcb84e/config/coding_crew/agents.yaml",
+      "markers": 1,
+      "longest_span_words": 13
+    },
+    {
+      "cache": "data/pre/llm_judge_method_votes/llama-3.3-70b.json",
+      "instance_id": "crewai-0016",
+      "license": "GPL-3.0",
+      "source": "opahopa/crewai-factory-crew@2dbcb84e/config/coding_crew/agents.yaml",
+      "markers": 1,
+      "longest_span_words": 15
+    },
+    {
+      "cache": "data/pre/llm_judge_method_votes/llama-3.3-70b.json",
+      "instance_id": "crewai-0017",
+      "license": "GPL-3.0",
+      "source": "opahopa/crewai-factory-crew@2dbcb84e/config/coding_crew/agents.yaml",
+      "markers": 2,
+      "longest_span_words": 7
+    },
+    {
+      "cache": "data/pre/llm_judge_method_votes/llama-3.3-70b.json",
+      "instance_id": "crewai-0018",
+      "license": "GPL-3.0",
+      "source": "opahopa/crewai-factory-crew@2dbcb84e/config/design_crew/agents.yaml",
+      "markers": 3,
+      "longest_span_words": 6
+    },
+    {
+      "cache": "data/pre/llm_judge_method_votes/llama-3.3-70b.json",
+      "instance_id": "crewai-0019",
+      "license": "GPL-3.0",
+      "source": "opahopa/crewai-factory-crew@2dbcb84e/config/design_crew/agents.yaml",
+      "markers": 2,
+      "longest_span_words": 19
+    },
+    {
+      "cache": "data/pre/llm_judge_method_votes/llama-3.3-70b.json",
+      "instance_id": "crewai-0183",
+      "license": "GPL-3.0",
+      "source": "tom333/cv@a4696394/src/config/agents.yaml",
+      "markers": 1,
+      "longest_span_words": 4
+    },
+    {
+      "cache": "data/pre/llm_judge_method_votes/llama-3.3-70b.json",
+      "instance_id": "crewai-0184",
+      "license": "GPL-3.0",
+      "source": "tom333/cv@a4696394/src/config/agents.yaml",
+      "markers": 1,
+      "longest_span_words": 5
+    },
+    {
+      "cache": "data/pre/llm_judge_method_votes/llama-3.3-70b.json",
+      "instance_id": "crewai-0185",
+      "license": "GPL-3.0",
+      "source": "tom333/cv@a4696394/src/config/agents.yaml",
+      "markers": 3,
+      "longest_span_words": 8
+    }
+  ]
+}

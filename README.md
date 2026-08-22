@@ -4,9 +4,9 @@
 
 **A benchmark for finding and attributing agent failures over real agent traces.**
 
-[![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
+[![Code license](https://img.shields.io/badge/code%20license-MIT-blue.svg)](LICENSE)
 [![Python](https://img.shields.io/badge/python-3.10%20%7C%203.12-blue.svg)](pyproject.toml)
-[![Tests](https://img.shields.io/badge/tests-253-brightgreen.svg)](tests)
+[![Tests](https://img.shields.io/badge/tests-350-brightgreen.svg)](tests)
 [![Boards](https://img.shields.io/badge/boards-PRE%20%7C%20LIVE%20%7C%20POST-orange.svg)](#the-boards)
 
 [Quickstart](#quickstart) · [The Boards](#the-boards) · [Task List](#the-full-task-list) · [Add a Method](#how-a-method-plugs-in) · [Full Install](#the-full-board)
@@ -91,6 +91,32 @@ through that full revision, and verifies the observed fetch or Who&When snapshot
 board header records all three commits. Direct execution of GRADE outside this runner is not covered by
 the CatchBench-side pin. The sibling GRADE and `auditable` checkout revisions are not fixed by the
 setup, and Python dependencies are not locked.
+
+### Data and Generated-Artifact Licensing
+
+The repository's MIT `LICENSE` covers CatchBench-authored code and the 56 authored synthetic PRE
+records. It is not a blanket licence for derived third-party records or cached model output. Of the
+committed PRE records, InjecAgent's 340 are established as MIT and the synthetic 56 are first-party
+MIT. Some CrewAI and MCP records also carry MIT or Apache-2.0 declarations, but those source sets
+still contain unresolved records. The n8n and SWE-agent artifact terms remain unverified.
+
+Nine CrewAI records declare GPL-3.0 and one MCP record declares CC-BY-4.0. They stay in the release,
+their licence texts ship in [`third_party/licenses/`](third_party/licenses/), and
+[THIRD_PARTY_LICENSES.md](THIRD_PARTY_LICENSES.md#why-the-gpl-30-and-cc-by-40-records-are-in-the-release)
+sets out exactly what those records carry and why, so a reader can judge the position rather than
+take it. Every licence value the committed records declare is either carried as local text or
+recorded as a non-declaration, and
+[`tools/emit_third_party_notices.py --check`](tools/emit_third_party_notices.py) enumerates the
+declared values rather than a fixed list, so a source declaring something unanticipated fails the
+check instead of passing it.
+
+The associated Who&When code repository is MIT, but the pinned Who&When dataset card does not
+declare a dataset licence. The pinned tau-bench trajectory card likewise does not declare a licence;
+neither project's code licence is presented here as licensing separately hosted generated
+trajectories. Exact artifact paths, source identifiers, and declared distributions are in
+[`ASSET_MANIFEST.json`](ASSET_MANIFEST.json). Reproduced notices, local third-party licence texts,
+provenance links, and clearly marked unresolved blocks are in [`NOTICE`](NOTICE) and
+[`THIRD_PARTY_LICENSES.md`](THIRD_PARTY_LICENSES.md).
 
 ## Posture: Branded Name, Neutral Content
 
@@ -194,7 +220,7 @@ SWE-Gym, 376 runs (188 failed, 188 resolved):
 | full (reference) | 0.819 |
 | G-Safeguard (supervised GNN) | **0.828** |
 
-tau-bench (MIT), 660 runs (363 failed, 297 resolved):
+tau-bench, 660 runs (363 failed, 297 resolved):
 
 | Method | ROC-AUC |
 |---|---|
@@ -574,9 +600,11 @@ pending: arXiv:XXXX.XXXXX.
 The repository ships benchmark code, cached LLM-judge predictions, and a PRE derived feature with
 labels. It does not re-host the raw upstream trace corpora or the upstream PRE task and role prose.
 The loaders obtain Who&When, SWE-Gym, and tau-bench during setup or the first benchmark run. Raw PRE
-prose is excluded because its licenses have not all been verified and it can contain personal data.
-Consequently, replay of boards that use upstream corpora also depends on continued access to those
-sources.
+prose is excluded because its licences have not all been verified and it can contain personal data.
+The 31 Who&When judge caches and four PRE judge-vote artifacts retain `raw` or `raw_response`
+model output. Some outputs quote or restate source traces, roles, workflows, or tool descriptions;
+see the generated asset manifest and third-party terms. Consequently, replay of boards that use
+upstream corpora also depends on continued access to those sources.
 
 For Gold, the repository ships the injector and evaluation code, not a static copy of the SWE-Gym
 runs. The board is generated from fetched clean runs and uses the exact eligible-pool ranking as its

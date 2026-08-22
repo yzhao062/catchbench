@@ -91,7 +91,21 @@ corpus files. A graph method written against that view must run on every corpus 
 task without corpus-specific branches.
 
 Every corpus must have a clear redistribution position. Document its source, license, conversion,
-and any limits on redistribution.
+and any limits on redistribution. Where a licence requires its text to accompany the material, that
+text has to be a file in this repository: a link to an upstream server does not travel with a copy
+of the release. Run `python tools/emit_third_party_notices.py --fetch` after adding or repinning any
+source whose records declare a licence, and record the source in `THIRD_PARTY_LICENSES.md`. The
+offline `--check` enumerates the licence values the committed records actually declare, so a source
+declaring one the tool has no rule for fails by name. Classifying it is part of adding the source:
+either the licence has one shared text (`CANONICAL_LICENSES`), or a text per project
+(`PER_PROJECT_LICENSES`), or it is not a licence at all (`NON_DECLARATIONS`).
+
+Record what an upstream reference proves. A git commit or a Hugging Face dataset revision addresses
+fixed bytes; a gallery template ID or a submission label names a location whose content can change
+under it. `tools/emit_asset_manifest.py` types the two apart, so a new source declares which kind
+it records and, for the mutable kind, where its artifacts were fetched. That generator also refuses
+to emit when a committed artifact holds an instance ID that no source record provenances, rather
+than attributing the row to the rest of its source set.
 
 ## Determinism and model APIs
 
