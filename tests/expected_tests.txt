@@ -365,3 +365,9 @@ always       tests/test_tools_are_not_stdlib_shadows.py::test_tool_name_does_not
 always       tests/test_tools_are_not_stdlib_shadows.py::test_tool_name_does_not_shadow_a_stdlib_module[statistical_tests]
 always       tests/test_tools_are_not_stdlib_shadows.py::test_tool_name_does_not_shadow_a_stdlib_module[whoandwhen_split_report]
 always       tests/test_tools_are_not_stdlib_shadows.py::test_tools_dir_exists_and_is_populated
+always       tests/test_workflow_pins.py::test_board_does_not_ask_for_a_runner_that_has_to_be_registered
+always       tests/test_workflow_pins.py::test_both_workflows_exist
+always       tests/test_workflow_pins.py::test_the_grade_commit_pin_is_the_same_in_both
+always       tests/test_workflow_pins.py::test_the_pyg_index_is_derived_from_the_pin_rather_than_written_again[board.yml]
+always       tests/test_workflow_pins.py::test_the_pyg_index_is_derived_from_the_pin_rather_than_written_again[verify.yml]
+always       tests/test_workflow_pins.py::test_the_torch_version_pin_is_the_same_in_both

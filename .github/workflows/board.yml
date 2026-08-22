@@ -1,24 +1,33 @@
 name: Board
 
-# The scoring board produces the paper's board-derived numbers, and until now nothing checked that
-# it still produces them: verify.yml covers the PRE board through ci_smoke.py and skips POST, LIVE,
-# and Gold because those need the GRADE bridge and three corpus downloads. This workflow runs the
-# whole board and compares it against tests/golden/board.txt. It does not cover the paper's other
-# tables, which come from named tools of their own (statistical_tests.py, whoandwhen_split_report.py,
-# pre_merge_judges.py, gold_artifact_diagnostic.py) or are read from the committed records.
+# The scoring board produces the paper's board-derived numbers, and verify.yml does not cover them:
+# it checks the PRE board through ci_smoke.py and skips POST, LIVE, and Gold, because those need the
+# GRADE bridge and three corpus downloads. This workflow runs the whole board and compares it against
+# tests/golden/board.txt. It does not cover the paper's other tables, which come from named tools of
+# their own (statistical_tests.py, whoandwhen_split_report.py, pre_merge_judges.py,
+# gold_artifact_diagnostic.py) or are read from the committed records.
 #
-# It lives in its own file rather than as a job in verify.yml for two reasons. It needs a
-# self-hosted runner, so a repository without one should not see a permanently queued job dragging
-# the main workflow's status. And it takes roughly nine minutes against verify.yml's ninety seconds,
-# so the two belong on different cadences.
+# 2026-08-22: this job ran on a self-hosted ARM64 runner and had therefore never run at all. No
+# runner was ever registered, so every dispatch sat queued until a later push cancelled it or until
+# GitHub expired it at twenty-four hours. The visible history was four cancellations and no
+# execution. A workflow that exists and never runs is worse than an absent one, because a reader who
+# opens .github/workflows/ sees this file and its comments and concludes the board is checked.
 #
-# SECURITY, and the reason the trigger set is narrow: a self-hosted runner executes whatever the
-# workflow tells it to, on hardware the maintainer owns. On a public repository, a pull request from
-# a fork can change the workflow and the code it runs. GitHub's own guidance is against pairing
-# self-hosted runners with public repositories for exactly this reason. This workflow therefore
-# never triggers on pull_request. It runs on pushes to main, which only a maintainer can make, on a
-# weekly schedule, and on manual dispatch. Do not add a pull_request trigger here; if board coverage
-# on pull requests becomes necessary, run it on a GitHub-hosted runner instead and accept the wait.
+# It now runs on a GitHub-hosted runner, which costs two things the self-hosted machine gave for
+# free. The three corpora, about 320 MB, are fetched on every run rather than once. And the PyGOD
+# rows run on CPU rather than on a GPU, which is slower but produces the same scores; nothing on this
+# board depends on a device. Caching the corpus download is worth doing if the run time becomes
+# annoying: the revisions are pinned, so the cache key is stable. It is left out for now because a
+# cache that silently stops matching is the failure this repository keeps finding, and the job runs
+# at most a few times a week.
+#
+# It lives in its own file rather than as a job in verify.yml because it takes tens of minutes
+# against verify.yml's ninety seconds, so the two belong on different cadences.
+#
+# The trigger set stays narrow. That was a security requirement while the runner was self-hosted,
+# since a fork's pull request can change the workflow and the code a maintainer's machine then runs.
+# On a hosted runner that reason is gone and the remaining one is cost: this job is long, and running
+# it on every pull request would buy little that the golden comparison on main does not already give.
 
 on:
   push:
@@ -42,82 +51,66 @@ permissions:
   contents: read
 
 concurrency:
-  # The board is long and the runner is a single machine, so a burst of pushes should not queue
-  # several full runs behind each other.
+  # The board is long, so a burst of pushes should not queue several full runs behind each other.
   group: board-${{ github.ref }}
   cancel-in-progress: true
 
 jobs:
   board:
     if: github.event_name != 'pull_request'
-    runs-on: [self-hosted, linux, ARM64]
-    timeout-minutes: 45
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
     steps:
       - uses: actions/checkout@v5
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
+          cache: pip
 
-      # A self-hosted runner is a fixed machine rather than a fresh image, so recording what it is
-      # makes a golden mismatch caused by a hardware or driver change diagnosable from the log.
-      - name: Report the runner
+      # CPU wheels only, and the torch version pinned rather than floated, for the reason the
+      # graph-AD job in verify.yml carries in full: pip's torch-geometric is the pure Python layer,
+      # PyGOD samples through NeighborLoader, and the compiled pyg-lib backend lives on an index that
+      # lags the torch release. Floating torch leaves this green until the next torch release and red
+      # after. The pin is duplicated in verify.yml and tests/test_workflow_pins.py holds the two
+      # equal, because a board scored against a different torch build than the contract tests use is
+      # a difference nobody would look for.
+      - name: Install the board stack (CPU wheels, pinned to a torch pyg-lib publishes for)
+        env:
+          TORCH_VERSION: "2.12.1"
         run: |
-          python3 -c "import platform, sys; print(platform.platform()); print(sys.version)"
-          nvidia-smi --query-gpu=name,memory.total,driver_version --format=csv,noheader || \
-            echo "no GPU visible; the PyGOD rows will run on CPU"
+          python -m pip install "torch==${TORCH_VERSION}" --index-url https://download.pytorch.org/whl/cpu
+          python -m pip install pyg_lib -f "https://data.pyg.org/whl/torch-${TORCH_VERSION}+cpu.html"
+          python -m pip install -e ".[full,dev]"
 
-      # The virtual environment is per-run so a leftover package cannot change a result, while pip's
-      # download cache and the Hugging Face cache persist on the machine. That is the whole reason
-      # this job is cheap here and expensive on a hosted runner: the 320 MB of corpora are fetched
-      # once, not once per run.
-      - name: Create a clean environment
+      # Assert the backend before spending the run, so a wrong wheel index fails in seconds with a
+      # message naming the build rather than as an ImportError deep inside a board.
+      - name: Report the resolved stack and refuse to score without a sampler backend
         run: |
-          python3 -m venv .venv-board
-          .venv-board/bin/python -m pip install --upgrade pip
-
-      - name: Install the package and the graph-AD stack
-        run: .venv-board/bin/python -m pip install -e ".[full,dev]"
-
-      # The `full` extra brings pygod, torch, and torch-geometric, and none of them depends on a
-      # compiled sampler backend. PyGOD still builds a NeighborLoader even at full-batch size, and
-      # PyG's sampler raises ImportError without pyg-lib or torch-sparse, so without this step the
-      # job would install cleanly and then die nine minutes later at the first PyGOD row. The index
-      # is keyed to the torch build actually installed, because PyG publishes one index per build
-      # and this runner is ARM64 with CUDA rather than the x86 CPU build the fast job uses.
-      - name: Install the compiled PyG backend for the installed torch build
-        run: |
-          BUILD=$(.venv-board/bin/python -c "import torch; v=torch.__version__.split('+')[0]; c=torch.version.cuda; print(f'{v}+' + ('cu' + c.replace('.','') if c else 'cpu'))")
-          echo "torch build: ${BUILD}"
-          .venv-board/bin/python -m pip install pyg_lib -f "https://data.pyg.org/whl/torch-${BUILD}.html"
-
-      # Assert the backend before spending nine minutes, so a wrong wheel index fails in seconds
-      # with a message naming the build rather than as an ImportError deep inside a board.
-      - name: Refuse to score without a working sampler backend
-        run: |
-          .venv-board/bin/python - <<'PY'
-          import torch_geometric.typing as t
-          print("pyg_lib:", t.WITH_PYG_LIB, " torch_sparse:", t.WITH_TORCH_SPARSE)
-          if not (t.WITH_PYG_LIB or t.WITH_TORCH_SPARSE):
-              raise SystemExit(
-                  "no compiled PyG sampler backend, so the PyGOD rows cannot score. Install "
-                  "pyg_lib or torch-sparse from the index matching this torch build.")
-          PY
+          python -c "import platform, sys; print(platform.platform()); print(sys.version)"
+          python -c "import torch, torch_geometric, pyg_lib, pygod; print('torch', torch.__version__); print('torch_geometric', torch_geometric.__version__); print('pyg_lib', pyg_lib.__version__); print('pygod', pygod.__version__)"
+          python -c "import torch_geometric.typing as t; assert t.WITH_PYG_LIB, 'pyg-lib did not register; PyGOD would fail at the first row'; print('pyg-lib backend registered')"
 
       - name: Install GRADE (pinned, for the corpus loaders)
         run: |
           rm -rf ../grade-board
           git clone --filter=blob:none https://github.com/yzhao062/grade.git ../grade-board
           git -C ../grade-board checkout --quiet 3839a57ac165d58a807fce0a3ff38346732ee936
-          .venv-board/bin/python -m pip install -e "../grade-board[experiments]"
+          python -m pip install -e "../grade-board[experiments]"
 
       - name: Compare the board against the golden
         env:
           GRADE_DIR: ${{ github.workspace }}/../grade-board
           PYTHONHASHSEED: "0"
-        run: .venv-board/bin/python tools/check_board.py
+        run: python tools/check_board.py
 
       # The board prints the corpus revisions it scored. Keeping the produced output as an artifact
-      # means a mismatch can be inspected without re-running nine minutes of computation.
+      # means a mismatch can be inspected without re-running the whole board.
       - name: Keep the produced board on failure
         if: failure()
-        run: .venv-board/bin/python run.py > board-produced.txt || true
+        env:
+          GRADE_DIR: ${{ github.workspace }}/../grade-board
+          PYTHONHASHSEED: "0"
+        run: python run.py > board-produced.txt || true
 
       - name: Upload the produced board
         if: failure()
