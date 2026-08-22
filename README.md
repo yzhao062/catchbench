@@ -6,7 +6,7 @@
 
 [![Code license](https://img.shields.io/badge/code%20license-MIT-blue.svg)](LICENSE)
 [![Python](https://img.shields.io/badge/python-3.10%20%7C%203.12-blue.svg)](pyproject.toml)
-[![Tests](https://img.shields.io/badge/tests-361-brightgreen.svg)](tests)
+[![Tests](https://img.shields.io/badge/tests-366-brightgreen.svg)](tests)
 [![Boards](https://img.shields.io/badge/boards-PRE%20%7C%20LIVE%20%7C%20POST-orange.svg)](#the-boards)
 
 [Quickstart](#quickstart) · [The Boards](#the-boards) · [Task List](#the-full-task-list) · [Add a Method](#how-a-method-plugs-in) · [Full Install](#the-full-board)
@@ -27,11 +27,15 @@ checkout, and no torch. It is a real board, not a toy: these are the same number
 prints.
 
 ```bash
-git clone https://github.com/yzhao062/catchbench.git
-cd catchbench
-python -m pip install -e ".[dev]"
-python run.py --task pre        # about a second
+python -m pip install "catchbench>=0.1.1"
+catchbench --task pre        # about a second
 ```
+
+These are installed-package commands. Release 0.1.1 is the first wheel that includes the PRE
+records and the `catchbench` console command; the 0.1.0 wheel omitted both. `python run.py`,
+`python tools/...`, and `pytest tests` are repository commands and require a clone. The complete
+board also requires the GRADE checkout and optional dependencies described in
+[The Full Board](#the-full-board).
 
 You get eleven scored rows over 1187 declared agent configurations, and a per-source breakdown,
 because a pooled F1 over four different label processes hides more than it shows. Three of the
@@ -164,7 +168,7 @@ POST answers its three forensic questions (which step, did it fail, what kind) p
 board, whose injection-site labels inherit the file-level construction artifact documented below. LIVE
 answers its two real-time questions (early warning from a prefix, online detection). PRE answers the
 deploy-gate question (is the declared harness over-privileged) using the four constructed label
-processes documented on that board. Run `python run.py` to recompute the boards from the available
+processes documented on that board. Run `catchbench` to recompute the boards from the available
 inputs; exact agreement with the displayed values has the revision and environment qualifications in
 the Paper section. The POST localization, detection, and Gold boards and the PRE over-privilege board
 have headline tables below; the cause-attribution board and the two LIVE boards are summarized at the
@@ -537,7 +541,7 @@ git -C grade checkout 3839a57ac165d58a807fce0a3ff38346732ee936   # the pinned co
 cd catchbench
 python -m pip install -e "../grade[experiments]"
 python -m pip install -e ".[full]"
-python run.py
+catchbench
 ```
 
 The runner reuses GRADE's verified Who&When and SWE-Gym / tau-bench loaders and evaluations for
@@ -566,10 +570,10 @@ to its checkout.
 
 | Command | What it proves | Needs |
 |---|---|---|
-| `python run.py --task pre` | The PRE board reproduces, offline | nothing |
+| `catchbench --task pre` | The PRE board reproduces, offline | nothing |
 | `python tools/ci_smoke.py` | Imports resolve; PRE floors hold | nothing |
-| `pytest tests -q` | Every contract test, with no silent skips | GRADE checkout |
-| `python run.py` | Every board reproduces | GRADE + corpora |
+| `pytest tests --ignore=tests/canary -q` | Every contract test, with no silent skips | GRADE checkout |
+| `catchbench` | Every board reproduces | GRADE + corpora |
 | `python tools/check_board.py` | The board still matches the committed golden | GRADE + corpora |
 | `python tools/check_board.py --readme-only` | Every number in this file is a board cell | nothing |
 | `python tools/print_corpus_revisions.py` | The three corpus commits are the pinned ones | network |

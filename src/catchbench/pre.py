@@ -7,6 +7,8 @@ import os
 from dataclasses import dataclass
 from typing import Mapping
 
+from ._paths import data_dir
+
 
 _PERM_LEVELS = {"read", "write", "execute", "network", "admin", "unknown"}
 _SPEC_OVERRIDE_KEYS = {
@@ -117,7 +119,7 @@ def pre_instance_from_dict(d: dict) -> PreInstance:
     )
 
 
-_DATA_DIR = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(__file__))), "data", "pre")
+_DATA_DIR = str(data_dir("pre"))
 
 
 def _load_data_dir() -> list[PreInstance]:

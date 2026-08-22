@@ -9,4 +9,4 @@ while each compatible method supplies its own evaluation logic.
 from catchbench.core import Method, ResultRow, RunPipeline, Task
 
 __all__ = ["Method", "ResultRow", "RunPipeline", "Task"]
-__version__ = "0.0.1"
+__version__ = "0.1.1"

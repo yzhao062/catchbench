@@ -11,17 +11,13 @@ import json
 import os
 from typing import Mapping
 
+from ._paths import data_dir
 from .pre import PreOverPrivilege, pre_score
 from .pre_static_scanner import owasp_scanner_methods
 
 
 _RISKY_PERMISSION_LEVELS = {"write", "execute", "network", "admin"}
-_CACHE_DIR = os.path.join(
-    os.path.dirname(os.path.dirname(os.path.dirname(__file__))),
-    "data",
-    "pre",
-    "llm_judge_method",
-)
+_CACHE_DIR = str(data_dir("pre") / "llm_judge_method")
 
 
 class FlagRiskyPermsMethod:

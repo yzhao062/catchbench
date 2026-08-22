@@ -32,12 +32,13 @@ from catchbench import _reuse  # noqa: F401  side effect: sets sys.path for grad
 
 import numpy as np  # noqa: E402
 
+from catchbench._paths import data_dir  # noqa: E402
 from agent_failure_localization import _rank_metrics  # noqa: E402  GRADE's verified ranking metric
 
 import agent_graph_characterization as ww  # noqa: E402  the Who&When loader (raw history + labels)
 
 _METRIC_NAMES = ("top1", "top3", "mrr")
-_CACHE_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "..", "data", "llm_judge")
+_CACHE_DIR = str(data_dir("llm_judge"))
 _LEGACY_KEY_MAP_PATH = os.path.join(_CACHE_DIR, "legacy_run_keys.json")
 
 

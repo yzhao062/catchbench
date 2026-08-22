@@ -149,11 +149,15 @@ score.
 Run the full suite under both hash seeds:
 
 ```bash
-PYTHONHASHSEED=0 pytest tests
-PYTHONHASHSEED=1 pytest tests
+PYTHONHASHSEED=0 pytest tests --ignore=tests/canary
+PYTHONHASHSEED=1 pytest tests --ignore=tests/canary
 ```
 
 Both runs must pass. The second seed matters because scanner rules iterate over sets.
+
+`tests/canary` is excluded because it holds one test that is supposed to fail. CI runs it on its own
+and requires the failure to be reported, which is the one check that does not depend on the suite's
+own report being honest. `tests/canary/test_the_suite_reports_failures.py` explains why.
 
 ## Changes that will be declined
 

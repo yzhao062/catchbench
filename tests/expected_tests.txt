@@ -89,6 +89,9 @@ always       tests/test_ci_report_check.py::test_the_manifest_declares_exactly_t
 always       tests/test_ci_report_check.py::test_the_regression_on_its_own_is_caught
 always       tests/test_ci_report_check.py::test_the_workflow_checks_every_pytest_run_it_makes
 always       tests/test_ci_report_check.py::test_trading_a_contract_for_trivial_tests_no_longer_balances
+always       tests/test_distribution.py::test_a_fresh_wheel_install_scores_all_pre_rows
+always       tests/test_distribution.py::test_wheel_contains_every_committed_pre_file
+always       tests/test_distribution.py::test_wheel_excludes_the_downloaded_corpora
 always       tests/test_emit_asset_manifest.py::test_a_cached_vote_with_no_source_record_fails_generation
 always       tests/test_emit_asset_manifest.py::test_a_claude_vote_row_with_no_source_record_fails_generation
 always       tests/test_emit_asset_manifest.py::test_a_mutable_identifier_is_never_presented_as_a_revision
@@ -370,6 +373,8 @@ always       tests/test_tools_are_not_stdlib_shadows.py::test_tool_name_does_not
 always       tests/test_tools_are_not_stdlib_shadows.py::test_tool_name_does_not_shadow_a_stdlib_module[statistical_tests]
 always       tests/test_tools_are_not_stdlib_shadows.py::test_tool_name_does_not_shadow_a_stdlib_module[whoandwhen_split_report]
 always       tests/test_tools_are_not_stdlib_shadows.py::test_tools_dir_exists_and_is_populated
+always       tests/test_version_is_consistent.py::test_the_package_and_the_distribution_agree
+always       tests/test_version_is_consistent.py::test_the_version_is_a_release_identifier
 always       tests/test_workflow_pins.py::test_board_does_not_ask_for_a_runner_that_has_to_be_registered
 always       tests/test_workflow_pins.py::test_both_workflows_exist
 always       tests/test_workflow_pins.py::test_the_grade_commit_pin_is_the_same_in_both
