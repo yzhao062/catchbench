@@ -356,7 +356,7 @@
       "repo": "https://github.com/frumu-ai/tandem",
       "commit": "45af781922d21474d18f5bc80b7d0d75ae7c4654",
       "path": ".",
-      "license": "Other"
+      "license": "NOASSERTION"
     },
     "declared_capabilities": [
       {
@@ -1159,7 +1159,7 @@
       "repo": "https://github.com/modelcontextprotocol/registry",
       "commit": "535941a30e92c88b5bc83ef4e951d4183ccf19db",
       "path": ".",
-      "license": "Other"
+      "license": "NOASSERTION"
     },
     "declared_capabilities": [
       {
@@ -2674,7 +2674,7 @@
       "repo": "https://github.com/proxygate-official/proxygate",
       "commit": "e09ea93e47cf1c1148dcb891ccd26857735d14ae",
       "path": ".",
-      "license": "NOASSERTION"
+      "license": "MIT"
     },
     "declared_capabilities": [
       {
@@ -5806,7 +5806,7 @@
       "repo": "https://github.com/shahdadk/swiftsign",
       "commit": "65e8a631b1988c99ea7b6a37e0df8b2d9bbf3610",
       "path": "mcp",
-      "license": "NOASSERTION"
+      "license": "MIT"
     },
     "declared_capabilities": [
       {
@@ -9339,7 +9339,7 @@
       "repo": "https://github.com/entscheidsuche/entscheidsuche-mcp",
       "commit": "24a4de7bea85cc5785663d135e800c4159627022",
       "path": ".",
-      "license": "NOASSERTION"
+      "license": "MIT"
     },
     "declared_capabilities": [
       {
@@ -9492,7 +9492,7 @@
       "repo": "https://github.com/adbutler/mcp-server",
       "commit": "c22f59ed70c02b6b507c4463ab7ac90022c51b0d",
       "path": ".",
-      "license": "NOASSERTION"
+      "license": "MIT"
     },
     "declared_capabilities": [
       {
@@ -13586,7 +13586,7 @@
       "repo": "https://github.com/BrasilNFe/brasilnfe-mcp",
       "commit": "2c441fa48c2fd11915aec1ed299413f2a0a43c86",
       "path": ".",
-      "license": "Other"
+      "license": "MIT"
     },
     "declared_capabilities": [
       {
@@ -14095,7 +14095,7 @@
       "repo": "https://github.com/Patheras/the-anots",
       "commit": "e43bf635a2ad509da5664572201548651066cc00",
       "path": ".",
-      "license": "NOASSERTION"
+      "license": "MIT"
     },
     "declared_capabilities": [
       {
@@ -15308,7 +15308,7 @@
       "repo": "https://github.com/MadaBurns/bv-mcp",
       "commit": "5d4c08fefc349fa6ee56bf29a70a5c161ce45a36",
       "path": ".",
-      "license": "Other"
+      "license": "BUSL-1.1"
     },
     "declared_capabilities": [
       {
@@ -17055,7 +17055,7 @@
       "repo": "https://github.com/blockscout/mcp-server",
       "commit": "682faa628d8b54813f37cc595a254b1d5690a1f7",
       "path": ".",
-      "license": "Other"
+      "license": "NOASSERTION"
     },
     "declared_capabilities": [
       {
@@ -17900,7 +17900,7 @@
       "repo": "https://github.com/eveoy/eveoy-mcp",
       "commit": "177d6c7d05715042cef62059fa5e118911be5ef5",
       "path": ".",
-      "license": "Other"
+      "license": "NOASSERTION"
     },
     "declared_capabilities": [
       {
@@ -18551,7 +18551,7 @@
       "repo": "https://github.com/Terahertz-Inc/sandwich-public",
       "commit": "e036e61ec5ec1a182ba74d9b8d404011581e2819",
       "path": ".",
-      "license": "NOASSERTION"
+      "license": "CC-BY-4.0"
     },
     "declared_capabilities": [
       {
@@ -18600,7 +18600,7 @@
       "repo": "https://github.com/cgallic/kaicalls-mcp",
       "commit": "d663de57270c6947449d4d619d305e799b5216aa",
       "path": ".",
-      "license": "Other"
+      "license": "MIT"
     },
     "declared_capabilities": [
       {
@@ -19173,7 +19173,7 @@
       "repo": "https://github.com/ifthenpay/mcp-payments",
       "commit": "05472929b61e82aeb2bc9dc7efd50df2858d8531",
       "path": ".",
-      "license": "Other"
+      "license": "NOASSERTION"
     },
     "declared_capabilities": [
       {
@@ -19257,7 +19257,7 @@
       "repo": "https://github.com/Linkly-HQ/linkly-mcp-server",
       "commit": "4d297b4acab74cf20132722392b4184df4bfdeb3",
       "path": ".",
-      "license": "NOASSERTION"
+      "license": "MIT"
     },
     "declared_capabilities": [
       {
@@ -19977,7 +19977,7 @@
       "repo": "https://github.com/lanchuske/local-mcp-releases",
       "commit": "c6e08824abd6f88449426a756342232a1d06abcd",
       "path": ".",
-      "license": "Other"
+      "license": "NOASSERTION"
     },
     "declared_capabilities": [
       {
@@ -21316,7 +21316,7 @@
       "repo": "https://github.com/gpitrella/memxus-remote-mcp",
       "commit": "d9839947e7725661d7edd37bcc135f4ed32d23b8",
       "path": ".",
-      "license": "Other"
+      "license": "AGPL-3.0-only"
     },
     "declared_capabilities": [
       {
@@ -21639,7 +21639,7 @@
       "repo": "https://github.com/navifare/moltravel-mcp",
       "commit": "54c25eab2aac19b13c4b14c734067ce3260f99a6",
       "path": ".",
-      "license": "NOASSERTION"
+      "license": "MIT"
     },
     "declared_capabilities": [
       {
@@ -22002,7 +22002,7 @@
       "repo": "https://github.com/sailquery/niche-mcp",
       "commit": "857185d6044e6ca8edc00dea2b64a08b6f2cbffe",
       "path": ".",
-      "license": "Other"
+      "license": "MIT"
     },
     "declared_capabilities": [
       {
@@ -22184,7 +22184,7 @@
       "repo": "https://github.com/MetricSpot/mcp-server",
       "commit": "dc8fa99e2df7a4bbdff733b138446bf4da49aec7",
       "path": ".",
-      "license": "NOASSERTION"
+      "license": "MIT"
     },
     "declared_capabilities": [
       {
@@ -22247,7 +22247,7 @@
       "repo": "https://github.com/Qazza1/onchaindiligence-mcp",
       "commit": "49d5bbe5130875b1921c71ad82b4755699238ed5",
       "path": ".",
-      "license": "Other"
+      "license": "NOASSERTION"
     },
     "declared_capabilities": [
       {

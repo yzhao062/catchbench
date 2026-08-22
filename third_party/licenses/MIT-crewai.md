@@ -9,7 +9,7 @@ here as files rather than as links. A project marked UNRESOLVED could not be ret
 pinned revision and its records remain unfinished for redistribution; see
 [`THIRD_PARTY_LICENSES.md`](../../THIRD_PARTY_LICENSES.md).
 
-Projects: 18.
+Projects: 44.
 
 ### Amteshwar091/crewAI-multi-agent-marketing-system
 
@@ -40,6 +40,48 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 ```
+
+### andreagroferreira/myAIDEVTEAM
+
+- Pinned revision: `f31b9d2c5a468fd757450448eb5fb6265dd7896c`
+- CatchBench records: 15
+- Status: UNRESOLVED, because the pinned licence file could not be retrieved. The records derived from this project stay unfinished.
+
+### anshxl/vibecheck
+
+- Pinned revision: `eb7ec990ba6cf9c9752f71d8db7e4dce717fdbba`
+- CatchBench records: 1
+- Status: UNRESOLVED, because the pinned licence file could not be retrieved. The records derived from this project stay unfinished.
+
+### AravindB98/Cerebro
+
+- Pinned revision: `54dda77852eb9206b9cd4252b0df76029bbeb21e`
+- CatchBench records: 2
+- Status: UNRESOLVED, because the pinned licence file could not be retrieved. The records derived from this project stay unfinished.
+
+### arpankumarde/crew-ai-multi-agent-orchestration-support-team
+
+- Pinned revision: `32e2b3323d27fd7e0d3feb292f4c60d8cece6aeb`
+- CatchBench records: 6
+- Status: UNRESOLVED, because the pinned licence file could not be retrieved. The records derived from this project stay unfinished.
+
+### barackm/conekthub
+
+- Pinned revision: `ade3490cd57be558c1aafcb2a277af368666ee5c`
+- CatchBench records: 1
+- Status: UNRESOLVED, because the pinned licence file could not be retrieved. The records derived from this project stay unfinished.
+
+### Bhatteryash/E-commerce-Multi-Agent
+
+- Pinned revision: `64d8f4b4b32c8abab11835fc02b09ab426248cdb`
+- CatchBench records: 2
+- Status: UNRESOLVED, because the pinned licence file could not be retrieved. The records derived from this project stay unfinished.
+
+### Bhavik-Jikadara/youtube-automation-agent
+
+- Pinned revision: `5ccb3f59e37bf7f2405e02dd38e99926d8a75375`
+- CatchBench records: 2
+- Status: UNRESOLVED, because the pinned licence file could not be retrieved. The records derived from this project stay unfinished.
 
 ### bmh2127/pd-discovery-platform
 
@@ -131,6 +173,24 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 ```
 
+### FamilOrujov/financial-researcher-agentic-ai
+
+- Pinned revision: `805b35284d4966181d94ed41a88bdd7b5f234837`
+- CatchBench records: 1
+- Status: UNRESOLVED, because the pinned licence file could not be retrieved. The records derived from this project stay unfinished.
+
+### fredzolio/sms_public_health_monitor
+
+- Pinned revision: `5d1994ecbf8430770cf711f6269cd8236ecd5c9e`
+- CatchBench records: 4
+- Status: UNRESOLVED, because the pinned licence file could not be retrieved. The records derived from this project stay unfinished.
+
+### gurezende/Crew_Writer
+
+- Pinned revision: `0e0c4358ece3abb2a90c43e12498eaa142be584e`
+- CatchBench records: 2
+- Status: UNRESOLVED, because the pinned licence file could not be retrieved. The records derived from this project stay unfinished.
+
 ### HopMaster03/linkedin-post-generation-CrewAI
 
 - Pinned licence file: [LICENSE](https://github.com/HopMaster03/linkedin-post-generation-CrewAI/blob/08300406d9184887aedda5cf20e83ebbb2513845/LICENSE)
@@ -195,6 +255,30 @@ SOFTWARE.
 
 - Pinned revision: `bd4d10f9e4e59fa76e99a6e9b015ca3a1584315c`
 - CatchBench records: 2
+- Status: UNRESOLVED, because the pinned licence file could not be retrieved. The records derived from this project stay unfinished.
+
+### ksriyesh/h1b_smart_job_matcher
+
+- Pinned revision: `8d06f38f0b5feb0b3d401ecfffedd288cccdb2d5`
+- CatchBench records: 1
+- Status: UNRESOLVED, because the pinned licence file could not be retrieved. The records derived from this project stay unfinished.
+
+### kvrancic/interview-analyzer-archiver
+
+- Pinned revision: `932c38b31b020db6cc6b3b1834e5e85ce1b25925`
+- CatchBench records: 2
+- Status: UNRESOLVED, because the pinned licence file could not be retrieved. The records derived from this project stay unfinished.
+
+### liangdabiao/crewai_stock_analysis_system
+
+- Pinned revision: `aab66c6a5782bb74542bdce6996baba30742e337`
+- CatchBench records: 13
+- Status: UNRESOLVED, because the pinned licence file could not be retrieved. The records derived from this project stay unfinished.
+
+### Mira-dmh/CrewAI
+
+- Pinned revision: `97733014f613430eed21d9f5e69423aebe9367b0`
+- CatchBench records: 4
 - Status: UNRESOLVED, because the pinned licence file could not be retrieved. The records derived from this project stay unfinished.
 
 ### Mohankumar217/CrewAi
@@ -287,6 +371,18 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 ```
 
+### OssiRuhanen/CrewAI_Assistant
+
+- Pinned revision: `419306f0bdfa6080c92430835ff1cc1292949bf4`
+- CatchBench records: 1
+- Status: UNRESOLVED, because the pinned licence file could not be retrieved. The records derived from this project stay unfinished.
+
+### pandemonium0225/dynamic-coding-system
+
+- Pinned revision: `95da3c94f8fd8d004dafb6c48352b15501b19a9a`
+- CatchBench records: 1
+- Status: UNRESOLVED, because the pinned licence file could not be retrieved. The records derived from this project stay unfinished.
+
 ### pryyyynz/DevCrew-Agents
 
 - Pinned licence file: [LICENSE](https://github.com/pryyyynz/DevCrew-Agents/blob/3f0a85bcf9d7e7847d3c7e960705f6d61f8bdfbf/LICENSE)
@@ -317,6 +413,12 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 ```
 
+### saitanay/LLMageddon
+
+- Pinned revision: `2616ed475e102a169b0b6c49a88d57447f80ec2a`
+- CatchBench records: 2
+- Status: UNRESOLVED, because the pinned licence file could not be retrieved. The records derived from this project stay unfinished.
+
 ### Saleh7127/multi-agent-masters-thesis-finder
 
 - Pinned licence file: [LICENSE](https://github.com/Saleh7127/multi-agent-masters-thesis-finder/blob/51b54e6a7061669673e269e9fa5a280aa81b5a08/LICENSE)
@@ -346,6 +448,24 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 ```
+
+### shashankyadav03/ai-property-researcher
+
+- Pinned revision: `5aaa60f5ee70646d9a286ce20475833ddc3a60bd`
+- CatchBench records: 3
+- Status: UNRESOLVED, because the pinned licence file could not be retrieved. The records derived from this project stay unfinished.
+
+### shawn1207/finance-alchemy
+
+- Pinned revision: `9f88e78954d3dcbc4896e496a82cda75c92c9ab6`
+- CatchBench records: 2
+- Status: UNRESOLVED, because the pinned licence file could not be retrieved. The records derived from this project stay unfinished.
+
+### sobit-nep/crewAI-agents
+
+- Pinned revision: `477c59067470b945210b6e3a60571f1d4af986ca`
+- CatchBench records: 2
+- Status: UNRESOLVED, because the pinned licence file could not be retrieved. The records derived from this project stay unfinished.
 
 ### Subrahmanyam2305/claude_computer_use
 
@@ -426,6 +546,36 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 ```
 
+### Tejas-Bantupalli/trading_knowledge_base
+
+- Pinned revision: `09417379f8cd379d7cd58ed30c7721cc14a509dc`
+- CatchBench records: 1
+- Status: UNRESOLVED, because the pinned licence file could not be retrieved. The records derived from this project stay unfinished.
+
+### Thiagovilela2001/Crew_ai_v1
+
+- Pinned revision: `ad35a89b86cc3c69f08ca91c76eda367a6ede463`
+- CatchBench records: 3
+- Status: UNRESOLVED, because the pinned licence file could not be retrieved. The records derived from this project stay unfinished.
+
+### tylerprogramming/travel-planner
+
+- Pinned revision: `1ae200daa65608d700b252fd7da748667e63312d`
+- CatchBench records: 3
+- Status: UNRESOLVED, because the pinned licence file could not be retrieved. The records derived from this project stay unfinished.
+
+### Unica2804/Vaultmind
+
+- Pinned revision: `4e8e61af2302d6afe960165c757ece5c22b22197`
+- CatchBench records: 1
+- Status: UNRESOLVED, because the pinned licence file could not be retrieved. The records derived from this project stay unfinished.
+
+### victorcastillojimenez/CV-Scan
+
+- Pinned revision: `198e4378b6eefd8a51d8a0a6c7a6a2a8bc611824`
+- CatchBench records: 2
+- Status: UNRESOLVED, because the pinned licence file could not be retrieved. The records derived from this project stay unfinished.
+
 ### Vidoosh/bloodhound
 
 - Pinned licence file: [LICENSE](https://github.com/Vidoosh/bloodhound/blob/e2f3b562a634f7d4f28d022c4059096b761b67b9/LICENSE)
@@ -455,6 +605,12 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 ```
+
+### Vipul111196/stock-analysis-crewai
+
+- Pinned revision: `899f29dc6225a77cf747dfc382d160ed3b47bc19`
+- CatchBench records: 2
+- Status: UNRESOLVED, because the pinned licence file could not be retrieved. The records derived from this project stay unfinished.
 
 ### YUGESHKARAN/Mentor-Consulting-Crew
 

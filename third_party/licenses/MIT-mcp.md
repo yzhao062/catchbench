@@ -9,7 +9,7 @@ here as files rather than as links. A project marked UNRESOLVED could not be ret
 pinned revision and its records remain unfinished for redistribution; see
 [`THIRD_PARTY_LICENSES.md`](../../THIRD_PARTY_LICENSES.md).
 
-Projects: 68.
+Projects: 79.
 
 ### 100Hires/mcp
 
@@ -70,6 +70,12 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 ```
+
+### adbutler/mcp-server
+
+- Pinned revision: `c22f59ed70c02b6b507c4463ab7ac90022c51b0d`
+- CatchBench records: 1
+- Status: UNRESOLVED, because the pinned licence file could not be retrieved. The records derived from this project stay unfinished.
 
 ### alexzavialov/travel-art-mcp
 
@@ -341,6 +347,42 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 ```
 
+### BrasilNFe/brasilnfe-mcp
+
+- Pinned licence file: [LICENSE](https://github.com/BrasilNFe/brasilnfe-mcp/blob/2c441fa48c2fd11915aec1ed299413f2a0a43c86/LICENSE)
+- CatchBench records: 1
+- SHA-256 of the retrieved file: `b6f1a83365571059b2762767675f8b9daff3d10e4ea4e532016d767d97b85a6d`
+
+```text
+MIT License
+
+Copyright (c) 2026 Brasil NFe LTDA
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+
+Note: This MIT license covers the contents of this repository only
+(configuration examples, documentation, schemas). The hosted MCP server at
+https://api.brasilnfe.com.br/services/Mcp is a commercial service operated
+by Brasil NFe LTDA and is governed by its own Terms of Service and Privacy
+Policy at https://www.brasilnfe.com.br.
+```
+
 ### ByteAsk/ByteAsk-Embedded-MCP
 
 - Pinned licence file: [LICENSE](https://github.com/ByteAsk/ByteAsk-Embedded-MCP/blob/e7103adab7579df88313e763f66b4533519c651d/LICENSE)
@@ -399,6 +441,40 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
+```
+
+### cgallic/kaicalls-mcp
+
+- Pinned licence file: [LICENSE](https://github.com/cgallic/kaicalls-mcp/blob/d663de57270c6947449d4d619d305e799b5216aa/LICENSE)
+- CatchBench records: 1
+- SHA-256 of the retrieved file: `2a3eabfe1c86fce9ac9ef5cf725de0785e87fb088aae4a44725c524c9654612d`
+
+```text
+MIT License
+
+Copyright (c) 2026 KaiCalls
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+
+Note: this license covers the connector definitions and documentation in this
+repository only. The KaiCalls service is a proprietary hosted product governed
+by its Terms of Service at https://www.kaicalls.com/terms-of-service.
 ```
 
 ### codinghaven/mrmarket-mcp
@@ -587,6 +663,12 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 ```
+
+### entscheidsuche/entscheidsuche-mcp
+
+- Pinned revision: `24a4de7bea85cc5785663d135e800c4159627022`
+- CatchBench records: 1
+- Status: UNRESOLVED, because the pinned licence file could not be retrieved. The records derived from this project stay unfinished.
 
 ### Evlek/evlek-mcp
 
@@ -1068,6 +1150,12 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 ```
 
+### Linkly-HQ/linkly-mcp-server
+
+- Pinned revision: `4d297b4acab74cf20132722392b4184df4bfdeb3`
+- CatchBench records: 1
+- Status: UNRESOLVED, because the pinned licence file could not be retrieved. The records derived from this project stay unfinished.
+
 ### lksrz/cnvs-whiteboard-skills
 
 - Pinned licence file: [LICENSE](https://github.com/lksrz/cnvs-whiteboard-skills/blob/50d14ab577133473e38aac00c909b3b4fa50adc0/LICENSE)
@@ -1164,6 +1252,12 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 ```
 
+### MetricSpot/mcp-server
+
+- Pinned revision: `dc8fa99e2df7a4bbdff733b138446bf4da49aec7`
+- CatchBench records: 1
+- Status: UNRESOLVED, because the pinned licence file could not be retrieved. The records derived from this project stay unfinished.
+
 ### mploschiavo/mcp-kettlelogic
 
 - Pinned licence file: [LICENSE](https://github.com/mploschiavo/mcp-kettlelogic/blob/4384b5fe7ca123561d8d53200271e64b2db90334/LICENSE)
@@ -1185,6 +1279,12 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 ### mustafasalimerek-bit/launchtrust-mcp
 
 - Pinned revision: `7068f4769c19e259fb9bf9f1b7d518b11acd4063`
+- CatchBench records: 1
+- Status: UNRESOLVED, because the pinned licence file could not be retrieved. The records derived from this project stay unfinished.
+
+### navifare/moltravel-mcp
+
+- Pinned revision: `54c25eab2aac19b13c4b14c734067ce3260f99a6`
 - CatchBench records: 1
 - Status: UNRESOLVED, because the pinned licence file could not be retrieved. The records derived from this project stay unfinished.
 
@@ -1308,6 +1408,12 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 ```
 
+### Patheras/the-anots
+
+- Pinned revision: `e43bf635a2ad509da5664572201548651066cc00`
+- CatchBench records: 1
+- Status: UNRESOLVED, because the pinned licence file could not be retrieved. The records derived from this project stay unfinished.
+
 ### PostOakLabs/ainumbers-mcp-apps
 
 - Pinned licence file: [LICENSE](https://github.com/PostOakLabs/ainumbers-mcp-apps/blob/43c102651be134a1323bdac9abfe51a4d00b69dd/LICENSE)
@@ -1337,6 +1443,12 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 ```
+
+### proxygate-official/proxygate
+
+- Pinned revision: `e09ea93e47cf1c1148dcb891ccd26857735d14ae`
+- CatchBench records: 1
+- Status: UNRESOLVED, because the pinned licence file could not be retrieved. The records derived from this project stay unfinished.
 
 ### pulltrader/pulltrader-mcp
 
@@ -1517,6 +1629,42 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 ```
+
+### sailquery/niche-mcp
+
+- Pinned licence file: [LICENSE](https://github.com/sailquery/niche-mcp/blob/857185d6044e6ca8edc00dea2b64a08b6f2cbffe/LICENSE)
+- CatchBench records: 1
+- SHA-256 of the retrieved file: `60d1e8342cf39b923b5f92bc0edd6180c3e29b3f6ec3e9ba356d79700119f37d`
+
+```text
+MIT License
+
+Copyright (c) 2026 SailQuery LLC
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this documentation and associated example files (the "Materials"), to deal
+in the Materials without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Materials, and to permit persons to whom the Materials are
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Materials.
+
+THE MATERIALS ARE PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE MATERIALS OR THE USE OR OTHER DEALINGS IN THE
+MATERIALS.
+```
+
+### shahdadk/swiftsign
+
+- Pinned revision: `65e8a631b1988c99ea7b6a37e0df8b2d9bbf3610`
+- CatchBench records: 1
+- Status: UNRESOLVED, because the pinned licence file could not be retrieved. The records derived from this project stay unfinished.
 
 ### SitePulsar/mcp-server
 

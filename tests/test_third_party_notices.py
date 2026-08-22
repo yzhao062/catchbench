@@ -315,7 +315,7 @@ def test_a_record_declaring_an_unanticipated_licence_fails_the_check(corpus_copy
 
 def test_the_unanticipated_licence_is_reported_even_when_nothing_else_is_wrong(corpus_copy, capsys):
     """The failure has to be the unclassified value itself, not a count that drifted with it."""
-    _rewrite_declaration(corpus_copy, "n8n", "unverified", "SSPL-1.0")
+    _rewrite_declaration(corpus_copy, "n8n", "NOASSERTION", "SSPL-1.0")
 
     assert etpn.check(corpus_copy) == 1
     problems = [line for line in capsys.readouterr().err.splitlines() if line.startswith("  ")]
@@ -326,7 +326,7 @@ def test_the_unanticipated_licence_is_reported_even_when_nothing_else_is_wrong(c
 
 def test_a_new_project_declaring_a_carried_licence_fails_until_it_is_attributed(corpus_copy, capsys):
     """A carried licence is not a blanket pass: the new project still has to reach the index."""
-    _rewrite_declaration(corpus_copy, "sweagent", "unverified", "GPL-3.0")
+    _rewrite_declaration(corpus_copy, "sweagent", "NOASSERTION", "GPL-3.0")
 
     assert etpn.check(corpus_copy) == 1
     problems = capsys.readouterr().err

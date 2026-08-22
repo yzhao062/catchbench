@@ -81,6 +81,11 @@ CANONICAL_LICENSES: dict[str, CanonicalText] = {
         "https://www.gnu.org/licenses/gpl-3.0.txt",
         "Version 3, 29 June 2007",
     ),
+    "AGPL-3.0-only": CanonicalText(
+        "AGPL-3.0.txt",
+        "https://www.gnu.org/licenses/agpl-3.0.txt",
+        "Version 3, 19 November 2007",
+    ),
     "CC-BY-4.0": CanonicalText(
         "CC-BY-4.0.txt",
         "https://creativecommons.org/licenses/by/4.0/legalcode.txt",
@@ -89,7 +94,15 @@ CANONICAL_LICENSES: dict[str, CanonicalText] = {
 }
 
 # MIT's text carries the copyright holder's name, so it cannot be collapsed into one shared copy.
-PER_PROJECT_LICENSES = {"MIT"}
+#
+# BUSL-1.1 is here for a different reason and it is worth stating, because the obvious move is to
+# treat it as canonical alongside Apache-2.0. Its published form is a template with a Parameters
+# block the licensor fills in: Licensor, Licensed Work, Additional Use Grant, Change Date, and
+# Change License. Two projects under BUSL-1.1 therefore do not grant the same thing, and a Change
+# Date is the operative term for whether the work is open source yet. One shared copy would state
+# somebody else's parameters. It is also not an open-source licence at all, which the notice text
+# has to say rather than let a reader assume from the company it keeps.
+PER_PROJECT_LICENSES = {"MIT", "BUSL-1.1"}
 
 # Sources whose records carry per-project MIT declarations, each generated into its own appendix.
 MIT_SOURCES = {
@@ -104,6 +117,19 @@ INLINE_MIT_SOURCES = {"injecagent": "Copyright (c) 2023 Qiusi Zhan"}
 
 # Sources whose MIT declaration is CatchBench's own licence on CatchBench-authored records.
 FIRST_PARTY_SOURCES = {"synthetic"}
+
+# Per-project licences other than MIT, each reproduced inline in THIRD_PARTY_LICENSES.md. The value
+# is (licence, marker phrase): both the licence name and the phrase have to appear there, so
+# deleting the block fails the check rather than going unnoticed.
+#
+# Adding BUSL-1.1 to PER_PROJECT_LICENSES alone was not enough, and the way it failed is worth
+# recording. It made the value "known", which silenced the unclassified-licence error, while the
+# generation loop below still walked MIT_SOURCES and matched MIT_MARKER, so the one BUSL record
+# carried no notice and --check went green. A set that gates an error without also driving the work
+# turns a correct loud failure into a silent pass.
+INLINE_PER_PROJECT = {
+    "BUSL-1.1": "Business Source License 1.1",
+}
 
 # Values that record the absence of a declaration rather than a grant. `unverified` marks a source
 # whose terms were never established; `NOASSERTION` and `Other` are what the upstream registry
@@ -525,6 +551,21 @@ def _check_per_project(
     """MIT, whose text names the holder, so every declaring source needs its own carrier."""
     problems: list[str] = []
     carried = 0
+    inline_only = (root / "THIRD_PARTY_LICENSES.md").read_text(encoding="utf-8")         if (root / "THIRD_PARTY_LICENSES.md").is_file() else ""
+
+    for licence, marker in sorted(INLINE_PER_PROJECT.items()):
+        declaring = _sources_declaring(grouped, licence)
+        if not declaring:
+            continue
+        count = sum(int(p["record_count"])
+                    for source in declaring for p in grouped[source][licence])
+        if licence not in inline_only or marker not in inline_only:
+            problems.append(
+                f"THIRD_PARTY_LICENSES.md carries no inline {licence} notice for "
+                f"{', '.join(sorted(declaring))} ({count} record(s)); both {licence!r} and "
+                f"{marker!r} must appear there")
+        else:
+            carried += count
 
     classified = set(MIT_SOURCES) | set(INLINE_MIT_SOURCES) | FIRST_PARTY_SOURCES
     for source in sorted(_sources_declaring(grouped, "MIT") - classified):

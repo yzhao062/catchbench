@@ -6,7 +6,7 @@
       "repo": "liangdabiao/crewai_stock_analysis_system",
       "commit": "aab66c6a5782bb74542bdce6996baba30742e337",
       "path": "config/agents.yaml",
-      "license": "NOASSERTION"
+      "license": "MIT"
     },
     "declared_capabilities": [
       {
@@ -45,7 +45,7 @@
       "repo": "liangdabiao/crewai_stock_analysis_system",
       "commit": "aab66c6a5782bb74542bdce6996baba30742e337",
       "path": "config/agents.yaml",
-      "license": "NOASSERTION"
+      "license": "MIT"
     },
     "declared_capabilities": [
       {
@@ -84,7 +84,7 @@
       "repo": "liangdabiao/crewai_stock_analysis_system",
       "commit": "aab66c6a5782bb74542bdce6996baba30742e337",
       "path": "config/agents.yaml",
-      "license": "NOASSERTION"
+      "license": "MIT"
     },
     "declared_capabilities": [
       {
@@ -123,7 +123,7 @@
       "repo": "liangdabiao/crewai_stock_analysis_system",
       "commit": "aab66c6a5782bb74542bdce6996baba30742e337",
       "path": "config/agents.yaml",
-      "license": "NOASSERTION"
+      "license": "MIT"
     },
     "declared_capabilities": [
       {
@@ -156,7 +156,7 @@
       "repo": "liangdabiao/crewai_stock_analysis_system",
       "commit": "aab66c6a5782bb74542bdce6996baba30742e337",
       "path": "config/agents.yaml",
-      "license": "NOASSERTION"
+      "license": "MIT"
     },
     "declared_capabilities": [
       {
@@ -189,7 +189,7 @@
       "repo": "liangdabiao/crewai_stock_analysis_system",
       "commit": "aab66c6a5782bb74542bdce6996baba30742e337",
       "path": "config/agents.yaml",
-      "license": "NOASSERTION"
+      "license": "MIT"
     },
     "declared_capabilities": [
       {
@@ -222,7 +222,7 @@
       "repo": "liangdabiao/crewai_stock_analysis_system",
       "commit": "aab66c6a5782bb74542bdce6996baba30742e337",
       "path": "config/agents.yaml",
-      "license": "NOASSERTION"
+      "license": "MIT"
     },
     "declared_capabilities": [
       {
@@ -255,7 +255,7 @@
       "repo": "liangdabiao/crewai_stock_analysis_system",
       "commit": "aab66c6a5782bb74542bdce6996baba30742e337",
       "path": "config/agents.yaml",
-      "license": "NOASSERTION"
+      "license": "MIT"
     },
     "declared_capabilities": [
       {
@@ -288,7 +288,7 @@
       "repo": "liangdabiao/crewai_stock_analysis_system",
       "commit": "aab66c6a5782bb74542bdce6996baba30742e337",
       "path": "config/agents.yaml",
-      "license": "NOASSERTION"
+      "license": "MIT"
     },
     "declared_capabilities": [
       {
@@ -321,7 +321,7 @@
       "repo": "liangdabiao/crewai_stock_analysis_system",
       "commit": "aab66c6a5782bb74542bdce6996baba30742e337",
       "path": "config/agents.yaml",
-      "license": "NOASSERTION"
+      "license": "MIT"
     },
     "declared_capabilities": [
       {
@@ -354,7 +354,7 @@
       "repo": "liangdabiao/crewai_stock_analysis_system",
       "commit": "aab66c6a5782bb74542bdce6996baba30742e337",
       "path": "config/agents.yaml",
-      "license": "NOASSERTION"
+      "license": "MIT"
     },
     "declared_capabilities": [
       {
@@ -387,7 +387,7 @@
       "repo": "liangdabiao/crewai_stock_analysis_system",
       "commit": "aab66c6a5782bb74542bdce6996baba30742e337",
       "path": "config/agents.yaml",
-      "license": "NOASSERTION"
+      "license": "MIT"
     },
     "declared_capabilities": [
       {
@@ -420,7 +420,7 @@
       "repo": "liangdabiao/crewai_stock_analysis_system",
       "commit": "aab66c6a5782bb74542bdce6996baba30742e337",
       "path": "config/agents.yaml",
-      "license": "NOASSERTION"
+      "license": "MIT"
     },
     "declared_capabilities": [
       {
@@ -758,7 +758,7 @@
       "repo": "tylerprogramming/travel-planner",
       "commit": "1ae200daa65608d700b252fd7da748667e63312d",
       "path": "config/agents.yaml",
-      "license": "NOASSERTION"
+      "license": "MIT"
     },
     "declared_capabilities": [
       {
@@ -798,7 +798,7 @@
       "repo": "tylerprogramming/travel-planner",
       "commit": "1ae200daa65608d700b252fd7da748667e63312d",
       "path": "config/agents.yaml",
-      "license": "NOASSERTION"
+      "license": "MIT"
     },
     "declared_capabilities": [
       {
@@ -837,7 +837,7 @@
       "repo": "tylerprogramming/travel-planner",
       "commit": "1ae200daa65608d700b252fd7da748667e63312d",
       "path": "config/agents.yaml",
-      "license": "NOASSERTION"
+      "license": "MIT"
     },
     "declared_capabilities": [
       {
@@ -1633,7 +1633,7 @@
       "repo": "sobit-nep/crewAI-agents",
       "commit": "477c59067470b945210b6e3a60571f1d4af986ca",
       "path": "config/agents.yaml",
-      "license": "NOASSERTION"
+      "license": "MIT"
     },
     "declared_capabilities": [
       {
@@ -1667,7 +1667,7 @@
       "repo": "sobit-nep/crewAI-agents",
       "commit": "477c59067470b945210b6e3a60571f1d4af986ca",
       "path": "config/agents.yaml",
-      "license": "NOASSERTION"
+      "license": "MIT"
     },
     "declared_capabilities": [
       {
@@ -2535,7 +2535,7 @@
       "repo": "shashankyadav03/ai-property-researcher",
       "commit": "5aaa60f5ee70646d9a286ce20475833ddc3a60bd",
       "path": "config/agents.yaml",
-      "license": "NOASSERTION"
+      "license": "MIT"
     },
     "declared_capabilities": [
       {
@@ -2575,7 +2575,7 @@
       "repo": "shashankyadav03/ai-property-researcher",
       "commit": "5aaa60f5ee70646d9a286ce20475833ddc3a60bd",
       "path": "config/agents.yaml",
-      "license": "NOASSERTION"
+      "license": "MIT"
     },
     "declared_capabilities": [
       {
@@ -2619,7 +2619,7 @@
       "repo": "shashankyadav03/ai-property-researcher",
       "commit": "5aaa60f5ee70646d9a286ce20475833ddc3a60bd",
       "path": "config/agents.yaml",
-      "license": "NOASSERTION"
+      "license": "MIT"
     },
     "declared_capabilities": [
       {
@@ -2846,7 +2846,7 @@
       "repo": "shawn1207/finance-alchemy",
       "commit": "9f88e78954d3dcbc4896e496a82cda75c92c9ab6",
       "path": "config/agents/agents.yaml",
-      "license": "NOASSERTION"
+      "license": "MIT"
     },
     "declared_capabilities": [
       {
@@ -2887,7 +2887,7 @@
       "repo": "shawn1207/finance-alchemy",
       "commit": "9f88e78954d3dcbc4896e496a82cda75c92c9ab6",
       "path": "config/agents/agents.yaml",
-      "license": "NOASSERTION"
+      "license": "MIT"
     },
     "declared_capabilities": [
       {
@@ -2935,7 +2935,7 @@
       "repo": "gurezende/Crew_Writer",
       "commit": "0e0c4358ece3abb2a90c43e12498eaa142be584e",
       "path": "config/agents.yaml",
-      "license": "NOASSERTION"
+      "license": "MIT"
     },
     "declared_capabilities": [
       {
@@ -2969,7 +2969,7 @@
       "repo": "gurezende/Crew_Writer",
       "commit": "0e0c4358ece3abb2a90c43e12498eaa142be584e",
       "path": "config/agents.yaml",
-      "license": "NOASSERTION"
+      "license": "MIT"
     },
     "declared_capabilities": [
       {
@@ -3273,7 +3273,7 @@
       "repo": "OssiRuhanen/CrewAI_Assistant",
       "commit": "419306f0bdfa6080c92430835ff1cc1292949bf4",
       "path": "src/agent_assistant/config/agents.yaml",
-      "license": "NOASSERTION"
+      "license": "MIT"
     },
     "declared_capabilities": [
       {
@@ -3845,7 +3845,7 @@
       "repo": "victorcastillojimenez/CV-Scan",
       "commit": "198e4378b6eefd8a51d8a0a6c7a6a2a8bc611824",
       "path": "config/agents.yaml",
-      "license": "NOASSERTION"
+      "license": "MIT"
     },
     "declared_capabilities": [
       {
@@ -3879,7 +3879,7 @@
       "repo": "victorcastillojimenez/CV-Scan",
       "commit": "198e4378b6eefd8a51d8a0a6c7a6a2a8bc611824",
       "path": "config/agents.yaml",
-      "license": "NOASSERTION"
+      "license": "MIT"
     },
     "declared_capabilities": [
       {
@@ -4206,7 +4206,7 @@
       "repo": "pandemonium0225/dynamic-coding-system",
       "commit": "95da3c94f8fd8d004dafb6c48352b15501b19a9a",
       "path": "config/agents.yaml",
-      "license": "NOASSERTION"
+      "license": "MIT"
     },
     "declared_capabilities": [
       {
@@ -4454,7 +4454,7 @@
       "repo": "saitanay/LLMageddon",
       "commit": "2616ed475e102a169b0b6c49a88d57447f80ec2a",
       "path": "config/agents.yaml",
-      "license": "NOASSERTION"
+      "license": "MIT"
     },
     "declared_capabilities": [
       {
@@ -4490,7 +4490,7 @@
       "repo": "saitanay/LLMageddon",
       "commit": "2616ed475e102a169b0b6c49a88d57447f80ec2a",
       "path": "config/agents.yaml",
-      "license": "NOASSERTION"
+      "license": "MIT"
     },
     "declared_capabilities": [
       {
@@ -5589,7 +5589,7 @@
       "repo": "ksriyesh/h1b_smart_job_matcher",
       "commit": "8d06f38f0b5feb0b3d401ecfffedd288cccdb2d5",
       "path": "config/agents.yaml",
-      "license": "NOASSERTION"
+      "license": "MIT"
     },
     "declared_capabilities": [
       {
@@ -5972,7 +5972,7 @@
       "repo": "Bhavik-Jikadara/youtube-automation-agent",
       "commit": "5ccb3f59e37bf7f2405e02dd38e99926d8a75375",
       "path": "src/config/agents.yaml",
-      "license": "NOASSERTION"
+      "license": "MIT"
     },
     "declared_capabilities": [
       {
@@ -6016,7 +6016,7 @@
       "repo": "Bhavik-Jikadara/youtube-automation-agent",
       "commit": "5ccb3f59e37bf7f2405e02dd38e99926d8a75375",
       "path": "src/config/agents.yaml",
-      "license": "NOASSERTION"
+      "license": "MIT"
     },
     "declared_capabilities": [
       {
@@ -6091,7 +6091,7 @@
       "repo": "FamilOrujov/financial-researcher-agentic-ai",
       "commit": "805b35284d4966181d94ed41a88bdd7b5f234837",
       "path": "src/config/agents.yaml",
-      "license": "NOASSERTION"
+      "license": "MIT"
     },
     "declared_capabilities": [
       {
@@ -6131,7 +6131,7 @@
       "repo": "Bhatteryash/E-commerce-Multi-Agent",
       "commit": "64d8f4b4b32c8abab11835fc02b09ab426248cdb",
       "path": "src/config/agents.yaml",
-      "license": "NOASSERTION"
+      "license": "MIT"
     },
     "declared_capabilities": [
       {
@@ -6166,7 +6166,7 @@
       "repo": "Bhatteryash/E-commerce-Multi-Agent",
       "commit": "64d8f4b4b32c8abab11835fc02b09ab426248cdb",
       "path": "src/config/agents.yaml",
-      "license": "NOASSERTION"
+      "license": "MIT"
     },
     "declared_capabilities": [
       {
@@ -6479,7 +6479,7 @@
       "repo": "fredzolio/sms_public_health_monitor",
       "commit": "5d1994ecbf8430770cf711f6269cd8236ecd5c9e",
       "path": "src/config/agents.yaml",
-      "license": "NOASSERTION"
+      "license": "MIT"
     },
     "declared_capabilities": [
       {
@@ -6513,7 +6513,7 @@
       "repo": "fredzolio/sms_public_health_monitor",
       "commit": "5d1994ecbf8430770cf711f6269cd8236ecd5c9e",
       "path": "src/config/agents.yaml",
-      "license": "NOASSERTION"
+      "license": "MIT"
     },
     "declared_capabilities": [
       {
@@ -6546,7 +6546,7 @@
       "repo": "fredzolio/sms_public_health_monitor",
       "commit": "5d1994ecbf8430770cf711f6269cd8236ecd5c9e",
       "path": "src/config/agents.yaml",
-      "license": "NOASSERTION"
+      "license": "MIT"
     },
     "declared_capabilities": [
       {
@@ -6579,7 +6579,7 @@
       "repo": "fredzolio/sms_public_health_monitor",
       "commit": "5d1994ecbf8430770cf711f6269cd8236ecd5c9e",
       "path": "src/config/agents.yaml",
-      "license": "NOASSERTION"
+      "license": "MIT"
     },
     "declared_capabilities": [
       {
@@ -6612,7 +6612,7 @@
       "repo": "Tejas-Bantupalli/trading_knowledge_base",
       "commit": "09417379f8cd379d7cd58ed30c7721cc14a509dc",
       "path": "src/config/agents.yaml",
-      "license": "NOASSERTION"
+      "license": "MIT"
     },
     "declared_capabilities": [
       {
@@ -6645,7 +6645,7 @@
       "repo": "andreagroferreira/myAIDEVTEAM",
       "commit": "f31b9d2c5a468fd757450448eb5fb6265dd7896c",
       "path": "src/config/agents.yaml",
-      "license": "NOASSERTION"
+      "license": "MIT"
     },
     "declared_capabilities": [
       {
@@ -6692,7 +6692,7 @@
       "repo": "andreagroferreira/myAIDEVTEAM",
       "commit": "f31b9d2c5a468fd757450448eb5fb6265dd7896c",
       "path": "src/config/agents.yaml",
-      "license": "NOASSERTION"
+      "license": "MIT"
     },
     "declared_capabilities": [
       {
@@ -6740,7 +6740,7 @@
       "repo": "andreagroferreira/myAIDEVTEAM",
       "commit": "f31b9d2c5a468fd757450448eb5fb6265dd7896c",
       "path": "src/config/agents.yaml",
-      "license": "NOASSERTION"
+      "license": "MIT"
     },
     "declared_capabilities": [
       {
@@ -6782,7 +6782,7 @@
       "repo": "andreagroferreira/myAIDEVTEAM",
       "commit": "f31b9d2c5a468fd757450448eb5fb6265dd7896c",
       "path": "src/config/agents.yaml",
-      "license": "NOASSERTION"
+      "license": "MIT"
     },
     "declared_capabilities": [
       {
@@ -6822,7 +6822,7 @@
       "repo": "andreagroferreira/myAIDEVTEAM",
       "commit": "f31b9d2c5a468fd757450448eb5fb6265dd7896c",
       "path": "src/config/agents.yaml",
-      "license": "NOASSERTION"
+      "license": "MIT"
     },
     "declared_capabilities": [
       {
@@ -6864,7 +6864,7 @@
       "repo": "andreagroferreira/myAIDEVTEAM",
       "commit": "f31b9d2c5a468fd757450448eb5fb6265dd7896c",
       "path": "src/config/agents.yaml",
-      "license": "NOASSERTION"
+      "license": "MIT"
     },
     "declared_capabilities": [
       {
@@ -6905,7 +6905,7 @@
       "repo": "andreagroferreira/myAIDEVTEAM",
       "commit": "f31b9d2c5a468fd757450448eb5fb6265dd7896c",
       "path": "src/config/agents.yaml",
-      "license": "NOASSERTION"
+      "license": "MIT"
     },
     "declared_capabilities": [
       {
@@ -6945,7 +6945,7 @@
       "repo": "andreagroferreira/myAIDEVTEAM",
       "commit": "f31b9d2c5a468fd757450448eb5fb6265dd7896c",
       "path": "src/config/agents.yaml",
-      "license": "NOASSERTION"
+      "license": "MIT"
     },
     "declared_capabilities": [
       {
@@ -6987,7 +6987,7 @@
       "repo": "andreagroferreira/myAIDEVTEAM",
       "commit": "f31b9d2c5a468fd757450448eb5fb6265dd7896c",
       "path": "src/config/agents.yaml",
-      "license": "NOASSERTION"
+      "license": "MIT"
     },
     "declared_capabilities": [
       {
@@ -7039,7 +7039,7 @@
       "repo": "andreagroferreira/myAIDEVTEAM",
       "commit": "f31b9d2c5a468fd757450448eb5fb6265dd7896c",
       "path": "src/config/agents.yaml",
-      "license": "NOASSERTION"
+      "license": "MIT"
     },
     "declared_capabilities": [
       {
@@ -7073,7 +7073,7 @@
       "repo": "andreagroferreira/myAIDEVTEAM",
       "commit": "f31b9d2c5a468fd757450448eb5fb6265dd7896c",
       "path": "src/config/agents.yaml",
-      "license": "NOASSERTION"
+      "license": "MIT"
     },
     "declared_capabilities": [
       {
@@ -7107,7 +7107,7 @@
       "repo": "andreagroferreira/myAIDEVTEAM",
       "commit": "f31b9d2c5a468fd757450448eb5fb6265dd7896c",
       "path": "src/config/agents.yaml",
-      "license": "NOASSERTION"
+      "license": "MIT"
     },
     "declared_capabilities": [
       {
@@ -7140,7 +7140,7 @@
       "repo": "andreagroferreira/myAIDEVTEAM",
       "commit": "f31b9d2c5a468fd757450448eb5fb6265dd7896c",
       "path": "src/config/agents.yaml",
-      "license": "NOASSERTION"
+      "license": "MIT"
     },
     "declared_capabilities": [
       {
@@ -7179,7 +7179,7 @@
       "repo": "andreagroferreira/myAIDEVTEAM",
       "commit": "f31b9d2c5a468fd757450448eb5fb6265dd7896c",
       "path": "src/config/agents.yaml",
-      "license": "NOASSERTION"
+      "license": "MIT"
     },
     "declared_capabilities": [
       {
@@ -7219,7 +7219,7 @@
       "repo": "andreagroferreira/myAIDEVTEAM",
       "commit": "f31b9d2c5a468fd757450448eb5fb6265dd7896c",
       "path": "src/config/agents.yaml",
-      "license": "NOASSERTION"
+      "license": "MIT"
     },
     "declared_capabilities": [
       {
@@ -7420,7 +7420,7 @@
       "repo": "anshxl/vibecheck",
       "commit": "eb7ec990ba6cf9c9752f71d8db7e4dce717fdbba",
       "path": "src/config/agents.yaml",
-      "license": "NOASSERTION"
+      "license": "MIT"
     },
     "declared_capabilities": [
       {
@@ -8027,7 +8027,7 @@
       "repo": "Unica2804/Vaultmind",
       "commit": "4e8e61af2302d6afe960165c757ece5c22b22197",
       "path": "src/config/agents.yaml",
-      "license": "NOASSERTION"
+      "license": "MIT"
     },
     "declared_capabilities": [
       {
@@ -8069,7 +8069,7 @@
       "repo": "Thiagovilela2001/Crew_ai_v1",
       "commit": "ad35a89b86cc3c69f08ca91c76eda367a6ede463",
       "path": "src/config/agents.yaml",
-      "license": "NOASSERTION"
+      "license": "MIT"
     },
     "declared_capabilities": [
       {
@@ -8105,7 +8105,7 @@
       "repo": "Thiagovilela2001/Crew_ai_v1",
       "commit": "ad35a89b86cc3c69f08ca91c76eda367a6ede463",
       "path": "src/config/agents.yaml",
-      "license": "NOASSERTION"
+      "license": "MIT"
     },
     "declared_capabilities": [
       {
@@ -8138,7 +8138,7 @@
       "repo": "Thiagovilela2001/Crew_ai_v1",
       "commit": "ad35a89b86cc3c69f08ca91c76eda367a6ede463",
       "path": "src/config/agents.yaml",
-      "license": "NOASSERTION"
+      "license": "MIT"
     },
     "declared_capabilities": [
       {
@@ -8293,7 +8293,7 @@
       "repo": "Vipul111196/stock-analysis-crewai",
       "commit": "899f29dc6225a77cf747dfc382d160ed3b47bc19",
       "path": "src/config/agents.yaml",
-      "license": "NOASSERTION"
+      "license": "MIT"
     },
     "declared_capabilities": [
       {
@@ -8350,7 +8350,7 @@
       "repo": "Vipul111196/stock-analysis-crewai",
       "commit": "899f29dc6225a77cf747dfc382d160ed3b47bc19",
       "path": "src/config/agents.yaml",
-      "license": "NOASSERTION"
+      "license": "MIT"
     },
     "declared_capabilities": [
       {
@@ -8505,7 +8505,7 @@
       "repo": "AravindB98/Cerebro",
       "commit": "54dda77852eb9206b9cd4252b0df76029bbeb21e",
       "path": "src/config/agents.yaml",
-      "license": "NOASSERTION"
+      "license": "MIT"
     },
     "declared_capabilities": [
       {
@@ -8551,7 +8551,7 @@
       "repo": "AravindB98/Cerebro",
       "commit": "54dda77852eb9206b9cd4252b0df76029bbeb21e",
       "path": "src/config/agents.yaml",
-      "license": "NOASSERTION"
+      "license": "MIT"
     },
     "declared_capabilities": [
       {
@@ -8618,7 +8618,7 @@
       "repo": "barackm/conekthub",
       "commit": "ade3490cd57be558c1aafcb2a277af368666ee5c",
       "path": "src/config/agents.yaml",
-      "license": "NOASSERTION"
+      "license": "MIT"
     },
     "declared_capabilities": [
       {
@@ -9863,7 +9863,7 @@
       "repo": "Mira-dmh/CrewAI",
       "commit": "97733014f613430eed21d9f5e69423aebe9367b0",
       "path": "src/config/agents.yaml",
-      "license": "NOASSERTION"
+      "license": "MIT"
     },
     "declared_capabilities": [
       {
@@ -9896,7 +9896,7 @@
       "repo": "Mira-dmh/CrewAI",
       "commit": "97733014f613430eed21d9f5e69423aebe9367b0",
       "path": "src/config/agents.yaml",
-      "license": "NOASSERTION"
+      "license": "MIT"
     },
     "declared_capabilities": [
       {
@@ -9937,7 +9937,7 @@
       "repo": "Mira-dmh/CrewAI",
       "commit": "97733014f613430eed21d9f5e69423aebe9367b0",
       "path": "src/config/agents.yaml",
-      "license": "NOASSERTION"
+      "license": "MIT"
     },
     "declared_capabilities": [
       {
@@ -9970,7 +9970,7 @@
       "repo": "Mira-dmh/CrewAI",
       "commit": "97733014f613430eed21d9f5e69423aebe9367b0",
       "path": "src/config/agents.yaml",
-      "license": "NOASSERTION"
+      "license": "MIT"
     },
     "declared_capabilities": [
       {
@@ -10012,7 +10012,7 @@
       "repo": "JasperHG90/rfcrew",
       "commit": "ec1539c4595b5a24a9aa940ce9aaf324a9c32928",
       "path": "config/agents.yaml",
-      "license": "NOASSERTION"
+      "license": "Apache-2.0"
     },
     "declared_capabilities": [
       {
@@ -10060,7 +10060,7 @@
       "repo": "JasperHG90/rfcrew",
       "commit": "ec1539c4595b5a24a9aa940ce9aaf324a9c32928",
       "path": "config/agents.yaml",
-      "license": "NOASSERTION"
+      "license": "Apache-2.0"
     },
     "declared_capabilities": [
       {
@@ -10105,7 +10105,7 @@
       "repo": "JasperHG90/rfcrew",
       "commit": "ec1539c4595b5a24a9aa940ce9aaf324a9c32928",
       "path": "config/agents.yaml",
-      "license": "NOASSERTION"
+      "license": "Apache-2.0"
     },
     "declared_capabilities": [
       {
@@ -10521,7 +10521,7 @@
       "repo": "kvrancic/interview-analyzer-archiver",
       "commit": "932c38b31b020db6cc6b3b1834e5e85ce1b25925",
       "path": "config/agents.yaml",
-      "license": "NOASSERTION"
+      "license": "MIT"
     },
     "declared_capabilities": [
       {
@@ -10555,7 +10555,7 @@
       "repo": "kvrancic/interview-analyzer-archiver",
       "commit": "932c38b31b020db6cc6b3b1834e5e85ce1b25925",
       "path": "config/agents.yaml",
-      "license": "NOASSERTION"
+      "license": "MIT"
     },
     "declared_capabilities": [
       {
@@ -10599,7 +10599,7 @@
       "repo": "arpankumarde/crew-ai-multi-agent-orchestration-support-team",
       "commit": "32e2b3323d27fd7e0d3feb292f4c60d8cece6aeb",
       "path": "config/agents.yaml",
-      "license": "NOASSERTION"
+      "license": "MIT"
     },
     "declared_capabilities": [
       {
@@ -10635,7 +10635,7 @@
       "repo": "arpankumarde/crew-ai-multi-agent-orchestration-support-team",
       "commit": "32e2b3323d27fd7e0d3feb292f4c60d8cece6aeb",
       "path": "config/agents.yaml",
-      "license": "NOASSERTION"
+      "license": "MIT"
     },
     "declared_capabilities": [
       {
@@ -10675,7 +10675,7 @@
       "repo": "arpankumarde/crew-ai-multi-agent-orchestration-support-team",
       "commit": "32e2b3323d27fd7e0d3feb292f4c60d8cece6aeb",
       "path": "config/agents.yaml",
-      "license": "NOASSERTION"
+      "license": "MIT"
     },
     "declared_capabilities": [
       {
@@ -10727,7 +10727,7 @@
       "repo": "arpankumarde/crew-ai-multi-agent-orchestration-support-team",
       "commit": "32e2b3323d27fd7e0d3feb292f4c60d8cece6aeb",
       "path": "config/agents.yaml",
-      "license": "NOASSERTION"
+      "license": "MIT"
     },
     "declared_capabilities": [
       {
@@ -10762,7 +10762,7 @@
       "repo": "arpankumarde/crew-ai-multi-agent-orchestration-support-team",
       "commit": "32e2b3323d27fd7e0d3feb292f4c60d8cece6aeb",
       "path": "config/agents.yaml",
-      "license": "NOASSERTION"
+      "license": "MIT"
     },
     "declared_capabilities": [
       {
@@ -10802,7 +10802,7 @@
       "repo": "arpankumarde/crew-ai-multi-agent-orchestration-support-team",
       "commit": "32e2b3323d27fd7e0d3feb292f4c60d8cece6aeb",
       "path": "config/agents.yaml",
-      "license": "NOASSERTION"
+      "license": "MIT"
     },
     "declared_capabilities": [
       {

@@ -295,12 +295,14 @@ always       tests/test_statistical_tests.py::test_exact_mcnemar_uses_discordant
 always       tests/test_statistical_tests.py::test_holm_enforces_monotonicity
 always       tests/test_statistical_tests.py::test_paired_delong_identical_scores
 always       tests/test_statistical_tests.py::test_poisson_binomial_tails
+always       tests/test_third_party_notices.py::test_a_canonical_copy_that_is_not_the_licence_fails_the_check[AGPL-3.0-only]
 always       tests/test_third_party_notices.py::test_a_canonical_copy_that_is_not_the_licence_fails_the_check[Apache-2.0]
 always       tests/test_third_party_notices.py::test_a_canonical_copy_that_is_not_the_licence_fails_the_check[CC-BY-4.0]
 always       tests/test_third_party_notices.py::test_a_canonical_copy_that_is_not_the_licence_fails_the_check[GPL-3.0]
 always       tests/test_third_party_notices.py::test_a_drifted_record_count_fails_the_check
 always       tests/test_third_party_notices.py::test_a_dropped_attribution_row_fails_the_check
 always       tests/test_third_party_notices.py::test_a_dropped_project_notice_fails_the_check
+always       tests/test_third_party_notices.py::test_a_missing_canonical_copy_fails_the_check[AGPL-3.0-only]
 always       tests/test_third_party_notices.py::test_a_missing_canonical_copy_fails_the_check[Apache-2.0]
 always       tests/test_third_party_notices.py::test_a_missing_canonical_copy_fails_the_check[CC-BY-4.0]
 always       tests/test_third_party_notices.py::test_a_missing_canonical_copy_fails_the_check[GPL-3.0]
@@ -311,12 +313,14 @@ always       tests/test_third_party_notices.py::test_a_notice_stripped_to_a_poin
 always       tests/test_third_party_notices.py::test_a_record_declaring_an_unanticipated_licence_fails_the_check
 always       tests/test_third_party_notices.py::test_a_stale_recorded_digest_fails_the_check
 always       tests/test_third_party_notices.py::test_an_unmodified_copy_still_passes
+always       tests/test_third_party_notices.py::test_each_canonical_copy_carries_its_own_terms[AGPL-3.0-only]
 always       tests/test_third_party_notices.py::test_each_canonical_copy_carries_its_own_terms[Apache-2.0]
 always       tests/test_third_party_notices.py::test_each_canonical_copy_carries_its_own_terms[CC-BY-4.0]
 always       tests/test_third_party_notices.py::test_each_canonical_copy_carries_its_own_terms[GPL-3.0]
 always       tests/test_third_party_notices.py::test_each_mit_notice_carries_a_copyright_line_and_the_permission_notice[crewai]
 always       tests/test_third_party_notices.py::test_each_mit_notice_carries_a_copyright_line_and_the_permission_notice[mcp]
 always       tests/test_third_party_notices.py::test_every_declared_licence_has_local_text
+always       tests/test_third_party_notices.py::test_every_record_of_a_canonical_licence_is_covered_by_that_one_copy[AGPL-3.0-only]
 always       tests/test_third_party_notices.py::test_every_record_of_a_canonical_licence_is_covered_by_that_one_copy[Apache-2.0]
 always       tests/test_third_party_notices.py::test_every_record_of_a_canonical_licence_is_covered_by_that_one_copy[CC-BY-4.0]
 always       tests/test_third_party_notices.py::test_every_record_of_a_canonical_licence_is_covered_by_that_one_copy[GPL-3.0]
@@ -327,6 +331,7 @@ always       tests/test_third_party_notices.py::test_the_check_survives_a_crlf_c
 always       tests/test_third_party_notices.py::test_the_copied_corpus_still_passes
 always       tests/test_third_party_notices.py::test_the_declared_set_is_exactly_what_the_repository_carries_or_records
 always       tests/test_third_party_notices.py::test_the_gpl_copy_carries_the_redistribution_clause
+always       tests/test_third_party_notices.py::test_the_index_attributes_every_project_declaring_a_canonical_licence[AGPL-3.0-only]
 always       tests/test_third_party_notices.py::test_the_index_attributes_every_project_declaring_a_canonical_licence[Apache-2.0]
 always       tests/test_third_party_notices.py::test_the_index_attributes_every_project_declaring_a_canonical_licence[CC-BY-4.0]
 always       tests/test_third_party_notices.py::test_the_index_attributes_every_project_declaring_a_canonical_licence[GPL-3.0]

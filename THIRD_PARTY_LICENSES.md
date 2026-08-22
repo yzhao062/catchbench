@@ -339,6 +339,28 @@ MIT-declared projects; the three unretrievable MIT projects listed above are mar
 there as well. The 1 CC-BY-4.0 record carries the licence text and the attribution stated
 [above](#the-cc-by-40-record). The `NOASSERTION` and `Other` subsets remain unfinished.
 
+### The BUSL-1.1 record
+
+One MCP Registry record declares the Business Source License 1.1:
+[`MadaBurns/bv-mcp`](https://github.com/MadaBurns/bv-mcp/tree/5d4c08fefc349fa6ee56bf29a70a5c161ce45a36).
+Its text is reproduced here rather than in the shared canonical set, because BUSL-1.1 is published
+as a template whose Parameters block the licensor fills in. Two projects under it do not grant the
+same thing, so one shared copy would state somebody else's terms.
+
+The parameters at the pinned commit:
+
+- Licensor: BLACKVEIL Security
+- Licensed Work: Blackveil DNS, (c) 2025-2026 BLACKVEIL Security
+- Additional Use Grant: non-commercial use. The licence states that providing the work as a hosted
+  service for a fee, or embedding it in a commercial product, is commercial use.
+- Change Date: 2030-03-17
+- Change License: MIT License
+
+The licence carries its own notice on what it is: "The Business Source License (this document, or
+the 'License') is not an Open Source license. However, the Licensed Work will eventually be made
+available under an Open Source License, as stated in this License." CatchBench is a research
+benchmark distributed without charge, which is within the non-commercial grant above.
+
 ## SWE-agent trajectories
 
 **Status: UNFINISHED - the trajectory artifact terms are unverified.**

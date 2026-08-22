@@ -6,7 +6,7 @@
       "repo": "n8n.io/workflows",
       "commit": "6270",
       "path": "6270",
-      "license": "unverified"
+      "license": "NOASSERTION"
     },
     "declared_capabilities": [
       {
@@ -64,7 +64,7 @@
       "repo": "n8n.io/workflows",
       "commit": "5819",
       "path": "5819",
-      "license": "unverified"
+      "license": "NOASSERTION"
     },
     "declared_capabilities": [
       {
@@ -162,7 +162,7 @@
       "repo": "n8n.io/workflows",
       "commit": "7639",
       "path": "7639",
-      "license": "unverified"
+      "license": "NOASSERTION"
     },
     "declared_capabilities": [
       {
@@ -207,7 +207,7 @@
       "repo": "n8n.io/workflows",
       "commit": "5035",
       "path": "5035",
-      "license": "unverified"
+      "license": "NOASSERTION"
     },
     "declared_capabilities": [
       {
@@ -274,7 +274,7 @@
       "repo": "n8n.io/workflows",
       "commit": "8500",
       "path": "8500",
-      "license": "unverified"
+      "license": "NOASSERTION"
     },
     "declared_capabilities": [
       {
@@ -367,7 +367,7 @@
       "repo": "n8n.io/workflows",
       "commit": "7756",
       "path": "7756",
-      "license": "unverified"
+      "license": "NOASSERTION"
     },
     "declared_capabilities": [
       {
@@ -464,7 +464,7 @@
       "repo": "n8n.io/workflows",
       "commit": "5148",
       "path": "5148",
-      "license": "unverified"
+      "license": "NOASSERTION"
     },
     "declared_capabilities": [
       {
@@ -505,7 +505,7 @@
       "repo": "n8n.io/workflows",
       "commit": "5110",
       "path": "5110",
-      "license": "unverified"
+      "license": "NOASSERTION"
     },
     "declared_capabilities": [
       {
@@ -563,7 +563,7 @@
       "repo": "n8n.io/workflows",
       "commit": "15369",
       "path": "15369",
-      "license": "unverified"
+      "license": "NOASSERTION"
     },
     "declared_capabilities": [
       {
@@ -631,7 +631,7 @@
       "repo": "n8n.io/workflows",
       "commit": "4827",
       "path": "4827",
-      "license": "unverified"
+      "license": "NOASSERTION"
     },
     "declared_capabilities": [
       {
@@ -682,7 +682,7 @@
       "repo": "n8n.io/workflows",
       "commit": "5338",
       "path": "5338",
-      "license": "unverified"
+      "license": "NOASSERTION"
     },
     "declared_capabilities": [
       {
@@ -746,7 +746,7 @@
       "repo": "n8n.io/workflows",
       "commit": "13503",
       "path": "13503",
-      "license": "unverified"
+      "license": "NOASSERTION"
     },
     "declared_capabilities": [
       {
@@ -836,7 +836,7 @@
       "repo": "n8n.io/workflows",
       "commit": "9200",
       "path": "9200",
-      "license": "unverified"
+      "license": "NOASSERTION"
     },
     "declared_capabilities": [
       {
@@ -903,7 +903,7 @@
       "repo": "n8n.io/workflows",
       "commit": "11204",
       "path": "11204",
-      "license": "unverified"
+      "license": "NOASSERTION"
     },
     "declared_capabilities": [
       {
@@ -969,7 +969,7 @@
       "repo": "n8n.io/workflows",
       "commit": "9383",
       "path": "9383",
-      "license": "unverified"
+      "license": "NOASSERTION"
     },
     "declared_capabilities": [
       {
@@ -1053,7 +1053,7 @@
       "repo": "n8n.io/workflows",
       "commit": "8428",
       "path": "8428",
-      "license": "unverified"
+      "license": "NOASSERTION"
     },
     "declared_capabilities": [
       {
@@ -1111,7 +1111,7 @@
       "repo": "n8n.io/workflows",
       "commit": "5010",
       "path": "5010",
-      "license": "unverified"
+      "license": "NOASSERTION"
     },
     "declared_capabilities": [
       {
@@ -1148,7 +1148,7 @@
       "repo": "n8n.io/workflows",
       "commit": "13526",
       "path": "13526",
-      "license": "unverified"
+      "license": "NOASSERTION"
     },
     "declared_capabilities": [
       {
@@ -1261,7 +1261,7 @@
       "repo": "n8n.io/workflows",
       "commit": "4722",
       "path": "4722",
-      "license": "unverified"
+      "license": "NOASSERTION"
     },
     "declared_capabilities": [
       {
@@ -1318,7 +1318,7 @@
       "repo": "n8n.io/workflows",
       "commit": "14167",
       "path": "14167",
-      "license": "unverified"
+      "license": "NOASSERTION"
     },
     "declared_capabilities": [
       {
@@ -1402,7 +1402,7 @@
       "repo": "n8n.io/workflows",
       "commit": "5948",
       "path": "5948",
-      "license": "unverified"
+      "license": "NOASSERTION"
     },
     "declared_capabilities": [
       {
@@ -1448,7 +1448,7 @@
       "repo": "n8n.io/workflows",
       "commit": "6841",
       "path": "6841",
-      "license": "unverified"
+      "license": "NOASSERTION"
     },
     "declared_capabilities": [
       {
@@ -1538,7 +1538,7 @@
       "repo": "n8n.io/workflows",
       "commit": "13409",
       "path": "13409",
-      "license": "unverified"
+      "license": "NOASSERTION"
     },
     "declared_capabilities": [
       {
@@ -1642,7 +1642,7 @@
       "repo": "n8n.io/workflows",
       "commit": "9429",
       "path": "9429",
-      "license": "unverified"
+      "license": "NOASSERTION"
     },
     "declared_capabilities": [
       {
@@ -1712,7 +1712,7 @@
       "repo": "n8n.io/workflows",
       "commit": "8597",
       "path": "8597",
-      "license": "unverified"
+      "license": "NOASSERTION"
     },
     "declared_capabilities": [
       {
@@ -1802,7 +1802,7 @@
       "repo": "n8n.io/workflows",
       "commit": "8591",
       "path": "8591",
-      "license": "unverified"
+      "license": "NOASSERTION"
     },
     "declared_capabilities": [
       {
@@ -1845,7 +1845,7 @@
       "repo": "n8n.io/workflows",
       "commit": "4600",
       "path": "4600",
-      "license": "unverified"
+      "license": "NOASSERTION"
     },
     "declared_capabilities": [
       {
@@ -1907,7 +1907,7 @@
       "repo": "n8n.io/workflows",
       "commit": "9277",
       "path": "9277",
-      "license": "unverified"
+      "license": "NOASSERTION"
     },
     "declared_capabilities": [
       {
@@ -2009,7 +2009,7 @@
       "repo": "n8n.io/workflows",
       "commit": "5523",
       "path": "5523",
-      "license": "unverified"
+      "license": "NOASSERTION"
     },
     "declared_capabilities": [
       {
@@ -2081,7 +2081,7 @@
       "repo": "n8n.io/workflows",
       "commit": "3066",
       "path": "3066",
-      "license": "unverified"
+      "license": "NOASSERTION"
     },
     "declared_capabilities": [
       {
@@ -2131,7 +2131,7 @@
       "repo": "n8n.io/workflows",
       "commit": "5398",
       "path": "5398",
-      "license": "unverified"
+      "license": "NOASSERTION"
     },
     "declared_capabilities": [
       {
@@ -2200,7 +2200,7 @@
       "repo": "n8n.io/workflows",
       "commit": "4484",
       "path": "4484",
-      "license": "unverified"
+      "license": "NOASSERTION"
     },
     "declared_capabilities": [
       {
@@ -2274,7 +2274,7 @@
       "repo": "n8n.io/workflows",
       "commit": "7467",
       "path": "7467",
-      "license": "unverified"
+      "license": "NOASSERTION"
     },
     "declared_capabilities": [
       {
@@ -2361,7 +2361,7 @@
       "repo": "n8n.io/workflows",
       "commit": "5817",
       "path": "5817",
-      "license": "unverified"
+      "license": "NOASSERTION"
     },
     "declared_capabilities": [
       {
@@ -2428,7 +2428,7 @@
       "repo": "n8n.io/workflows",
       "commit": "4723",
       "path": "4723",
-      "license": "unverified"
+      "license": "NOASSERTION"
     },
     "declared_capabilities": [
       {
@@ -2563,7 +2563,7 @@
       "repo": "n8n.io/workflows",
       "commit": "8237",
       "path": "8237",
-      "license": "unverified"
+      "license": "NOASSERTION"
     },
     "declared_capabilities": [
       {
@@ -2636,7 +2636,7 @@
       "repo": "n8n.io/workflows",
       "commit": "5832",
       "path": "5832",
-      "license": "unverified"
+      "license": "NOASSERTION"
     },
     "declared_capabilities": [
       {
@@ -2685,7 +2685,7 @@
       "repo": "n8n.io/workflows",
       "commit": "5541",
       "path": "5541",
-      "license": "unverified"
+      "license": "NOASSERTION"
     },
     "declared_capabilities": [
       {
@@ -2725,7 +2725,7 @@
       "repo": "n8n.io/workflows",
       "commit": "5938",
       "path": "5938",
-      "license": "unverified"
+      "license": "NOASSERTION"
     },
     "declared_capabilities": [
       {
@@ -2780,7 +2780,7 @@
       "repo": "n8n.io/workflows",
       "commit": "4721",
       "path": "4721",
-      "license": "unverified"
+      "license": "NOASSERTION"
     },
     "declared_capabilities": [
       {
@@ -2856,7 +2856,7 @@
       "repo": "n8n.io/workflows",
       "commit": "14008",
       "path": "14008",
-      "license": "unverified"
+      "license": "NOASSERTION"
     },
     "declared_capabilities": [
       {
@@ -3044,7 +3044,7 @@
       "repo": "n8n.io/workflows",
       "commit": "5808",
       "path": "5808",
-      "license": "unverified"
+      "license": "NOASSERTION"
     },
     "declared_capabilities": [
       {
@@ -3121,7 +3121,7 @@
       "repo": "n8n.io/workflows",
       "commit": "5296",
       "path": "5296",
-      "license": "unverified"
+      "license": "NOASSERTION"
     },
     "declared_capabilities": [
       {
@@ -3166,7 +3166,7 @@
       "repo": "n8n.io/workflows",
       "commit": "5828",
       "path": "5828",
-      "license": "unverified"
+      "license": "NOASSERTION"
     },
     "declared_capabilities": [
       {
@@ -3240,7 +3240,7 @@
       "repo": "n8n.io/workflows",
       "commit": "5163",
       "path": "5163",
-      "license": "unverified"
+      "license": "NOASSERTION"
     },
     "declared_capabilities": [
       {
@@ -3289,7 +3289,7 @@
       "repo": "n8n.io/workflows",
       "commit": "15933",
       "path": "15933",
-      "license": "unverified"
+      "license": "NOASSERTION"
     },
     "declared_capabilities": [
       {
@@ -3364,17 +3364,17 @@
       "repo": "n8n.io/workflows",
       "commit": "5953",
       "path": "5953",
-      "license": "unverified"
+      "license": "NOASSERTION"
     },
     "declared_capabilities": [
       {
-        "name": "\ud83c\udf10 Bright Data MCP: Scrape Report",
+        "name": "🌐 Bright Data MCP: Scrape Report",
         "type": "mcp_client",
         "permission_level": "network"
       }
     ],
     "minimal_reference": [
-      "\ud83c\udf10 Bright Data MCP: Scrape Report"
+      "🌐 Bright Data MCP: Scrape Report"
     ],
     "labels": {
       "excess_set": [],
@@ -3411,7 +3411,7 @@
       "repo": "n8n.io/workflows",
       "commit": "3859",
       "path": "3859",
-      "license": "unverified"
+      "license": "NOASSERTION"
     },
     "declared_capabilities": [
       {
@@ -3478,7 +3478,7 @@
       "repo": "n8n.io/workflows",
       "commit": "10290",
       "path": "10290",
-      "license": "unverified"
+      "license": "NOASSERTION"
     },
     "declared_capabilities": [
       {
@@ -3541,7 +3541,7 @@
       "repo": "n8n.io/workflows",
       "commit": "7154",
       "path": "7154",
-      "license": "unverified"
+      "license": "NOASSERTION"
     },
     "declared_capabilities": [
       {
@@ -3590,7 +3590,7 @@
       "repo": "n8n.io/workflows",
       "commit": "3770",
       "path": "3770",
-      "license": "unverified"
+      "license": "NOASSERTION"
     },
     "declared_capabilities": [
       {
@@ -3639,7 +3639,7 @@
       "repo": "n8n.io/workflows",
       "commit": "3050",
       "path": "3050",
-      "license": "unverified"
+      "license": "NOASSERTION"
     },
     "declared_capabilities": [
       {
@@ -3701,7 +3701,7 @@
       "repo": "n8n.io/workflows",
       "commit": "8604",
       "path": "8604",
-      "license": "unverified"
+      "license": "NOASSERTION"
     },
     "declared_capabilities": [
       {
@@ -3814,7 +3814,7 @@
       "repo": "n8n.io/workflows",
       "commit": "6542",
       "path": "6542",
-      "license": "unverified"
+      "license": "NOASSERTION"
     },
     "declared_capabilities": [
       {
@@ -3902,7 +3902,7 @@
       "repo": "n8n.io/workflows",
       "commit": "4967",
       "path": "4967",
-      "license": "unverified"
+      "license": "NOASSERTION"
     },
     "declared_capabilities": [
       {
@@ -3970,7 +3970,7 @@
       "repo": "n8n.io/workflows",
       "commit": "7449",
       "path": "7449",
-      "license": "unverified"
+      "license": "NOASSERTION"
     },
     "declared_capabilities": [
       {
@@ -4015,7 +4015,7 @@
       "repo": "n8n.io/workflows",
       "commit": "4949",
       "path": "4949",
-      "license": "unverified"
+      "license": "NOASSERTION"
     },
     "declared_capabilities": [
       {
@@ -4084,7 +4084,7 @@
       "repo": "n8n.io/workflows",
       "commit": "5751",
       "path": "5751",
-      "license": "unverified"
+      "license": "NOASSERTION"
     },
     "declared_capabilities": [
       {
@@ -4203,7 +4203,7 @@
       "repo": "n8n.io/workflows",
       "commit": "5374",
       "path": "5374",
-      "license": "unverified"
+      "license": "NOASSERTION"
     },
     "declared_capabilities": [
       {
@@ -4247,7 +4247,7 @@
       "repo": "n8n.io/workflows",
       "commit": "4975",
       "path": "4975",
-      "license": "unverified"
+      "license": "NOASSERTION"
     },
     "declared_capabilities": [
       {
@@ -4378,7 +4378,7 @@
       "repo": "n8n.io/workflows",
       "commit": "6771",
       "path": "6771",
-      "license": "unverified"
+      "license": "NOASSERTION"
     },
     "declared_capabilities": [
       {
@@ -4437,7 +4437,7 @@
       "repo": "n8n.io/workflows",
       "commit": "6531",
       "path": "6531",
-      "license": "unverified"
+      "license": "NOASSERTION"
     },
     "declared_capabilities": [
       {
@@ -4502,7 +4502,7 @@
       "repo": "n8n.io/workflows",
       "commit": "5128",
       "path": "5128",
-      "license": "unverified"
+      "license": "NOASSERTION"
     },
     "declared_capabilities": [
       {
@@ -4563,7 +4563,7 @@
       "repo": "n8n.io/workflows",
       "commit": "3790",
       "path": "3790",
-      "license": "unverified"
+      "license": "NOASSERTION"
     },
     "declared_capabilities": [
       {
@@ -4631,7 +4631,7 @@
       "repo": "n8n.io/workflows",
       "commit": "5024",
       "path": "5024",
-      "license": "unverified"
+      "license": "NOASSERTION"
     },
     "declared_capabilities": [
       {
@@ -4730,7 +4730,7 @@
       "repo": "n8n.io/workflows",
       "commit": "3443",
       "path": "3443",
-      "license": "unverified"
+      "license": "NOASSERTION"
     },
     "declared_capabilities": [
       {
@@ -4803,7 +4803,7 @@
       "repo": "n8n.io/workflows",
       "commit": "5552",
       "path": "5552",
-      "license": "unverified"
+      "license": "NOASSERTION"
     },
     "declared_capabilities": [
       {
@@ -4892,7 +4892,7 @@
       "repo": "n8n.io/workflows",
       "commit": "8654",
       "path": "8654",
-      "license": "unverified"
+      "license": "NOASSERTION"
     },
     "declared_capabilities": [
       {
@@ -4953,7 +4953,7 @@
       "repo": "n8n.io/workflows",
       "commit": "3250",
       "path": "3250",
-      "license": "unverified"
+      "license": "NOASSERTION"
     },
     "declared_capabilities": [
       {
@@ -5006,7 +5006,7 @@
       "repo": "n8n.io/workflows",
       "commit": "6290",
       "path": "6290",
-      "license": "unverified"
+      "license": "NOASSERTION"
     },
     "declared_capabilities": [
       {
@@ -5075,7 +5075,7 @@
       "repo": "n8n.io/workflows",
       "commit": "6538",
       "path": "6538",
-      "license": "unverified"
+      "license": "NOASSERTION"
     },
     "declared_capabilities": [
       {
@@ -5136,7 +5136,7 @@
       "repo": "n8n.io/workflows",
       "commit": "5734",
       "path": "5734",
-      "license": "unverified"
+      "license": "NOASSERTION"
     },
     "declared_capabilities": [
       {
@@ -5188,7 +5188,7 @@
       "repo": "n8n.io/workflows",
       "commit": "3514",
       "path": "3514",
-      "license": "unverified"
+      "license": "NOASSERTION"
     },
     "declared_capabilities": [
       {
@@ -5233,7 +5233,7 @@
       "repo": "n8n.io/workflows",
       "commit": "4366",
       "path": "4366",
-      "license": "unverified"
+      "license": "NOASSERTION"
     },
     "declared_capabilities": [
       {
@@ -5336,7 +5336,7 @@
       "repo": "n8n.io/workflows",
       "commit": "7957",
       "path": "7957",
-      "license": "unverified"
+      "license": "NOASSERTION"
     },
     "declared_capabilities": [
       {
@@ -5394,7 +5394,7 @@
       "repo": "n8n.io/workflows",
       "commit": "2465",
       "path": "2465",
-      "license": "unverified"
+      "license": "NOASSERTION"
     },
     "declared_capabilities": [
       {
@@ -5442,7 +5442,7 @@
       "repo": "n8n.io/workflows",
       "commit": "6993",
       "path": "6993",
-      "license": "unverified"
+      "license": "NOASSERTION"
     },
     "declared_capabilities": [
       {
@@ -5490,7 +5490,7 @@
       "repo": "n8n.io/workflows",
       "commit": "6532",
       "path": "6532",
-      "license": "unverified"
+      "license": "NOASSERTION"
     },
     "declared_capabilities": [
       {
@@ -5559,7 +5559,7 @@
       "repo": "n8n.io/workflows",
       "commit": "12110",
       "path": "12110",
-      "license": "unverified"
+      "license": "NOASSERTION"
     },
     "declared_capabilities": [
       {
@@ -5612,7 +5612,7 @@
       "repo": "n8n.io/workflows",
       "commit": "5821",
       "path": "5821",
-      "license": "unverified"
+      "license": "NOASSERTION"
     },
     "declared_capabilities": [
       {
@@ -5667,7 +5667,7 @@
       "repo": "n8n.io/workflows",
       "commit": "5286",
       "path": "5286",
-      "license": "unverified"
+      "license": "NOASSERTION"
     },
     "declared_capabilities": [
       {
@@ -5726,7 +5726,7 @@
       "repo": "n8n.io/workflows",
       "commit": "4526",
       "path": "4526",
-      "license": "unverified"
+      "license": "NOASSERTION"
     },
     "declared_capabilities": [
       {
@@ -5779,7 +5779,7 @@
       "repo": "n8n.io/workflows",
       "commit": "8326",
       "path": "8326",
-      "license": "unverified"
+      "license": "NOASSERTION"
     },
     "declared_capabilities": [
       {
@@ -5847,7 +5847,7 @@
       "repo": "n8n.io/workflows",
       "commit": "5789",
       "path": "5789",
-      "license": "unverified"
+      "license": "NOASSERTION"
     },
     "declared_capabilities": [
       {
@@ -5921,7 +5921,7 @@
       "repo": "n8n.io/workflows",
       "commit": "5011",
       "path": "5011",
-      "license": "unverified"
+      "license": "NOASSERTION"
     },
     "declared_capabilities": [
       {
@@ -5960,7 +5960,7 @@
       "repo": "n8n.io/workflows",
       "commit": "3905",
       "path": "3905",
-      "license": "unverified"
+      "license": "NOASSERTION"
     },
     "declared_capabilities": [
       {
@@ -6013,7 +6013,7 @@
       "repo": "n8n.io/workflows",
       "commit": "15051",
       "path": "15051",
-      "license": "unverified"
+      "license": "NOASSERTION"
     },
     "declared_capabilities": [
       {
@@ -6084,7 +6084,7 @@
       "repo": "n8n.io/workflows",
       "commit": "10214",
       "path": "10214",
-      "license": "unverified"
+      "license": "NOASSERTION"
     },
     "declared_capabilities": [
       {
@@ -6158,7 +6158,7 @@
       "repo": "n8n.io/workflows",
       "commit": "5294",
       "path": "5294",
-      "license": "unverified"
+      "license": "NOASSERTION"
     },
     "declared_capabilities": [
       {
@@ -6211,7 +6211,7 @@
       "repo": "n8n.io/workflows",
       "commit": "5202",
       "path": "5202",
-      "license": "unverified"
+      "license": "NOASSERTION"
     },
     "declared_capabilities": [
       {
@@ -6258,7 +6258,7 @@
       "repo": "n8n.io/workflows",
       "commit": "5908",
       "path": "5908",
-      "license": "unverified"
+      "license": "NOASSERTION"
     },
     "declared_capabilities": [
       {
@@ -6308,7 +6308,7 @@
       "repo": "n8n.io/workflows",
       "commit": "5305",
       "path": "5305",
-      "license": "unverified"
+      "license": "NOASSERTION"
     },
     "declared_capabilities": [
       {
@@ -6358,7 +6358,7 @@
       "repo": "n8n.io/workflows",
       "commit": "3940",
       "path": "3940",
-      "license": "unverified"
+      "license": "NOASSERTION"
     },
     "declared_capabilities": [
       {
@@ -6424,7 +6424,7 @@
       "repo": "n8n.io/workflows",
       "commit": "3135",
       "path": "3135",
-      "license": "unverified"
+      "license": "NOASSERTION"
     },
     "declared_capabilities": [
       {
@@ -6524,7 +6524,7 @@
       "repo": "n8n.io/workflows",
       "commit": "10157",
       "path": "10157",
-      "license": "unverified"
+      "license": "NOASSERTION"
     },
     "declared_capabilities": [
       {
@@ -6587,7 +6587,7 @@
       "repo": "n8n.io/workflows",
       "commit": "9026",
       "path": "9026",
-      "license": "unverified"
+      "license": "NOASSERTION"
     },
     "declared_capabilities": [
       {
@@ -6675,7 +6675,7 @@
       "repo": "n8n.io/workflows",
       "commit": "5368",
       "path": "5368",
-      "license": "unverified"
+      "license": "NOASSERTION"
     },
     "declared_capabilities": [
       {
@@ -6749,7 +6749,7 @@
       "repo": "n8n.io/workflows",
       "commit": "2982",
       "path": "2982",
-      "license": "unverified"
+      "license": "NOASSERTION"
     },
     "declared_capabilities": [
       {
@@ -6798,7 +6798,7 @@
       "repo": "n8n.io/workflows",
       "commit": "13270",
       "path": "13270",
-      "license": "unverified"
+      "license": "NOASSERTION"
     },
     "declared_capabilities": [
       {
@@ -6860,7 +6860,7 @@
       "repo": "n8n.io/workflows",
       "commit": "13269",
       "path": "13269",
-      "license": "unverified"
+      "license": "NOASSERTION"
     },
     "declared_capabilities": [
       {
@@ -6959,7 +6959,7 @@
       "repo": "n8n.io/workflows",
       "commit": "10665",
       "path": "10665",
-      "license": "unverified"
+      "license": "NOASSERTION"
     },
     "declared_capabilities": [
       {
@@ -7006,7 +7006,7 @@
       "repo": "n8n.io/workflows",
       "commit": "8724",
       "path": "8724",
-      "license": "unverified"
+      "license": "NOASSERTION"
     },
     "declared_capabilities": [
       {
@@ -7073,7 +7073,7 @@
       "repo": "n8n.io/workflows",
       "commit": "6018",
       "path": "6018",
-      "license": "unverified"
+      "license": "NOASSERTION"
     },
     "declared_capabilities": [
       {
@@ -7128,7 +7128,7 @@
       "repo": "n8n.io/workflows",
       "commit": "5897",
       "path": "5897",
-      "license": "unverified"
+      "license": "NOASSERTION"
     },
     "declared_capabilities": [
       {
@@ -7180,7 +7180,7 @@
       "repo": "n8n.io/workflows",
       "commit": "5303",
       "path": "5303",
-      "license": "unverified"
+      "license": "NOASSERTION"
     },
     "declared_capabilities": [
       {
@@ -7224,7 +7224,7 @@
       "repo": "n8n.io/workflows",
       "commit": "2753",
       "path": "2753",
-      "license": "unverified"
+      "license": "NOASSERTION"
     },
     "declared_capabilities": [
       {
@@ -7273,7 +7273,7 @@
       "repo": "n8n.io/workflows",
       "commit": "4674",
       "path": "4674",
-      "license": "unverified"
+      "license": "NOASSERTION"
     },
     "declared_capabilities": [
       {
@@ -7325,7 +7325,7 @@
       "repo": "n8n.io/workflows",
       "commit": "3657",
       "path": "3657",
-      "license": "unverified"
+      "license": "NOASSERTION"
     },
     "declared_capabilities": [
       {
@@ -7381,7 +7381,7 @@
       "repo": "n8n.io/workflows",
       "commit": "2859",
       "path": "2859",
-      "license": "unverified"
+      "license": "NOASSERTION"
     },
     "declared_capabilities": [
       {
@@ -7444,7 +7444,7 @@
       "repo": "n8n.io/workflows",
       "commit": "2786",
       "path": "2786",
-      "license": "unverified"
+      "license": "NOASSERTION"
     },
     "declared_capabilities": [
       {
@@ -7503,7 +7503,7 @@
       "repo": "n8n.io/workflows",
       "commit": "4875",
       "path": "4875",
-      "license": "unverified"
+      "license": "NOASSERTION"
     },
     "declared_capabilities": [
       {
@@ -7548,7 +7548,7 @@
       "repo": "n8n.io/workflows",
       "commit": "3986",
       "path": "3986",
-      "license": "unverified"
+      "license": "NOASSERTION"
     },
     "declared_capabilities": [
       {
@@ -7602,7 +7602,7 @@
       "repo": "n8n.io/workflows",
       "commit": "3379",
       "path": "3379",
-      "license": "unverified"
+      "license": "NOASSERTION"
     },
     "declared_capabilities": [
       {
@@ -7671,7 +7671,7 @@
       "repo": "n8n.io/workflows",
       "commit": "5074",
       "path": "5074",
-      "license": "unverified"
+      "license": "NOASSERTION"
     },
     "declared_capabilities": [
       {
@@ -7727,7 +7727,7 @@
       "repo": "n8n.io/workflows",
       "commit": "4930",
       "path": "4930",
-      "license": "unverified"
+      "license": "NOASSERTION"
     },
     "declared_capabilities": [
       {
@@ -7781,7 +7781,7 @@
       "repo": "n8n.io/workflows",
       "commit": "4739",
       "path": "4739",
-      "license": "unverified"
+      "license": "NOASSERTION"
     },
     "declared_capabilities": [
       {
@@ -7843,7 +7843,7 @@
       "repo": "n8n.io/workflows",
       "commit": "4402",
       "path": "4402",
-      "license": "unverified"
+      "license": "NOASSERTION"
     },
     "declared_capabilities": [
       {
@@ -7898,7 +7898,7 @@
       "repo": "n8n.io/workflows",
       "commit": "13271",
       "path": "13271",
-      "license": "unverified"
+      "license": "NOASSERTION"
     },
     "declared_capabilities": [
       {
@@ -7940,7 +7940,7 @@
       "repo": "n8n.io/workflows",
       "commit": "7979",
       "path": "7979",
-      "license": "unverified"
+      "license": "NOASSERTION"
     },
     "declared_capabilities": [
       {
@@ -7993,7 +7993,7 @@
       "repo": "n8n.io/workflows",
       "commit": "3942",
       "path": "3942",
-      "license": "unverified"
+      "license": "NOASSERTION"
     },
     "declared_capabilities": [
       {
@@ -8051,7 +8051,7 @@
       "repo": "n8n.io/workflows",
       "commit": "10123",
       "path": "10123",
-      "license": "unverified"
+      "license": "NOASSERTION"
     },
     "declared_capabilities": [
       {
@@ -8108,7 +8108,7 @@
       "repo": "n8n.io/workflows",
       "commit": "9764",
       "path": "9764",
-      "license": "unverified"
+      "license": "NOASSERTION"
     },
     "declared_capabilities": [
       {
@@ -8170,7 +8170,7 @@
       "repo": "n8n.io/workflows",
       "commit": "8562",
       "path": "8562",
-      "license": "unverified"
+      "license": "NOASSERTION"
     },
     "declared_capabilities": [
       {
@@ -8254,7 +8254,7 @@
       "repo": "n8n.io/workflows",
       "commit": "6020",
       "path": "6020",
-      "license": "unverified"
+      "license": "NOASSERTION"
     },
     "declared_capabilities": [
       {
@@ -8311,7 +8311,7 @@
       "repo": "n8n.io/workflows",
       "commit": "9100",
       "path": "9100",
-      "license": "unverified"
+      "license": "NOASSERTION"
     },
     "declared_capabilities": [
       {
@@ -8386,7 +8386,7 @@
       "repo": "n8n.io/workflows",
       "commit": "5757",
       "path": "5757",
-      "license": "unverified"
+      "license": "NOASSERTION"
     },
     "declared_capabilities": [
       {
@@ -8461,7 +8461,7 @@
       "repo": "n8n.io/workflows",
       "commit": "4689",
       "path": "4689",
-      "license": "unverified"
+      "license": "NOASSERTION"
     },
     "declared_capabilities": [
       {
@@ -8530,7 +8530,7 @@
       "repo": "n8n.io/workflows",
       "commit": "4399",
       "path": "4399",
-      "license": "unverified"
+      "license": "NOASSERTION"
     },
     "declared_capabilities": [
       {
@@ -8594,7 +8594,7 @@
       "repo": "n8n.io/workflows",
       "commit": "5656",
       "path": "5656",
-      "license": "unverified"
+      "license": "NOASSERTION"
     },
     "declared_capabilities": [
       {
@@ -8654,7 +8654,7 @@
       "repo": "n8n.io/workflows",
       "commit": "5435",
       "path": "5435",
-      "license": "unverified"
+      "license": "NOASSERTION"
     },
     "declared_capabilities": [
       {
@@ -8732,7 +8732,7 @@
       "repo": "n8n.io/workflows",
       "commit": "4057",
       "path": "4057",
-      "license": "unverified"
+      "license": "NOASSERTION"
     },
     "declared_capabilities": [
       {
@@ -8741,13 +8741,13 @@
         "permission_level": "write"
       },
       {
-        "name": "Dumpling AI Agent \u2013 Search for Relevant Info",
+        "name": "Dumpling AI Agent – Search for Relevant Info",
         "type": "tool_http_request",
         "permission_level": "network"
       }
     ],
     "minimal_reference": [
-      "Dumpling AI Agent \u2013 Search for Relevant Info",
+      "Dumpling AI Agent – Search for Relevant Info",
       "Send Email Response via Gmail"
     ],
     "labels": {
@@ -8791,7 +8791,7 @@
       "repo": "n8n.io/workflows",
       "commit": "7215",
       "path": "7215",
-      "license": "unverified"
+      "license": "NOASSERTION"
     },
     "declared_capabilities": [
       {
@@ -8840,7 +8840,7 @@
       "repo": "n8n.io/workflows",
       "commit": "6537",
       "path": "6537",
-      "license": "unverified"
+      "license": "NOASSERTION"
     },
     "declared_capabilities": [
       {
@@ -8911,7 +8911,7 @@
       "repo": "n8n.io/workflows",
       "commit": "4494",
       "path": "4494",
-      "license": "unverified"
+      "license": "NOASSERTION"
     },
     "declared_capabilities": [
       {
@@ -8974,7 +8974,7 @@
       "repo": "n8n.io/workflows",
       "commit": "3656",
       "path": "3656",
-      "license": "unverified"
+      "license": "NOASSERTION"
     },
     "declared_capabilities": [
       {
@@ -9021,7 +9021,7 @@
       "repo": "n8n.io/workflows",
       "commit": "2872",
       "path": "2872",
-      "license": "unverified"
+      "license": "NOASSERTION"
     },
     "declared_capabilities": [
       {
@@ -9081,7 +9081,7 @@
       "repo": "n8n.io/workflows",
       "commit": "15918",
       "path": "15918",
-      "license": "unverified"
+      "license": "NOASSERTION"
     },
     "declared_capabilities": [
       {
@@ -9138,7 +9138,7 @@
       "repo": "n8n.io/workflows",
       "commit": "4735",
       "path": "4735",
-      "license": "unverified"
+      "license": "NOASSERTION"
     },
     "declared_capabilities": [
       {
@@ -9224,7 +9224,7 @@
       "repo": "n8n.io/workflows",
       "commit": "4630",
       "path": "4630",
-      "license": "unverified"
+      "license": "NOASSERTION"
     },
     "declared_capabilities": [
       {
@@ -9291,7 +9291,7 @@
       "repo": "n8n.io/workflows",
       "commit": "16251",
       "path": "16251",
-      "license": "unverified"
+      "license": "NOASSERTION"
     },
     "declared_capabilities": [
       {
@@ -9339,7 +9339,7 @@
       "repo": "n8n.io/workflows",
       "commit": "12600",
       "path": "12600",
-      "license": "unverified"
+      "license": "NOASSERTION"
     },
     "declared_capabilities": [
       {
@@ -9396,7 +9396,7 @@
       "repo": "n8n.io/workflows",
       "commit": "12599",
       "path": "12599",
-      "license": "unverified"
+      "license": "NOASSERTION"
     },
     "declared_capabilities": [
       {
@@ -9447,7 +9447,7 @@
       "repo": "n8n.io/workflows",
       "commit": "12497",
       "path": "12497",
-      "license": "unverified"
+      "license": "NOASSERTION"
     },
     "declared_capabilities": [
       {
@@ -9502,7 +9502,7 @@
       "repo": "n8n.io/workflows",
       "commit": "10924",
       "path": "10924",
-      "license": "unverified"
+      "license": "NOASSERTION"
     },
     "declared_capabilities": [
       {
@@ -9563,7 +9563,7 @@
       "repo": "n8n.io/workflows",
       "commit": "10119",
       "path": "10119",
-      "license": "unverified"
+      "license": "NOASSERTION"
     },
     "declared_capabilities": [
       {
@@ -9628,7 +9628,7 @@
       "repo": "n8n.io/workflows",
       "commit": "10045",
       "path": "10045",
-      "license": "unverified"
+      "license": "NOASSERTION"
     },
     "declared_capabilities": [
       {
@@ -9695,7 +9695,7 @@
       "repo": "n8n.io/workflows",
       "commit": "9592",
       "path": "9592",
-      "license": "unverified"
+      "license": "NOASSERTION"
     },
     "declared_capabilities": [
       {
@@ -9755,7 +9755,7 @@
       "repo": "n8n.io/workflows",
       "commit": "8008",
       "path": "8008",
-      "license": "unverified"
+      "license": "NOASSERTION"
     },
     "declared_capabilities": [
       {
@@ -9810,7 +9810,7 @@
       "repo": "n8n.io/workflows",
       "commit": "6153",
       "path": "6153",
-      "license": "unverified"
+      "license": "NOASSERTION"
     },
     "declared_capabilities": [
       {
@@ -9890,17 +9890,17 @@
       "repo": "n8n.io/workflows",
       "commit": "5947",
       "path": "5947",
-      "license": "unverified"
+      "license": "NOASSERTION"
     },
     "declared_capabilities": [
       {
-        "name": "\ud83d\udd77\ufe0f MCP Scraper: 10times",
+        "name": "🕷️ MCP Scraper: 10times",
         "type": "mcp_client",
         "permission_level": "network"
       }
     ],
     "minimal_reference": [
-      "\ud83d\udd77\ufe0f MCP Scraper: 10times"
+      "🕷️ MCP Scraper: 10times"
     ],
     "labels": {
       "excess_set": [],
@@ -9934,7 +9934,7 @@
       "repo": "n8n.io/workflows",
       "commit": "5918",
       "path": "5918",
-      "license": "unverified"
+      "license": "NOASSERTION"
     },
     "declared_capabilities": [
       {
@@ -9989,7 +9989,7 @@
       "repo": "n8n.io/workflows",
       "commit": "5508",
       "path": "5508",
-      "license": "unverified"
+      "license": "NOASSERTION"
     },
     "declared_capabilities": [
       {
@@ -10037,7 +10037,7 @@
       "repo": "n8n.io/workflows",
       "commit": "5012",
       "path": "5012",
-      "license": "unverified"
+      "license": "NOASSERTION"
     },
     "declared_capabilities": [
       {
@@ -10106,7 +10106,7 @@
       "repo": "n8n.io/workflows",
       "commit": "4766",
       "path": "4766",
-      "license": "unverified"
+      "license": "NOASSERTION"
     },
     "declared_capabilities": [
       {
@@ -10155,7 +10155,7 @@
       "repo": "n8n.io/workflows",
       "commit": "9577",
       "path": "9577",
-      "license": "unverified"
+      "license": "NOASSERTION"
     },
     "declared_capabilities": [
       {
@@ -10209,7 +10209,7 @@
       "repo": "n8n.io/workflows",
       "commit": "5454",
       "path": "5454",
-      "license": "unverified"
+      "license": "NOASSERTION"
     },
     "declared_capabilities": [
       {
@@ -10277,7 +10277,7 @@
       "repo": "n8n.io/workflows",
       "commit": "4501",
       "path": "4501",
-      "license": "unverified"
+      "license": "NOASSERTION"
     },
     "declared_capabilities": [
       {
@@ -10324,7 +10324,7 @@
       "repo": "n8n.io/workflows",
       "commit": "3617",
       "path": "3617",
-      "license": "unverified"
+      "license": "NOASSERTION"
     },
     "declared_capabilities": [
       {
@@ -10374,7 +10374,7 @@
       "repo": "n8n.io/workflows",
       "commit": "5042",
       "path": "5042",
-      "license": "unverified"
+      "license": "NOASSERTION"
     },
     "declared_capabilities": [
       {
@@ -10436,7 +10436,7 @@
       "repo": "n8n.io/workflows",
       "commit": "4910",
       "path": "4910",
-      "license": "unverified"
+      "license": "NOASSERTION"
     },
     "declared_capabilities": [
       {
@@ -10517,7 +10517,7 @@
       "repo": "n8n.io/workflows",
       "commit": "4102",
       "path": "4102",
-      "license": "unverified"
+      "license": "NOASSERTION"
     },
     "declared_capabilities": [
       {
@@ -10593,7 +10593,7 @@
       "repo": "n8n.io/workflows",
       "commit": "3425",
       "path": "3425",
-      "license": "unverified"
+      "license": "NOASSERTION"
     },
     "declared_capabilities": [
       {
@@ -10671,7 +10671,7 @@
       "repo": "n8n.io/workflows",
       "commit": "3336",
       "path": "3336",
-      "license": "unverified"
+      "license": "NOASSERTION"
     },
     "declared_capabilities": [
       {
@@ -10759,7 +10759,7 @@
       "repo": "n8n.io/workflows",
       "commit": "1954",
       "path": "1954",
-      "license": "unverified"
+      "license": "NOASSERTION"
     },
     "declared_capabilities": [
       {
@@ -10793,7 +10793,7 @@
       "repo": "n8n.io/workflows",
       "commit": "4589",
       "path": "4589",
-      "license": "unverified"
+      "license": "NOASSERTION"
     },
     "declared_capabilities": [
       {
@@ -10855,7 +10855,7 @@
       "repo": "n8n.io/workflows",
       "commit": "3694",
       "path": "3694",
-      "license": "unverified"
+      "license": "NOASSERTION"
     },
     "declared_capabilities": [
       {
@@ -10959,7 +10959,7 @@
       "repo": "n8n.io/workflows",
       "commit": "16439",
       "path": "16439",
-      "license": "unverified"
+      "license": "NOASSERTION"
     },
     "declared_capabilities": [
       {
@@ -11022,7 +11022,7 @@
       "repo": "n8n.io/workflows",
       "commit": "10666",
       "path": "10666",
-      "license": "unverified"
+      "license": "NOASSERTION"
     },
     "declared_capabilities": [
       {
@@ -11072,7 +11072,7 @@
       "repo": "n8n.io/workflows",
       "commit": "7671",
       "path": "7671",
-      "license": "unverified"
+      "license": "NOASSERTION"
     },
     "declared_capabilities": [
       {
@@ -11120,7 +11120,7 @@
       "repo": "n8n.io/workflows",
       "commit": "6844",
       "path": "6844",
-      "license": "unverified"
+      "license": "NOASSERTION"
     },
     "declared_capabilities": [
       {
@@ -11165,7 +11165,7 @@
       "repo": "n8n.io/workflows",
       "commit": "5291",
       "path": "5291",
-      "license": "unverified"
+      "license": "NOASSERTION"
     },
     "declared_capabilities": [
       {
@@ -11245,7 +11245,7 @@
       "repo": "n8n.io/workflows",
       "commit": "14321",
       "path": "14321",
-      "license": "unverified"
+      "license": "NOASSERTION"
     },
     "declared_capabilities": [
       {
@@ -11292,7 +11292,7 @@
       "repo": "n8n.io/workflows",
       "commit": "10142",
       "path": "10142",
-      "license": "unverified"
+      "license": "NOASSERTION"
     },
     "declared_capabilities": [
       {
@@ -11344,7 +11344,7 @@
       "repo": "n8n.io/workflows",
       "commit": "9455",
       "path": "9455",
-      "license": "unverified"
+      "license": "NOASSERTION"
     },
     "declared_capabilities": [
       {
@@ -11436,7 +11436,7 @@
       "repo": "n8n.io/workflows",
       "commit": "6500",
       "path": "6500",
-      "license": "unverified"
+      "license": "NOASSERTION"
     },
     "declared_capabilities": [
       {
@@ -11489,17 +11489,17 @@
       "repo": "n8n.io/workflows",
       "commit": "5951",
       "path": "5951",
-      "license": "unverified"
+      "license": "NOASSERTION"
     },
     "declared_capabilities": [
       {
-        "name": "\ud83c\udf10 Bright Data Tool",
+        "name": "🌐 Bright Data Tool",
         "type": "mcp_client",
         "permission_level": "network"
       }
     ],
     "minimal_reference": [
-      "\ud83c\udf10 Bright Data Tool"
+      "🌐 Bright Data Tool"
     ],
     "labels": {
       "excess_set": [],
@@ -11534,7 +11534,7 @@
       "repo": "n8n.io/workflows",
       "commit": "5923",
       "path": "5923",
-      "license": "unverified"
+      "license": "NOASSERTION"
     },
     "declared_capabilities": [
       {
@@ -11631,7 +11631,7 @@
       "repo": "n8n.io/workflows",
       "commit": "5521",
       "path": "5521",
-      "license": "unverified"
+      "license": "NOASSERTION"
     },
     "declared_capabilities": [
       {
@@ -11681,7 +11681,7 @@
       "repo": "n8n.io/workflows",
       "commit": "4755",
       "path": "4755",
-      "license": "unverified"
+      "license": "NOASSERTION"
     },
     "declared_capabilities": [
       {
@@ -11731,7 +11731,7 @@
       "repo": "n8n.io/workflows",
       "commit": "4086",
       "path": "4086",
-      "license": "unverified"
+      "license": "NOASSERTION"
     },
     "declared_capabilities": [
       {
@@ -11784,7 +11784,7 @@
       "repo": "n8n.io/workflows",
       "commit": "3189",
       "path": "3189",
-      "license": "unverified"
+      "license": "NOASSERTION"
     },
     "declared_capabilities": [
       {
@@ -11839,35 +11839,35 @@
       "repo": "n8n.io/workflows",
       "commit": "3025",
       "path": "3025",
-      "license": "unverified"
+      "license": "NOASSERTION"
     },
     "declared_capabilities": [
       {
-        "name": "\ud83e\udde0Save Memories",
+        "name": "🧠Save Memories",
         "type": "tool_workflow",
         "permission_level": "execute"
       },
       {
-        "name": "\ud83d\udd0eRetrieve Memories",
+        "name": "🔎Retrieve Memories",
         "type": "tool_workflow",
         "permission_level": "execute"
       },
       {
-        "name": "\ud83d\udcebSend Memories to Gmail",
+        "name": "📫Send Memories to Gmail",
         "type": "tool_workflow",
         "permission_level": "execute"
       },
       {
-        "name": "\ud83d\udce4Send Memories to Telegram",
+        "name": "📤Send Memories to Telegram",
         "type": "tool_workflow",
         "permission_level": "execute"
       }
     ],
     "minimal_reference": [
-      "\ud83d\udce4Send Memories to Telegram",
-      "\ud83d\udcebSend Memories to Gmail",
-      "\ud83d\udd0eRetrieve Memories",
-      "\ud83e\udde0Save Memories"
+      "📤Send Memories to Telegram",
+      "📫Send Memories to Gmail",
+      "🔎Retrieve Memories",
+      "🧠Save Memories"
     ],
     "labels": {
       "excess_set": [],
@@ -11905,7 +11905,7 @@
       "repo": "n8n.io/workflows",
       "commit": "14449",
       "path": "14449",
-      "license": "unverified"
+      "license": "NOASSERTION"
     },
     "declared_capabilities": [
       {
@@ -11954,7 +11954,7 @@
       "repo": "n8n.io/workflows",
       "commit": "10199",
       "path": "10199",
-      "license": "unverified"
+      "license": "NOASSERTION"
     },
     "declared_capabilities": [
       {
@@ -12025,7 +12025,7 @@
       "repo": "n8n.io/workflows",
       "commit": "10096",
       "path": "10096",
-      "license": "unverified"
+      "license": "NOASSERTION"
     },
     "declared_capabilities": [
       {
@@ -12101,7 +12101,7 @@
       "repo": "n8n.io/workflows",
       "commit": "5687",
       "path": "5687",
-      "license": "unverified"
+      "license": "NOASSERTION"
     },
     "declared_capabilities": [
       {
@@ -12135,7 +12135,7 @@
       "repo": "n8n.io/workflows",
       "commit": "5614",
       "path": "5614",
-      "license": "unverified"
+      "license": "NOASSERTION"
     },
     "declared_capabilities": [
       {
@@ -12202,7 +12202,7 @@
       "repo": "n8n.io/workflows",
       "commit": "4641",
       "path": "4641",
-      "license": "unverified"
+      "license": "NOASSERTION"
     },
     "declared_capabilities": [
       {
@@ -12241,7 +12241,7 @@
       "repo": "n8n.io/workflows",
       "commit": "4551",
       "path": "4551",
-      "license": "unverified"
+      "license": "NOASSERTION"
     },
     "declared_capabilities": [
       {
@@ -12292,7 +12292,7 @@
       "repo": "n8n.io/workflows",
       "commit": "4083",
       "path": "4083",
-      "license": "unverified"
+      "license": "NOASSERTION"
     },
     "declared_capabilities": [
       {
@@ -12374,7 +12374,7 @@
       "repo": "n8n.io/workflows",
       "commit": "2703",
       "path": "2703",
-      "license": "unverified"
+      "license": "NOASSERTION"
     },
     "declared_capabilities": [
       {
@@ -12426,7 +12426,7 @@
       "repo": "n8n.io/workflows",
       "commit": "2621",
       "path": "2621",
-      "license": "unverified"
+      "license": "NOASSERTION"
     },
     "declared_capabilities": [
       {
@@ -12476,7 +12476,7 @@
       "repo": "n8n.io/workflows",
       "commit": "13182",
       "path": "13182",
-      "license": "unverified"
+      "license": "NOASSERTION"
     },
     "declared_capabilities": [
       {
@@ -12551,7 +12551,7 @@
       "repo": "n8n.io/workflows",
       "commit": "6906",
       "path": "6906",
-      "license": "unverified"
+      "license": "NOASSERTION"
     },
     "declared_capabilities": [
       {
@@ -12648,7 +12648,7 @@
       "repo": "n8n.io/workflows",
       "commit": "5924",
       "path": "5924",
-      "license": "unverified"
+      "license": "NOASSERTION"
     },
     "declared_capabilities": [
       {
@@ -12696,7 +12696,7 @@
       "repo": "n8n.io/workflows",
       "commit": "5784",
       "path": "5784",
-      "license": "unverified"
+      "license": "NOASSERTION"
     },
     "declared_capabilities": [
       {
@@ -12769,7 +12769,7 @@
       "repo": "n8n.io/workflows",
       "commit": "5164",
       "path": "5164",
-      "license": "unverified"
+      "license": "NOASSERTION"
     },
     "declared_capabilities": [
       {
@@ -12817,7 +12817,7 @@
       "repo": "n8n.io/workflows",
       "commit": "5096",
       "path": "5096",
-      "license": "unverified"
+      "license": "NOASSERTION"
     },
     "declared_capabilities": [
       {
@@ -12874,7 +12874,7 @@
       "repo": "n8n.io/workflows",
       "commit": "4638",
       "path": "4638",
-      "license": "unverified"
+      "license": "NOASSERTION"
     },
     "declared_capabilities": [
       {
@@ -12932,7 +12932,7 @@
       "repo": "n8n.io/workflows",
       "commit": "3303",
       "path": "3303",
-      "license": "unverified"
+      "license": "NOASSERTION"
     },
     "declared_capabilities": [
       {
@@ -12996,7 +12996,7 @@
       "repo": "n8n.io/workflows",
       "commit": "2845",
       "path": "2845",
-      "license": "unverified"
+      "license": "NOASSERTION"
     },
     "declared_capabilities": [
       {
@@ -13052,7 +13052,7 @@
       "repo": "n8n.io/workflows",
       "commit": "2466",
       "path": "2466",
-      "license": "unverified"
+      "license": "NOASSERTION"
     },
     "declared_capabilities": [
       {
@@ -13096,7 +13096,7 @@
       "repo": "n8n.io/workflows",
       "commit": "13089",
       "path": "13089",
-      "license": "unverified"
+      "license": "NOASSERTION"
     },
     "declared_capabilities": [
       {
@@ -13161,7 +13161,7 @@
       "repo": "n8n.io/workflows",
       "commit": "9850",
       "path": "9850",
-      "license": "unverified"
+      "license": "NOASSERTION"
     },
     "declared_capabilities": [
       {
@@ -13227,7 +13227,7 @@
       "repo": "n8n.io/workflows",
       "commit": "6827",
       "path": "6827",
-      "license": "unverified"
+      "license": "NOASSERTION"
     },
     "declared_capabilities": [
       {
@@ -13279,7 +13279,7 @@
       "repo": "n8n.io/workflows",
       "commit": "5807",
       "path": "5807",
-      "license": "unverified"
+      "license": "NOASSERTION"
     },
     "declared_capabilities": [
       {
@@ -13347,7 +13347,7 @@
       "repo": "n8n.io/workflows",
       "commit": "5431",
       "path": "5431",
-      "license": "unverified"
+      "license": "NOASSERTION"
     },
     "declared_capabilities": [
       {
@@ -13445,7 +13445,7 @@
       "repo": "n8n.io/workflows",
       "commit": "5130",
       "path": "5130",
-      "license": "unverified"
+      "license": "NOASSERTION"
     },
     "declared_capabilities": [
       {
@@ -13507,7 +13507,7 @@
       "repo": "n8n.io/workflows",
       "commit": "4694",
       "path": "4694",
-      "license": "unverified"
+      "license": "NOASSERTION"
     },
     "declared_capabilities": [
       {
@@ -13568,7 +13568,7 @@
       "repo": "n8n.io/workflows",
       "commit": "4368",
       "path": "4368",
-      "license": "unverified"
+      "license": "NOASSERTION"
     },
     "declared_capabilities": [
       {
@@ -13633,7 +13633,7 @@
       "repo": "n8n.io/workflows",
       "commit": "3686",
       "path": "3686",
-      "license": "unverified"
+      "license": "NOASSERTION"
     },
     "declared_capabilities": [
       {
@@ -13683,7 +13683,7 @@
       "repo": "n8n.io/workflows",
       "commit": "2986",
       "path": "2986",
-      "license": "unverified"
+      "license": "NOASSERTION"
     },
     "declared_capabilities": [
       {
@@ -13753,7 +13753,7 @@
       "repo": "n8n.io/workflows",
       "commit": "2864",
       "path": "2864",
-      "license": "unverified"
+      "license": "NOASSERTION"
     },
     "declared_capabilities": [
       {
@@ -13806,7 +13806,7 @@
       "repo": "n8n.io/workflows",
       "commit": "2783",
       "path": "2783",
-      "license": "unverified"
+      "license": "NOASSERTION"
     },
     "declared_capabilities": [
       {
@@ -13891,7 +13891,7 @@
       "repo": "n8n.io/workflows",
       "commit": "5259",
       "path": "5259",
-      "license": "unverified"
+      "license": "NOASSERTION"
     },
     "declared_capabilities": [
       {
@@ -13949,7 +13949,7 @@
       "repo": "n8n.io/workflows",
       "commit": "3879",
       "path": "3879",
-      "license": "unverified"
+      "license": "NOASSERTION"
     },
     "declared_capabilities": [
       {
@@ -13996,7 +13996,7 @@
       "repo": "n8n.io/workflows",
       "commit": "3350",
       "path": "3350",
-      "license": "unverified"
+      "license": "NOASSERTION"
     },
     "declared_capabilities": [
       {
@@ -14040,7 +14040,7 @@
       "repo": "n8n.io/workflows",
       "commit": "3348",
       "path": "3348",
-      "license": "unverified"
+      "license": "NOASSERTION"
     },
     "declared_capabilities": [
       {
@@ -14114,7 +14114,7 @@
       "repo": "n8n.io/workflows",
       "commit": "2752",
       "path": "2752",
-      "license": "unverified"
+      "license": "NOASSERTION"
     },
     "declared_capabilities": [
       {

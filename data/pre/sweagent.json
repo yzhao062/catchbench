@@ -84,7 +84,7 @@
     ],
     "provenance": {
       "commit": "20240728_sweagent_gpt4o",
-      "license": "unverified",
+      "license": "NOASSERTION",
       "path": "astropy__astropy-12907.traj",
       "repo": "swe-bench/experiments"
     },
@@ -180,7 +180,7 @@
     ],
     "provenance": {
       "commit": "20240728_sweagent_gpt4o",
-      "license": "unverified",
+      "license": "NOASSERTION",
       "path": "astropy__astropy-14182.traj",
       "repo": "swe-bench/experiments"
     },
@@ -276,7 +276,7 @@
     ],
     "provenance": {
       "commit": "20240728_sweagent_gpt4o",
-      "license": "unverified",
+      "license": "NOASSERTION",
       "path": "astropy__astropy-14365.traj",
       "repo": "swe-bench/experiments"
     },
@@ -376,7 +376,7 @@
     ],
     "provenance": {
       "commit": "20240728_sweagent_gpt4o",
-      "license": "unverified",
+      "license": "NOASSERTION",
       "path": "astropy__astropy-14995.traj",
       "repo": "swe-bench/experiments"
     },
@@ -465,7 +465,7 @@
     ],
     "provenance": {
       "commit": "20240728_sweagent_gpt4o",
-      "license": "unverified",
+      "license": "NOASSERTION",
       "path": "astropy__astropy-6938.traj",
       "repo": "swe-bench/experiments"
     },
@@ -558,7 +558,7 @@
     ],
     "provenance": {
       "commit": "20240728_sweagent_gpt4o",
-      "license": "unverified",
+      "license": "NOASSERTION",
       "path": "astropy__astropy-7746.traj",
       "repo": "swe-bench/experiments"
     },
@@ -653,7 +653,7 @@
     ],
     "provenance": {
       "commit": "20240728_sweagent_gpt4o",
-      "license": "unverified",
+      "license": "NOASSERTION",
       "path": "django__django-10914.traj",
       "repo": "swe-bench/experiments"
     },
@@ -756,7 +756,7 @@
     ],
     "provenance": {
       "commit": "20240728_sweagent_gpt4o",
-      "license": "unverified",
+      "license": "NOASSERTION",
       "path": "django__django-10924.traj",
       "repo": "swe-bench/experiments"
     },
@@ -855,7 +855,7 @@
     ],
     "provenance": {
       "commit": "20240728_sweagent_gpt4o",
-      "license": "unverified",
+      "license": "NOASSERTION",
       "path": "django__django-11001.traj",
       "repo": "swe-bench/experiments"
     },
@@ -956,7 +956,7 @@
     ],
     "provenance": {
       "commit": "20240728_sweagent_gpt4o",
-      "license": "unverified",
+      "license": "NOASSERTION",
       "path": "django__django-11019.traj",
       "repo": "swe-bench/experiments"
     },
@@ -1052,7 +1052,7 @@
     ],
     "provenance": {
       "commit": "20240728_sweagent_gpt4o",
-      "license": "unverified",
+      "license": "NOASSERTION",
       "path": "django__django-11039.traj",
       "repo": "swe-bench/experiments"
     },
@@ -1152,7 +1152,7 @@
     ],
     "provenance": {
       "commit": "20240728_sweagent_gpt4o",
-      "license": "unverified",
+      "license": "NOASSERTION",
       "path": "django__django-11049.traj",
       "repo": "swe-bench/experiments"
     },
@@ -1248,7 +1248,7 @@
     ],
     "provenance": {
       "commit": "20240728_sweagent_gpt4o",
-      "license": "unverified",
+      "license": "NOASSERTION",
       "path": "django__django-11099.traj",
       "repo": "swe-bench/experiments"
     },
@@ -1345,7 +1345,7 @@
     ],
     "provenance": {
       "commit": "20240728_sweagent_gpt4o",
-      "license": "unverified",
+      "license": "NOASSERTION",
       "path": "django__django-11133.traj",
       "repo": "swe-bench/experiments"
     },
@@ -1441,7 +1441,7 @@
     ],
     "provenance": {
       "commit": "20240728_sweagent_gpt4o",
-      "license": "unverified",
+      "license": "NOASSERTION",
       "path": "django__django-11179.traj",
       "repo": "swe-bench/experiments"
     },
@@ -1539,7 +1539,7 @@
     ],
     "provenance": {
       "commit": "20240728_sweagent_gpt4o",
-      "license": "unverified",
+      "license": "NOASSERTION",
       "path": "django__django-11283.traj",
       "repo": "swe-bench/experiments"
     },
@@ -1646,7 +1646,7 @@
     ],
     "provenance": {
       "commit": "20240728_sweagent_gpt4o",
-      "license": "unverified",
+      "license": "NOASSERTION",
       "path": "django__django-11422.traj",
       "repo": "swe-bench/experiments"
     },
@@ -1745,7 +1745,7 @@
     ],
     "provenance": {
       "commit": "20240728_sweagent_gpt4o",
-      "license": "unverified",
+      "license": "NOASSERTION",
       "path": "django__django-11564.traj",
       "repo": "swe-bench/experiments"
     },
@@ -1845,7 +1845,7 @@
     ],
     "provenance": {
       "commit": "20240728_sweagent_gpt4o",
-      "license": "unverified",
+      "license": "NOASSERTION",
       "path": "django__django-11583.traj",
       "repo": "swe-bench/experiments"
     },
@@ -1945,7 +1945,7 @@
     ],
     "provenance": {
       "commit": "20240728_sweagent_gpt4o",
-      "license": "unverified",
+      "license": "NOASSERTION",
       "path": "django__django-11620.traj",
       "repo": "swe-bench/experiments"
     },
@@ -2042,7 +2042,7 @@
     ],
     "provenance": {
       "commit": "20240728_sweagent_gpt4o",
-      "license": "unverified",
+      "license": "NOASSERTION",
       "path": "django__django-11630.traj",
       "repo": "swe-bench/experiments"
     },
@@ -2137,7 +2137,7 @@
     ],
     "provenance": {
       "commit": "20240728_sweagent_gpt4o",
-      "license": "unverified",
+      "license": "NOASSERTION",
       "path": "django__django-11742.traj",
       "repo": "swe-bench/experiments"
     },
@@ -2232,7 +2232,7 @@
     ],
     "provenance": {
       "commit": "20240728_sweagent_gpt4o",
-      "license": "unverified",
+      "license": "NOASSERTION",
       "path": "django__django-11797.traj",
       "repo": "swe-bench/experiments"
     },
@@ -2328,7 +2328,7 @@
     ],
     "provenance": {
       "commit": "20240728_sweagent_gpt4o",
-      "license": "unverified",
+      "license": "NOASSERTION",
       "path": "django__django-11815.traj",
       "repo": "swe-bench/experiments"
     },
@@ -2424,7 +2424,7 @@
     ],
     "provenance": {
       "commit": "20240728_sweagent_gpt4o",
-      "license": "unverified",
+      "license": "NOASSERTION",
       "path": "django__django-11848.traj",
       "repo": "swe-bench/experiments"
     },
@@ -2514,7 +2514,7 @@
     ],
     "provenance": {
       "commit": "20240728_sweagent_gpt4o",
-      "license": "unverified",
+      "license": "NOASSERTION",
       "path": "django__django-11905.traj",
       "repo": "swe-bench/experiments"
     },
@@ -2610,7 +2610,7 @@
     ],
     "provenance": {
       "commit": "20240728_sweagent_gpt4o",
-      "license": "unverified",
+      "license": "NOASSERTION",
       "path": "django__django-11910.traj",
       "repo": "swe-bench/experiments"
     },
@@ -2706,7 +2706,7 @@
     ],
     "provenance": {
       "commit": "20240728_sweagent_gpt4o",
-      "license": "unverified",
+      "license": "NOASSERTION",
       "path": "django__django-11964.traj",
       "repo": "swe-bench/experiments"
     },
@@ -2805,7 +2805,7 @@
     ],
     "provenance": {
       "commit": "20240728_sweagent_gpt4o",
-      "license": "unverified",
+      "license": "NOASSERTION",
       "path": "django__django-11999.traj",
       "repo": "swe-bench/experiments"
     },
@@ -2898,7 +2898,7 @@
     ],
     "provenance": {
       "commit": "20240728_sweagent_gpt4o",
-      "license": "unverified",
+      "license": "NOASSERTION",
       "path": "django__django-12113.traj",
       "repo": "swe-bench/experiments"
     },
@@ -3007,7 +3007,7 @@
     ],
     "provenance": {
       "commit": "20240728_sweagent_gpt4o",
-      "license": "unverified",
+      "license": "NOASSERTION",
       "path": "django__django-12125.traj",
       "repo": "swe-bench/experiments"
     },
@@ -3107,7 +3107,7 @@
     ],
     "provenance": {
       "commit": "20240728_sweagent_gpt4o",
-      "license": "unverified",
+      "license": "NOASSERTION",
       "path": "django__django-12184.traj",
       "repo": "swe-bench/experiments"
     },
@@ -3204,7 +3204,7 @@
     ],
     "provenance": {
       "commit": "20240728_sweagent_gpt4o",
-      "license": "unverified",
+      "license": "NOASSERTION",
       "path": "django__django-12284.traj",
       "repo": "swe-bench/experiments"
     },
@@ -3299,7 +3299,7 @@
     ],
     "provenance": {
       "commit": "20240728_sweagent_gpt4o",
-      "license": "unverified",
+      "license": "NOASSERTION",
       "path": "django__django-12286.traj",
       "repo": "swe-bench/experiments"
     },
@@ -3394,7 +3394,7 @@
     ],
     "provenance": {
       "commit": "20240728_sweagent_gpt4o",
-      "license": "unverified",
+      "license": "NOASSERTION",
       "path": "django__django-12308.traj",
       "repo": "swe-bench/experiments"
     },
@@ -3489,7 +3489,7 @@
     ],
     "provenance": {
       "commit": "20240728_sweagent_gpt4o",
-      "license": "unverified",
+      "license": "NOASSERTION",
       "path": "django__django-12453.traj",
       "repo": "swe-bench/experiments"
     },
@@ -3592,7 +3592,7 @@
     ],
     "provenance": {
       "commit": "20240728_sweagent_gpt4o",
-      "license": "unverified",
+      "license": "NOASSERTION",
       "path": "django__django-12470.traj",
       "repo": "swe-bench/experiments"
     },
@@ -3688,7 +3688,7 @@
     ],
     "provenance": {
       "commit": "20240728_sweagent_gpt4o",
-      "license": "unverified",
+      "license": "NOASSERTION",
       "path": "django__django-12497.traj",
       "repo": "swe-bench/experiments"
     },
@@ -3787,7 +3787,7 @@
     ],
     "provenance": {
       "commit": "20240728_sweagent_gpt4o",
-      "license": "unverified",
+      "license": "NOASSERTION",
       "path": "django__django-12589.traj",
       "repo": "swe-bench/experiments"
     },
@@ -3884,7 +3884,7 @@
     ],
     "provenance": {
       "commit": "20240728_sweagent_gpt4o",
-      "license": "unverified",
+      "license": "NOASSERTION",
       "path": "django__django-12700.traj",
       "repo": "swe-bench/experiments"
     },
@@ -3982,7 +3982,7 @@
     ],
     "provenance": {
       "commit": "20240728_sweagent_gpt4o",
-      "license": "unverified",
+      "license": "NOASSERTION",
       "path": "django__django-12708.traj",
       "repo": "swe-bench/experiments"
     },
@@ -4081,7 +4081,7 @@
     ],
     "provenance": {
       "commit": "20240728_sweagent_gpt4o",
-      "license": "unverified",
+      "license": "NOASSERTION",
       "path": "django__django-12747.traj",
       "repo": "swe-bench/experiments"
     },
@@ -4174,7 +4174,7 @@
     ],
     "provenance": {
       "commit": "20240728_sweagent_gpt4o",
-      "license": "unverified",
+      "license": "NOASSERTION",
       "path": "django__django-12856.traj",
       "repo": "swe-bench/experiments"
     },
@@ -4269,7 +4269,7 @@
     ],
     "provenance": {
       "commit": "20240728_sweagent_gpt4o",
-      "license": "unverified",
+      "license": "NOASSERTION",
       "path": "django__django-12908.traj",
       "repo": "swe-bench/experiments"
     },
@@ -4366,7 +4366,7 @@
     ],
     "provenance": {
       "commit": "20240728_sweagent_gpt4o",
-      "license": "unverified",
+      "license": "NOASSERTION",
       "path": "django__django-12915.traj",
       "repo": "swe-bench/experiments"
     },
@@ -4462,7 +4462,7 @@
     ],
     "provenance": {
       "commit": "20240728_sweagent_gpt4o",
-      "license": "unverified",
+      "license": "NOASSERTION",
       "path": "django__django-12983.traj",
       "repo": "swe-bench/experiments"
     },
@@ -4557,7 +4557,7 @@
     ],
     "provenance": {
       "commit": "20240728_sweagent_gpt4o",
-      "license": "unverified",
+      "license": "NOASSERTION",
       "path": "django__django-13028.traj",
       "repo": "swe-bench/experiments"
     },
@@ -4658,7 +4658,7 @@
     ],
     "provenance": {
       "commit": "20240728_sweagent_gpt4o",
-      "license": "unverified",
+      "license": "NOASSERTION",
       "path": "django__django-13033.traj",
       "repo": "swe-bench/experiments"
     },
@@ -4756,7 +4756,7 @@
     ],
     "provenance": {
       "commit": "20240728_sweagent_gpt4o",
-      "license": "unverified",
+      "license": "NOASSERTION",
       "path": "django__django-13158.traj",
       "repo": "swe-bench/experiments"
     },
@@ -4854,7 +4854,7 @@
     ],
     "provenance": {
       "commit": "20240728_sweagent_gpt4o",
-      "license": "unverified",
+      "license": "NOASSERTION",
       "path": "django__django-13220.traj",
       "repo": "swe-bench/experiments"
     },
@@ -4951,7 +4951,7 @@
     ],
     "provenance": {
       "commit": "20240728_sweagent_gpt4o",
-      "license": "unverified",
+      "license": "NOASSERTION",
       "path": "django__django-13230.traj",
       "repo": "swe-bench/experiments"
     },
@@ -5044,7 +5044,7 @@
     ],
     "provenance": {
       "commit": "20240728_sweagent_gpt4o",
-      "license": "unverified",
+      "license": "NOASSERTION",
       "path": "django__django-13265.traj",
       "repo": "swe-bench/experiments"
     },
@@ -5147,7 +5147,7 @@
     ],
     "provenance": {
       "commit": "20240728_sweagent_gpt4o",
-      "license": "unverified",
+      "license": "NOASSERTION",
       "path": "django__django-13315.traj",
       "repo": "swe-bench/experiments"
     },
@@ -5242,7 +5242,7 @@
     ],
     "provenance": {
       "commit": "20240728_sweagent_gpt4o",
-      "license": "unverified",
+      "license": "NOASSERTION",
       "path": "django__django-13321.traj",
       "repo": "swe-bench/experiments"
     },
@@ -5344,7 +5344,7 @@
     ],
     "provenance": {
       "commit": "20240728_sweagent_gpt4o",
-      "license": "unverified",
+      "license": "NOASSERTION",
       "path": "django__django-13401.traj",
       "repo": "swe-bench/experiments"
     },
@@ -5439,7 +5439,7 @@
     ],
     "provenance": {
       "commit": "20240728_sweagent_gpt4o",
-      "license": "unverified",
+      "license": "NOASSERTION",
       "path": "django__django-13447.traj",
       "repo": "swe-bench/experiments"
     },
@@ -5536,7 +5536,7 @@
     ],
     "provenance": {
       "commit": "20240728_sweagent_gpt4o",
-      "license": "unverified",
+      "license": "NOASSERTION",
       "path": "django__django-13448.traj",
       "repo": "swe-bench/experiments"
     },
@@ -5640,7 +5640,7 @@
     ],
     "provenance": {
       "commit": "20240728_sweagent_gpt4o",
-      "license": "unverified",
+      "license": "NOASSERTION",
       "path": "django__django-13551.traj",
       "repo": "swe-bench/experiments"
     },
@@ -5739,7 +5739,7 @@
     ],
     "provenance": {
       "commit": "20240728_sweagent_gpt4o",
-      "license": "unverified",
+      "license": "NOASSERTION",
       "path": "django__django-13590.traj",
       "repo": "swe-bench/experiments"
     },
@@ -5834,7 +5834,7 @@
     ],
     "provenance": {
       "commit": "20240728_sweagent_gpt4o",
-      "license": "unverified",
+      "license": "NOASSERTION",
       "path": "django__django-13658.traj",
       "repo": "swe-bench/experiments"
     },
@@ -5933,7 +5933,7 @@
     ],
     "provenance": {
       "commit": "20240728_sweagent_gpt4o",
-      "license": "unverified",
+      "license": "NOASSERTION",
       "path": "django__django-13660.traj",
       "repo": "swe-bench/experiments"
     },
@@ -6034,7 +6034,7 @@
     ],
     "provenance": {
       "commit": "20240728_sweagent_gpt4o",
-      "license": "unverified",
+      "license": "NOASSERTION",
       "path": "django__django-13710.traj",
       "repo": "swe-bench/experiments"
     },
@@ -6131,7 +6131,7 @@
     ],
     "provenance": {
       "commit": "20240728_sweagent_gpt4o",
-      "license": "unverified",
+      "license": "NOASSERTION",
       "path": "django__django-13757.traj",
       "repo": "swe-bench/experiments"
     },
@@ -6229,7 +6229,7 @@
     ],
     "provenance": {
       "commit": "20240728_sweagent_gpt4o",
-      "license": "unverified",
+      "license": "NOASSERTION",
       "path": "django__django-13768.traj",
       "repo": "swe-bench/experiments"
     },
@@ -6325,7 +6325,7 @@
     ],
     "provenance": {
       "commit": "20240728_sweagent_gpt4o",
-      "license": "unverified",
+      "license": "NOASSERTION",
       "path": "django__django-13925.traj",
       "repo": "swe-bench/experiments"
     },
@@ -6428,7 +6428,7 @@
     ],
     "provenance": {
       "commit": "20240728_sweagent_gpt4o",
-      "license": "unverified",
+      "license": "NOASSERTION",
       "path": "django__django-13933.traj",
       "repo": "swe-bench/experiments"
     },
@@ -6527,7 +6527,7 @@
     ],
     "provenance": {
       "commit": "20240728_sweagent_gpt4o",
-      "license": "unverified",
+      "license": "NOASSERTION",
       "path": "django__django-13964.traj",
       "repo": "swe-bench/experiments"
     },
@@ -6628,7 +6628,7 @@
     ],
     "provenance": {
       "commit": "20240728_sweagent_gpt4o",
-      "license": "unverified",
+      "license": "NOASSERTION",
       "path": "django__django-14016.traj",
       "repo": "swe-bench/experiments"
     },
@@ -6724,7 +6724,7 @@
     ],
     "provenance": {
       "commit": "20240728_sweagent_gpt4o",
-      "license": "unverified",
+      "license": "NOASSERTION",
       "path": "django__django-14017.traj",
       "repo": "swe-bench/experiments"
     },
@@ -6817,7 +6817,7 @@
     ],
     "provenance": {
       "commit": "20240728_sweagent_gpt4o",
-      "license": "unverified",
+      "license": "NOASSERTION",
       "path": "django__django-14155.traj",
       "repo": "swe-bench/experiments"
     },
@@ -6912,7 +6912,7 @@
     ],
     "provenance": {
       "commit": "20240728_sweagent_gpt4o",
-      "license": "unverified",
+      "license": "NOASSERTION",
       "path": "django__django-14238.traj",
       "repo": "swe-bench/experiments"
     },
@@ -7013,7 +7013,7 @@
     ],
     "provenance": {
       "commit": "20240728_sweagent_gpt4o",
-      "license": "unverified",
+      "license": "NOASSERTION",
       "path": "django__django-14382.traj",
       "repo": "swe-bench/experiments"
     },
@@ -7112,7 +7112,7 @@
     ],
     "provenance": {
       "commit": "20240728_sweagent_gpt4o",
-      "license": "unverified",
+      "license": "NOASSERTION",
       "path": "django__django-14411.traj",
       "repo": "swe-bench/experiments"
     },
@@ -7209,7 +7209,7 @@
     ],
     "provenance": {
       "commit": "20240728_sweagent_gpt4o",
-      "license": "unverified",
+      "license": "NOASSERTION",
       "path": "django__django-14534.traj",
       "repo": "swe-bench/experiments"
     },
@@ -7304,7 +7304,7 @@
     ],
     "provenance": {
       "commit": "20240728_sweagent_gpt4o",
-      "license": "unverified",
+      "license": "NOASSERTION",
       "path": "django__django-14580.traj",
       "repo": "swe-bench/experiments"
     },
@@ -7406,7 +7406,7 @@
     ],
     "provenance": {
       "commit": "20240728_sweagent_gpt4o",
-      "license": "unverified",
+      "license": "NOASSERTION",
       "path": "django__django-14608.traj",
       "repo": "swe-bench/experiments"
     },
@@ -7502,7 +7502,7 @@
     ],
     "provenance": {
       "commit": "20240728_sweagent_gpt4o",
-      "license": "unverified",
+      "license": "NOASSERTION",
       "path": "django__django-14667.traj",
       "repo": "swe-bench/experiments"
     },
@@ -7598,7 +7598,7 @@
     ],
     "provenance": {
       "commit": "20240728_sweagent_gpt4o",
-      "license": "unverified",
+      "license": "NOASSERTION",
       "path": "django__django-14672.traj",
       "repo": "swe-bench/experiments"
     },
@@ -7698,7 +7698,7 @@
     ],
     "provenance": {
       "commit": "20240728_sweagent_gpt4o",
-      "license": "unverified",
+      "license": "NOASSERTION",
       "path": "django__django-14730.traj",
       "repo": "swe-bench/experiments"
     },
@@ -7794,7 +7794,7 @@
     ],
     "provenance": {
       "commit": "20240728_sweagent_gpt4o",
-      "license": "unverified",
+      "license": "NOASSERTION",
       "path": "django__django-14752.traj",
       "repo": "swe-bench/experiments"
     },
@@ -7896,7 +7896,7 @@
     ],
     "provenance": {
       "commit": "20240728_sweagent_gpt4o",
-      "license": "unverified",
+      "license": "NOASSERTION",
       "path": "django__django-14787.traj",
       "repo": "swe-bench/experiments"
     },
@@ -7989,7 +7989,7 @@
     ],
     "provenance": {
       "commit": "20240728_sweagent_gpt4o",
-      "license": "unverified",
+      "license": "NOASSERTION",
       "path": "django__django-14855.traj",
       "repo": "swe-bench/experiments"
     },
@@ -8089,7 +8089,7 @@
     ],
     "provenance": {
       "commit": "20240728_sweagent_gpt4o",
-      "license": "unverified",
+      "license": "NOASSERTION",
       "path": "django__django-14915.traj",
       "repo": "swe-bench/experiments"
     },
@@ -8185,7 +8185,7 @@
     ],
     "provenance": {
       "commit": "20240728_sweagent_gpt4o",
-      "license": "unverified",
+      "license": "NOASSERTION",
       "path": "django__django-14997.traj",
       "repo": "swe-bench/experiments"
     },
@@ -8295,7 +8295,7 @@
     ],
     "provenance": {
       "commit": "20240728_sweagent_gpt4o",
-      "license": "unverified",
+      "license": "NOASSERTION",
       "path": "django__django-14999.traj",
       "repo": "swe-bench/experiments"
     },
@@ -8391,7 +8391,7 @@
     ],
     "provenance": {
       "commit": "20240728_sweagent_gpt4o",
-      "license": "unverified",
+      "license": "NOASSERTION",
       "path": "django__django-15061.traj",
       "repo": "swe-bench/experiments"
     },
@@ -8487,7 +8487,7 @@
     ],
     "provenance": {
       "commit": "20240728_sweagent_gpt4o",
-      "license": "unverified",
+      "license": "NOASSERTION",
       "path": "django__django-15202.traj",
       "repo": "swe-bench/experiments"
     },
@@ -8583,7 +8583,7 @@
     ],
     "provenance": {
       "commit": "20240728_sweagent_gpt4o",
-      "license": "unverified",
+      "license": "NOASSERTION",
       "path": "django__django-15213.traj",
       "repo": "swe-bench/experiments"
     },
@@ -8679,7 +8679,7 @@
     ],
     "provenance": {
       "commit": "20240728_sweagent_gpt4o",
-      "license": "unverified",
+      "license": "NOASSERTION",
       "path": "django__django-15252.traj",
       "repo": "swe-bench/experiments"
     },
@@ -8780,7 +8780,7 @@
     ],
     "provenance": {
       "commit": "20240728_sweagent_gpt4o",
-      "license": "unverified",
+      "license": "NOASSERTION",
       "path": "django__django-15320.traj",
       "repo": "swe-bench/experiments"
     },
@@ -8878,7 +8878,7 @@
     ],
     "provenance": {
       "commit": "20240728_sweagent_gpt4o",
-      "license": "unverified",
+      "license": "NOASSERTION",
       "path": "django__django-15347.traj",
       "repo": "swe-bench/experiments"
     },
@@ -8976,7 +8976,7 @@
     ],
     "provenance": {
       "commit": "20240728_sweagent_gpt4o",
-      "license": "unverified",
+      "license": "NOASSERTION",
       "path": "django__django-15388.traj",
       "repo": "swe-bench/experiments"
     },
@@ -9077,7 +9077,7 @@
     ],
     "provenance": {
       "commit": "20240728_sweagent_gpt4o",
-      "license": "unverified",
+      "license": "NOASSERTION",
       "path": "django__django-15400.traj",
       "repo": "swe-bench/experiments"
     },
@@ -9170,7 +9170,7 @@
     ],
     "provenance": {
       "commit": "20240728_sweagent_gpt4o",
-      "license": "unverified",
+      "license": "NOASSERTION",
       "path": "django__django-15498.traj",
       "repo": "swe-bench/experiments"
     },
@@ -9265,7 +9265,7 @@
     ],
     "provenance": {
       "commit": "20240728_sweagent_gpt4o",
-      "license": "unverified",
+      "license": "NOASSERTION",
       "path": "django__django-15695.traj",
       "repo": "swe-bench/experiments"
     },
@@ -9356,7 +9356,7 @@
     ],
     "provenance": {
       "commit": "20240728_sweagent_gpt4o",
-      "license": "unverified",
+      "license": "NOASSERTION",
       "path": "django__django-15738.traj",
       "repo": "swe-bench/experiments"
     },
@@ -9456,7 +9456,7 @@
     ],
     "provenance": {
       "commit": "20240728_sweagent_gpt4o",
-      "license": "unverified",
+      "license": "NOASSERTION",
       "path": "django__django-15781.traj",
       "repo": "swe-bench/experiments"
     },
@@ -9551,7 +9551,7 @@
     ],
     "provenance": {
       "commit": "20240728_sweagent_gpt4o",
-      "license": "unverified",
+      "license": "NOASSERTION",
       "path": "django__django-15789.traj",
       "repo": "swe-bench/experiments"
     },
@@ -9644,7 +9644,7 @@
     ],
     "provenance": {
       "commit": "20240728_sweagent_gpt4o",
-      "license": "unverified",
+      "license": "NOASSERTION",
       "path": "django__django-15790.traj",
       "repo": "swe-bench/experiments"
     },
@@ -9737,7 +9737,7 @@
     ],
     "provenance": {
       "commit": "20240728_sweagent_gpt4o",
-      "license": "unverified",
+      "license": "NOASSERTION",
       "path": "django__django-15814.traj",
       "repo": "swe-bench/experiments"
     },
@@ -9839,7 +9839,7 @@
     ],
     "provenance": {
       "commit": "20240728_sweagent_gpt4o",
-      "license": "unverified",
+      "license": "NOASSERTION",
       "path": "django__django-15819.traj",
       "repo": "swe-bench/experiments"
     },
@@ -9935,7 +9935,7 @@
     ],
     "provenance": {
       "commit": "20240728_sweagent_gpt4o",
-      "license": "unverified",
+      "license": "NOASSERTION",
       "path": "django__django-15851.traj",
       "repo": "swe-bench/experiments"
     },
@@ -10030,7 +10030,7 @@
     ],
     "provenance": {
       "commit": "20240728_sweagent_gpt4o",
-      "license": "unverified",
+      "license": "NOASSERTION",
       "path": "django__django-15902.traj",
       "repo": "swe-bench/experiments"
     },
@@ -10123,7 +10123,7 @@
     ],
     "provenance": {
       "commit": "20240728_sweagent_gpt4o",
-      "license": "unverified",
+      "license": "NOASSERTION",
       "path": "django__django-15996.traj",
       "repo": "swe-bench/experiments"
     },
@@ -10219,7 +10219,7 @@
     ],
     "provenance": {
       "commit": "20240728_sweagent_gpt4o",
-      "license": "unverified",
+      "license": "NOASSERTION",
       "path": "django__django-16041.traj",
       "repo": "swe-bench/experiments"
     },
@@ -10320,7 +10320,7 @@
     ],
     "provenance": {
       "commit": "20240728_sweagent_gpt4o",
-      "license": "unverified",
+      "license": "NOASSERTION",
       "path": "django__django-16046.traj",
       "repo": "swe-bench/experiments"
     },
@@ -10417,7 +10417,7 @@
     ],
     "provenance": {
       "commit": "20240728_sweagent_gpt4o",
-      "license": "unverified",
+      "license": "NOASSERTION",
       "path": "django__django-16139.traj",
       "repo": "swe-bench/experiments"
     },
@@ -10519,7 +10519,7 @@
     ],
     "provenance": {
       "commit": "20240728_sweagent_gpt4o",
-      "license": "unverified",
+      "license": "NOASSERTION",
       "path": "django__django-16229.traj",
       "repo": "swe-bench/experiments"
     },
@@ -10618,7 +10618,7 @@
     ],
     "provenance": {
       "commit": "20240728_sweagent_gpt4o",
-      "license": "unverified",
+      "license": "NOASSERTION",
       "path": "django__django-16255.traj",
       "repo": "swe-bench/experiments"
     },
@@ -10713,7 +10713,7 @@
     ],
     "provenance": {
       "commit": "20240728_sweagent_gpt4o",
-      "license": "unverified",
+      "license": "NOASSERTION",
       "path": "django__django-16379.traj",
       "repo": "swe-bench/experiments"
     },
@@ -10813,7 +10813,7 @@
     ],
     "provenance": {
       "commit": "20240728_sweagent_gpt4o",
-      "license": "unverified",
+      "license": "NOASSERTION",
       "path": "django__django-16400.traj",
       "repo": "swe-bench/experiments"
     },
@@ -10916,7 +10916,7 @@
     ],
     "provenance": {
       "commit": "20240728_sweagent_gpt4o",
-      "license": "unverified",
+      "license": "NOASSERTION",
       "path": "django__django-16408.traj",
       "repo": "swe-bench/experiments"
     },
@@ -11011,7 +11011,7 @@
     ],
     "provenance": {
       "commit": "20240728_sweagent_gpt4o",
-      "license": "unverified",
+      "license": "NOASSERTION",
       "path": "django__django-16527.traj",
       "repo": "swe-bench/experiments"
     },
@@ -11109,7 +11109,7 @@
     ],
     "provenance": {
       "commit": "20240728_sweagent_gpt4o",
-      "license": "unverified",
+      "license": "NOASSERTION",
       "path": "django__django-16595.traj",
       "repo": "swe-bench/experiments"
     },
@@ -11204,7 +11204,7 @@
     ],
     "provenance": {
       "commit": "20240728_sweagent_gpt4o",
-      "license": "unverified",
+      "license": "NOASSERTION",
       "path": "django__django-16816.traj",
       "repo": "swe-bench/experiments"
     },
@@ -11299,7 +11299,7 @@
     ],
     "provenance": {
       "commit": "20240728_sweagent_gpt4o",
-      "license": "unverified",
+      "license": "NOASSERTION",
       "path": "django__django-16820.traj",
       "repo": "swe-bench/experiments"
     },
@@ -11395,7 +11395,7 @@
     ],
     "provenance": {
       "commit": "20240728_sweagent_gpt4o",
-      "license": "unverified",
+      "license": "NOASSERTION",
       "path": "django__django-16873.traj",
       "repo": "swe-bench/experiments"
     },
@@ -11491,7 +11491,7 @@
     ],
     "provenance": {
       "commit": "20240728_sweagent_gpt4o",
-      "license": "unverified",
+      "license": "NOASSERTION",
       "path": "django__django-16910.traj",
       "repo": "swe-bench/experiments"
     },
@@ -11590,7 +11590,7 @@
     ],
     "provenance": {
       "commit": "20240728_sweagent_gpt4o",
-      "license": "unverified",
+      "license": "NOASSERTION",
       "path": "django__django-17051.traj",
       "repo": "swe-bench/experiments"
     },
@@ -11693,7 +11693,7 @@
     ],
     "provenance": {
       "commit": "20240728_sweagent_gpt4o",
-      "license": "unverified",
+      "license": "NOASSERTION",
       "path": "django__django-17087.traj",
       "repo": "swe-bench/experiments"
     },
@@ -11789,7 +11789,7 @@
     ],
     "provenance": {
       "commit": "20240728_sweagent_gpt4o",
-      "license": "unverified",
+      "license": "NOASSERTION",
       "path": "matplotlib__matplotlib-22711.traj",
       "repo": "swe-bench/experiments"
     },
@@ -11889,7 +11889,7 @@
     ],
     "provenance": {
       "commit": "20240728_sweagent_gpt4o",
-      "license": "unverified",
+      "license": "NOASSERTION",
       "path": "mwaskom__seaborn-2848.traj",
       "repo": "swe-bench/experiments"
     },
@@ -11991,7 +11991,7 @@
     ],
     "provenance": {
       "commit": "20240728_sweagent_gpt4o",
-      "license": "unverified",
+      "license": "NOASSERTION",
       "path": "mwaskom__seaborn-3010.traj",
       "repo": "swe-bench/experiments"
     },
@@ -12090,7 +12090,7 @@
     ],
     "provenance": {
       "commit": "20240728_sweagent_gpt4o",
-      "license": "unverified",
+      "license": "NOASSERTION",
       "path": "mwaskom__seaborn-3190.traj",
       "repo": "swe-bench/experiments"
     },
@@ -12189,7 +12189,7 @@
     ],
     "provenance": {
       "commit": "20240728_sweagent_gpt4o",
-      "license": "unverified",
+      "license": "NOASSERTION",
       "path": "mwaskom__seaborn-3407.traj",
       "repo": "swe-bench/experiments"
     },
@@ -12279,7 +12279,7 @@
     ],
     "provenance": {
       "commit": "20240728_sweagent_gpt4o",
-      "license": "unverified",
+      "license": "NOASSERTION",
       "path": "pallets__flask-4045.traj",
       "repo": "swe-bench/experiments"
     },
@@ -12372,7 +12372,7 @@
     ],
     "provenance": {
       "commit": "20240728_sweagent_gpt4o",
-      "license": "unverified",
+      "license": "NOASSERTION",
       "path": "pallets__flask-4992.traj",
       "repo": "swe-bench/experiments"
     },
@@ -12471,7 +12471,7 @@
     ],
     "provenance": {
       "commit": "20240728_sweagent_gpt4o",
-      "license": "unverified",
+      "license": "NOASSERTION",
       "path": "pallets__flask-5063.traj",
       "repo": "swe-bench/experiments"
     },
@@ -12570,7 +12570,7 @@
     ],
     "provenance": {
       "commit": "20240728_sweagent_gpt4o",
-      "license": "unverified",
+      "license": "NOASSERTION",
       "path": "psf__requests-1963.traj",
       "repo": "swe-bench/experiments"
     },
@@ -12667,7 +12667,7 @@
     ],
     "provenance": {
       "commit": "20240728_sweagent_gpt4o",
-      "license": "unverified",
+      "license": "NOASSERTION",
       "path": "psf__requests-2148.traj",
       "repo": "swe-bench/experiments"
     },

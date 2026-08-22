@@ -14,10 +14,10 @@
       "identifier_kind": "immutable_revision",
       "record_count": 298,
       "declared_license_distribution": {
-        "Apache-2.0": 6,
+        "Apache-2.0": 9,
         "GPL-3.0": 9,
-        "MIT": 53,
-        "NOASSERTION": 230
+        "MIT": 132,
+        "NOASSERTION": 148
       },
       "upstream_identifiers": [
         {
@@ -58,7 +58,7 @@
           "upstream_url": "https://github.com/andreagroferreira/myAIDEVTEAM",
           "identifier": "f31b9d2c5a468fd757450448eb5fb6265dd7896c",
           "identifier_kind": "immutable_revision",
-          "declared_license": "NOASSERTION",
+          "declared_license": "MIT",
           "record_count": 15,
           "paths": [
             "src/config/agents.yaml"
@@ -91,7 +91,7 @@
           "upstream_url": "https://github.com/anshxl/vibecheck",
           "identifier": "eb7ec990ba6cf9c9752f71d8db7e4dce717fdbba",
           "identifier_kind": "immutable_revision",
-          "declared_license": "NOASSERTION",
+          "declared_license": "MIT",
           "record_count": 1,
           "paths": [
             "src/config/agents.yaml"
@@ -102,7 +102,7 @@
           "upstream_url": "https://github.com/AravindB98/Cerebro",
           "identifier": "54dda77852eb9206b9cd4252b0df76029bbeb21e",
           "identifier_kind": "immutable_revision",
-          "declared_license": "NOASSERTION",
+          "declared_license": "MIT",
           "record_count": 2,
           "paths": [
             "src/config/agents.yaml"
@@ -124,7 +124,7 @@
           "upstream_url": "https://github.com/arpankumarde/crew-ai-multi-agent-orchestration-support-team",
           "identifier": "32e2b3323d27fd7e0d3feb292f4c60d8cece6aeb",
           "identifier_kind": "immutable_revision",
-          "declared_license": "NOASSERTION",
+          "declared_license": "MIT",
           "record_count": 6,
           "paths": [
             "config/agents.yaml"
@@ -146,7 +146,7 @@
           "upstream_url": "https://github.com/barackm/conekthub",
           "identifier": "ade3490cd57be558c1aafcb2a277af368666ee5c",
           "identifier_kind": "immutable_revision",
-          "declared_license": "NOASSERTION",
+          "declared_license": "MIT",
           "record_count": 1,
           "paths": [
             "src/config/agents.yaml"
@@ -157,7 +157,7 @@
           "upstream_url": "https://github.com/Bhatteryash/E-commerce-Multi-Agent",
           "identifier": "64d8f4b4b32c8abab11835fc02b09ab426248cdb",
           "identifier_kind": "immutable_revision",
-          "declared_license": "NOASSERTION",
+          "declared_license": "MIT",
           "record_count": 2,
           "paths": [
             "src/config/agents.yaml"
@@ -168,7 +168,7 @@
           "upstream_url": "https://github.com/Bhavik-Jikadara/youtube-automation-agent",
           "identifier": "5ccb3f59e37bf7f2405e02dd38e99926d8a75375",
           "identifier_kind": "immutable_revision",
-          "declared_license": "NOASSERTION",
+          "declared_license": "MIT",
           "record_count": 2,
           "paths": [
             "src/config/agents.yaml"
@@ -323,7 +323,7 @@
           "upstream_url": "https://github.com/FamilOrujov/financial-researcher-agentic-ai",
           "identifier": "805b35284d4966181d94ed41a88bdd7b5f234837",
           "identifier_kind": "immutable_revision",
-          "declared_license": "NOASSERTION",
+          "declared_license": "MIT",
           "record_count": 1,
           "paths": [
             "src/config/agents.yaml"
@@ -345,7 +345,7 @@
           "upstream_url": "https://github.com/fredzolio/sms_public_health_monitor",
           "identifier": "5d1994ecbf8430770cf711f6269cd8236ecd5c9e",
           "identifier_kind": "immutable_revision",
-          "declared_license": "NOASSERTION",
+          "declared_license": "MIT",
           "record_count": 4,
           "paths": [
             "src/config/agents.yaml"
@@ -433,7 +433,7 @@
           "upstream_url": "https://github.com/gurezende/Crew_Writer",
           "identifier": "0e0c4358ece3abb2a90c43e12498eaa142be584e",
           "identifier_kind": "immutable_revision",
-          "declared_license": "NOASSERTION",
+          "declared_license": "MIT",
           "record_count": 2,
           "paths": [
             "config/agents.yaml"
@@ -545,7 +545,7 @@
           "upstream_url": "https://github.com/JasperHG90/rfcrew",
           "identifier": "ec1539c4595b5a24a9aa940ce9aaf324a9c32928",
           "identifier_kind": "immutable_revision",
-          "declared_license": "NOASSERTION",
+          "declared_license": "Apache-2.0",
           "record_count": 3,
           "paths": [
             "config/agents.yaml"
@@ -600,7 +600,7 @@
           "upstream_url": "https://github.com/ksriyesh/h1b_smart_job_matcher",
           "identifier": "8d06f38f0b5feb0b3d401ecfffedd288cccdb2d5",
           "identifier_kind": "immutable_revision",
-          "declared_license": "NOASSERTION",
+          "declared_license": "MIT",
           "record_count": 1,
           "paths": [
             "config/agents.yaml"
@@ -611,7 +611,7 @@
           "upstream_url": "https://github.com/kvrancic/interview-analyzer-archiver",
           "identifier": "932c38b31b020db6cc6b3b1834e5e85ce1b25925",
           "identifier_kind": "immutable_revision",
-          "declared_license": "NOASSERTION",
+          "declared_license": "MIT",
           "record_count": 2,
           "paths": [
             "config/agents.yaml"
@@ -634,7 +634,7 @@
           "upstream_url": "https://github.com/liangdabiao/crewai_stock_analysis_system",
           "identifier": "aab66c6a5782bb74542bdce6996baba30742e337",
           "identifier_kind": "immutable_revision",
-          "declared_license": "NOASSERTION",
+          "declared_license": "MIT",
           "record_count": 13,
           "paths": [
             "config/agents.yaml"
@@ -667,7 +667,7 @@
           "upstream_url": "https://github.com/Mira-dmh/CrewAI",
           "identifier": "97733014f613430eed21d9f5e69423aebe9367b0",
           "identifier_kind": "immutable_revision",
-          "declared_license": "NOASSERTION",
+          "declared_license": "MIT",
           "record_count": 4,
           "paths": [
             "src/config/agents.yaml"
@@ -768,7 +768,7 @@
           "upstream_url": "https://github.com/OssiRuhanen/CrewAI_Assistant",
           "identifier": "419306f0bdfa6080c92430835ff1cc1292949bf4",
           "identifier_kind": "immutable_revision",
-          "declared_license": "NOASSERTION",
+          "declared_license": "MIT",
           "record_count": 1,
           "paths": [
             "src/agent_assistant/config/agents.yaml"
@@ -779,7 +779,7 @@
           "upstream_url": "https://github.com/pandemonium0225/dynamic-coding-system",
           "identifier": "95da3c94f8fd8d004dafb6c48352b15501b19a9a",
           "identifier_kind": "immutable_revision",
-          "declared_license": "NOASSERTION",
+          "declared_license": "MIT",
           "record_count": 1,
           "paths": [
             "config/agents.yaml"
@@ -845,7 +845,7 @@
           "upstream_url": "https://github.com/saitanay/LLMageddon",
           "identifier": "2616ed475e102a169b0b6c49a88d57447f80ec2a",
           "identifier_kind": "immutable_revision",
-          "declared_license": "NOASSERTION",
+          "declared_license": "MIT",
           "record_count": 2,
           "paths": [
             "config/agents.yaml"
@@ -889,7 +889,7 @@
           "upstream_url": "https://github.com/shashankyadav03/ai-property-researcher",
           "identifier": "5aaa60f5ee70646d9a286ce20475833ddc3a60bd",
           "identifier_kind": "immutable_revision",
-          "declared_license": "NOASSERTION",
+          "declared_license": "MIT",
           "record_count": 3,
           "paths": [
             "config/agents.yaml"
@@ -900,7 +900,7 @@
           "upstream_url": "https://github.com/shawn1207/finance-alchemy",
           "identifier": "9f88e78954d3dcbc4896e496a82cda75c92c9ab6",
           "identifier_kind": "immutable_revision",
-          "declared_license": "NOASSERTION",
+          "declared_license": "MIT",
           "record_count": 2,
           "paths": [
             "config/agents/agents.yaml"
@@ -922,7 +922,7 @@
           "upstream_url": "https://github.com/sobit-nep/crewAI-agents",
           "identifier": "477c59067470b945210b6e3a60571f1d4af986ca",
           "identifier_kind": "immutable_revision",
-          "declared_license": "NOASSERTION",
+          "declared_license": "MIT",
           "record_count": 2,
           "paths": [
             "config/agents.yaml"
@@ -999,7 +999,7 @@
           "upstream_url": "https://github.com/Tejas-Bantupalli/trading_knowledge_base",
           "identifier": "09417379f8cd379d7cd58ed30c7721cc14a509dc",
           "identifier_kind": "immutable_revision",
-          "declared_license": "NOASSERTION",
+          "declared_license": "MIT",
           "record_count": 1,
           "paths": [
             "src/config/agents.yaml"
@@ -1010,7 +1010,7 @@
           "upstream_url": "https://github.com/Thiagovilela2001/Crew_ai_v1",
           "identifier": "ad35a89b86cc3c69f08ca91c76eda367a6ede463",
           "identifier_kind": "immutable_revision",
-          "declared_license": "NOASSERTION",
+          "declared_license": "MIT",
           "record_count": 3,
           "paths": [
             "src/config/agents.yaml"
@@ -1065,7 +1065,7 @@
           "upstream_url": "https://github.com/tylerprogramming/travel-planner",
           "identifier": "1ae200daa65608d700b252fd7da748667e63312d",
           "identifier_kind": "immutable_revision",
-          "declared_license": "NOASSERTION",
+          "declared_license": "MIT",
           "record_count": 3,
           "paths": [
             "config/agents.yaml"
@@ -1076,7 +1076,7 @@
           "upstream_url": "https://github.com/Unica2804/Vaultmind",
           "identifier": "4e8e61af2302d6afe960165c757ece5c22b22197",
           "identifier_kind": "immutable_revision",
-          "declared_license": "NOASSERTION",
+          "declared_license": "MIT",
           "record_count": 1,
           "paths": [
             "src/config/agents.yaml"
@@ -1098,7 +1098,7 @@
           "upstream_url": "https://github.com/victorcastillojimenez/CV-Scan",
           "identifier": "198e4378b6eefd8a51d8a0a6c7a6a2a8bc611824",
           "identifier_kind": "immutable_revision",
-          "declared_license": "NOASSERTION",
+          "declared_license": "MIT",
           "record_count": 2,
           "paths": [
             "config/agents.yaml"
@@ -1120,7 +1120,7 @@
           "upstream_url": "https://github.com/Vipul111196/stock-analysis-crewai",
           "identifier": "899f29dc6225a77cf747dfc382d160ed3b47bc19",
           "identifier_kind": "immutable_revision",
-          "declared_license": "NOASSERTION",
+          "declared_license": "MIT",
           "record_count": 2,
           "paths": [
             "src/config/agents.yaml"
@@ -1216,11 +1216,12 @@
       "identifier_kind": "immutable_revision",
       "record_count": 144,
       "declared_license_distribution": {
+        "AGPL-3.0-only": 1,
         "Apache-2.0": 15,
-        "CC-BY-4.0": 1,
-        "MIT": 87,
-        "NOASSERTION": 29,
-        "Other": 12
+        "BUSL-1.1": 1,
+        "CC-BY-4.0": 2,
+        "MIT": 98,
+        "NOASSERTION": 27
       },
       "upstream_identifiers": [
         {
@@ -1272,7 +1273,7 @@
           "upstream_url": "https://github.com/adbutler/mcp-server",
           "identifier": "c22f59ed70c02b6b507c4463ab7ac90022c51b0d",
           "identifier_kind": "immutable_revision",
-          "declared_license": "NOASSERTION",
+          "declared_license": "MIT",
           "record_count": 1,
           "paths": [
             "."
@@ -1393,7 +1394,7 @@
           "upstream_url": "https://github.com/blockscout/mcp-server",
           "identifier": "682faa628d8b54813f37cc595a254b1d5690a1f7",
           "identifier_kind": "immutable_revision",
-          "declared_license": "Other",
+          "declared_license": "NOASSERTION",
           "record_count": 1,
           "paths": [
             "."
@@ -1426,7 +1427,7 @@
           "upstream_url": "https://github.com/BrasilNFe/brasilnfe-mcp",
           "identifier": "2c441fa48c2fd11915aec1ed299413f2a0a43c86",
           "identifier_kind": "immutable_revision",
-          "declared_license": "Other",
+          "declared_license": "MIT",
           "record_count": 1,
           "paths": [
             "."
@@ -1481,7 +1482,7 @@
           "upstream_url": "https://github.com/cgallic/kaicalls-mcp",
           "identifier": "d663de57270c6947449d4d619d305e799b5216aa",
           "identifier_kind": "immutable_revision",
-          "declared_license": "Other",
+          "declared_license": "MIT",
           "record_count": 1,
           "paths": [
             "."
@@ -1613,7 +1614,7 @@
           "upstream_url": "https://github.com/entscheidsuche/entscheidsuche-mcp",
           "identifier": "24a4de7bea85cc5785663d135e800c4159627022",
           "identifier_kind": "immutable_revision",
-          "declared_license": "NOASSERTION",
+          "declared_license": "MIT",
           "record_count": 1,
           "paths": [
             "."
@@ -1624,7 +1625,7 @@
           "upstream_url": "https://github.com/eveoy/eveoy-mcp",
           "identifier": "177d6c7d05715042cef62059fa5e118911be5ef5",
           "identifier_kind": "immutable_revision",
-          "declared_license": "Other",
+          "declared_license": "NOASSERTION",
           "record_count": 1,
           "paths": [
             "."
@@ -1690,7 +1691,7 @@
           "upstream_url": "https://github.com/frumu-ai/tandem",
           "identifier": "45af781922d21474d18f5bc80b7d0d75ae7c4654",
           "identifier_kind": "immutable_revision",
-          "declared_license": "Other",
+          "declared_license": "NOASSERTION",
           "record_count": 1,
           "paths": [
             "."
@@ -1724,7 +1725,7 @@
           "upstream_url": "https://github.com/gpitrella/memxus-remote-mcp",
           "identifier": "d9839947e7725661d7edd37bcc135f4ed32d23b8",
           "identifier_kind": "immutable_revision",
-          "declared_license": "Other",
+          "declared_license": "AGPL-3.0-only",
           "record_count": 1,
           "paths": [
             "."
@@ -1823,7 +1824,7 @@
           "upstream_url": "https://github.com/ifthenpay/mcp-payments",
           "identifier": "05472929b61e82aeb2bc9dc7efd50df2858d8531",
           "identifier_kind": "immutable_revision",
-          "declared_license": "Other",
+          "declared_license": "NOASSERTION",
           "record_count": 1,
           "paths": [
             "."
@@ -1944,7 +1945,7 @@
           "upstream_url": "https://github.com/lanchuske/local-mcp-releases",
           "identifier": "c6e08824abd6f88449426a756342232a1d06abcd",
           "identifier_kind": "immutable_revision",
-          "declared_license": "Other",
+          "declared_license": "NOASSERTION",
           "record_count": 1,
           "paths": [
             "."
@@ -1955,7 +1956,7 @@
           "upstream_url": "https://github.com/Linkly-HQ/linkly-mcp-server",
           "identifier": "4d297b4acab74cf20132722392b4184df4bfdeb3",
           "identifier_kind": "immutable_revision",
-          "declared_license": "NOASSERTION",
+          "declared_license": "MIT",
           "record_count": 1,
           "paths": [
             "."
@@ -2032,7 +2033,7 @@
           "upstream_url": "https://github.com/MadaBurns/bv-mcp",
           "identifier": "5d4c08fefc349fa6ee56bf29a70a5c161ce45a36",
           "identifier_kind": "immutable_revision",
-          "declared_license": "Other",
+          "declared_license": "BUSL-1.1",
           "record_count": 1,
           "paths": [
             "."
@@ -2043,7 +2044,7 @@
           "upstream_url": "https://github.com/MetricSpot/mcp-server",
           "identifier": "dc8fa99e2df7a4bbdff733b138446bf4da49aec7",
           "identifier_kind": "immutable_revision",
-          "declared_license": "NOASSERTION",
+          "declared_license": "MIT",
           "record_count": 1,
           "paths": [
             "."
@@ -2065,7 +2066,7 @@
           "upstream_url": "https://github.com/modelcontextprotocol/registry",
           "identifier": "535941a30e92c88b5bc83ef4e951d4183ccf19db",
           "identifier_kind": "immutable_revision",
-          "declared_license": "Other",
+          "declared_license": "NOASSERTION",
           "record_count": 1,
           "paths": [
             "."
@@ -2120,7 +2121,7 @@
           "upstream_url": "https://github.com/navifare/moltravel-mcp",
           "identifier": "54c25eab2aac19b13c4b14c734067ce3260f99a6",
           "identifier_kind": "immutable_revision",
-          "declared_license": "NOASSERTION",
+          "declared_license": "MIT",
           "record_count": 1,
           "paths": [
             "."
@@ -2175,7 +2176,7 @@
           "upstream_url": "https://github.com/Patheras/the-anots",
           "identifier": "e43bf635a2ad509da5664572201548651066cc00",
           "identifier_kind": "immutable_revision",
-          "declared_license": "NOASSERTION",
+          "declared_license": "MIT",
           "record_count": 1,
           "paths": [
             "."
@@ -2197,7 +2198,7 @@
           "upstream_url": "https://github.com/proxygate-official/proxygate",
           "identifier": "e09ea93e47cf1c1148dcb891ccd26857735d14ae",
           "identifier_kind": "immutable_revision",
-          "declared_license": "NOASSERTION",
+          "declared_license": "MIT",
           "record_count": 1,
           "paths": [
             "."
@@ -2230,7 +2231,7 @@
           "upstream_url": "https://github.com/Qazza1/onchaindiligence-mcp",
           "identifier": "49d5bbe5130875b1921c71ad82b4755699238ed5",
           "identifier_kind": "immutable_revision",
-          "declared_license": "Other",
+          "declared_license": "NOASSERTION",
           "record_count": 1,
           "paths": [
             "."
@@ -2296,7 +2297,7 @@
           "upstream_url": "https://github.com/sailquery/niche-mcp",
           "identifier": "857185d6044e6ca8edc00dea2b64a08b6f2cbffe",
           "identifier_kind": "immutable_revision",
-          "declared_license": "Other",
+          "declared_license": "MIT",
           "record_count": 1,
           "paths": [
             "."
@@ -2329,7 +2330,7 @@
           "upstream_url": "https://github.com/shahdadk/swiftsign",
           "identifier": "65e8a631b1988c99ea7b6a37e0df8b2d9bbf3610",
           "identifier_kind": "immutable_revision",
-          "declared_license": "NOASSERTION",
+          "declared_license": "MIT",
           "record_count": 1,
           "paths": [
             "mcp"
@@ -2395,7 +2396,7 @@
           "upstream_url": "https://github.com/Terahertz-Inc/sandwich-public",
           "identifier": "e036e61ec5ec1a182ba74d9b8d404011581e2819",
           "identifier_kind": "immutable_revision",
-          "declared_license": "NOASSERTION",
+          "declared_license": "CC-BY-4.0",
           "record_count": 1,
           "paths": [
             "."
@@ -2567,7 +2568,7 @@
       "artifact_base_url": "https://api.n8n.io/api/templates/workflows/",
       "record_count": 219,
       "declared_license_distribution": {
-        "unverified": 219
+        "NOASSERTION": 219
       },
       "upstream_identifiers": [
         {
@@ -2575,7 +2576,7 @@
           "upstream_url": "https://n8n.io/workflows/",
           "identifier": "10045",
           "identifier_kind": "mutable_identifier",
-          "declared_license": "unverified",
+          "declared_license": "NOASSERTION",
           "record_count": 1,
           "paths": [
             "10045"
@@ -2586,7 +2587,7 @@
           "upstream_url": "https://n8n.io/workflows/",
           "identifier": "10096",
           "identifier_kind": "mutable_identifier",
-          "declared_license": "unverified",
+          "declared_license": "NOASSERTION",
           "record_count": 1,
           "paths": [
             "10096"
@@ -2597,7 +2598,7 @@
           "upstream_url": "https://n8n.io/workflows/",
           "identifier": "10119",
           "identifier_kind": "mutable_identifier",
-          "declared_license": "unverified",
+          "declared_license": "NOASSERTION",
           "record_count": 1,
           "paths": [
             "10119"
@@ -2608,7 +2609,7 @@
           "upstream_url": "https://n8n.io/workflows/",
           "identifier": "10123",
           "identifier_kind": "mutable_identifier",
-          "declared_license": "unverified",
+          "declared_license": "NOASSERTION",
           "record_count": 1,
           "paths": [
             "10123"
@@ -2619,7 +2620,7 @@
           "upstream_url": "https://n8n.io/workflows/",
           "identifier": "10142",
           "identifier_kind": "mutable_identifier",
-          "declared_license": "unverified",
+          "declared_license": "NOASSERTION",
           "record_count": 1,
           "paths": [
             "10142"
@@ -2630,7 +2631,7 @@
           "upstream_url": "https://n8n.io/workflows/",
           "identifier": "10157",
           "identifier_kind": "mutable_identifier",
-          "declared_license": "unverified",
+          "declared_license": "NOASSERTION",
           "record_count": 1,
           "paths": [
             "10157"
@@ -2641,7 +2642,7 @@
           "upstream_url": "https://n8n.io/workflows/",
           "identifier": "10199",
           "identifier_kind": "mutable_identifier",
-          "declared_license": "unverified",
+          "declared_license": "NOASSERTION",
           "record_count": 1,
           "paths": [
             "10199"
@@ -2652,7 +2653,7 @@
           "upstream_url": "https://n8n.io/workflows/",
           "identifier": "10214",
           "identifier_kind": "mutable_identifier",
-          "declared_license": "unverified",
+          "declared_license": "NOASSERTION",
           "record_count": 1,
           "paths": [
             "10214"
@@ -2663,7 +2664,7 @@
           "upstream_url": "https://n8n.io/workflows/",
           "identifier": "10290",
           "identifier_kind": "mutable_identifier",
-          "declared_license": "unverified",
+          "declared_license": "NOASSERTION",
           "record_count": 1,
           "paths": [
             "10290"
@@ -2674,7 +2675,7 @@
           "upstream_url": "https://n8n.io/workflows/",
           "identifier": "10665",
           "identifier_kind": "mutable_identifier",
-          "declared_license": "unverified",
+          "declared_license": "NOASSERTION",
           "record_count": 1,
           "paths": [
             "10665"
@@ -2685,7 +2686,7 @@
           "upstream_url": "https://n8n.io/workflows/",
           "identifier": "10666",
           "identifier_kind": "mutable_identifier",
-          "declared_license": "unverified",
+          "declared_license": "NOASSERTION",
           "record_count": 1,
           "paths": [
             "10666"
@@ -2696,7 +2697,7 @@
           "upstream_url": "https://n8n.io/workflows/",
           "identifier": "10924",
           "identifier_kind": "mutable_identifier",
-          "declared_license": "unverified",
+          "declared_license": "NOASSERTION",
           "record_count": 1,
           "paths": [
             "10924"
@@ -2707,7 +2708,7 @@
           "upstream_url": "https://n8n.io/workflows/",
           "identifier": "11204",
           "identifier_kind": "mutable_identifier",
-          "declared_license": "unverified",
+          "declared_license": "NOASSERTION",
           "record_count": 1,
           "paths": [
             "11204"
@@ -2718,7 +2719,7 @@
           "upstream_url": "https://n8n.io/workflows/",
           "identifier": "12110",
           "identifier_kind": "mutable_identifier",
-          "declared_license": "unverified",
+          "declared_license": "NOASSERTION",
           "record_count": 1,
           "paths": [
             "12110"
@@ -2729,7 +2730,7 @@
           "upstream_url": "https://n8n.io/workflows/",
           "identifier": "12497",
           "identifier_kind": "mutable_identifier",
-          "declared_license": "unverified",
+          "declared_license": "NOASSERTION",
           "record_count": 1,
           "paths": [
             "12497"
@@ -2740,7 +2741,7 @@
           "upstream_url": "https://n8n.io/workflows/",
           "identifier": "12599",
           "identifier_kind": "mutable_identifier",
-          "declared_license": "unverified",
+          "declared_license": "NOASSERTION",
           "record_count": 1,
           "paths": [
             "12599"
@@ -2751,7 +2752,7 @@
           "upstream_url": "https://n8n.io/workflows/",
           "identifier": "12600",
           "identifier_kind": "mutable_identifier",
-          "declared_license": "unverified",
+          "declared_license": "NOASSERTION",
           "record_count": 1,
           "paths": [
             "12600"
@@ -2762,7 +2763,7 @@
           "upstream_url": "https://n8n.io/workflows/",
           "identifier": "13089",
           "identifier_kind": "mutable_identifier",
-          "declared_license": "unverified",
+          "declared_license": "NOASSERTION",
           "record_count": 1,
           "paths": [
             "13089"
@@ -2773,7 +2774,7 @@
           "upstream_url": "https://n8n.io/workflows/",
           "identifier": "13182",
           "identifier_kind": "mutable_identifier",
-          "declared_license": "unverified",
+          "declared_license": "NOASSERTION",
           "record_count": 1,
           "paths": [
             "13182"
@@ -2784,7 +2785,7 @@
           "upstream_url": "https://n8n.io/workflows/",
           "identifier": "13269",
           "identifier_kind": "mutable_identifier",
-          "declared_license": "unverified",
+          "declared_license": "NOASSERTION",
           "record_count": 1,
           "paths": [
             "13269"
@@ -2795,7 +2796,7 @@
           "upstream_url": "https://n8n.io/workflows/",
           "identifier": "13270",
           "identifier_kind": "mutable_identifier",
-          "declared_license": "unverified",
+          "declared_license": "NOASSERTION",
           "record_count": 1,
           "paths": [
             "13270"
@@ -2806,7 +2807,7 @@
           "upstream_url": "https://n8n.io/workflows/",
           "identifier": "13271",
           "identifier_kind": "mutable_identifier",
-          "declared_license": "unverified",
+          "declared_license": "NOASSERTION",
           "record_count": 1,
           "paths": [
             "13271"
@@ -2817,7 +2818,7 @@
           "upstream_url": "https://n8n.io/workflows/",
           "identifier": "13409",
           "identifier_kind": "mutable_identifier",
-          "declared_license": "unverified",
+          "declared_license": "NOASSERTION",
           "record_count": 1,
           "paths": [
             "13409"
@@ -2828,7 +2829,7 @@
           "upstream_url": "https://n8n.io/workflows/",
           "identifier": "13503",
           "identifier_kind": "mutable_identifier",
-          "declared_license": "unverified",
+          "declared_license": "NOASSERTION",
           "record_count": 1,
           "paths": [
             "13503"
@@ -2839,7 +2840,7 @@
           "upstream_url": "https://n8n.io/workflows/",
           "identifier": "13526",
           "identifier_kind": "mutable_identifier",
-          "declared_license": "unverified",
+          "declared_license": "NOASSERTION",
           "record_count": 1,
           "paths": [
             "13526"
@@ -2850,7 +2851,7 @@
           "upstream_url": "https://n8n.io/workflows/",
           "identifier": "14008",
           "identifier_kind": "mutable_identifier",
-          "declared_license": "unverified",
+          "declared_license": "NOASSERTION",
           "record_count": 1,
           "paths": [
             "14008"
@@ -2861,7 +2862,7 @@
           "upstream_url": "https://n8n.io/workflows/",
           "identifier": "14167",
           "identifier_kind": "mutable_identifier",
-          "declared_license": "unverified",
+          "declared_license": "NOASSERTION",
           "record_count": 1,
           "paths": [
             "14167"
@@ -2872,7 +2873,7 @@
           "upstream_url": "https://n8n.io/workflows/",
           "identifier": "14321",
           "identifier_kind": "mutable_identifier",
-          "declared_license": "unverified",
+          "declared_license": "NOASSERTION",
           "record_count": 1,
           "paths": [
             "14321"
@@ -2883,7 +2884,7 @@
           "upstream_url": "https://n8n.io/workflows/",
           "identifier": "14449",
           "identifier_kind": "mutable_identifier",
-          "declared_license": "unverified",
+          "declared_license": "NOASSERTION",
           "record_count": 1,
           "paths": [
             "14449"
@@ -2894,7 +2895,7 @@
           "upstream_url": "https://n8n.io/workflows/",
           "identifier": "15051",
           "identifier_kind": "mutable_identifier",
-          "declared_license": "unverified",
+          "declared_license": "NOASSERTION",
           "record_count": 1,
           "paths": [
             "15051"
@@ -2905,7 +2906,7 @@
           "upstream_url": "https://n8n.io/workflows/",
           "identifier": "15369",
           "identifier_kind": "mutable_identifier",
-          "declared_license": "unverified",
+          "declared_license": "NOASSERTION",
           "record_count": 1,
           "paths": [
             "15369"
@@ -2916,7 +2917,7 @@
           "upstream_url": "https://n8n.io/workflows/",
           "identifier": "15918",
           "identifier_kind": "mutable_identifier",
-          "declared_license": "unverified",
+          "declared_license": "NOASSERTION",
           "record_count": 1,
           "paths": [
             "15918"
@@ -2927,7 +2928,7 @@
           "upstream_url": "https://n8n.io/workflows/",
           "identifier": "15933",
           "identifier_kind": "mutable_identifier",
-          "declared_license": "unverified",
+          "declared_license": "NOASSERTION",
           "record_count": 1,
           "paths": [
             "15933"
@@ -2938,7 +2939,7 @@
           "upstream_url": "https://n8n.io/workflows/",
           "identifier": "16251",
           "identifier_kind": "mutable_identifier",
-          "declared_license": "unverified",
+          "declared_license": "NOASSERTION",
           "record_count": 1,
           "paths": [
             "16251"
@@ -2949,7 +2950,7 @@
           "upstream_url": "https://n8n.io/workflows/",
           "identifier": "16439",
           "identifier_kind": "mutable_identifier",
-          "declared_license": "unverified",
+          "declared_license": "NOASSERTION",
           "record_count": 1,
           "paths": [
             "16439"
@@ -2960,7 +2961,7 @@
           "upstream_url": "https://n8n.io/workflows/",
           "identifier": "1954",
           "identifier_kind": "mutable_identifier",
-          "declared_license": "unverified",
+          "declared_license": "NOASSERTION",
           "record_count": 1,
           "paths": [
             "1954"
@@ -2971,7 +2972,7 @@
           "upstream_url": "https://n8n.io/workflows/",
           "identifier": "2465",
           "identifier_kind": "mutable_identifier",
-          "declared_license": "unverified",
+          "declared_license": "NOASSERTION",
           "record_count": 1,
           "paths": [
             "2465"
@@ -2982,7 +2983,7 @@
           "upstream_url": "https://n8n.io/workflows/",
           "identifier": "2466",
           "identifier_kind": "mutable_identifier",
-          "declared_license": "unverified",
+          "declared_license": "NOASSERTION",
           "record_count": 1,
           "paths": [
             "2466"
@@ -2993,7 +2994,7 @@
           "upstream_url": "https://n8n.io/workflows/",
           "identifier": "2621",
           "identifier_kind": "mutable_identifier",
-          "declared_license": "unverified",
+          "declared_license": "NOASSERTION",
           "record_count": 1,
           "paths": [
             "2621"
@@ -3004,7 +3005,7 @@
           "upstream_url": "https://n8n.io/workflows/",
           "identifier": "2703",
           "identifier_kind": "mutable_identifier",
-          "declared_license": "unverified",
+          "declared_license": "NOASSERTION",
           "record_count": 1,
           "paths": [
             "2703"
@@ -3015,7 +3016,7 @@
           "upstream_url": "https://n8n.io/workflows/",
           "identifier": "2752",
           "identifier_kind": "mutable_identifier",
-          "declared_license": "unverified",
+          "declared_license": "NOASSERTION",
           "record_count": 1,
           "paths": [
             "2752"
@@ -3026,7 +3027,7 @@
           "upstream_url": "https://n8n.io/workflows/",
           "identifier": "2753",
           "identifier_kind": "mutable_identifier",
-          "declared_license": "unverified",
+          "declared_license": "NOASSERTION",
           "record_count": 1,
           "paths": [
             "2753"
@@ -3037,7 +3038,7 @@
           "upstream_url": "https://n8n.io/workflows/",
           "identifier": "2783",
           "identifier_kind": "mutable_identifier",
-          "declared_license": "unverified",
+          "declared_license": "NOASSERTION",
           "record_count": 1,
           "paths": [
             "2783"
@@ -3048,7 +3049,7 @@
           "upstream_url": "https://n8n.io/workflows/",
           "identifier": "2786",
           "identifier_kind": "mutable_identifier",
-          "declared_license": "unverified",
+          "declared_license": "NOASSERTION",
           "record_count": 1,
           "paths": [
             "2786"
@@ -3059,7 +3060,7 @@
           "upstream_url": "https://n8n.io/workflows/",
           "identifier": "2845",
           "identifier_kind": "mutable_identifier",
-          "declared_license": "unverified",
+          "declared_license": "NOASSERTION",
           "record_count": 1,
           "paths": [
             "2845"
@@ -3070,7 +3071,7 @@
           "upstream_url": "https://n8n.io/workflows/",
           "identifier": "2859",
           "identifier_kind": "mutable_identifier",
-          "declared_license": "unverified",
+          "declared_license": "NOASSERTION",
           "record_count": 1,
           "paths": [
             "2859"
@@ -3081,7 +3082,7 @@
           "upstream_url": "https://n8n.io/workflows/",
           "identifier": "2864",
           "identifier_kind": "mutable_identifier",
-          "declared_license": "unverified",
+          "declared_license": "NOASSERTION",
           "record_count": 1,
           "paths": [
             "2864"
@@ -3092,7 +3093,7 @@
           "upstream_url": "https://n8n.io/workflows/",
           "identifier": "2872",
           "identifier_kind": "mutable_identifier",
-          "declared_license": "unverified",
+          "declared_license": "NOASSERTION",
           "record_count": 1,
           "paths": [
             "2872"
@@ -3103,7 +3104,7 @@
           "upstream_url": "https://n8n.io/workflows/",
           "identifier": "2982",
           "identifier_kind": "mutable_identifier",
-          "declared_license": "unverified",
+          "declared_license": "NOASSERTION",
           "record_count": 1,
           "paths": [
             "2982"
@@ -3114,7 +3115,7 @@
           "upstream_url": "https://n8n.io/workflows/",
           "identifier": "2986",
           "identifier_kind": "mutable_identifier",
-          "declared_license": "unverified",
+          "declared_license": "NOASSERTION",
           "record_count": 1,
           "paths": [
             "2986"
@@ -3125,7 +3126,7 @@
           "upstream_url": "https://n8n.io/workflows/",
           "identifier": "3025",
           "identifier_kind": "mutable_identifier",
-          "declared_license": "unverified",
+          "declared_license": "NOASSERTION",
           "record_count": 1,
           "paths": [
             "3025"
@@ -3136,7 +3137,7 @@
           "upstream_url": "https://n8n.io/workflows/",
           "identifier": "3050",
           "identifier_kind": "mutable_identifier",
-          "declared_license": "unverified",
+          "declared_license": "NOASSERTION",
           "record_count": 1,
           "paths": [
             "3050"
@@ -3147,7 +3148,7 @@
           "upstream_url": "https://n8n.io/workflows/",
           "identifier": "3066",
           "identifier_kind": "mutable_identifier",
-          "declared_license": "unverified",
+          "declared_license": "NOASSERTION",
           "record_count": 1,
           "paths": [
             "3066"
@@ -3158,7 +3159,7 @@
           "upstream_url": "https://n8n.io/workflows/",
           "identifier": "3135",
           "identifier_kind": "mutable_identifier",
-          "declared_license": "unverified",
+          "declared_license": "NOASSERTION",
           "record_count": 1,
           "paths": [
             "3135"
@@ -3169,7 +3170,7 @@
           "upstream_url": "https://n8n.io/workflows/",
           "identifier": "3189",
           "identifier_kind": "mutable_identifier",
-          "declared_license": "unverified",
+          "declared_license": "NOASSERTION",
           "record_count": 1,
           "paths": [
             "3189"
@@ -3180,7 +3181,7 @@
           "upstream_url": "https://n8n.io/workflows/",
           "identifier": "3250",
           "identifier_kind": "mutable_identifier",
-          "declared_license": "unverified",
+          "declared_license": "NOASSERTION",
           "record_count": 1,
           "paths": [
             "3250"
@@ -3191,7 +3192,7 @@
           "upstream_url": "https://n8n.io/workflows/",
           "identifier": "3303",
           "identifier_kind": "mutable_identifier",
-          "declared_license": "unverified",
+          "declared_license": "NOASSERTION",
           "record_count": 1,
           "paths": [
             "3303"
@@ -3202,7 +3203,7 @@
           "upstream_url": "https://n8n.io/workflows/",
           "identifier": "3336",
           "identifier_kind": "mutable_identifier",
-          "declared_license": "unverified",
+          "declared_license": "NOASSERTION",
           "record_count": 1,
           "paths": [
             "3336"
@@ -3213,7 +3214,7 @@
           "upstream_url": "https://n8n.io/workflows/",
           "identifier": "3348",
           "identifier_kind": "mutable_identifier",
-          "declared_license": "unverified",
+          "declared_license": "NOASSERTION",
           "record_count": 1,
           "paths": [
             "3348"
@@ -3224,7 +3225,7 @@
           "upstream_url": "https://n8n.io/workflows/",
           "identifier": "3350",
           "identifier_kind": "mutable_identifier",
-          "declared_license": "unverified",
+          "declared_license": "NOASSERTION",
           "record_count": 1,
           "paths": [
             "3350"
@@ -3235,7 +3236,7 @@
           "upstream_url": "https://n8n.io/workflows/",
           "identifier": "3379",
           "identifier_kind": "mutable_identifier",
-          "declared_license": "unverified",
+          "declared_license": "NOASSERTION",
           "record_count": 1,
           "paths": [
             "3379"
@@ -3246,7 +3247,7 @@
           "upstream_url": "https://n8n.io/workflows/",
           "identifier": "3425",
           "identifier_kind": "mutable_identifier",
-          "declared_license": "unverified",
+          "declared_license": "NOASSERTION",
           "record_count": 1,
           "paths": [
             "3425"
@@ -3257,7 +3258,7 @@
           "upstream_url": "https://n8n.io/workflows/",
           "identifier": "3443",
           "identifier_kind": "mutable_identifier",
-          "declared_license": "unverified",
+          "declared_license": "NOASSERTION",
           "record_count": 1,
           "paths": [
             "3443"
@@ -3268,7 +3269,7 @@
           "upstream_url": "https://n8n.io/workflows/",
           "identifier": "3514",
           "identifier_kind": "mutable_identifier",
-          "declared_license": "unverified",
+          "declared_license": "NOASSERTION",
           "record_count": 1,
           "paths": [
             "3514"
@@ -3279,7 +3280,7 @@
           "upstream_url": "https://n8n.io/workflows/",
           "identifier": "3617",
           "identifier_kind": "mutable_identifier",
-          "declared_license": "unverified",
+          "declared_license": "NOASSERTION",
           "record_count": 1,
           "paths": [
             "3617"
@@ -3290,7 +3291,7 @@
           "upstream_url": "https://n8n.io/workflows/",
           "identifier": "3656",
           "identifier_kind": "mutable_identifier",
-          "declared_license": "unverified",
+          "declared_license": "NOASSERTION",
           "record_count": 1,
           "paths": [
             "3656"
@@ -3301,7 +3302,7 @@
           "upstream_url": "https://n8n.io/workflows/",
           "identifier": "3657",
           "identifier_kind": "mutable_identifier",
-          "declared_license": "unverified",
+          "declared_license": "NOASSERTION",
           "record_count": 1,
           "paths": [
             "3657"
@@ -3312,7 +3313,7 @@
           "upstream_url": "https://n8n.io/workflows/",
           "identifier": "3686",
           "identifier_kind": "mutable_identifier",
-          "declared_license": "unverified",
+          "declared_license": "NOASSERTION",
           "record_count": 1,
           "paths": [
             "3686"
@@ -3323,7 +3324,7 @@
           "upstream_url": "https://n8n.io/workflows/",
           "identifier": "3694",
           "identifier_kind": "mutable_identifier",
-          "declared_license": "unverified",
+          "declared_license": "NOASSERTION",
           "record_count": 1,
           "paths": [
             "3694"
@@ -3334,7 +3335,7 @@
           "upstream_url": "https://n8n.io/workflows/",
           "identifier": "3770",
           "identifier_kind": "mutable_identifier",
-          "declared_license": "unverified",
+          "declared_license": "NOASSERTION",
           "record_count": 1,
           "paths": [
             "3770"
@@ -3345,7 +3346,7 @@
           "upstream_url": "https://n8n.io/workflows/",
           "identifier": "3790",
           "identifier_kind": "mutable_identifier",
-          "declared_license": "unverified",
+          "declared_license": "NOASSERTION",
           "record_count": 1,
           "paths": [
             "3790"
@@ -3356,7 +3357,7 @@
           "upstream_url": "https://n8n.io/workflows/",
           "identifier": "3859",
           "identifier_kind": "mutable_identifier",
-          "declared_license": "unverified",
+          "declared_license": "NOASSERTION",
           "record_count": 1,
           "paths": [
             "3859"
@@ -3367,7 +3368,7 @@
           "upstream_url": "https://n8n.io/workflows/",
           "identifier": "3879",
           "identifier_kind": "mutable_identifier",
-          "declared_license": "unverified",
+          "declared_license": "NOASSERTION",
           "record_count": 1,
           "paths": [
             "3879"
@@ -3378,7 +3379,7 @@
           "upstream_url": "https://n8n.io/workflows/",
           "identifier": "3905",
           "identifier_kind": "mutable_identifier",
-          "declared_license": "unverified",
+          "declared_license": "NOASSERTION",
           "record_count": 1,
           "paths": [
             "3905"
@@ -3389,7 +3390,7 @@
           "upstream_url": "https://n8n.io/workflows/",
           "identifier": "3940",
           "identifier_kind": "mutable_identifier",
-          "declared_license": "unverified",
+          "declared_license": "NOASSERTION",
           "record_count": 1,
           "paths": [
             "3940"
@@ -3400,7 +3401,7 @@
           "upstream_url": "https://n8n.io/workflows/",
           "identifier": "3942",
           "identifier_kind": "mutable_identifier",
-          "declared_license": "unverified",
+          "declared_license": "NOASSERTION",
           "record_count": 1,
           "paths": [
             "3942"
@@ -3411,7 +3412,7 @@
           "upstream_url": "https://n8n.io/workflows/",
           "identifier": "3986",
           "identifier_kind": "mutable_identifier",
-          "declared_license": "unverified",
+          "declared_license": "NOASSERTION",
           "record_count": 1,
           "paths": [
             "3986"
@@ -3422,7 +3423,7 @@
           "upstream_url": "https://n8n.io/workflows/",
           "identifier": "4057",
           "identifier_kind": "mutable_identifier",
-          "declared_license": "unverified",
+          "declared_license": "NOASSERTION",
           "record_count": 1,
           "paths": [
             "4057"
@@ -3433,7 +3434,7 @@
           "upstream_url": "https://n8n.io/workflows/",
           "identifier": "4083",
           "identifier_kind": "mutable_identifier",
-          "declared_license": "unverified",
+          "declared_license": "NOASSERTION",
           "record_count": 1,
           "paths": [
             "4083"
@@ -3444,7 +3445,7 @@
           "upstream_url": "https://n8n.io/workflows/",
           "identifier": "4086",
           "identifier_kind": "mutable_identifier",
-          "declared_license": "unverified",
+          "declared_license": "NOASSERTION",
           "record_count": 1,
           "paths": [
             "4086"
@@ -3455,7 +3456,7 @@
           "upstream_url": "https://n8n.io/workflows/",
           "identifier": "4102",
           "identifier_kind": "mutable_identifier",
-          "declared_license": "unverified",
+          "declared_license": "NOASSERTION",
           "record_count": 1,
           "paths": [
             "4102"
@@ -3466,7 +3467,7 @@
           "upstream_url": "https://n8n.io/workflows/",
           "identifier": "4366",
           "identifier_kind": "mutable_identifier",
-          "declared_license": "unverified",
+          "declared_license": "NOASSERTION",
           "record_count": 1,
           "paths": [
             "4366"
@@ -3477,7 +3478,7 @@
           "upstream_url": "https://n8n.io/workflows/",
           "identifier": "4368",
           "identifier_kind": "mutable_identifier",
-          "declared_license": "unverified",
+          "declared_license": "NOASSERTION",
           "record_count": 1,
           "paths": [
             "4368"
@@ -3488,7 +3489,7 @@
           "upstream_url": "https://n8n.io/workflows/",
           "identifier": "4399",
           "identifier_kind": "mutable_identifier",
-          "declared_license": "unverified",
+          "declared_license": "NOASSERTION",
           "record_count": 1,
           "paths": [
             "4399"
@@ -3499,7 +3500,7 @@
           "upstream_url": "https://n8n.io/workflows/",
           "identifier": "4402",
           "identifier_kind": "mutable_identifier",
-          "declared_license": "unverified",
+          "declared_license": "NOASSERTION",
           "record_count": 1,
           "paths": [
             "4402"
@@ -3510,7 +3511,7 @@
           "upstream_url": "https://n8n.io/workflows/",
           "identifier": "4484",
           "identifier_kind": "mutable_identifier",
-          "declared_license": "unverified",
+          "declared_license": "NOASSERTION",
           "record_count": 1,
           "paths": [
             "4484"
@@ -3521,7 +3522,7 @@
           "upstream_url": "https://n8n.io/workflows/",
           "identifier": "4494",
           "identifier_kind": "mutable_identifier",
-          "declared_license": "unverified",
+          "declared_license": "NOASSERTION",
           "record_count": 1,
           "paths": [
             "4494"
@@ -3532,7 +3533,7 @@
           "upstream_url": "https://n8n.io/workflows/",
           "identifier": "4501",
           "identifier_kind": "mutable_identifier",
-          "declared_license": "unverified",
+          "declared_license": "NOASSERTION",
           "record_count": 1,
           "paths": [
             "4501"
@@ -3543,7 +3544,7 @@
           "upstream_url": "https://n8n.io/workflows/",
           "identifier": "4526",
           "identifier_kind": "mutable_identifier",
-          "declared_license": "unverified",
+          "declared_license": "NOASSERTION",
           "record_count": 1,
           "paths": [
             "4526"
@@ -3554,7 +3555,7 @@
           "upstream_url": "https://n8n.io/workflows/",
           "identifier": "4551",
           "identifier_kind": "mutable_identifier",
-          "declared_license": "unverified",
+          "declared_license": "NOASSERTION",
           "record_count": 1,
           "paths": [
             "4551"
@@ -3565,7 +3566,7 @@
           "upstream_url": "https://n8n.io/workflows/",
           "identifier": "4589",
           "identifier_kind": "mutable_identifier",
-          "declared_license": "unverified",
+          "declared_license": "NOASSERTION",
           "record_count": 1,
           "paths": [
             "4589"
@@ -3576,7 +3577,7 @@
           "upstream_url": "https://n8n.io/workflows/",
           "identifier": "4600",
           "identifier_kind": "mutable_identifier",
-          "declared_license": "unverified",
+          "declared_license": "NOASSERTION",
           "record_count": 1,
           "paths": [
             "4600"
@@ -3587,7 +3588,7 @@
           "upstream_url": "https://n8n.io/workflows/",
           "identifier": "4630",
           "identifier_kind": "mutable_identifier",
-          "declared_license": "unverified",
+          "declared_license": "NOASSERTION",
           "record_count": 1,
           "paths": [
             "4630"
@@ -3598,7 +3599,7 @@
           "upstream_url": "https://n8n.io/workflows/",
           "identifier": "4638",
           "identifier_kind": "mutable_identifier",
-          "declared_license": "unverified",
+          "declared_license": "NOASSERTION",
           "record_count": 1,
           "paths": [
             "4638"
@@ -3609,7 +3610,7 @@
           "upstream_url": "https://n8n.io/workflows/",
           "identifier": "4641",
           "identifier_kind": "mutable_identifier",
-          "declared_license": "unverified",
+          "declared_license": "NOASSERTION",
           "record_count": 1,
           "paths": [
             "4641"
@@ -3620,7 +3621,7 @@
           "upstream_url": "https://n8n.io/workflows/",
           "identifier": "4674",
           "identifier_kind": "mutable_identifier",
-          "declared_license": "unverified",
+          "declared_license": "NOASSERTION",
           "record_count": 1,
           "paths": [
             "4674"
@@ -3631,7 +3632,7 @@
           "upstream_url": "https://n8n.io/workflows/",
           "identifier": "4689",
           "identifier_kind": "mutable_identifier",
-          "declared_license": "unverified",
+          "declared_license": "NOASSERTION",
           "record_count": 1,
           "paths": [
             "4689"
@@ -3642,7 +3643,7 @@
           "upstream_url": "https://n8n.io/workflows/",
           "identifier": "4694",
           "identifier_kind": "mutable_identifier",
-          "declared_license": "unverified",
+          "declared_license": "NOASSERTION",
           "record_count": 1,
           "paths": [
             "4694"
@@ -3653,7 +3654,7 @@
           "upstream_url": "https://n8n.io/workflows/",
           "identifier": "4721",
           "identifier_kind": "mutable_identifier",
-          "declared_license": "unverified",
+          "declared_license": "NOASSERTION",
           "record_count": 1,
           "paths": [
             "4721"
@@ -3664,7 +3665,7 @@
           "upstream_url": "https://n8n.io/workflows/",
           "identifier": "4722",
           "identifier_kind": "mutable_identifier",
-          "declared_license": "unverified",
+          "declared_license": "NOASSERTION",
           "record_count": 1,
           "paths": [
             "4722"
@@ -3675,7 +3676,7 @@
           "upstream_url": "https://n8n.io/workflows/",
           "identifier": "4723",
           "identifier_kind": "mutable_identifier",
-          "declared_license": "unverified",
+          "declared_license": "NOASSERTION",
           "record_count": 1,
           "paths": [
             "4723"
@@ -3686,7 +3687,7 @@
           "upstream_url": "https://n8n.io/workflows/",
           "identifier": "4735",
           "identifier_kind": "mutable_identifier",
-          "declared_license": "unverified",
+          "declared_license": "NOASSERTION",
           "record_count": 1,
           "paths": [
             "4735"
@@ -3697,7 +3698,7 @@
           "upstream_url": "https://n8n.io/workflows/",
           "identifier": "4739",
           "identifier_kind": "mutable_identifier",
-          "declared_license": "unverified",
+          "declared_license": "NOASSERTION",
           "record_count": 1,
           "paths": [
             "4739"
@@ -3708,7 +3709,7 @@
           "upstream_url": "https://n8n.io/workflows/",
           "identifier": "4755",
           "identifier_kind": "mutable_identifier",
-          "declared_license": "unverified",
+          "declared_license": "NOASSERTION",
           "record_count": 1,
           "paths": [
             "4755"
@@ -3719,7 +3720,7 @@
           "upstream_url": "https://n8n.io/workflows/",
           "identifier": "4766",
           "identifier_kind": "mutable_identifier",
-          "declared_license": "unverified",
+          "declared_license": "NOASSERTION",
           "record_count": 1,
           "paths": [
             "4766"
@@ -3730,7 +3731,7 @@
           "upstream_url": "https://n8n.io/workflows/",
           "identifier": "4827",
           "identifier_kind": "mutable_identifier",
-          "declared_license": "unverified",
+          "declared_license": "NOASSERTION",
           "record_count": 1,
           "paths": [
             "4827"
@@ -3741,7 +3742,7 @@
           "upstream_url": "https://n8n.io/workflows/",
           "identifier": "4875",
           "identifier_kind": "mutable_identifier",
-          "declared_license": "unverified",
+          "declared_license": "NOASSERTION",
           "record_count": 1,
           "paths": [
             "4875"
@@ -3752,7 +3753,7 @@
           "upstream_url": "https://n8n.io/workflows/",
           "identifier": "4910",
           "identifier_kind": "mutable_identifier",
-          "declared_license": "unverified",
+          "declared_license": "NOASSERTION",
           "record_count": 1,
           "paths": [
             "4910"
@@ -3763,7 +3764,7 @@
           "upstream_url": "https://n8n.io/workflows/",
           "identifier": "4930",
           "identifier_kind": "mutable_identifier",
-          "declared_license": "unverified",
+          "declared_license": "NOASSERTION",
           "record_count": 1,
           "paths": [
             "4930"
@@ -3774,7 +3775,7 @@
           "upstream_url": "https://n8n.io/workflows/",
           "identifier": "4949",
           "identifier_kind": "mutable_identifier",
-          "declared_license": "unverified",
+          "declared_license": "NOASSERTION",
           "record_count": 1,
           "paths": [
             "4949"
@@ -3785,7 +3786,7 @@
           "upstream_url": "https://n8n.io/workflows/",
           "identifier": "4967",
           "identifier_kind": "mutable_identifier",
-          "declared_license": "unverified",
+          "declared_license": "NOASSERTION",
           "record_count": 1,
           "paths": [
             "4967"
@@ -3796,7 +3797,7 @@
           "upstream_url": "https://n8n.io/workflows/",
           "identifier": "4975",
           "identifier_kind": "mutable_identifier",
-          "declared_license": "unverified",
+          "declared_license": "NOASSERTION",
           "record_count": 1,
           "paths": [
             "4975"
@@ -3807,7 +3808,7 @@
           "upstream_url": "https://n8n.io/workflows/",
           "identifier": "5010",
           "identifier_kind": "mutable_identifier",
-          "declared_license": "unverified",
+          "declared_license": "NOASSERTION",
           "record_count": 1,
           "paths": [
             "5010"
@@ -3818,7 +3819,7 @@
           "upstream_url": "https://n8n.io/workflows/",
           "identifier": "5011",
           "identifier_kind": "mutable_identifier",
-          "declared_license": "unverified",
+          "declared_license": "NOASSERTION",
           "record_count": 1,
           "paths": [
             "5011"
@@ -3829,7 +3830,7 @@
           "upstream_url": "https://n8n.io/workflows/",
           "identifier": "5012",
           "identifier_kind": "mutable_identifier",
-          "declared_license": "unverified",
+          "declared_license": "NOASSERTION",
           "record_count": 1,
           "paths": [
             "5012"
@@ -3840,7 +3841,7 @@
           "upstream_url": "https://n8n.io/workflows/",
           "identifier": "5024",
           "identifier_kind": "mutable_identifier",
-          "declared_license": "unverified",
+          "declared_license": "NOASSERTION",
           "record_count": 1,
           "paths": [
             "5024"
@@ -3851,7 +3852,7 @@
           "upstream_url": "https://n8n.io/workflows/",
           "identifier": "5035",
           "identifier_kind": "mutable_identifier",
-          "declared_license": "unverified",
+          "declared_license": "NOASSERTION",
           "record_count": 1,
           "paths": [
             "5035"
@@ -3862,7 +3863,7 @@
           "upstream_url": "https://n8n.io/workflows/",
           "identifier": "5042",
           "identifier_kind": "mutable_identifier",
-          "declared_license": "unverified",
+          "declared_license": "NOASSERTION",
           "record_count": 1,
           "paths": [
             "5042"
@@ -3873,7 +3874,7 @@
           "upstream_url": "https://n8n.io/workflows/",
           "identifier": "5074",
           "identifier_kind": "mutable_identifier",
-          "declared_license": "unverified",
+          "declared_license": "NOASSERTION",
           "record_count": 1,
           "paths": [
             "5074"
@@ -3884,7 +3885,7 @@
           "upstream_url": "https://n8n.io/workflows/",
           "identifier": "5096",
           "identifier_kind": "mutable_identifier",
-          "declared_license": "unverified",
+          "declared_license": "NOASSERTION",
           "record_count": 1,
           "paths": [
             "5096"
@@ -3895,7 +3896,7 @@
           "upstream_url": "https://n8n.io/workflows/",
           "identifier": "5110",
           "identifier_kind": "mutable_identifier",
-          "declared_license": "unverified",
+          "declared_license": "NOASSERTION",
           "record_count": 1,
           "paths": [
             "5110"
@@ -3906,7 +3907,7 @@
           "upstream_url": "https://n8n.io/workflows/",
           "identifier": "5128",
           "identifier_kind": "mutable_identifier",
-          "declared_license": "unverified",
+          "declared_license": "NOASSERTION",
           "record_count": 1,
           "paths": [
             "5128"
@@ -3917,7 +3918,7 @@
           "upstream_url": "https://n8n.io/workflows/",
           "identifier": "5130",
           "identifier_kind": "mutable_identifier",
-          "declared_license": "unverified",
+          "declared_license": "NOASSERTION",
           "record_count": 1,
           "paths": [
             "5130"
@@ -3928,7 +3929,7 @@
           "upstream_url": "https://n8n.io/workflows/",
           "identifier": "5148",
           "identifier_kind": "mutable_identifier",
-          "declared_license": "unverified",
+          "declared_license": "NOASSERTION",
           "record_count": 1,
           "paths": [
             "5148"
@@ -3939,7 +3940,7 @@
           "upstream_url": "https://n8n.io/workflows/",
           "identifier": "5163",
           "identifier_kind": "mutable_identifier",
-          "declared_license": "unverified",
+          "declared_license": "NOASSERTION",
           "record_count": 1,
           "paths": [
             "5163"
@@ -3950,7 +3951,7 @@
           "upstream_url": "https://n8n.io/workflows/",
           "identifier": "5164",
           "identifier_kind": "mutable_identifier",
-          "declared_license": "unverified",
+          "declared_license": "NOASSERTION",
           "record_count": 1,
           "paths": [
             "5164"
@@ -3961,7 +3962,7 @@
           "upstream_url": "https://n8n.io/workflows/",
           "identifier": "5202",
           "identifier_kind": "mutable_identifier",
-          "declared_license": "unverified",
+          "declared_license": "NOASSERTION",
           "record_count": 1,
           "paths": [
             "5202"
@@ -3972,7 +3973,7 @@
           "upstream_url": "https://n8n.io/workflows/",
           "identifier": "5259",
           "identifier_kind": "mutable_identifier",
-          "declared_license": "unverified",
+          "declared_license": "NOASSERTION",
           "record_count": 1,
           "paths": [
             "5259"
@@ -3983,7 +3984,7 @@
           "upstream_url": "https://n8n.io/workflows/",
           "identifier": "5286",
           "identifier_kind": "mutable_identifier",
-          "declared_license": "unverified",
+          "declared_license": "NOASSERTION",
           "record_count": 1,
           "paths": [
             "5286"
@@ -3994,7 +3995,7 @@
           "upstream_url": "https://n8n.io/workflows/",
           "identifier": "5291",
           "identifier_kind": "mutable_identifier",
-          "declared_license": "unverified",
+          "declared_license": "NOASSERTION",
           "record_count": 1,
           "paths": [
             "5291"
@@ -4005,7 +4006,7 @@
           "upstream_url": "https://n8n.io/workflows/",
           "identifier": "5294",
           "identifier_kind": "mutable_identifier",
-          "declared_license": "unverified",
+          "declared_license": "NOASSERTION",
           "record_count": 1,
           "paths": [
             "5294"
@@ -4016,7 +4017,7 @@
           "upstream_url": "https://n8n.io/workflows/",
           "identifier": "5296",
           "identifier_kind": "mutable_identifier",
-          "declared_license": "unverified",
+          "declared_license": "NOASSERTION",
           "record_count": 1,
           "paths": [
             "5296"
@@ -4027,7 +4028,7 @@
           "upstream_url": "https://n8n.io/workflows/",
           "identifier": "5303",
           "identifier_kind": "mutable_identifier",
-          "declared_license": "unverified",
+          "declared_license": "NOASSERTION",
           "record_count": 1,
           "paths": [
             "5303"
@@ -4038,7 +4039,7 @@
           "upstream_url": "https://n8n.io/workflows/",
           "identifier": "5305",
           "identifier_kind": "mutable_identifier",
-          "declared_license": "unverified",
+          "declared_license": "NOASSERTION",
           "record_count": 1,
           "paths": [
             "5305"
@@ -4049,7 +4050,7 @@
           "upstream_url": "https://n8n.io/workflows/",
           "identifier": "5338",
           "identifier_kind": "mutable_identifier",
-          "declared_license": "unverified",
+          "declared_license": "NOASSERTION",
           "record_count": 1,
           "paths": [
             "5338"
@@ -4060,7 +4061,7 @@
           "upstream_url": "https://n8n.io/workflows/",
           "identifier": "5368",
           "identifier_kind": "mutable_identifier",
-          "declared_license": "unverified",
+          "declared_license": "NOASSERTION",
           "record_count": 1,
           "paths": [
             "5368"
@@ -4071,7 +4072,7 @@
           "upstream_url": "https://n8n.io/workflows/",
           "identifier": "5374",
           "identifier_kind": "mutable_identifier",
-          "declared_license": "unverified",
+          "declared_license": "NOASSERTION",
           "record_count": 1,
           "paths": [
             "5374"
@@ -4082,7 +4083,7 @@
           "upstream_url": "https://n8n.io/workflows/",
           "identifier": "5398",
           "identifier_kind": "mutable_identifier",
-          "declared_license": "unverified",
+          "declared_license": "NOASSERTION",
           "record_count": 1,
           "paths": [
             "5398"
@@ -4093,7 +4094,7 @@
           "upstream_url": "https://n8n.io/workflows/",
           "identifier": "5431",
           "identifier_kind": "mutable_identifier",
-          "declared_license": "unverified",
+          "declared_license": "NOASSERTION",
           "record_count": 1,
           "paths": [
             "5431"
@@ -4104,7 +4105,7 @@
           "upstream_url": "https://n8n.io/workflows/",
           "identifier": "5435",
           "identifier_kind": "mutable_identifier",
-          "declared_license": "unverified",
+          "declared_license": "NOASSERTION",
           "record_count": 1,
           "paths": [
             "5435"
@@ -4115,7 +4116,7 @@
           "upstream_url": "https://n8n.io/workflows/",
           "identifier": "5454",
           "identifier_kind": "mutable_identifier",
-          "declared_license": "unverified",
+          "declared_license": "NOASSERTION",
           "record_count": 1,
           "paths": [
             "5454"
@@ -4126,7 +4127,7 @@
           "upstream_url": "https://n8n.io/workflows/",
           "identifier": "5508",
           "identifier_kind": "mutable_identifier",
-          "declared_license": "unverified",
+          "declared_license": "NOASSERTION",
           "record_count": 1,
           "paths": [
             "5508"
@@ -4137,7 +4138,7 @@
           "upstream_url": "https://n8n.io/workflows/",
           "identifier": "5521",
           "identifier_kind": "mutable_identifier",
-          "declared_license": "unverified",
+          "declared_license": "NOASSERTION",
           "record_count": 1,
           "paths": [
             "5521"
@@ -4148,7 +4149,7 @@
           "upstream_url": "https://n8n.io/workflows/",
           "identifier": "5523",
           "identifier_kind": "mutable_identifier",
-          "declared_license": "unverified",
+          "declared_license": "NOASSERTION",
           "record_count": 1,
           "paths": [
             "5523"
@@ -4159,7 +4160,7 @@
           "upstream_url": "https://n8n.io/workflows/",
           "identifier": "5541",
           "identifier_kind": "mutable_identifier",
-          "declared_license": "unverified",
+          "declared_license": "NOASSERTION",
           "record_count": 1,
           "paths": [
             "5541"
@@ -4170,7 +4171,7 @@
           "upstream_url": "https://n8n.io/workflows/",
           "identifier": "5552",
           "identifier_kind": "mutable_identifier",
-          "declared_license": "unverified",
+          "declared_license": "NOASSERTION",
           "record_count": 1,
           "paths": [
             "5552"
@@ -4181,7 +4182,7 @@
           "upstream_url": "https://n8n.io/workflows/",
           "identifier": "5614",
           "identifier_kind": "mutable_identifier",
-          "declared_license": "unverified",
+          "declared_license": "NOASSERTION",
           "record_count": 1,
           "paths": [
             "5614"
@@ -4192,7 +4193,7 @@
           "upstream_url": "https://n8n.io/workflows/",
           "identifier": "5656",
           "identifier_kind": "mutable_identifier",
-          "declared_license": "unverified",
+          "declared_license": "NOASSERTION",
           "record_count": 1,
           "paths": [
             "5656"
@@ -4203,7 +4204,7 @@
           "upstream_url": "https://n8n.io/workflows/",
           "identifier": "5687",
           "identifier_kind": "mutable_identifier",
-          "declared_license": "unverified",
+          "declared_license": "NOASSERTION",
           "record_count": 1,
           "paths": [
             "5687"
@@ -4214,7 +4215,7 @@
           "upstream_url": "https://n8n.io/workflows/",
           "identifier": "5734",
           "identifier_kind": "mutable_identifier",
-          "declared_license": "unverified",
+          "declared_license": "NOASSERTION",
           "record_count": 1,
           "paths": [
             "5734"
@@ -4225,7 +4226,7 @@
           "upstream_url": "https://n8n.io/workflows/",
           "identifier": "5751",
           "identifier_kind": "mutable_identifier",
-          "declared_license": "unverified",
+          "declared_license": "NOASSERTION",
           "record_count": 1,
           "paths": [
             "5751"
@@ -4236,7 +4237,7 @@
           "upstream_url": "https://n8n.io/workflows/",
           "identifier": "5757",
           "identifier_kind": "mutable_identifier",
-          "declared_license": "unverified",
+          "declared_license": "NOASSERTION",
           "record_count": 1,
           "paths": [
             "5757"
@@ -4247,7 +4248,7 @@
           "upstream_url": "https://n8n.io/workflows/",
           "identifier": "5784",
           "identifier_kind": "mutable_identifier",
-          "declared_license": "unverified",
+          "declared_license": "NOASSERTION",
           "record_count": 1,
           "paths": [
             "5784"
@@ -4258,7 +4259,7 @@
           "upstream_url": "https://n8n.io/workflows/",
           "identifier": "5789",
           "identifier_kind": "mutable_identifier",
-          "declared_license": "unverified",
+          "declared_license": "NOASSERTION",
           "record_count": 1,
           "paths": [
             "5789"
@@ -4269,7 +4270,7 @@
           "upstream_url": "https://n8n.io/workflows/",
           "identifier": "5807",
           "identifier_kind": "mutable_identifier",
-          "declared_license": "unverified",
+          "declared_license": "NOASSERTION",
           "record_count": 1,
           "paths": [
             "5807"
@@ -4280,7 +4281,7 @@
           "upstream_url": "https://n8n.io/workflows/",
           "identifier": "5808",
           "identifier_kind": "mutable_identifier",
-          "declared_license": "unverified",
+          "declared_license": "NOASSERTION",
           "record_count": 1,
           "paths": [
             "5808"
@@ -4291,7 +4292,7 @@
           "upstream_url": "https://n8n.io/workflows/",
           "identifier": "5817",
           "identifier_kind": "mutable_identifier",
-          "declared_license": "unverified",
+          "declared_license": "NOASSERTION",
           "record_count": 1,
           "paths": [
             "5817"
@@ -4302,7 +4303,7 @@
           "upstream_url": "https://n8n.io/workflows/",
           "identifier": "5819",
           "identifier_kind": "mutable_identifier",
-          "declared_license": "unverified",
+          "declared_license": "NOASSERTION",
           "record_count": 1,
           "paths": [
             "5819"
@@ -4313,7 +4314,7 @@
           "upstream_url": "https://n8n.io/workflows/",
           "identifier": "5821",
           "identifier_kind": "mutable_identifier",
-          "declared_license": "unverified",
+          "declared_license": "NOASSERTION",
           "record_count": 1,
           "paths": [
             "5821"
@@ -4324,7 +4325,7 @@
           "upstream_url": "https://n8n.io/workflows/",
           "identifier": "5828",
           "identifier_kind": "mutable_identifier",
-          "declared_license": "unverified",
+          "declared_license": "NOASSERTION",
           "record_count": 1,
           "paths": [
             "5828"
@@ -4335,7 +4336,7 @@
           "upstream_url": "https://n8n.io/workflows/",
           "identifier": "5832",
           "identifier_kind": "mutable_identifier",
-          "declared_license": "unverified",
+          "declared_license": "NOASSERTION",
           "record_count": 1,
           "paths": [
             "5832"
@@ -4346,7 +4347,7 @@
           "upstream_url": "https://n8n.io/workflows/",
           "identifier": "5897",
           "identifier_kind": "mutable_identifier",
-          "declared_license": "unverified",
+          "declared_license": "NOASSERTION",
           "record_count": 1,
           "paths": [
             "5897"
@@ -4357,7 +4358,7 @@
           "upstream_url": "https://n8n.io/workflows/",
           "identifier": "5908",
           "identifier_kind": "mutable_identifier",
-          "declared_license": "unverified",
+          "declared_license": "NOASSERTION",
           "record_count": 1,
           "paths": [
             "5908"
@@ -4368,7 +4369,7 @@
           "upstream_url": "https://n8n.io/workflows/",
           "identifier": "5918",
           "identifier_kind": "mutable_identifier",
-          "declared_license": "unverified",
+          "declared_license": "NOASSERTION",
           "record_count": 1,
           "paths": [
             "5918"
@@ -4379,7 +4380,7 @@
           "upstream_url": "https://n8n.io/workflows/",
           "identifier": "5923",
           "identifier_kind": "mutable_identifier",
-          "declared_license": "unverified",
+          "declared_license": "NOASSERTION",
           "record_count": 1,
           "paths": [
             "5923"
@@ -4390,7 +4391,7 @@
           "upstream_url": "https://n8n.io/workflows/",
           "identifier": "5924",
           "identifier_kind": "mutable_identifier",
-          "declared_license": "unverified",
+          "declared_license": "NOASSERTION",
           "record_count": 1,
           "paths": [
             "5924"
@@ -4401,7 +4402,7 @@
           "upstream_url": "https://n8n.io/workflows/",
           "identifier": "5938",
           "identifier_kind": "mutable_identifier",
-          "declared_license": "unverified",
+          "declared_license": "NOASSERTION",
           "record_count": 1,
           "paths": [
             "5938"
@@ -4412,7 +4413,7 @@
           "upstream_url": "https://n8n.io/workflows/",
           "identifier": "5947",
           "identifier_kind": "mutable_identifier",
-          "declared_license": "unverified",
+          "declared_license": "NOASSERTION",
           "record_count": 1,
           "paths": [
             "5947"
@@ -4423,7 +4424,7 @@
           "upstream_url": "https://n8n.io/workflows/",
           "identifier": "5948",
           "identifier_kind": "mutable_identifier",
-          "declared_license": "unverified",
+          "declared_license": "NOASSERTION",
           "record_count": 1,
           "paths": [
             "5948"
@@ -4434,7 +4435,7 @@
           "upstream_url": "https://n8n.io/workflows/",
           "identifier": "5951",
           "identifier_kind": "mutable_identifier",
-          "declared_license": "unverified",
+          "declared_license": "NOASSERTION",
           "record_count": 1,
           "paths": [
             "5951"
@@ -4445,7 +4446,7 @@
           "upstream_url": "https://n8n.io/workflows/",
           "identifier": "5953",
           "identifier_kind": "mutable_identifier",
-          "declared_license": "unverified",
+          "declared_license": "NOASSERTION",
           "record_count": 1,
           "paths": [
             "5953"
@@ -4456,7 +4457,7 @@
           "upstream_url": "https://n8n.io/workflows/",
           "identifier": "6018",
           "identifier_kind": "mutable_identifier",
-          "declared_license": "unverified",
+          "declared_license": "NOASSERTION",
           "record_count": 1,
           "paths": [
             "6018"
@@ -4467,7 +4468,7 @@
           "upstream_url": "https://n8n.io/workflows/",
           "identifier": "6020",
           "identifier_kind": "mutable_identifier",
-          "declared_license": "unverified",
+          "declared_license": "NOASSERTION",
           "record_count": 1,
           "paths": [
             "6020"
@@ -4478,7 +4479,7 @@
           "upstream_url": "https://n8n.io/workflows/",
           "identifier": "6153",
           "identifier_kind": "mutable_identifier",
-          "declared_license": "unverified",
+          "declared_license": "NOASSERTION",
           "record_count": 1,
           "paths": [
             "6153"
@@ -4489,7 +4490,7 @@
           "upstream_url": "https://n8n.io/workflows/",
           "identifier": "6270",
           "identifier_kind": "mutable_identifier",
-          "declared_license": "unverified",
+          "declared_license": "NOASSERTION",
           "record_count": 1,
           "paths": [
             "6270"
@@ -4500,7 +4501,7 @@
           "upstream_url": "https://n8n.io/workflows/",
           "identifier": "6290",
           "identifier_kind": "mutable_identifier",
-          "declared_license": "unverified",
+          "declared_license": "NOASSERTION",
           "record_count": 1,
           "paths": [
             "6290"
@@ -4511,7 +4512,7 @@
           "upstream_url": "https://n8n.io/workflows/",
           "identifier": "6500",
           "identifier_kind": "mutable_identifier",
-          "declared_license": "unverified",
+          "declared_license": "NOASSERTION",
           "record_count": 1,
           "paths": [
             "6500"
@@ -4522,7 +4523,7 @@
           "upstream_url": "https://n8n.io/workflows/",
           "identifier": "6531",
           "identifier_kind": "mutable_identifier",
-          "declared_license": "unverified",
+          "declared_license": "NOASSERTION",
           "record_count": 1,
           "paths": [
             "6531"
@@ -4533,7 +4534,7 @@
           "upstream_url": "https://n8n.io/workflows/",
           "identifier": "6532",
           "identifier_kind": "mutable_identifier",
-          "declared_license": "unverified",
+          "declared_license": "NOASSERTION",
           "record_count": 1,
           "paths": [
             "6532"
@@ -4544,7 +4545,7 @@
           "upstream_url": "https://n8n.io/workflows/",
           "identifier": "6537",
           "identifier_kind": "mutable_identifier",
-          "declared_license": "unverified",
+          "declared_license": "NOASSERTION",
           "record_count": 1,
           "paths": [
             "6537"
@@ -4555,7 +4556,7 @@
           "upstream_url": "https://n8n.io/workflows/",
           "identifier": "6538",
           "identifier_kind": "mutable_identifier",
-          "declared_license": "unverified",
+          "declared_license": "NOASSERTION",
           "record_count": 1,
           "paths": [
             "6538"
@@ -4566,7 +4567,7 @@
           "upstream_url": "https://n8n.io/workflows/",
           "identifier": "6542",
           "identifier_kind": "mutable_identifier",
-          "declared_license": "unverified",
+          "declared_license": "NOASSERTION",
           "record_count": 1,
           "paths": [
             "6542"
@@ -4577,7 +4578,7 @@
           "upstream_url": "https://n8n.io/workflows/",
           "identifier": "6771",
           "identifier_kind": "mutable_identifier",
-          "declared_license": "unverified",
+          "declared_license": "NOASSERTION",
           "record_count": 1,
           "paths": [
             "6771"
@@ -4588,7 +4589,7 @@
           "upstream_url": "https://n8n.io/workflows/",
           "identifier": "6827",
           "identifier_kind": "mutable_identifier",
-          "declared_license": "unverified",
+          "declared_license": "NOASSERTION",
           "record_count": 1,
           "paths": [
             "6827"
@@ -4599,7 +4600,7 @@
           "upstream_url": "https://n8n.io/workflows/",
           "identifier": "6841",
           "identifier_kind": "mutable_identifier",
-          "declared_license": "unverified",
+          "declared_license": "NOASSERTION",
           "record_count": 1,
           "paths": [
             "6841"
@@ -4610,7 +4611,7 @@
           "upstream_url": "https://n8n.io/workflows/",
           "identifier": "6844",
           "identifier_kind": "mutable_identifier",
-          "declared_license": "unverified",
+          "declared_license": "NOASSERTION",
           "record_count": 1,
           "paths": [
             "6844"
@@ -4621,7 +4622,7 @@
           "upstream_url": "https://n8n.io/workflows/",
           "identifier": "6906",
           "identifier_kind": "mutable_identifier",
-          "declared_license": "unverified",
+          "declared_license": "NOASSERTION",
           "record_count": 1,
           "paths": [
             "6906"
@@ -4632,7 +4633,7 @@
           "upstream_url": "https://n8n.io/workflows/",
           "identifier": "6993",
           "identifier_kind": "mutable_identifier",
-          "declared_license": "unverified",
+          "declared_license": "NOASSERTION",
           "record_count": 1,
           "paths": [
             "6993"
@@ -4643,7 +4644,7 @@
           "upstream_url": "https://n8n.io/workflows/",
           "identifier": "7154",
           "identifier_kind": "mutable_identifier",
-          "declared_license": "unverified",
+          "declared_license": "NOASSERTION",
           "record_count": 1,
           "paths": [
             "7154"
@@ -4654,7 +4655,7 @@
           "upstream_url": "https://n8n.io/workflows/",
           "identifier": "7215",
           "identifier_kind": "mutable_identifier",
-          "declared_license": "unverified",
+          "declared_license": "NOASSERTION",
           "record_count": 1,
           "paths": [
             "7215"
@@ -4665,7 +4666,7 @@
           "upstream_url": "https://n8n.io/workflows/",
           "identifier": "7449",
           "identifier_kind": "mutable_identifier",
-          "declared_license": "unverified",
+          "declared_license": "NOASSERTION",
           "record_count": 1,
           "paths": [
             "7449"
@@ -4676,7 +4677,7 @@
           "upstream_url": "https://n8n.io/workflows/",
           "identifier": "7467",
           "identifier_kind": "mutable_identifier",
-          "declared_license": "unverified",
+          "declared_license": "NOASSERTION",
           "record_count": 1,
           "paths": [
             "7467"
@@ -4687,7 +4688,7 @@
           "upstream_url": "https://n8n.io/workflows/",
           "identifier": "7639",
           "identifier_kind": "mutable_identifier",
-          "declared_license": "unverified",
+          "declared_license": "NOASSERTION",
           "record_count": 1,
           "paths": [
             "7639"
@@ -4698,7 +4699,7 @@
           "upstream_url": "https://n8n.io/workflows/",
           "identifier": "7671",
           "identifier_kind": "mutable_identifier",
-          "declared_license": "unverified",
+          "declared_license": "NOASSERTION",
           "record_count": 1,
           "paths": [
             "7671"
@@ -4709,7 +4710,7 @@
           "upstream_url": "https://n8n.io/workflows/",
           "identifier": "7756",
           "identifier_kind": "mutable_identifier",
-          "declared_license": "unverified",
+          "declared_license": "NOASSERTION",
           "record_count": 1,
           "paths": [
             "7756"
@@ -4720,7 +4721,7 @@
           "upstream_url": "https://n8n.io/workflows/",
           "identifier": "7957",
           "identifier_kind": "mutable_identifier",
-          "declared_license": "unverified",
+          "declared_license": "NOASSERTION",
           "record_count": 1,
           "paths": [
             "7957"
@@ -4731,7 +4732,7 @@
           "upstream_url": "https://n8n.io/workflows/",
           "identifier": "7979",
           "identifier_kind": "mutable_identifier",
-          "declared_license": "unverified",
+          "declared_license": "NOASSERTION",
           "record_count": 1,
           "paths": [
             "7979"
@@ -4742,7 +4743,7 @@
           "upstream_url": "https://n8n.io/workflows/",
           "identifier": "8008",
           "identifier_kind": "mutable_identifier",
-          "declared_license": "unverified",
+          "declared_license": "NOASSERTION",
           "record_count": 1,
           "paths": [
             "8008"
@@ -4753,7 +4754,7 @@
           "upstream_url": "https://n8n.io/workflows/",
           "identifier": "8237",
           "identifier_kind": "mutable_identifier",
-          "declared_license": "unverified",
+          "declared_license": "NOASSERTION",
           "record_count": 1,
           "paths": [
             "8237"
@@ -4764,7 +4765,7 @@
           "upstream_url": "https://n8n.io/workflows/",
           "identifier": "8326",
           "identifier_kind": "mutable_identifier",
-          "declared_license": "unverified",
+          "declared_license": "NOASSERTION",
           "record_count": 1,
           "paths": [
             "8326"
@@ -4775,7 +4776,7 @@
           "upstream_url": "https://n8n.io/workflows/",
           "identifier": "8428",
           "identifier_kind": "mutable_identifier",
-          "declared_license": "unverified",
+          "declared_license": "NOASSERTION",
           "record_count": 1,
           "paths": [
             "8428"
@@ -4786,7 +4787,7 @@
           "upstream_url": "https://n8n.io/workflows/",
           "identifier": "8500",
           "identifier_kind": "mutable_identifier",
-          "declared_license": "unverified",
+          "declared_license": "NOASSERTION",
           "record_count": 1,
           "paths": [
             "8500"
@@ -4797,7 +4798,7 @@
           "upstream_url": "https://n8n.io/workflows/",
           "identifier": "8562",
           "identifier_kind": "mutable_identifier",
-          "declared_license": "unverified",
+          "declared_license": "NOASSERTION",
           "record_count": 1,
           "paths": [
             "8562"
@@ -4808,7 +4809,7 @@
           "upstream_url": "https://n8n.io/workflows/",
           "identifier": "8591",
           "identifier_kind": "mutable_identifier",
-          "declared_license": "unverified",
+          "declared_license": "NOASSERTION",
           "record_count": 1,
           "paths": [
             "8591"
@@ -4819,7 +4820,7 @@
           "upstream_url": "https://n8n.io/workflows/",
           "identifier": "8597",
           "identifier_kind": "mutable_identifier",
-          "declared_license": "unverified",
+          "declared_license": "NOASSERTION",
           "record_count": 1,
           "paths": [
             "8597"
@@ -4830,7 +4831,7 @@
           "upstream_url": "https://n8n.io/workflows/",
           "identifier": "8604",
           "identifier_kind": "mutable_identifier",
-          "declared_license": "unverified",
+          "declared_license": "NOASSERTION",
           "record_count": 1,
           "paths": [
             "8604"
@@ -4841,7 +4842,7 @@
           "upstream_url": "https://n8n.io/workflows/",
           "identifier": "8654",
           "identifier_kind": "mutable_identifier",
-          "declared_license": "unverified",
+          "declared_license": "NOASSERTION",
           "record_count": 1,
           "paths": [
             "8654"
@@ -4852,7 +4853,7 @@
           "upstream_url": "https://n8n.io/workflows/",
           "identifier": "8724",
           "identifier_kind": "mutable_identifier",
-          "declared_license": "unverified",
+          "declared_license": "NOASSERTION",
           "record_count": 1,
           "paths": [
             "8724"
@@ -4863,7 +4864,7 @@
           "upstream_url": "https://n8n.io/workflows/",
           "identifier": "9026",
           "identifier_kind": "mutable_identifier",
-          "declared_license": "unverified",
+          "declared_license": "NOASSERTION",
           "record_count": 1,
           "paths": [
             "9026"
@@ -4874,7 +4875,7 @@
           "upstream_url": "https://n8n.io/workflows/",
           "identifier": "9100",
           "identifier_kind": "mutable_identifier",
-          "declared_license": "unverified",
+          "declared_license": "NOASSERTION",
           "record_count": 1,
           "paths": [
             "9100"
@@ -4885,7 +4886,7 @@
           "upstream_url": "https://n8n.io/workflows/",
           "identifier": "9200",
           "identifier_kind": "mutable_identifier",
-          "declared_license": "unverified",
+          "declared_license": "NOASSERTION",
           "record_count": 1,
           "paths": [
             "9200"
@@ -4896,7 +4897,7 @@
           "upstream_url": "https://n8n.io/workflows/",
           "identifier": "9277",
           "identifier_kind": "mutable_identifier",
-          "declared_license": "unverified",
+          "declared_license": "NOASSERTION",
           "record_count": 1,
           "paths": [
             "9277"
@@ -4907,7 +4908,7 @@
           "upstream_url": "https://n8n.io/workflows/",
           "identifier": "9383",
           "identifier_kind": "mutable_identifier",
-          "declared_license": "unverified",
+          "declared_license": "NOASSERTION",
           "record_count": 1,
           "paths": [
             "9383"
@@ -4918,7 +4919,7 @@
           "upstream_url": "https://n8n.io/workflows/",
           "identifier": "9429",
           "identifier_kind": "mutable_identifier",
-          "declared_license": "unverified",
+          "declared_license": "NOASSERTION",
           "record_count": 1,
           "paths": [
             "9429"
@@ -4929,7 +4930,7 @@
           "upstream_url": "https://n8n.io/workflows/",
           "identifier": "9455",
           "identifier_kind": "mutable_identifier",
-          "declared_license": "unverified",
+          "declared_license": "NOASSERTION",
           "record_count": 1,
           "paths": [
             "9455"
@@ -4940,7 +4941,7 @@
           "upstream_url": "https://n8n.io/workflows/",
           "identifier": "9577",
           "identifier_kind": "mutable_identifier",
-          "declared_license": "unverified",
+          "declared_license": "NOASSERTION",
           "record_count": 1,
           "paths": [
             "9577"
@@ -4951,7 +4952,7 @@
           "upstream_url": "https://n8n.io/workflows/",
           "identifier": "9592",
           "identifier_kind": "mutable_identifier",
-          "declared_license": "unverified",
+          "declared_license": "NOASSERTION",
           "record_count": 1,
           "paths": [
             "9592"
@@ -4962,7 +4963,7 @@
           "upstream_url": "https://n8n.io/workflows/",
           "identifier": "9764",
           "identifier_kind": "mutable_identifier",
-          "declared_license": "unverified",
+          "declared_license": "NOASSERTION",
           "record_count": 1,
           "paths": [
             "9764"
@@ -4973,7 +4974,7 @@
           "upstream_url": "https://n8n.io/workflows/",
           "identifier": "9850",
           "identifier_kind": "mutable_identifier",
-          "declared_license": "unverified",
+          "declared_license": "NOASSERTION",
           "record_count": 1,
           "paths": [
             "9850"
@@ -4991,7 +4992,7 @@
       "artifact_base_url": "https://swe-bench-submissions.s3.amazonaws.com/lite/20240728_sweagent_gpt4o/trajs/",
       "record_count": 130,
       "declared_license_distribution": {
-        "unverified": 130
+        "NOASSERTION": 130
       },
       "upstream_identifiers": [
         {
@@ -4999,7 +5000,7 @@
           "upstream_url": "https://github.com/swe-bench/experiments",
           "identifier": "20240728_sweagent_gpt4o",
           "identifier_kind": "mutable_identifier",
-          "declared_license": "unverified",
+          "declared_license": "NOASSERTION",
           "record_count": 130,
           "paths": [
             "astropy__astropy-12907.traj",
@@ -5744,20 +5745,21 @@
       "row_count": 661,
       "declared_license_distribution": {
         "crewai": {
-          "Apache-2.0": 6,
+          "Apache-2.0": 9,
           "GPL-3.0": 9,
-          "MIT": 53,
-          "NOASSERTION": 230
+          "MIT": 132,
+          "NOASSERTION": 148
         },
         "mcp": {
+          "AGPL-3.0-only": 1,
           "Apache-2.0": 15,
-          "CC-BY-4.0": 1,
-          "MIT": 87,
-          "NOASSERTION": 29,
-          "Other": 12
+          "BUSL-1.1": 1,
+          "CC-BY-4.0": 2,
+          "MIT": 98,
+          "NOASSERTION": 27
         },
         "n8n": {
-          "unverified": 219
+          "NOASSERTION": 219
         }
       },
       "source_prose_survives": false,
@@ -5776,10 +5778,10 @@
       "row_count": 298,
       "declared_license_distribution": {
         "crewai": {
-          "Apache-2.0": 6,
+          "Apache-2.0": 9,
           "GPL-3.0": 9,
-          "MIT": 53,
-          "NOASSERTION": 230
+          "MIT": 132,
+          "NOASSERTION": 148
         }
       },
       "source_prose_survives": false,
@@ -5796,11 +5798,12 @@
       "row_count": 144,
       "declared_license_distribution": {
         "mcp": {
+          "AGPL-3.0-only": 1,
           "Apache-2.0": 15,
-          "CC-BY-4.0": 1,
-          "MIT": 87,
-          "NOASSERTION": 29,
-          "Other": 12
+          "BUSL-1.1": 1,
+          "CC-BY-4.0": 2,
+          "MIT": 98,
+          "NOASSERTION": 27
         }
       },
       "source_prose_survives": false,
@@ -5817,7 +5820,7 @@
       "row_count": 219,
       "declared_license_distribution": {
         "n8n": {
-          "unverified": 219
+          "NOASSERTION": 219
         }
       },
       "source_prose_survives": false,
@@ -5834,10 +5837,10 @@
       "row_count": 298,
       "declared_license_distribution": {
         "crewai": {
-          "Apache-2.0": 6,
+          "Apache-2.0": 9,
           "GPL-3.0": 9,
-          "MIT": 53,
-          "NOASSERTION": 230
+          "MIT": 132,
+          "NOASSERTION": 148
         }
       },
       "source_prose_survives": false,
@@ -5854,10 +5857,10 @@
       "row_count": 298,
       "declared_license_distribution": {
         "crewai": {
-          "Apache-2.0": 6,
+          "Apache-2.0": 9,
           "GPL-3.0": 9,
-          "MIT": 53,
-          "NOASSERTION": 230
+          "MIT": 132,
+          "NOASSERTION": 148
         }
       },
       "source_prose_survives": true,
@@ -5874,11 +5877,12 @@
       "row_count": 144,
       "declared_license_distribution": {
         "mcp": {
+          "AGPL-3.0-only": 1,
           "Apache-2.0": 15,
-          "CC-BY-4.0": 1,
-          "MIT": 87,
-          "NOASSERTION": 29,
-          "Other": 12
+          "BUSL-1.1": 1,
+          "CC-BY-4.0": 2,
+          "MIT": 98,
+          "NOASSERTION": 27
         }
       },
       "source_prose_survives": true,
@@ -5895,7 +5899,7 @@
       "row_count": 219,
       "declared_license_distribution": {
         "n8n": {
-          "unverified": 219
+          "NOASSERTION": 219
         }
       },
       "source_prose_survives": true,
@@ -5934,26 +5938,27 @@
       "row_count": 1182,
       "declared_license_distribution": {
         "crewai": {
-          "Apache-2.0": 6,
+          "Apache-2.0": 9,
           "GPL-3.0": 9,
-          "MIT": 53,
-          "NOASSERTION": 230
+          "MIT": 132,
+          "NOASSERTION": 148
         },
         "injecagent": {
           "MIT": 340
         },
         "mcp": {
+          "AGPL-3.0-only": 1,
           "Apache-2.0": 15,
-          "CC-BY-4.0": 1,
-          "MIT": 87,
-          "NOASSERTION": 28,
-          "Other": 12
+          "BUSL-1.1": 1,
+          "CC-BY-4.0": 2,
+          "MIT": 97,
+          "NOASSERTION": 27
         },
         "n8n": {
-          "unverified": 215
+          "NOASSERTION": 215
         },
         "sweagent": {
-          "unverified": 130
+          "NOASSERTION": 130
         },
         "synthetic": {
           "MIT": 56
@@ -5983,26 +5988,27 @@
       "row_count": 1187,
       "declared_license_distribution": {
         "crewai": {
-          "Apache-2.0": 6,
+          "Apache-2.0": 9,
           "GPL-3.0": 9,
-          "MIT": 53,
-          "NOASSERTION": 230
+          "MIT": 132,
+          "NOASSERTION": 148
         },
         "injecagent": {
           "MIT": 340
         },
         "mcp": {
+          "AGPL-3.0-only": 1,
           "Apache-2.0": 15,
-          "CC-BY-4.0": 1,
-          "MIT": 87,
-          "NOASSERTION": 29,
-          "Other": 12
+          "BUSL-1.1": 1,
+          "CC-BY-4.0": 2,
+          "MIT": 98,
+          "NOASSERTION": 27
         },
         "n8n": {
-          "unverified": 219
+          "NOASSERTION": 219
         },
         "sweagent": {
-          "unverified": 130
+          "NOASSERTION": 130
         },
         "synthetic": {
           "MIT": 56
@@ -6027,11 +6033,12 @@
       "row_count": 144,
       "declared_license_distribution": {
         "mcp": {
+          "AGPL-3.0-only": 1,
           "Apache-2.0": 15,
-          "CC-BY-4.0": 1,
-          "MIT": 87,
-          "NOASSERTION": 29,
-          "Other": 12
+          "BUSL-1.1": 1,
+          "CC-BY-4.0": 2,
+          "MIT": 98,
+          "NOASSERTION": 27
         }
       },
       "source_prose_survives": false,
@@ -6048,7 +6055,7 @@
       "row_count": 219,
       "declared_license_distribution": {
         "n8n": {
-          "unverified": 219
+          "NOASSERTION": 219
         }
       },
       "source_prose_survives": false,
@@ -6065,7 +6072,7 @@
       "row_count": 130,
       "declared_license_distribution": {
         "sweagent": {
-          "unverified": 130
+          "NOASSERTION": 130
         }
       },
       "source_prose_survives": false,

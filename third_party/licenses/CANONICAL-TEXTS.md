@@ -17,14 +17,14 @@ nothing about the terms. A row marked UNRESOLVED could not be retrieved at its p
 revision, and its records remain unfinished for redistribution; see
 [`THIRD_PARTY_LICENSES.md`](../../THIRD_PARTY_LICENSES.md).
 
-Licences carried: 3.
+Licences carried: 4.
 
 ### Apache-2.0
 
 - Local copy: [`Apache-2.0.txt`](Apache-2.0.txt)
 - Retrieved from: <https://www.apache.org/licenses/LICENSE-2.0.txt>
 - SHA-256 of the local copy: `cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30`
-- CatchBench records: 21
+- CatchBench records: 24
 
 | Upstream project | Pinned revision | Records | SHA-256 of that project's licence file | Byte-identical to the local copy |
 |---|---|---|---|---|
@@ -38,6 +38,7 @@ Licences carried: 3.
 | [cybrlab-ai/preclick-mcp](https://github.com/cybrlab-ai/preclick-mcp) | `7fbd5c94bc1ca014b4dbedbc5df74f7f46439c24` | 2 | `c71d239df91726fc519c6eb72d318ec65820627232b2f796219e87dcf35d0ab4` | no |
 | [Helixar-AI/helixar-mcp](https://github.com/Helixar-AI/helixar-mcp) | `c0b73c99d2fe8eaab7f1db5a450bee7f4934e801` | 1 | `67976d9ca4fe93fdc87c953555910caba7212e669a42cea914928e6a0568c3a0` | no |
 | [HemmaBo-se/hemmabo-mcp-server](https://github.com/HemmaBo-se/hemmabo-mcp-server) | `fe57b7c04b39a9db774bc248d85c4aada1acaf09` | 1 | `cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30` | yes |
+| [JasperHG90/rfcrew](https://github.com/JasperHG90/rfcrew) | `ec1539c4595b5a24a9aa940ce9aaf324a9c32928` | 3 | UNRESOLVED, because the pinned licence file could not be retrieved | - |
 | [luthersystems/insideout-agent-skills](https://github.com/luthersystems/insideout-agent-skills) | `afaaf9d5e29ad8fb98495c23ca9c1693396a43d4` | 1 | `bca887882ba80b8c6d7b681810d8e01fe5b176a3c1dd9ab23900048283380c77` | no |
 | [muxinc/mux-node-sdk](https://github.com/muxinc/mux-node-sdk) | `cfd2aa2e22741a518bd3164a613f08d234bcfa51` | 1 | `89f3dd2eab17e8b0e7147652905fb4f4c7080b2a2bd7887e6c4fc2918f2266be` | no |
 | [rchow93/askvai-meta-agentic-agents](https://github.com/rchow93/askvai-meta-agentic-agents) | `1a2fd9ebdb0ede411f15e370a43132b9a77ffafe` | 1 | `991b70e46816b2ea4115822cce4e56b3f936d3cb6fa63b1d6da4cb114b8aab71` | no |
@@ -58,13 +59,25 @@ Licences carried: 3.
 | [opahopa/crewai-factory-crew](https://github.com/opahopa/crewai-factory-crew) | `2dbcb84e0abeb21b15c9c53115abffd9d0d6e96f` | 6 | `3972dc9744f6499f0f9b2dbf76696f2ae7ad8af9b23dde66d6af86c9dfb36986` | yes |
 | [tom333/cv](https://github.com/tom333/cv) | `a4696394614ff49f4a3099aa806b7a061ddd86d8` | 3 | `3972dc9744f6499f0f9b2dbf76696f2ae7ad8af9b23dde66d6af86c9dfb36986` | yes |
 
+### AGPL-3.0-only
+
+- Local copy: [`AGPL-3.0.txt`](AGPL-3.0.txt)
+- Retrieved from: <https://www.gnu.org/licenses/agpl-3.0.txt>
+- SHA-256 of the local copy: `0d96a4ff68ad6d4b6f1f30f713b18d5184912ba8dd389f86aa7710db079abcb0`
+- CatchBench records: 1
+
+| Upstream project | Pinned revision | Records | SHA-256 of that project's licence file | Byte-identical to the local copy |
+|---|---|---|---|---|
+| [gpitrella/memxus-remote-mcp](https://github.com/gpitrella/memxus-remote-mcp) | `d9839947e7725661d7edd37bcc135f4ed32d23b8` | 1 | `451f369e16402fca445a6c46bb73ac0e5fa43047059f1e61fed0cc345250b286` | no |
+
 ### CC-BY-4.0
 
 - Local copy: [`CC-BY-4.0.txt`](CC-BY-4.0.txt)
 - Retrieved from: <https://creativecommons.org/licenses/by/4.0/legalcode.txt>
 - SHA-256 of the local copy: `9ba9550ad48438d0836ddab3da480b3b69ffa0aac7b7878b5a0039e7ab429411`
-- CatchBench records: 1
+- CatchBench records: 2
 
 | Upstream project | Pinned revision | Records | SHA-256 of that project's licence file | Byte-identical to the local copy |
 |---|---|---|---|---|
 | [MicrosoftDocs/mcp](https://github.com/MicrosoftDocs/mcp) | `caa3d670bf2814171dba4f7346ece5080964021e` | 1 | `7183ef9749eb9b75e710a81a4c812a9405cc184f087500581a973e5929ac3f5e` | no |
+| [Terahertz-Inc/sandwich-public](https://github.com/Terahertz-Inc/sandwich-public) | `e036e61ec5ec1a182ba74d9b8d404011581e2819` | 1 | UNRESOLVED, because the pinned licence file could not be retrieved | - |

@@ -6,7 +6,7 @@
 
 [![Code license](https://img.shields.io/badge/code%20license-MIT-blue.svg)](LICENSE)
 [![Python](https://img.shields.io/badge/python-3.10%20%7C%203.12-blue.svg)](pyproject.toml)
-[![Tests](https://img.shields.io/badge/tests-356-brightgreen.svg)](tests)
+[![Tests](https://img.shields.io/badge/tests-361-brightgreen.svg)](tests)
 [![Boards](https://img.shields.io/badge/boards-PRE%20%7C%20LIVE%20%7C%20POST-orange.svg)](#the-boards)
 
 [Quickstart](#quickstart) · [The Boards](#the-boards) · [Task List](#the-full-task-list) · [Add a Method](#how-a-method-plugs-in) · [Full Install](#the-full-board)
@@ -80,8 +80,10 @@ method implementation; this repository provides the benchmark tasks and comparis
 ## Paper
 
 An accompanying manuscript is in preparation under the title *CatchBench: A Benchmark for
-Auditing Agent Failures Across the PRE / LIVE / POST Lifecycle*. Preprint: arXiv:XXXX.XXXXX
-(identifier pending). The repository has not yet been released publicly.
+Auditing Agent Failures Across the PRE / LIVE / POST Lifecycle*. It is not yet posted; this section
+carries the preprint link once it is. Every number the manuscript reports is regenerated from this
+repository by the tools named in [The Full Board](#the-full-board), so the code is
+checkable ahead of the write-up.
 
 `run.py` computes the boards from the inputs available to a checkout. A repository commit fixes the
 benchmark code, committed PRE artifacts, and cached LLM-judge predictions. It also records immutable
@@ -96,11 +98,18 @@ setup, and Python dependencies are not locked.
 
 The repository's MIT `LICENSE` covers CatchBench-authored code and the 56 authored synthetic PRE
 records. It is not a blanket licence for derived third-party records or cached model output. Of the
-committed PRE records, InjecAgent's 340 are established as MIT and the synthetic 56 are first-party
-MIT. Some CrewAI and MCP records also carry MIT or Apache-2.0 declarations, but those source sets
-still contain unresolved records. The n8n and SWE-agent artifact terms remain unverified.
+1187 committed PRE records, 663 carry an established licence: 626 MIT, 24 Apache-2.0, 9 GPL-3.0,
+2 CC-BY-4.0, 1 AGPL-3.0, and 1 BUSL-1.1. The remaining 524 declare none.
 
-Nine CrewAI records declare GPL-3.0 and one MCP record declares CC-BY-4.0. They stay in the release,
+Those 524 were checked rather than left unexamined, on 2026-08-21. Every n8n and SWE-agent record is
+among them: `SWE-bench/experiments` carries no licence file and states no submitter terms, and the
+n8n gallery terms grant other users a licence to use and adapt a template rather than to redistribute
+it. A re-check of the CrewAI and MCP records recorded as `NOASSERTION` found that 106 of them do
+carry a licence their upstream states in a README or package manifest, which is why the counts above
+are higher than an earlier reading of the same data. All 524 are recorded as `NOASSERTION` and marked
+unfinished in [THIRD_PARTY_LICENSES.md](THIRD_PARTY_LICENSES.md).
+
+The GPL-3.0, AGPL-3.0, CC-BY-4.0, and BUSL-1.1 records stay in the release,
 their licence texts ship in [`third_party/licenses/`](third_party/licenses/), and
 [THIRD_PARTY_LICENSES.md](THIRD_PARTY_LICENSES.md#why-the-gpl-30-and-cc-by-40-records-are-in-the-release)
 sets out exactly what those records carry and why, so a reader can judge the position rather than
@@ -592,10 +601,10 @@ the method, is the fixed point. See `src/catchbench/core.py` for the contract an
 
 ## Status and Release
 
-This repository is a local pre-release build. It implements POST localization, detection, cause
-attribution, and Gold injection; LIVE streaming early warning and online stale-state detection; and
-the PRE over-privilege audit across six config corpora. The accompanying preprint identifier is still
-pending: arXiv:XXXX.XXXXX.
+This repository implements POST localization, detection, cause attribution, and Gold injection;
+LIVE streaming early warning and online stale-state detection; and the PRE over-privilege audit
+across six config corpora. The accompanying preprint is not yet posted; the Paper section above
+carries the link once it is.
 
 The repository ships benchmark code, cached LLM-judge predictions, and a PRE derived feature with
 labels. It does not re-host the raw upstream trace corpora or the upstream PRE task and role prose.
