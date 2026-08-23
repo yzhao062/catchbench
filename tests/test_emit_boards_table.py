@@ -42,7 +42,8 @@ BOARD_TEXT = "\n".join([
 SPEC = dict(header="[PRE] pre_over_privilege :: multi",
             state="PRE", name="Over-privilege", metric="f1", metric_label="F1",
             corpus=r"^PRE over_privilege: (\d+) configs across (\d+) corpora",
-            corpus_label="{0} configurations, {1} sources",
+            corpus_name="{1} sources", size="{0}", unit="configs",
+            coverage=(),
             floor="flag_all", skip=("flag_none", "oracle_privilege_diff"),
             claims=())
 
@@ -89,76 +90,97 @@ def test_a_missing_floor_row_is_a_hard_failure(parsed):
 def test_a_corpus_line_that_stops_matching_is_a_hard_failure():
     preamble, _ = ebt.read_board(BOARD_TEXT.replace("1187 configs", "many configs"))
     with pytest.raises(SystemExit):
-        ebt.corpus_cell(preamble, SPEC)
+        ebt.corpus_cells(preamble, SPEC)
 
 
 def test_a_corpus_pattern_matching_twice_is_a_hard_failure(parsed):
     """Two matches means the row could be paired with the wrong corpus, which is silent."""
     preamble, _ = parsed
     with pytest.raises(SystemExit):
-        ebt.corpus_cell(preamble + list(preamble), SPEC)
+        ebt.corpus_cells(preamble + list(preamble), SPEC)
 
 
 # --- reading the verdicts -------------------------------------------------------------------------
 
 
-def test_an_unknown_claim_id_is_a_hard_failure():
-    spec = dict(SPEC, claims=("no.such.claim",))
-    with pytest.raises(SystemExit):
-        ebt.verdict_cell(spec, {}, {})
-
-
 def test_an_unknown_family_id_is_a_hard_failure():
-    spec = dict(SPEC, claims=(("family", "no_such_family", "things happen"),))
+    spec = dict(SPEC, coverage=(("no_such_family", None),))
     with pytest.raises(SystemExit):
-        ebt.verdict_cell(spec, {}, {})
+        ebt.separates_cell(spec, {})
+
+
+def test_a_prefix_that_selects_nothing_is_a_hard_failure():
+    """An empty selection must fail loudly; silently it prints a smaller denominator."""
+    spec = dict(SPEC, coverage=(("f", "det.nosuch."),))
+    with pytest.raises(SystemExit):
+        ebt.separates_cell(spec, {"f": [{"id": "det.swe.a", "verdict": "separates_as_stated"}]})
 
 
 def test_a_board_with_no_declared_contrast_says_so():
-    assert ebt.verdict_cell(SPEC, {}, {}) == "no registered contrast"
+    assert ebt.separates_cell(SPEC, {}) == "--"
 
 
 def test_a_nonseparating_claim_is_not_reported_as_separating():
-    claim = {"id": "x", "label": "swegym: a vs b", "verdict": "does_not_separate",
-             "estimate": {"a": 0.7, "b": 0.6}, "test": {"p_adjusted_holm": 0.4}}
-    cell = ebt.verdict_cell(dict(SPEC, claims=("x",)), {"x": claim}, {})
-    assert "unresolved" in cell and "separates" not in cell
+    members = [{"id": "x", "verdict": "does_not_separate"}]
+    assert ebt.separates_cell(dict(SPEC, coverage=(("f", None),)), {"f": members}) == "0/1"
 
 
 def test_a_family_count_comes_from_the_claims_not_from_the_declared_size():
     """A family that grows must move the printed count, which is the drift this exists to catch."""
-    members = [{"verdict": "separates_as_stated"}, {"verdict": "does_not_separate"}]
-    cell = ebt.verdict_cell(dict(SPEC, claims=(("family", "f", "things separate"),)),
-                            {}, {"f": members})
-    assert cell == "1 of 2 things separate"
+    members = [{"id": "a", "verdict": "separates_as_stated"},
+               {"id": "b", "verdict": "does_not_separate"}]
+    assert ebt.separates_cell(dict(SPEC, coverage=(("f", None),)), {"f": members}) == "1/2"
 
 
-def test_a_prefix_fraction_survives_the_corpus_strip():
-    """``SWE-Gym 25%`` names the corpus and the prefix; only the corpus half is redundant.
+def test_an_id_prefix_splits_one_family_across_two_boards():
+    """post_detection_auc spans both corpora, so each Detection row takes its own half."""
+    members = [{"id": "det.swe.a", "verdict": "separates_as_stated"},
+               {"id": "det.swe.b", "verdict": "does_not_separate"},
+               {"id": "det.tau.a", "verdict": "does_not_separate"}]
+    assert ebt.separates_cell(dict(SPEC, coverage=(("f", "det.swe."),)), {"f": members}) == "1/2"
+    assert ebt.separates_cell(dict(SPEC, coverage=(("f", "det.tau."),)), {"f": members}) == "0/1"
 
-    Dropping the whole prefix turned a contrast established at the first quarter of a run into one
-    that read as board-wide, on a board scored at four prefixes.
+
+# --- the partition gate ---------------------------------------------------------------------------
+
+
+def test_a_contrast_belonging_to_no_board_is_a_hard_failure(monkeypatch):
+    """The failure the fraction replaced: a dropped family shrinks the denominator in silence."""
+    boards = (dict(SPEC, coverage=(("f", None),)),)
+    monkeypatch.setattr(ebt, "_BOARDS", boards)
+    families = {"f": [{"id": "a", "verdict": "separates_as_stated"}],
+                "orphan": [{"id": "b", "verdict": "does_not_separate"}]}
+    with pytest.raises(SystemExit):
+        ebt.check_partition(families)
+
+
+def test_a_contrast_claimed_by_two_boards_is_a_hard_failure(monkeypatch):
+    boards = (dict(SPEC, coverage=(("f", None),)), dict(SPEC, coverage=(("f", None),)))
+    monkeypatch.setattr(ebt, "_BOARDS", boards)
+    with pytest.raises(SystemExit):
+        ebt.check_partition({"f": [{"id": "a", "verdict": "separates_as_stated"}]})
+
+
+def test_the_real_boards_partition_the_real_contrasts():
+    """Every declared contrast is on exactly one board, so the column cannot under-count."""
+    _, _, families = ebt.load()
+    ebt.check_partition(families)
+
+
+def test_the_printed_fractions_sum_to_the_papers_own_totals():
+    """The abstract quotes a separation count; a reader who adds up the column must get it.
+
+    This is the reconciliation the redesign exists to protect. Before it, the column showed 7 of
+    16 families, so summing the table gave 32 of 65 against an abstract that said 47 of 118.
     """
-    claim = {"id": "x", "label": "SWE-Gym 25%: a vs b", "verdict": "separates_as_stated",
-             "estimate": {"a": 0.7, "b": 0.6}, "test": {"p_adjusted_holm": 0.01}}
-    cell = ebt.verdict_cell(dict(SPEC, claims=("x",)), {"x": claim}, {})
-    assert r"25\%" in cell
-    assert "SWE-Gym" not in cell
-
-
-def test_a_bare_corpus_prefix_is_dropped_whole():
-    claim = {"id": "x", "label": "swegym: a vs b", "verdict": "separates_as_stated",
-             "estimate": {"a": 0.7, "b": 0.6}, "test": {"p_adjusted_holm": 0.01}}
-    cell = ebt.verdict_cell(dict(SPEC, claims=("x",)), {"x": claim}, {})
-    assert cell.startswith("a vs b")
-
-
-def test_an_unrecognized_prefix_is_kept_rather_than_guessed_away():
-    """A new corpus name must show up in the cell, not vanish into the strip list."""
-    claim = {"id": "x", "label": "AppWorld: a vs b", "verdict": "separates_as_stated",
-             "estimate": {"a": 0.7, "b": 0.6}, "test": {"p_adjusted_holm": 0.01}}
-    cell = ebt.verdict_cell(dict(SPEC, claims=("x",)), {"x": claim}, {})
-    assert cell.startswith("AppWorld, a vs b")
+    (preamble, blocks), claims, families = ebt.load()
+    printed = [ebt.separates_cell(spec, families) for spec in ebt._BOARDS]
+    pairs = [cell.split("/") for cell in printed if cell != "--"]
+    separates = sum(int(a) for a, _ in pairs)
+    total = sum(int(b) for _, b in pairs)
+    every = [c for members in families.values() for c in members]
+    assert total == len(every)
+    assert separates == sum(c["verdict"] in ebt._SEPARATING for c in every)
 
 
 def test_no_generated_cell_carries_a_literal_tab():
@@ -207,7 +229,7 @@ def _paper(tmp_path, rows):
     tmp_path.joinpath("03_benchmark.tex").write_text(
         "\\begin{table}[t]\n\\caption{x}\n\\label{tab:boards}\n"
         "\\begin{tabular}{@{}ll@{}}\n\\toprule\n"
-        "State & Board & Corpus & Metric & Floor & Range & Registered result \\\\\n"
+        "Board & Corpus & Size & Metric & Floor & Field & Separates \\\\\n"
         "\\midrule\n" + body + "\n\\bottomrule\n\\end{tabular}\n\\end{table}\n",
         encoding="utf-8")
     return tmp_path
@@ -269,8 +291,8 @@ def test_the_header_row_is_not_compared_as_content(tmp_path):
     paper = _paper(tmp_path, rows)
     text = paper.joinpath("03_benchmark.tex").read_text(encoding="utf-8")
     paper.joinpath("03_benchmark.tex").write_text(
-        text.replace("State & Board", "State & Scored board"), encoding="utf-8")
-    # the header no longer starts with "State &" in the same shape, so it must still be dropped
+        text.replace("Board & Corpus", "Board & Scored corpus"), encoding="utf-8")
+    # the header no longer starts with "Board &" in the same shape, so it must still be dropped
     assert ebt.check(paper, rows) in (0, 1)
 
 
