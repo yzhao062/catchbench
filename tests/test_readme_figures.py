@@ -4,7 +4,9 @@ from __future__ import annotations
 
 import json
 import re
+import struct
 import sys
+import zlib
 from pathlib import Path
 
 
@@ -111,6 +113,35 @@ def test_a_changed_live_verdict_makes_only_the_live_figure_stale(tmp_path):
                    for problem in problems)
 
 
+def _png_chunk(kind: bytes, data: bytes) -> bytes:
+    return (struct.pack(">I", len(data)) + kind + data
+            + struct.pack(">I", zlib.crc32(kind + data) & 0xFFFFFFFF))
+
+
+def _write_png(path: Path, color_type: int, *, palette=None, trns=None) -> None:
+    """Write a 2x2 PNG by hand, so these tests need no image library.
+
+    The module under test parses PNG with the standard library precisely so the asset gate
+    does not depend on Pillow. Building the fixtures the same way keeps that true, and it
+    tests the parser against the format rather than against one encoder's habits.
+    """
+
+    width = height = 2
+    pixel = b"\x0c\x22\x38" if color_type == 2 else b"\x00"
+    raw = (b"\x00" + pixel * width) * height
+    chunks = [
+        checker.PNG_SIGNATURE,
+        _png_chunk(b"IHDR", struct.pack(">IIBBBBB", width, height, 8, color_type, 0, 0, 0)),
+    ]
+    if palette is not None:
+        chunks.append(_png_chunk(b"PLTE", palette))
+    if trns is not None:
+        chunks.append(_png_chunk(b"tRNS", trns))
+    chunks.append(_png_chunk(b"IDAT", zlib.compress(raw)))
+    chunks.append(_png_chunk(b"IEND", b""))
+    path.write_bytes(b"".join(chunks))
+
+
 def test_a_truecolor_png_carrying_trns_is_not_read_as_opaque(tmp_path):
     """Opacity does not follow from the colour type: 0, 2, and 3 may all carry tRNS.
 
@@ -118,10 +149,8 @@ def test_a_truecolor_png_carrying_trns_is_not_read_as_opaque(tmp_path):
     carry transparency. A truecolor asset with a tRNS chunk would therefore have passed as
     opaque, so the parser now reports the chunk and the asset rule keys on it.
     """
-    from PIL import Image
-
     path = tmp_path / "truecolor-with-trns.png"
-    Image.new("RGB", (4, 4), (12, 34, 56)).save(path, transparency=(12, 34, 56))
+    _write_png(path, 2, trns=struct.pack(">HHH", 12, 34, 56))
 
     _, _, _, color_type, has_transparency = checker.png_metadata(path)
 
@@ -131,10 +160,8 @@ def test_a_truecolor_png_carrying_trns_is_not_read_as_opaque(tmp_path):
 
 def test_an_opaque_palette_png_is_read_as_opaque(tmp_path):
     """A palette image without tRNS is opaque, which is why the type alone cannot decide."""
-    from PIL import Image
-
     path = tmp_path / "opaque-palette.png"
-    Image.new("P", (4, 4), 0).save(path)
+    _write_png(path, 3, palette=b"\x0c\x22\x38")
 
     _, _, _, color_type, has_transparency = checker.png_metadata(path)
 
