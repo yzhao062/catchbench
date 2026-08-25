@@ -31,8 +31,9 @@ Leakage and distribution checks, reported as first-class results (see ``gold_rep
     candidate pool degree sits above that floor, but only because the injector targets steps that
     have dependencies: a has-dep eligibility baseline scores almost the same, so the lift is target
     SELECTION, a construction leak. ``gold_matched_breakdown`` controls for it by ranking only within
-    the injector's eligible pool, where the dependency-span signal is what survives (for
-    stale-state). Inside that pool has-dep lands exactly on the matched floor for stale-state
+    the injector's eligible pool. There, max-span displays above its floor, but no registered
+    matched-pool method-versus-floor contrast tests that reading. Inside that pool has-dep lands
+    exactly on the matched floor for stale-state
     (0.350 against 0.350), which is the leak closing. Degree does NOT: eligible steps still differ
     in how many dependencies they carry, so degree reads 0.394 on stale-state and 0.225 overall
     against a 0.308 floor. The pool equalizes eligibility and only eligibility, and it cannot
@@ -421,8 +422,8 @@ def gold_matched_breakdown(task: GoldLocalization, methods: list) -> str:
     could have targeted for that run's fault kind. The full-pool board carries a construction leak,
     since the injected step always has a dependency and detect-the-eligible baselines lift for free.
     Inside the matched pool that eligibility artifact is held constant and has-dep lands on the
-    matched random floor for stale-state; a genuine dependency signal is what survives. Degree is
-    NOT equalized, because eligible steps still differ in how many dependencies they carry, so read
+    matched random floor for stale-state. Max-span's displayed ordering against the floor is untested.
+    Degree is NOT equalized, because eligible steps still differ in how many dependencies they carry, so read
     its row as a partial check rather than a matched one. Reported per fault kind, tie-aware so
     constant-score baselines do not win on sort order (see ``_tie_aware``)."""
     task.setup()
@@ -638,11 +639,10 @@ def _mean_std(vals) -> Tuple[float, float]:
 
 
 def gold_seed_robustness(methods: list, seeds=(0, 1, 2, 3, 4)) -> str:
-    """Stability of the Gold headline across injection seeds: the robustness question a synthetic
-    injection has to answer. Per scoring method, stale-state and dropped-grounding Top-1 as mean +/-
-    std over seeds; plus the matched-control stale max-span versus its floor, so the
-    selection-controlled mechanism signal is shown stable, not a single-draw artifact. Clean runs are cached, so this re-injects K
-    times without reloading the corpus."""
+    """Seed displays for the Gold rows. Per scoring method, stale-state and dropped-grounding Top-1
+    are reported as mean +/- std over seeds, together with the displayed matched-control stale
+    max-span and its floor. No registered matched-pool method-versus-floor contrast tests that
+    reading. Clean runs are cached, so this re-injects K times without reloading the corpus."""
     seeds = tuple(seeds)
     keep = [m for m in methods if hasattr(m, "scores") and m.method_id != "random"]
     stale_t1 = {m.method_id: [] for m in keep}
@@ -671,6 +671,7 @@ def gold_seed_robustness(methods: list, seeds=(0, 1, 2, 3, 4)) -> str:
     spm, sps = _mean_std(matched_span)
     flm, fls = _mean_std(matched_floor)
     lines.append(f"  matched stale max-span {spm:.3f}+/-{sps:.3f} vs floor {flm:.3f}+/-{fls:.3f} "
-                 f"(selection-controlled mechanism signal, stable across seeds; construction "
-                 f"leakage is measured separately by tools/gold_artifact_diagnostic.py)")
+                 f"(displayed matched-pool values across injection seeds; no registered "
+                 f"method-versus-floor contrast; construction leakage is measured separately by "
+                 f"tools/gold_artifact_diagnostic.py)")
     return "\n".join(lines)

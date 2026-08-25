@@ -19,6 +19,13 @@ ORANGE = "#D45135"
 GREEN = "#16836B"
 PURPLE = "#7452A5"
 
+# The paper palette. README figures opt into these names as they are rebuilt.
+AB_GRAY = "#C9C9C9"
+AB_MINT = "#BFDFD2"
+AB_CORAL = "#ED8D5A"
+AB_NEAR_BLACK = "#1A1A1A"
+AB_SUBTITLE = "#666666"
+
 
 def style(matplotlib) -> None:
     matplotlib.rcParams.update({
@@ -61,6 +68,8 @@ def save_web_png(fig, output: Path, figure_id: str, payload: dict[str, object], 
         provenance = bd.SOURCE_DESCRIPTION
         if figure_id == "board_pre_source":
             provenance += "; tools/statistical_tests_results.json (verdict words only)"
+        elif figure_id == "board_live_prefix":
+            provenance += "; tools/statistical_tests_results.json (threshold verdicts only)"
         metadata.add_text(bd.META_SOURCE, provenance)
         image.save(output, format="PNG", pnginfo=metadata, optimize=True, dpi=(dpi, dpi))
         width, height = image.size

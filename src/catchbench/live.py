@@ -22,7 +22,7 @@ built-in validity check, not a separate number to reconcile.
   - size (flat)          : prefix size and counts only, the trivial baseline.
   - auditable (size+deps): size plus the size-normalized dependency block (the dependency signal
                           ``auditable`` surfaces over the growing prefix). Reading it EARLIER than
-                          size is the early-warning claim.
+                          the flat size-and-counts baseline is the early-warning claim.
   - full                 : flat plus execution plus raw dependency features (reference).
 
 prefix-AUC (the leaderboard metric) is the mean ROC-AUC across prefix fractions; the per-prefix curve

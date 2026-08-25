@@ -23,6 +23,10 @@ def _load_board_data():
     if spec is None or spec.loader is None:
         raise RuntimeError(f"cannot load {FIGURE_SOURCE}")
     module = importlib.util.module_from_spec(spec)
+    # Register before executing: board_data uses postponed annotations, and @dataclass
+    # resolves them through sys.modules[cls.__module__]. A by-path load that skips this
+    # step raises AttributeError on None inside dataclasses.
+    sys.modules[spec.name] = module
     spec.loader.exec_module(module)
     return module
 
@@ -30,8 +34,13 @@ def _load_board_data():
 bd = _load_board_data()
 
 
-def png_metadata(path: Path) -> tuple[dict[str, str], int, int, int]:
-    """Read checked tEXt metadata and the IHDR without an image-library dependency."""
+def png_metadata(path: Path) -> tuple[dict[str, str], int, int, int, bool]:
+    """Read checked tEXt metadata, the IHDR, and whether a tRNS chunk is present.
+
+    Opacity cannot be read off the colour type alone. The PNG specification defines tRNS
+    for colour types 0, 2, and 3, so a truecolor asset can be transparent while looking
+    safe by its type, which is why the chunk is reported rather than skipped.
+    """
 
     try:
         raw = path.read_bytes()
@@ -44,6 +53,7 @@ def png_metadata(path: Path) -> tuple[dict[str, str], int, int, int]:
     metadata: dict[str, str] = {}
     width = height = color_type = -1
     saw_end = False
+    has_transparency = False
     while offset < len(raw):
         if offset + 12 > len(raw):
             raise ValueError(f"{path} has a truncated PNG chunk")
@@ -71,6 +81,8 @@ def png_metadata(path: Path) -> tuple[dict[str, str], int, int, int]:
             if key in metadata:
                 raise ValueError(f"{path} repeats PNG metadata key {key!r}")
             metadata[key] = value.decode("latin-1")
+        elif chunk_type == b"tRNS":
+            has_transparency = True
         elif chunk_type == b"IEND":
             saw_end = True
             if crc_end != len(raw):
@@ -79,7 +91,7 @@ def png_metadata(path: Path) -> tuple[dict[str, str], int, int, int]:
         offset = crc_end
     if not saw_end or width < 1 or height < 1:
         raise ValueError(f"{path} is an incomplete PNG")
-    return metadata, width, height, color_type
+    return metadata, width, height, color_type, has_transparency
 
 
 def check_assets(board: Path = DEFAULT_BOARD, stats: Path = DEFAULT_STATS,
@@ -95,7 +107,7 @@ def check_assets(board: Path = DEFAULT_BOARD, stats: Path = DEFAULT_STATS,
             problems.append(f"{figure_id}: cannot derive current semantic inputs: {exc}")
             continue
         try:
-            metadata, width, height, color_type = png_metadata(path)
+            metadata, width, height, color_type, has_transparency = png_metadata(path)
         except ValueError as exc:
             problems.append(str(exc))
             continue
@@ -115,12 +127,22 @@ def check_assets(board: Path = DEFAULT_BOARD, stats: Path = DEFAULT_STATS,
         expected_source = bd.SOURCE_DESCRIPTION
         if figure_id == "board_pre_source":
             expected_source += "; tools/statistical_tests_results.json (verdict words only)"
+        elif figure_id == "board_live_prefix":
+            expected_source += "; tools/statistical_tests_results.json (threshold verdicts only)"
+        elif figure_id == "hero-lifecycle":
+            expected_source += "; README.md (phrase checks only)"
+        # catchbench_data_at_a_glance reads the board alone, so the bare description stands.
         if metadata.get(bd.META_SOURCE) != expected_source:
             problems.append(f"{path}: missing or wrong {bd.META_SOURCE!r} metadata")
-        if color_type not in (0, 2):
+        if color_type in (4, 6):
             problems.append(
-                f"{path}: PNG color type {color_type} can carry transparency; README figures "
+                f"{path}: PNG color type {color_type} carries an alpha channel; README figures "
                 "must be opaque for GitHub dark mode"
+            )
+        elif has_transparency:
+            problems.append(
+                f"{path}: PNG carries a tRNS chunk; README figures must be opaque for GitHub "
+                "dark mode"
             )
         if width < 700 or height < 400:
             problems.append(f"{path}: {width}x{height} is below the web-resolution floor")
@@ -141,7 +163,7 @@ def main(argv: list[str] | None = None) -> int:
         return 1
     for figure_id in bd.FIGURE_IDS:
         payload = bd.figure_payload(figure_id, args.board, args.stats)
-        metadata, width, height, _ = png_metadata(args.assets / f"{figure_id}.png")
+        metadata, width, height, _, _ = png_metadata(args.assets / f"{figure_id}.png")
         print(f"OK {figure_id}: {width}x{height} RGB, data {metadata[bd.META_DIGEST]}")
         assert metadata[bd.META_DIGEST] == bd.payload_digest(payload)
     return 0

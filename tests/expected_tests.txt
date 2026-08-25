@@ -50,6 +50,7 @@ always       tests/test_check_board.py::test_golden_row_with_one_space_before_it
 always       tests/test_check_board.py::test_header_only_table_fails
 always       tests/test_check_board.py::test_identifier_cells_still_do_not_make_a_board_table
 always       tests/test_check_board.py::test_lead_in_is_what_separates_two_identically_shaped_tables
+always       tests/test_check_board.py::test_live_stale_ordering_has_no_unrelated_gold_license
 always       tests/test_check_board.py::test_main_exits_one_and_names_the_line_and_both_values
 always       tests/test_check_board.py::test_main_exits_zero_on_a_clean_readme
 always       tests/test_check_board.py::test_missing_delimiter_row_fails
@@ -306,10 +307,16 @@ always       tests/test_pre_static_scanner.py::UnionAndFactoryTest::test_scanner
 always       tests/test_pre_static_scanner.py::UnionAndFactoryTest::test_union_equals_component_rules
 always       tests/test_pre_static_scanner.py::UnrequestedHighImpactRuleTest::test_composite_unrequested_action_flagged
 always       tests/test_pre_static_scanner.py::UnrequestedHighImpactRuleTest::test_requested_action_not_flagged
-always       tests/test_readme_figures.py::test_a_changed_registered_verdict_makes_the_pre_figure_stale
+always       tests/test_readme_figures.py::test_a_changed_live_verdict_makes_only_the_live_figure_stale
+always       tests/test_readme_figures.py::test_a_changed_pre_verdict_makes_only_the_pre_figure_stale
 always       tests/test_readme_figures.py::test_a_moved_board_number_makes_the_live_figure_stale
 always       tests/test_readme_figures.py::test_a_renamed_board_section_is_a_hard_failure
+always       tests/test_readme_figures.py::test_a_renamed_scored_block_makes_only_the_hero_stale
+always       tests/test_readme_figures.py::test_a_truecolor_png_carrying_trns_is_not_read_as_opaque
+always       tests/test_readme_figures.py::test_an_opaque_palette_png_is_read_as_opaque
 always       tests/test_readme_figures.py::test_committed_figures_match_their_semantic_inputs
+always       tests/test_readme_figures.py::test_no_committed_asset_leaks_an_absolute_path
+always       tests/test_readme_figures.py::test_the_glance_figure_is_not_stale_against_the_board
 always       tests/test_statistical_tests.py::test_exact_mcnemar_uses_discordant_pairs
 always       tests/test_statistical_tests.py::test_holm_enforces_monotonicity
 always       tests/test_statistical_tests.py::test_paired_delong_identical_scores

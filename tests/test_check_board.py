@@ -288,7 +288,7 @@ def test_clean_fixture_passes():
     number_problems, seen, board_backed, allowed = cb.check_prose_numbers(
         REAL_README.read_text(encoding="utf-8"), blocks, cb.PROSE_NUMBER_ALLOWLIST)
     assert number_problems == []
-    assert (seen, board_backed, allowed) == (212, 85, 127)
+    assert (seen, board_backed, allowed) == (225, 98, 127)
 
     # A comparative paragraph with a registered separating claim is the green claim-gate case.
     claim_result = cb.check_readme_detailed(
@@ -727,8 +727,8 @@ def test_removed_golden_row_fails():
         "The panel spans 0.127 to 0.452, but eight of the eleven models sit in one\n"
         "band from 0.333 up that 126 runs do not separate, so read the band rather than the "
         "ordering inside it.\n"
-        "Only the smallest models are distinguishable, and they do not improve on the position "
-        "prior."
+        "Mistral-Small and Nova-Micro fall below the position prior on point estimate, but the "
+        "registered\ntests leave both unresolved against it."
     )
     old = (
         "The four highest Top-1 scores range from 0.405 to 0.452; Llama and Qwen score from "
@@ -803,6 +803,33 @@ def test_prose_lines_are_not_indexed_as_golden_blocks():
 # --------------------------------------------------------------------------------------------
 # The shipped specs against the shipped golden
 # --------------------------------------------------------------------------------------------
+
+
+def test_live_stale_ordering_has_no_unrelated_gold_license():
+    """The LIVE stale-state paragraph must not be licensed by a Gold floor contrast.
+
+    It was. The paragraph ordered raw span against the z-score and compared both with the
+    post-hoc Gold value, while the registry declares no LIVE stale-state contrast at all,
+    and a licence anchored there named ``gold.maxspan.stale.floor``. That claim separates,
+    so the gate reported the paragraph as licensed: a false negative rather than a miss.
+    Restoring the ordering must now be caught as an unlicensed comparison.
+    """
+    readme = REAL_README.read_text(encoding="utf-8")
+    disclosure = (
+        "point estimates only. They support no claim about the effect of\n"
+        "per-run normalization."
+    )
+    assert readme.count(disclosure) == 1
+    bad = readme.replace(
+        disclosure,
+        "point estimates only. Raw span scores higher than the z-score, so\n"
+        "per-run normalization does not help.",
+    )
+    stats = json.loads(REAL_STATS.read_text(encoding="utf-8"))
+
+    problems, _, _ = cb.check_comparative_claims(bad, stats, cb.CLAIM_LICENSES)
+
+    assert any(problem.kind == "unlicensed-comparison" for problem in problems)
 
 
 def test_shipped_specs_resolve_against_the_committed_golden():

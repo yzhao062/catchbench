@@ -1211,8 +1211,6 @@ PROSE_NUMBER_ALLOWLIST: tuple[ProseNumberAllowance, ...] = (
                          "Supported Python versions displayed by the badge."),
     ProseNumberAllowance("test-badge", "badge/tests-", _declared_test_count(),
                          "Contract-test count displayed by the badge, read from the manifest."),
-    ProseNumberAllowance("headline-localization-count", "Eight of the eleven post-hoc judges",
-                         ("126",), "Who&When run count supporting the headline disclosure."),
     ProseNumberAllowance("release-current", "Release 0.1.1", ("0.1.1",),
                          "Package release version."),
     ProseNumberAllowance("release-previous", "0.1.0 wheel", ("0.1.0",),
@@ -1227,6 +1225,13 @@ PROSE_NUMBER_ALLOWLIST: tuple[ProseNumberAllowance, ...] = (
                          "arXiv paper identifier."),
     ProseNumberAllowance("asb-arxiv", "[Agent Security Bench]", ("2410.02644",),
                          "arXiv paper identifier."),
+    ProseNumberAllowance("catchbench-arxiv-badge", "badge/status-arXiv",
+                         ("2608.22808", "2608.22808"),
+                         "CatchBench's own arXiv identifier, shown by the badge and its link."),
+    ProseNumberAllowance("catchbench-arxiv-paper",
+                         "[CatchBench: When Can an Agent Failure Be Caught?]",
+                         ("2608.22808", "2608.22808"),
+                         "CatchBench's own arXiv identifier, repeated in the Paper section."),
     ProseNumberAllowance("synthetic-record-count", "56 authored", ("56",),
                          "Count of CatchBench-authored synthetic records."),
     ProseNumberAllowance(
@@ -1260,7 +1265,7 @@ PROSE_NUMBER_ALLOWLIST: tuple[ProseNumberAllowance, ...] = (
                          "Model version in a method name."),
     ProseNumberAllowance("localization-metric-name", "Top-1 score here",
                          ("1", "1", "3"), "Metric indices repeated in prose."),
-    ProseNumberAllowance("localization-metric-name-random", "Top-1 sits", ("1",),
+    ProseNumberAllowance("localization-metric-name-random", "has the only displayed Top-1", ("1",),
                          "Metric index in prose."),
     ProseNumberAllowance("swegym-run-counts", "SWE-Gym, 376 runs",
                          ("376", "188", "188"),
@@ -1296,10 +1301,10 @@ PROSE_NUMBER_ALLOWLIST: tuple[ProseNumberAllowance, ...] = (
                          "Counts of injected faults by mechanism."),
     ProseNumberAllowance("eligible-candidate-count", "mean of 7.4", ("7.4",),
                          "Mean eligible candidate count from the golden board heading."),
-    ProseNumberAllowance("gold-metric-name", "Top-1 against", ("1",),
-                         "Metric index in prose."),
-    ProseNumberAllowance("gold-seed-metric-name", "Top-1,", ("1",),
-                         "Metric index in prose."),
+    ProseNumberAllowance("gold-dropped-analytic-floor",
+                         "below the dropped-grounding analytic floor", ("0.035",),
+                         "Analytic random floor for dropped grounding. It comes from the registered "
+                         "gold.hasdep.dropped.floor contrast, not from a displayed board cell."),
     ProseNumberAllowance("gold-seed-mean", "0.795 +/-", ("0.795",),
                          "Selection-controlled five-seed mean in the golden reading notes."),
     ProseNumberAllowance("artifact-target-counts-a", "uniquely ranks all",
@@ -1318,8 +1323,6 @@ PROSE_NUMBER_ALLOWLIST: tuple[ProseNumberAllowance, ...] = (
                          "Count of paired cause-attribution runs."),
     ProseNumberAllowance("attribution-seed-mean", "0.671 +/-", ("0.671",),
                          "Five-seed cause-attribution mean in the golden reading notes."),
-    ProseNumberAllowance("online-realized-rates", "6% of stale reads", ("6%", "6%"),
-                         "Approximate realized true-positive and false-positive rates."),
     ProseNumberAllowance("online-target-rate", "displayed 5%", ("5%",),
                          "Target false-positive-rate threshold."),
     ProseNumberAllowance("pre-config-count", "It runs over 1187 configurations", ("1187",),
@@ -1411,6 +1414,16 @@ _TAU_THRESHOLD_CLAIMS = tuple(
                    "dep-span (online)")
 )
 
+_SWE_LIVE_METHOD_CLAIMS = (
+    "live.swe25.auditable.vs.size",
+    "live.swe.25.auditable.vs.ecod",
+    "live.swe25.full.vs.auditable (size+deps)",
+    "live.swe25.full.vs.pyod (ECOD)",
+    "live.swe.50.auditable.vs.ecod",
+    "live.swe.75.auditable.vs.ecod",
+    "live.swe.100.auditable.vs.ecod",
+)
+
 CLAIM_LICENSES: tuple[ClaimLicense, ...] = (
     ClaimLicense(
         "Who&When localization comparisons",
@@ -1429,7 +1442,7 @@ CLAIM_LICENSES: tuple[ClaimLicense, ...] = (
         ),
     ),
     ClaimLicense("headline detection comparison",
-                 "size-normalized dependency block scores above the size-only baseline",
+                 "size-normalized dependency block scores above the size-and-counts baseline",
                  ("det.swe.auditable.vs.size", "det.tau.auditable.vs.size",
                   "det.tau.auditable.vs.full", "det.swe.auditable.vs.ecod")),
     ClaimLicense("unsupervised arena comparison",
@@ -1443,8 +1456,9 @@ CLAIM_LICENSES: tuple[ClaimLicense, ...] = (
                  "paired test against the full-feature reference does not resolve the two",
                  ("det.swe.gsafeguard.vs.full",)),
     ClaimLicense("Gold displayed floor comparisons",
-                 "dependency-span detector localizes stale-state injections",
-                 ("gold.maxspan.stale.floor",)),
+                 "establishes max-span above the stale-state analytic",
+                 ("gold.maxspan.stale.floor", "gold.hasdep.dropped.floor",
+                  "gold.pygod.maxspan.matched")),
     ClaimLicense("Gold leakage-control comparisons",
                  "Leakage check, two levels",
                  ("gold.maxspan.stale.floor", "gold.hasdep.dropped.floor")),
@@ -1456,13 +1470,13 @@ CLAIM_LICENSES: tuple[ClaimLicense, ...] = (
                  "none of the reported methods reaches the 0.70 time-to-detection threshold",
                  ("live.swe25.auditable.vs.size",) + _TAU_THRESHOLD_CLAIMS),
     ClaimLicense("LIVE domain-split figure comparison",
-                 "same methods on the same features land on opposite sides of the bar",
-                 ("live.swe25.auditable.vs.size",)),
-    ClaimLicense("LIVE online stale-state comparison",
-                 "far below the 0.703 within-run localization",
-                 ("gold.maxspan.stale.floor",)),
+                 "All fillable SWE-Gym method markers are hollow",
+                 _SWE_LIVE_METHOD_CLAIMS + _TAU_THRESHOLD_CLAIMS),
+    # The three rule-precision ids test each rule against the pooled base rate. They
+    # license nothing about a rule against the judge, and the paragraph they cover now
+    # says so outright rather than printing the three as a ranking.
     ClaimLicense("PRE pooled comparisons",
-                 "combined OWASP/CWE scanner is the strongest rule-based method",
+                 "combined OWASP/CWE scanner has the highest displayed rule-based F1",
                  ("pre.combined.vs.heldout_judge",
                    "pre.precision.owasp_privilege_escalation.vs.base_rate",
                    "pre.precision.unrequested_high_impact.vs.base_rate",

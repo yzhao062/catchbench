@@ -2,16 +2,18 @@
 
 The benchmark board is the source of truth for every plotted number.  Each accessor below names
 the exact section header it expects, so a renamed section is a hard failure rather than an empty
-figure.  The PRE figure also displays registered verdict words; those non-numeric annotations come
-from ``tools/statistical_tests_results.json`` and are included in the figure provenance payload.
+figure.  The PRE and LIVE figures also display registered verdicts; those non-numeric annotations
+come from ``tools/statistical_tests_results.json`` and are included in the figure provenance payload.
 """
 
 from __future__ import annotations
 
+import ast
 import hashlib
 import json
 import math
 import re
+from dataclasses import asdict, dataclass
 from pathlib import Path
 
 
@@ -29,7 +31,14 @@ H_DETECTION_TAU = "[POST] post_detection :: tau"
 H_LIVE_SWE = "[LIVE] live_streaming :: swegym"
 H_LIVE_TAU = "[LIVE] live_streaming :: tau"
 
-FIGURE_IDS = ("board_live_prefix", "board_pre_source")
+BOARD_HEADER = re.compile(r"^\[(PRE|LIVE|POST)\]\s+(\S+)\s+::\s+(\S+)$")
+METHOD_ROW = re.compile(r"^\s{2}(.+?)\s{2,}[-+]?(?:\d+(?:\.\d*)?|\.\d+)")
+
+HERO_HEADER = re.compile(r"^\[(PRE|LIVE|POST)\]\s+([^:]+?)\s+::\s+(.+)$", re.MULTILINE)
+HERO_PREFIX_DECLARATION = "streaming prefixes [25%, 50%, 75%, 100%]"
+
+FIGURE_IDS = ("board_live_prefix", "board_pre_source", "catchbench_data_at_a_glance",
+              "hero-lifecycle")
 
 META_FIGURE = "CatchBench figure"
 META_PAYLOAD = "CatchBench data"
@@ -40,6 +49,118 @@ SOURCE_DESCRIPTION = "tests/golden/board.txt"
 
 class BoardDataError(RuntimeError):
     """The committed board cannot supply an exact figure input."""
+
+
+@dataclass(frozen=True)
+class BoardFacts:
+    """The scale and composition counts the README glance figure prints."""
+
+    pre_total: int
+    pre_sources: dict[str, int]
+    trace_runs: dict[str, int]
+    gold_injections: int
+    gold_stale: int
+    gold_dropped: int
+    board_count: int
+    entrant_count: int
+
+    @property
+    def trace_total(self) -> int:
+        return sum(self.trace_runs.values())
+
+
+def parse_board(path: Path | str = DEFAULT_BOARD) -> BoardFacts:
+    """Read the glance figure's counts from the board's own summary lines.
+
+    This lives beside the other accessors, and uses only the standard library, so
+    ``tools/check_readme_figures.py`` can gate the glance asset without importing
+    matplotlib or Pillow.
+    """
+
+    lines = Path(path).read_text(encoding="utf-8").splitlines()
+
+    pre_match = next(
+        (re.fullmatch(r"PRE over_privilege: (\d+) configs across (\d+) corpora (\{.*\})", line)
+         for line in lines if line.startswith("PRE over_privilege:")),
+        None,
+    )
+    if pre_match is None:
+        raise BoardDataError("board.txt has no parseable PRE corpus summary")
+    pre_total = int(pre_match.group(1))
+    declared_source_count = int(pre_match.group(2))
+    pre_sources = ast.literal_eval(pre_match.group(3))
+    if not isinstance(pre_sources, dict) or not all(
+        isinstance(key, str) and isinstance(value, int) for key, value in pre_sources.items()
+    ):
+        raise BoardDataError("PRE corpus summary is not a string-to-integer mapping")
+    if len(pre_sources) != declared_source_count or sum(pre_sources.values()) != pre_total:
+        raise BoardDataError("PRE corpus counts do not reconcile with the declared totals")
+
+    trace_patterns = {
+        "Who&When": re.compile(r"^Who&When: (\d+) failed runs,"),
+        "SWE-Gym": re.compile(r"^swegym: (\d+) runs \("),
+        "tau-bench": re.compile(r"^tau: (\d+) runs \("),
+    }
+    trace_runs: dict[str, int] = {}
+    for label, pattern in trace_patterns.items():
+        match = next((pattern.match(line) for line in lines if pattern.match(line)), None)
+        if match is None:
+            raise BoardDataError(f"board.txt has no parseable trace summary for {label}")
+        trace_runs[label] = int(match.group(1))
+
+    gold_pattern = re.compile(
+        r"^swegym-gold: (\d+) clean SWE-Gym runs, one injected fault each "
+        r"\((\d+) stale-state, (\d+) dropped-grounding\),"
+    )
+    gold_match = next((gold_pattern.match(line) for line in lines if gold_pattern.match(line)), None)
+    if gold_match is None:
+        raise BoardDataError("board.txt has no parseable Gold summary")
+    gold_injections, gold_stale, gold_dropped = map(int, gold_match.groups())
+    if gold_stale + gold_dropped != gold_injections:
+        raise BoardDataError("Gold fault counts do not reconcile with the Gold total")
+
+    headers = [(index, match) for index, line in enumerate(lines)
+               if (match := BOARD_HEADER.fullmatch(line))]
+    entrants: set[str] = set()
+    for index, _ in headers:
+        for row in lines[index + 2:]:
+            if not row.strip():
+                break
+            method_match = METHOD_ROW.match(row)
+            if method_match:
+                entrants.add(method_match.group(1).strip())
+
+    facts = BoardFacts(
+        pre_total=pre_total,
+        pre_sources=pre_sources,
+        trace_runs=trace_runs,
+        gold_injections=gold_injections,
+        gold_stale=gold_stale,
+        gold_dropped=gold_dropped,
+        board_count=len(headers),
+        entrant_count=len(entrants),
+    )
+    expected = {
+        "pre_total": 1187,
+        "pre_source_count": 6,
+        "trace_total": 1162,
+        "trace_source_count": 3,
+        "gold_injections": 188,
+        "board_count": 9,
+        "entrant_count": 72,
+    }
+    observed = {
+        "pre_total": facts.pre_total,
+        "pre_source_count": len(facts.pre_sources),
+        "trace_total": facts.trace_total,
+        "trace_source_count": len(facts.trace_runs),
+        "gold_injections": facts.gold_injections,
+        "board_count": facts.board_count,
+        "entrant_count": facts.entrant_count,
+    }
+    if observed != expected:
+        raise BoardDataError(f"board.txt changed; review the figure claims: {observed!r}")
+    return facts
 
 
 def _sections(text: str) -> dict[str, list[str]]:
@@ -268,7 +389,9 @@ def live_prefix(
     return prefixes, threshold, resolved
 
 
-def _pre_verdicts(stats_path: Path | str = DEFAULT_STATS) -> dict[str, str]:
+def _registered_claims(
+    stats_path: Path | str = DEFAULT_STATS,
+) -> dict[str, dict[str, object]]:
     path = Path(stats_path)
     try:
         root = json.loads(path.read_text(encoding="utf-8"))
@@ -285,6 +408,12 @@ def _pre_verdicts(stats_path: Path | str = DEFAULT_STATS) -> dict[str, str]:
         if claim_id in by_id:
             raise BoardDataError(f"{path} repeats claim {claim_id!r}")
         by_id[claim_id] = claim
+    return by_id
+
+
+def _pre_verdicts(stats_path: Path | str = DEFAULT_STATS) -> dict[str, str]:
+    path = Path(stats_path)
+    by_id = _registered_claims(path)
 
     verdicts: dict[str, str] = {}
     for source in ("crewai", "n8n", "mcp", "injecagent", "sweagent", "synthetic"):
@@ -299,6 +428,75 @@ def _pre_verdicts(stats_path: Path | str = DEFAULT_STATS) -> dict[str, str]:
         else:
             raise BoardDataError(f"{path} claim {claim_id!r} has unknown verdict {raw!r}")
     return verdicts
+
+
+def _live_threshold_claims(
+    prefixes: list[int],
+    corpora: dict[str, dict[str, list[float]]],
+    threshold: float,
+    stats_path: Path | str = DEFAULT_STATS,
+) -> dict[str, dict[str, list[dict[str, str] | None]]]:
+    """Registered method-versus-0.70 claims, with absent cells left as point estimates."""
+
+    path = Path(stats_path)
+    by_id = _registered_claims(path)
+    corpus_ids = {"swegym": "swe", "tau": "tau"}
+    threshold_families = {"swegym": "live_swegym_threshold_auc",
+                          "tau": "live_tau_threshold_auc"}
+    out: dict[str, dict[str, list[dict[str, str] | None]]] = {}
+    for corpus, rows in corpora.items():
+        corpus_id = corpus_ids[corpus]
+        expected_family = threshold_families[corpus]
+        out[corpus] = {}
+        for method in rows:
+            cells: list[dict[str, str] | None] = []
+            for prefix in prefixes:
+                claim_id = f"live.{corpus_id}.bar.{prefix}.{method}"
+                claim = by_id.get(claim_id)
+                if claim is None:
+                    cells.append(None)
+                    continue
+                estimate = claim.get("estimate")
+                if (claim.get("family") != expected_family
+                        or claim.get("metric") != "roc_auc"
+                        or not isinstance(estimate, dict)
+                        or estimate.get("a_name") != method
+                        or estimate.get("b_name") != "fixed bar"
+                        or not math.isclose(float(estimate.get("b", math.nan)), threshold,
+                                            abs_tol=1e-12)):
+                    raise BoardDataError(
+                        f"{path} claim {claim_id!r} is not the expected LIVE threshold contrast"
+                    )
+                raw = claim.get("verdict")
+                if raw == "separates_as_stated":
+                    verdict = "separates"
+                elif raw == "does_not_separate":
+                    verdict = "unresolved"
+                else:
+                    raise BoardDataError(
+                        f"{path} claim {claim_id!r} has unknown verdict {raw!r}"
+                    )
+                cells.append({"claim_id": claim_id, "family": expected_family,
+                              "verdict": verdict})
+            out[corpus][method] = cells
+    return out
+
+
+def scored_blocks(board_path: Path | str = DEFAULT_BOARD) -> list[str]:
+    """Every scored board block the lifecycle hero counts, as ``phase|board|corpus``.
+
+    The PRE by-source breakdown is excluded. It decomposes the one PRE board rather than
+    being a board of its own, and the hero prints board counts. Returning the identifiers
+    rather than only the counts is deliberate: a renamed corpus then moves the payload, so
+    the committed hero goes stale instead of staying plausible at the same three totals.
+    """
+
+    board = Path(board_path).read_text(encoding="utf-8")
+    return sorted(
+        f"{phase}|{board_id.strip()}|{corpus.strip()}"
+        for phase, board_id, corpus in HERO_HEADER.findall(board)
+        if corpus.strip() != "F1 by source"
+    )
 
 
 def figure_payload(
@@ -316,6 +514,9 @@ def figure_payload(
             "prefixes": prefixes,
             "threshold": threshold,
             "corpora": corpora,
+            "registered_threshold_claims": _live_threshold_claims(
+                prefixes, corpora, threshold, stats_path
+            ),
         }
     if figure_id == "board_pre_source":
         columns, rows = pre_by_source(board_path)
@@ -325,6 +526,19 @@ def figure_payload(
             "columns": columns,
             "rows": rows,
             "registered_verdicts": _pre_verdicts(stats_path),
+        }
+    if figure_id == "catchbench_data_at_a_glance":
+        facts = parse_board(board_path)
+        return {"figure": figure_id} | asdict(facts) | {"trace_total": facts.trace_total}
+    if figure_id == "hero-lifecycle":
+        blocks = scored_blocks(board_path)
+        return {
+            "figure": figure_id,
+            "blocks": blocks,
+            "counts": {phase: sum(1 for block in blocks if block.startswith(phase + "|"))
+                       for phase in ("PRE", "LIVE", "POST")},
+            "declares_prefixes":
+                HERO_PREFIX_DECLARATION in Path(board_path).read_text(encoding="utf-8"),
         }
     raise BoardDataError(f"unknown README figure {figure_id!r}")
 

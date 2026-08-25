@@ -1,8 +1,9 @@
 """POST pillar (forensics): run-level failure prediction (detection).
 
 Predict whether a run failed, scored by ROC-AUC, on trusted outcome labels. The keystone question,
-posed as a leaderboard: does the dependency structure predict failure beyond run size? The board
-answers it across four method families. A random floor and a size-only baseline bound the trivial
+posed as a leaderboard: does the dependency structure predict failure beyond run size and event
+counts? The board
+answers it across four method families. A random floor and a size-and-counts baseline bound the trivial
 end. Unsupervised anomaly detectors read the run without labels: PyOD on the flat features (shallow
 tabular AD), PyGOD's DOMINANT over the typed graph, and GUARDIAN's reconstruction autoencoder (the
 agent-specific graph sibling). The supervised feature layers reuse GRADE's verified eval (typed-graph

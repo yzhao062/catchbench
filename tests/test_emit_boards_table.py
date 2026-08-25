@@ -425,6 +425,10 @@ def test_the_two_figure_pipelines_read_the_board_identically():
     def load(path, name):
         spec = importlib.util.spec_from_file_location(name, path)
         module = importlib.util.module_from_spec(spec)
+        # A by-path load must register before executing. Either copy may define a
+        # dataclass under postponed annotations, and @dataclass resolves those through
+        # sys.modules[cls.__module__].
+        sys.modules[name] = module
         spec.loader.exec_module(module)
         return module
 

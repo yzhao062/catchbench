@@ -7,28 +7,35 @@
 A benchmark for auditing agents across three information states: the declared configuration before a
 run, a growing prefix while it runs, and the finished trace after it ends.
 
+[![arXiv](https://img.shields.io/badge/status-arXiv%202608.22808-blue.svg)](https://arxiv.org/abs/2608.22808)
 [![Code license](https://img.shields.io/badge/code%20license-MIT-blue.svg)](LICENSE)
 [![Python](https://img.shields.io/badge/python-3.10%20%7C%203.12-blue.svg)](pyproject.toml)
-[![Tests](https://img.shields.io/badge/tests-383-brightgreen.svg)](tests/expected_tests.txt)
+[![Tests](https://img.shields.io/badge/tests-390-brightgreen.svg)](tests/expected_tests.txt)
 [![Boards](https://img.shields.io/badge/boards-PRE%20%7C%20LIVE%20%7C%20POST-orange.svg)](#the-boards)
 
 [Quickstart](#quickstart) · [The Boards](#the-boards) · [Task List](#the-full-task-list) · [Add a Method](#how-a-method-plugs-in) · [Full Install](#the-full-board)
-
-<img src="assets/hero-masks.png" alt="One fixed agent run seen through three lifecycle evidence masks. PRE reads only the declared plan and harness; LIVE adds a growing prefix of the execution trace; POST reads the whole trace and the outcome. The run never changes." width="100%">
 
 </div>
 
 An audit is limited by the record more often than by the method. CatchBench holds the run fixed and
 varies what the auditor may read: before it runs you have only the plan and harness (is it
 over-privileged?); while it runs you have a growing prefix (is it about to fail?); after it runs you
-have the whole trace (which step broke it, did it fail, what kind of fault was it). Seven boards over
-five scenarios share one `Task` and `Method` interface.
+have the whole trace (which step broke it, did it fail, what kind of fault was it). Six audit
+scenarios produce seven task contracts (localization has two instantiations, human-labeled and
+injected), scored as nine boards, all sharing one `Task` and `Method` interface.
 
-Several of the answers are negative, and they are on the boards rather than in a limitations section.
-On tau-bench every entrant's time-to-detection reads `>100%`: none reaches the early-warning bar at
-any prefix, including the full trace. On two of six PRE sources the best method fails to establish a
-lead over flagging every capability. Eight of the eleven post-hoc judges sit in one band that 126
-runs do not separate, so the ordering inside it is not a result.
+<img src="assets/catchbench_data_at_a_glance.png" alt="Declared agent configurations across source corpora and recorded agent runs across trace corpora converge into the scored boards, evaluated by entrants that include LLM judges, rule scanners, structural and graph detectors, and anomaly detectors." width="100%">
+
+What the boards show, in plain terms:
+
+- On SWE-Gym, a run's dependency structure predicts failure better than its raw size and step counts.
+  The same comparison on tau-bench is inconclusive, so the board reports it as unresolved rather than
+  naming a winner.
+- No tested method flags a failing tau-bench run before it finishes.
+- On two of six configuration sources, no over-privilege method clearly beats the trivial baseline of
+  flagging every capability.
+- Eight of eleven LLM judges sit in a band these runs cannot tell apart, so the board declines to
+  rank them.
 
 ## Quickstart
 
@@ -60,6 +67,25 @@ oracle that reads the answer.
 The POST, LIVE, and Gold boards need the GRADE bridge and about 320 MB of corpora, and take roughly
 nine minutes. That path is under [The Full Board](#the-full-board).
 
+### For Coding Agents
+
+No repository clone, model key, GRADE checkout, torch installation, or corpus download is needed for
+the PRE board above. The `pip install` step may contact PyPI; the `catchbench --task pre` command
+itself then runs offline and normally finishes in about a second. A successful run's output contains
+both of these exact lines:
+
+```text
+CatchBench :: PRE board (offline; no GRADE bridge, no corpus download)
+PRE over_privilege: 1187 configs across 6 corpora {'crewai': 298, 'injecagent': 340, 'mcp': 144, 'n8n': 219, 'sweagent': 130, 'synthetic': 56}
+```
+
+An agent that needs the full board must clone CatchBench and GRADE as siblings, check GRADE out at
+the pinned commit, install `../grade[experiments]`, install the pinned CPU torch build and matching
+`pyg_lib` backend, and install CatchBench with its `full` extra. It also needs network access on
+every run to verify the three Hugging Face dataset heads. Budget about nine minutes and a large
+corpus download on the first run. Follow the exact commands and compatibility note in
+[The Full Board](#the-full-board); run plain `catchbench` only after that setup.
+
 <details>
 <summary>How this compares to earlier agent-auditing benchmarks</summary>
 
@@ -83,89 +109,6 @@ limitations are stated on their boards. New methods plug into a fixed `Task` and
 the same interface. The library [`auditable`](https://github.com/yzhao062/auditable) provides one
 method implementation; this repository provides the benchmark tasks and comparisons.
 
-## The Auditable Ecosystem
-
-| Cell | Role | Asset |
-|---|---|---|
-| Tool | the SDK people build on | [`auditable`](https://github.com/yzhao062/auditable) |
-| Evidence | the benchmark methods compete on | **CatchBench** (this repo) |
-| Knowledge | the curated reading list | [`awesome-auditable-ai`](https://github.com/yzhao062/awesome-auditable-ai) |
-| Method | graph construction and reused loaders | [`GRADE`](https://github.com/yzhao062/grade) |
-
-## Paper
-
-An accompanying manuscript is in preparation under the title *CatchBench: When Can an Agent Failure
-Be Caught?*. It is not yet posted; this section carries the preprint link once it is.
-
-Every number the manuscript reports is regenerated from this repository, so the code is checkable
-ahead of the write-up. The board-derived tables come from `run.py` through
-`tools/emit_boards_table.py`; the significance tables from `tools/statistical_tests.py` through
-`tools/emit_stats_table.py`; the transfer table from `tools/emit_transfer_table.py`; and the
-remaining reported quantities from `tools/whoandwhen_split_report.py`,
-`tools/pre_merge_judges.py`, and `tools/gold_artifact_diagnostic.py`. The three `emit_*` tools take a
-`--check` flag that exits non-zero and prints the delta when the manuscript is stale; the last three
-print their quantities and are compared by reading. All of it runs locally rather than in CI, for the
-reason given under [The Full Board](#the-full-board).
-
-`run.py` computes the boards from the inputs available to a checkout. A repository commit fixes the
-benchmark code, committed PRE artifacts, and cached LLM-judge predictions. It also records immutable
-Hugging Face commits for Who&When, SWE-Gym, and tau-bench in `catchbench.corpora`. Before scoring,
-the runner verifies that each dataset head still equals its recorded commit, forces GRADE's Hub calls
-through that full revision, and verifies the observed fetch or Who&When snapshot metadata. The printed
-board header records all three commits. Direct execution of GRADE outside this runner is not covered by
-the CatchBench-side pin. The documented setup and both workflows pin the GRADE commit, but the runner
-does not verify the sibling checkout's revision at run time, the `auditable` revision is not pinned at
-all, and the remaining Python dependencies are not locked.
-
-### Data and Generated-Artifact Licensing
-
-The repository's MIT `LICENSE` covers CatchBench-authored code and the 56 authored synthetic PRE
-records. It is not a blanket licence for derived third-party records or cached model output. Of the
-1187 committed PRE records, 663 carry an established licence: 626 MIT, 24 Apache-2.0, 9 GPL-3.0,
-2 CC-BY-4.0, 1 AGPL-3.0, and 1 BUSL-1.1. The remaining 524 declare none.
-
-Those 524 were checked rather than left unexamined, on 2026-08-21. Every n8n and SWE-agent record is
-among them: `SWE-bench/experiments` carries no licence file and states no submitter terms, and the
-n8n gallery terms grant other users a licence to use and adapt a template rather than to redistribute
-it. A re-check of the CrewAI and MCP records recorded as `NOASSERTION` found that 106 of them do
-carry a licence their upstream states in a README or package manifest, which is why the counts above
-are higher than an earlier reading of the same data. All 524 are recorded as `NOASSERTION` and marked
-unfinished in [THIRD_PARTY_LICENSES.md](THIRD_PARTY_LICENSES.md).
-
-The GPL-3.0, AGPL-3.0, CC-BY-4.0, and BUSL-1.1 records stay in the release. The first three ship
-their licence texts in [`third_party/licenses/`](third_party/licenses/); the BUSL-1.1 record's notice
-is reproduced inline in
-[THIRD_PARTY_LICENSES.md](THIRD_PARTY_LICENSES.md#the-busl-11-record) instead, because BUSL-1.1 is a
-template whose Parameters block each licensor fills in, so one shared copy would state somebody
-else's terms.
-[THIRD_PARTY_LICENSES.md](THIRD_PARTY_LICENSES.md#why-the-gpl-30-and-cc-by-40-records-are-in-the-release)
-sets out exactly what those records carry and why, so a reader can judge the position rather than
-take it. Every licence value the committed records declare is either carried as local text or
-recorded as a non-declaration, and
-[`tools/emit_third_party_notices.py --check`](tools/emit_third_party_notices.py) enumerates the
-declared values rather than a fixed list, so a source declaring something unanticipated fails the
-check instead of passing it.
-
-The associated Who&When code repository is MIT, but the pinned Who&When dataset card does not
-declare a dataset licence. The pinned tau-bench trajectory card likewise does not declare a licence;
-neither project's code licence is presented here as licensing separately hosted generated
-trajectories. Exact artifact paths, source identifiers, and declared distributions are in
-[`ASSET_MANIFEST.json`](ASSET_MANIFEST.json). Reproduced notices, local third-party licence texts,
-provenance links, and clearly marked unresolved blocks are in [`NOTICE`](NOTICE) and
-[`THIRD_PARTY_LICENSES.md`](THIRD_PARTY_LICENSES.md).
-
-## Posture: Branded Name, Neutral Content
-
-Because the benchmark shares a name with one entrant, the relationship is stated explicitly:
-
-- **The borrowed POST labels come from source corpora.** Localization scores against Who&When's
-  human-verified attribution; detection scores against SWE-Gym and tau-bench outcome labels. Gold
-  injection-site labels and PRE labels are constructed within this benchmark and carry the
-  limitations stated below.
-- **`auditable` is one baseline, not the referee.** It sits on the board next to a random floor,
-  a run-size baseline, PyOD on flattened features, a supervised reference, and a full-feature
-  reference. Its scores use the same interface as the other entries, and it is not required to lead.
-
 ## Why PRE / LIVE / POST
 
 The pillars are not three convenient buckets; they are the three information states a run passes
@@ -173,10 +116,10 @@ through, and the evidence available at each fixes which audit is possible. A met
 state cannot read another's evidence, so the pillars are separate tracks, not interchangeable views of
 one dataset.
 
-<img src="assets/hero-boards.png" alt="The lifecycle contract: for each of PRE, LIVE and POST, the admissible evidence, the audit question it permits, and the boards scored under it." width="100%">
+<img src="assets/hero-lifecycle.png" alt="One fixed agent run seen through three lifecycle evidence masks in the paper palette. PRE reads only the declaration, LIVE adds a growing trace prefix, and POST reads the complete trace and outcome. The rows contain one, three, and five scored blocks, respectively." width="100%">
 
-The board identities in that figure are the ones `run.py` prints and `tests/golden/board.txt`
-records. A reader can go from an audit question to its scored block without a lookup table.
+The scored block identities are the ones `run.py` prints and `tests/golden/board.txt` records. A
+reader can go from an audit question to its scored block without a lookup table.
 
 - **PRE** (only the plan and harness exist): the audit is static, for over-privilege and missing
   guardrails. **Over-privilege implemented; missing-guardrail planned.**
@@ -190,6 +133,37 @@ label that answers it and the metric the question implies (ranking questions use
 yes-or-no question uses ROC-AUC; an online question uses true-positive rate at a fixed false-positive
 budget so that its alarm burden is visible).
 
+<details>
+<summary>Seven implemented task contracts, plus one planned</summary>
+
+#### The Full Task List
+
+Each task is one auditor question at one information state, with the label that answers it, not a
+list chosen for coverage. Implemented in the current build:
+
+- **Fault localization** (POST, *which step*): rank the steps of a failed run. Top-1 / Top-3 / MRR
+  against Who&When human attribution.
+- **Failure detection** (POST, *did it fail*): predict run failure. ROC-AUC against SWE-Gym and
+  tau-bench resolved / unresolved outcomes.
+- **Cause attribution** (POST, *what kind*): tell stale-state from dropped-grounding on a paired Gold
+  injection (the same run injected both ways). ROC-AUC.
+- **Gold fault localization** (POST, injection experiment): plant a known fault in a real run and
+  localize it. Top-1 / Top-3 / MRR against injection-site labels.
+- **Streaming early warning** (LIVE, *can you tell early*): flag a failing run from a growing prefix.
+  Prefix-AUC and time to detection.
+- **Online stale-state detection** (LIVE, *catch it live*): detect the Gold stale-state injection
+  online. True-positive rate at a fixed false-positive budget.
+- **Over-privilege audit** (PRE, *is the declared harness safe*): flag granted capabilities the task
+  does not need. Compare an OWASP / CWE static-scanner set and a held-out LLM judge against the four
+  constructed label processes. Precision / recall / F1 over 1187 configs from six corpora.
+
+Planned:
+
+- **Missing-guardrail plan audit** (PRE, *is the plan safe*): flag removed or weakened guardrails in a
+  declared plan.
+
+</details>
+
 ## The Boards
 
 POST answers its three forensic questions (which step, did it fail, what kind) plus the Gold injection
@@ -201,6 +175,9 @@ inputs; exact agreement with the displayed values has the revision and environme
 the Paper section. The POST localization, detection, and Gold boards and the PRE over-privilege board
 have headline tables below; the cause-attribution board and the two LIVE boards are summarized at the
 end. `run.py` prints the additional method and metric rows.
+
+<details>
+<summary>Fault localization on Who&When: headline table, interpretation, and limits</summary>
 
 ### Fault Localization on Who&When
 
@@ -233,21 +210,27 @@ decisive step. The 11-model panel uses one all-at-once prompt per run, following
 predictions are cached and committed, so scoring the board makes no API call. GPT-5.5 has the highest
 Top-1 score here at 0.452. The panel spans 0.127 to 0.452, but eight of the eleven models sit in one
 band from 0.333 up that 126 runs do not separate, so read the band rather than the ordering inside it.
-Only the smallest models are distinguishable, and they do not improve on the position prior.
+Mistral-Small and Nova-Micro fall below the position prior on point estimate, but the registered
+tests leave both unresolved against it.
 Among methods that use no LLM, the supervised execution-feature ranker localizes beyond the prior on
 Top-3 without an API call; its Top-1 margin over position does not resolve at this corpus size.
 `auditable`'s blast share ties the prior at displayed precision because this
-corpus assumes every step depends on all prior steps. PyGOD DOMINANT is the one entry that scores
-below chance. Its 0.048 Top-1 sits under the 0.119 random floor: the reconstruction-error ranking
-does worse here than picking a step at random. The benchmark uses
+corpus assumes every step depends on all prior steps. PyGOD DOMINANT has the only displayed Top-1
+point estimate below chance, 0.048 against the 0.119 random floor; no registered contrast tests that
+pair. The benchmark uses
 separate structural methods in LIVE settings, where a full-trace judge cannot run. Separating a
 dependency signal from raw position requires traces in which long-range dependencies diverge from
 the corpus's full-context assumption.
 
+</details>
+
+<details>
+<summary>Failure detection on SWE-Gym and tau-bench: headline tables, wider arena, stability, and lineage</summary>
+
 ### Failure Detection on SWE-Gym and tau-bench
 
 Predict whether a run failed, scored by ROC-AUC. The comparison asks whether the dependency
-structure of a run predicts failure beyond its raw size. Compare `auditable (size+deps)` against
+structure of a run predicts failure beyond its raw size and event counts. Compare `auditable (size+deps)` against
 `size (flat)`.
 
 SWE-Gym, 376 runs (188 failed, 188 resolved):
@@ -276,10 +259,10 @@ tau-bench, 660 runs (363 failed, 297 resolved):
 | full (reference) | 0.665 |
 | G-Safeguard (supervised GNN) | 0.626 |
 
-How to read it. The size-normalized dependency block scores above the size-only baseline on both
+How to read it. The size-normalized dependency block scores above the size-and-counts baseline on both
 corpora (+0.141 on SWE-Gym, +0.046 on tau-bench), but only one of those is an established ordering.
 On SWE-Gym the paired test separates the two (Holm p=0.0001), so the structural signal predicts
-failure beyond run length there. On tau-bench the same test does not resolve the pair (Holm
+failure beyond run size and counts there. On tau-bench the same test does not resolve the pair (Holm
 p=0.068), so read that +0.046 as a point estimate and not as a result. On tau-bench the
 structural block and full-feature reference tie at the displayed precision (0.665), so the full vector
 shows no displayed gain there. On SWE-Gym, PyOD ECOD exceeds the linear size model (0.765 over 0.663),
@@ -302,10 +285,10 @@ detector establishes a task-relevant board lead. Neither does the task-aware str
 against the better ones: on SWE-Gym its paired tests against ECOD and against GUARDIAN both fail to
 separate (Holm p=0.404 and p=0.376), and failing to separate is not evidence that they are equal.
 G-Safeguard is
-the supervised graph comparator, holding the highest displayed SWE-Gym value at 0.828 and
+the supervised graph comparator, with the highest supervised SWE-Gym point estimate at 0.828 and
 0.824 +/- 0.007 over five cross-validation seeds.
 
-### Baselines and Lineage
+#### Baselines and Lineage
 
 The graph-AD baselines are ports of published methods onto the dependency graph, in the ADBench /
 BOND tradition of running a method on the benchmark's representation rather than gesturing at it.
@@ -319,6 +302,11 @@ information-bottleneck compression are simplified, as the code documents. G-Safe
 implemented as a supervised graph-classification GNN over the dependency graph. Its 0.828 is the
 highest displayed value on the SWE-Gym table, though the paired test against the full-feature
 reference does not resolve the two (Holm p=1).
+
+</details>
+
+<details>
+<summary>Gold injected-fault boards: full-pool and eligible-pool results, and where the injection does and does not yet hold up</summary>
 
 ### Gold: Injected Faults on Real Runs
 
@@ -359,29 +347,28 @@ on sort order.
 | `auditable` (dep-anomaly) | 0.391 | 0.799 | 0.075 |
 | PyGOD (graph AD) | 0.404 | 0.622 | 0.236 |
 
-How to read it. In the full pool, a dependency-span detector localizes stale-state injections at
-0.703 Top-1 against the 0.032 random floor. Within the eligible pool, `has-dep` equals the stale-state
-floor at 0.350, degree scores 0.394 against that floor, and max-span scores 0.805. This control removes
-the target-selection advantage but does not remove the construction artifact below. For
-dropped-grounding, position is the only displayed score above the matched floor, at 0.321 against
-0.277. The dependency-aware detector is essentially the raw `max-span` control, so it is
-keyed to the stale-state mechanism rather than presented as a general detector. PyGOD splits the same
-way. In the eligible pool it reaches 0.622 on stale-state against the 0.350 floor, which carries its
-0.404 overall to the top of that column. Its dropped-grounding score of 0.236 sits below that fault
-kind's 0.277 floor. The overall lead comes from one mechanism, the same one the span detector is
-keyed to.
+How to read it. The registered full-pool family establishes max-span above the stale-state analytic
+floor, 0.703 against 0.029, and `has-dep` below the dropped-grounding analytic floor, 0.005 against
+0.035. It declares no other method-versus-floor contrast in either pool, so all remaining comparisons
+to a floor in these tables are displayed cells. Within the eligible pool, `has-dep` displays 0.350 on
+stale-state, degree displays 0.394, and max-span displays 0.805 against the displayed 0.350 floor.
+For dropped grounding, position displays 0.321 against 0.277. PyGOD displays 0.622 on stale-state,
+0.236 on dropped grounding, and 0.404 overall; its registered overall comparison with max-span remains
+unresolved. These point estimates diagnose mechanisms but establish no additional floor ordering.
 
-### The Injection: Where It Holds Up, and Where It Does Not Yet
+#### The Injection: Where It Holds Up, and Where It Does Not Yet
 
 The injection checks include both the measured signal and its known limitations:
 
-- **One detectable mechanism.** Stale-state (redirect a dependency to an earlier superseded
-  event on the same file) is localized at 0.703 Top-1, and 0.653 +/- 0.028 across five injection seeds.
-  Dropped-grounding (remove a required dependency) is realized but not localized by the span/count
-  baselines.
-- **Leakage check, two levels.** In the full pool, position, degree, and `has-dep` score 0.000, 0.045,
-  and 0.078 overall against the 0.032 random floor. Two of the three controls clear that floor on
-  target eligibility alone. Ranking within the exact eligible pool controls target selection.
+- **One established localization mechanism.** Stale-state max-span separates from its analytic floor,
+  at 0.703 against 0.029 for this seed and 0.653 +/- 0.028 across five injection seeds. For dropped
+  grounding, the registered family establishes only `has-dep` below its analytic floor; it declares no
+  floor contrast for span, degree, or the graph detector, so it does not establish dropped-grounding
+  localization.
+- **Leakage check, two levels.** In the full pool, position, degree, and `has-dep` display 0.000, 0.045,
+  and 0.078 overall against the 0.032 random floor. The latter two point estimates are above the floor,
+  but the Gold localization family declares no overall floor contrast for either. Ranking within the
+  exact eligible pool controls target selection.
   On stale-state, `has-dep` equals the matched floor at 0.350, degree scores 0.394,
   and the dependency-span detector scores 0.805, with 0.795 +/- 0.020 across seeds. That controls
   selection, not construction: the
@@ -405,6 +392,11 @@ The injection checks include both the measured signal and its known limitations:
   requires a named-value corpus where writes and reads are explicit, plus a human-audited validation
   slice.
 
+</details>
+
+<details>
+<summary>Cause attribution and LIVE boards: paired mechanisms, early warning, and online detection</summary>
+
 ### Cause Attribution and the LIVE Boards
 
 Three more boards complete the POST and LIVE pillars; `run.py` prints their full tables.
@@ -419,27 +411,43 @@ floor. Each feature is keyed to one mechanism, so this measures discrimination w
 design, not general cause attribution.
 
 **LIVE streaming early warning (can you tell early).** Can a method separate failing from resolved
-runs from a growing prefix? On SWE-Gym the dependency-structure block clears ROC-AUC 0.74 at the 25%
-prefix (time-to-detection 25%) while the reported run-size curve does not; an unsupervised ECOD on the
-prefix also fires early (0.76), but a raw per-run span signal does not (0.36, length-confounded). The
-early signal appears in the tested supervised or batch-unsupervised prefix features, not in the
-single online scalar. On tau-bench, none of the reported methods reaches the 0.70 time-to-detection
-threshold.
+runs from a growing prefix? On SWE-Gym the registered 25% contrast separates the
+dependency-structure block from the flat size-and-counts baseline. Their point estimates are 0.74 and
+0.63, but neither has a
+registered contrast against the 0.70 bar. The 25% ECOD point estimate is 0.76, while the raw per-run
+span point estimate is 0.36 and length-confounded. On tau-bench, none of the reported methods reaches
+the 0.70 time-to-detection threshold. Its registered bar family resolves all five nonrandom entrants
+below 0.70 through the first three prefixes; at 100%, full features and size plus dependencies are
+unresolved against the bar, while the other three remain below it.
 
-<img src="assets/board_live_prefix.png" alt="Failure ROC-AUC against observed trace prefix, on SWE-Gym and tau-bench, for six LIVE entrants against the 0.70 early-warning threshold." width="620">
+<img src="assets/board_live_prefix.png" alt="Failure ROC-AUC against observed trace prefix on SWE-Gym and tau-bench for six LIVE entrants. Marker fill distinguishes registered and separating threshold contrasts, registered but unresolved threshold contrasts, and point estimates with no registered threshold test." width="620">
 
-Read each curve against the dashed 0.70 line within its own panel, and read the two panels against
-each other rather than pooling them: the same methods on the same features land on opposite sides of
-the bar, which is the domain split the detection board shows too. The online per-run span is the
-lowest curve at the shortest prefix in both panels, and it is the only setting that is genuinely
-online. Drawn by `figure-src/board_live_prefix.py` from `tests/golden/board.txt`.
+Marker fill states the evidence against the dashed line: method color means the registered contrast
+separates, mint means it is registered but unresolved, and hollow means the threshold reading is a
+point estimate with no registered bar test. All fillable SWE-Gym method markers are hollow, and
+random retains its x reference marker, because SWE-Gym's registered
+LIVE families compare entrants rather than testing the bar. Tau-bench registers five nonrandom
+entrants at every prefix; random remains an untested reference. The panels therefore show a
+descriptive domain split, not a registered cross-domain contrast. The online per-run span is the
+lowest curve at the shortest prefix on SWE-Gym, and on tau-bench it sits just above the random
+reference there; it is the only setting that is genuinely
+online. Drawn by `figure-src/board_live_prefix.py` from `tests/golden/board.txt` and
+`tools/statistical_tests_results.json`.
 
-**LIVE online stale-state detection (catch it live).** The same Gold stale-state injection, detected
-online at a fixed false-positive rate instead of localized post-hoc. The prefix-only span
-z-score catches about 6% of stale reads at a realized 6% false-positive rate (0.054 +/- 0.012 across
-seeds), far below the 0.703 within-run localization. At the displayed 5% target, the z-score ties the
-dependency-count control in the representative seed, while the raw-span method scores higher. The
-tested methods do not reliably identify one stale read online at this false-positive budget.
+**LIVE online stale-state detection (catch it live).** The same Gold stale-state injection is detected
+online at a fixed false-positive rate instead of localized post-hoc. At realized false-positive rates
+of 6.1% and 11.0%, the prefix-only span z-score displays true-positive rates of 0.061 and 0.110; raw
+span displays 0.122 and 0.159. Across five injection seeds, the corresponding means are 0.054 and
+0.124 for the z-score and 0.098 and 0.151 for raw span. At the displayed 5% target, the dependency-
+count control and z-score each display 0.061, while raw span displays 0.122. No contrast is declared
+among these methods, so the cells are point estimates only. They support no claim about the effect of
+per-run normalization. The Gold 0.703 value scores post-hoc within-run localization, a different
+decision, so it is context rather than a cross-state effect estimate.
+
+</details>
+
+<details>
+<summary>PRE over-privilege board: declared-configuration audit, label construction, standards mapping, results, and the injecagent shortcut</summary>
 
 ### Over-Privilege Audit on Declared Harnesses (PRE)
 
@@ -496,7 +504,7 @@ them; the held-out judge abstains on 5, so its precision, recall, and F1 are com
 on different denominators are not comparable cell for cell. The per-source section below says why the
 judge abstains and where.
 
-How to read it. The combined OWASP/CWE scanner is the strongest rule-based method (0.654 F1, 0.910
+How to read it. The combined OWASP/CWE scanner has the highest displayed rule-based F1 (0.654, 0.910
 recall), against 0.695 F1 for the held-out LLM judge on the 1182 configs it answered. Its predictions
 include unnecessary read and unknown capabilities through the excessive-functionality rule, not just
 risky permission levels.
@@ -505,10 +513,11 @@ predictions over the full 1187-config board. Their low overall recall shows that
 limited slice of the aggregate excess set. The corpus labels one undifferentiated excess
 set with no per-category annotation, so it cannot say how prevalent each standard category is, and
 these rules' precision is measured over those small-to-moderate samples rather than a category-level
-ground truth. Three rules print a higher precision than the judge: `owasp_privilege_escalation`
-at 0.811, `sensitive_access` at 0.763, and `unrequested_high_impact` at 0.633 against its 0.594.
-Read those as printed values rather than as a ranking, because the judge abstains and so is scored
-on a different set of configurations, which is the same reason the coverage column exists.
+ground truth. Three rules display a higher precision cell than the judge's 0.594:
+`owasp_privilege_escalation` at 0.811, `sensitive_access` at 0.763, and `unrequested_high_impact` at
+0.633. No registered contrast compares any rule's precision with the judge's, and the judge abstains
+so it is scored on a different set of configurations, which is the same reason the coverage column
+exists. Read those three as printed cells, never as a ranking against the judge.
 The crewai, n8n,
 and mcp labels were made by two other judges (GPT-5.5 and Claude), so the Llama-3.3-70B baseline did not
 create its own evaluation labels. The scanners are keyword-based and language-limited: a task spec in
@@ -566,33 +575,32 @@ above. The abstentions land in two columns: n8n is scored on 215 of 219 and mcp 
 them is large, a 622-capability MCP server carrying 337 of the corpus's 2893 excess labels. A
 head-to-head claim between the judge and a rule therefore needs a common evaluable set.
 
-## The Full Task List
+</details>
 
-Each task is one auditor question at one information state, with the label that answers it, not a
-list chosen for coverage. Implemented in the current build:
+## How a Method Plugs In
 
-- **Fault localization** (POST, *which step*): rank the steps of a failed run. Top-1 / Top-3 / MRR
-  against Who&When human attribution.
-- **Failure detection** (POST, *did it fail*): predict run failure. ROC-AUC against SWE-Gym and
-  tau-bench resolved / unresolved outcomes.
-- **Cause attribution** (POST, *what kind*): tell stale-state from dropped-grounding on a paired Gold
-  injection (the same run injected both ways). ROC-AUC.
-- **Gold fault localization** (POST, injection experiment): plant a known fault in a real run and
-  localize it. Top-1 / Top-3 / MRR against injection-site labels.
-- **Streaming early warning** (LIVE, *can you tell early*): flag a failing run from a growing prefix.
-  Prefix-AUC and time to detection.
-- **Online stale-state detection** (LIVE, *catch it live*): detect the Gold stale-state injection
-  online. True-positive rate at a fixed false-positive budget.
-- **Over-privilege audit** (PRE, *is the declared harness safe*): flag granted capabilities the task
-  does not need. Compare an OWASP / CWE static-scanner set and a held-out LLM judge against the four
-  constructed label processes. Precision / recall / F1 over 1187 configs from six corpora.
+One scenario is one `Task`; a `Method` scores a `Task`; `RunPipeline` runs every valid
+`(Task, Method)` pair and prints the leaderboard. A new entry is one small class:
 
-Planned:
+```python
+class MyDetector:
+    method_id = "my-detector"
+    supports = {"post_detection"}          # the task_ids it runs on
 
-- **Missing-guardrail plan audit** (PRE, *is the plan safe*): flag removed or weakened guardrails in a
-  declared plan.
+    def evaluate(self, task):
+        task.setup()                        # loads the corpus once
+        scores = my_model(task.layers["flat"])
+        return {"roc_auc": roc_auc(task.y, scores)}
+```
+
+The same `Task` feeds every method, so the comparison is apples to apples and the dataset, not
+the method, is the fixed point. See `src/catchbench/core.py` for the contract and
+`detection.py` / `post.py` for the implemented baselines.
 
 ## The Full Board
+
+<details>
+<summary>Install and reproduce all POST, LIVE, Gold, and PRE boards (about nine minutes, one-time corpus download)</summary>
 
 Every board, including POST, LIVE, and Gold. Budget about nine minutes and 320 MB on the first run.
 Later runs reuse the revision-keyed cache, but every run still re-resolves the three dataset heads
@@ -674,32 +682,47 @@ the paper publishes.
 
 </details>
 
-## How a Method Plugs In
+</details>
 
-One scenario is one `Task`; a `Method` scores a `Task`; `RunPipeline` runs every valid
-`(Task, Method)` pair and prints the leaderboard. A new entry is one small class:
+## Reference, Origins, and Release
 
-```python
-class MyDetector:
-    method_id = "my-detector"
-    supports = {"post_detection"}          # the task_ids it runs on
+### Paper
 
-    def evaluate(self, task):
-        task.setup()                        # loads the corpus once
-        scores = my_model(task.layers["flat"])
-        return {"roc_auc": roc_auc(task.y, scores)}
-```
+*[CatchBench: When Can an Agent Failure Be Caught?](https://arxiv.org/abs/2608.22808)* is posted as
+arXiv:2608.22808. It carries its own work-in-progress notice: the benchmark is still being extended,
+and the numbers below are the ones the current preprint reports.
 
-The same `Task` feeds every method, so the comparison is apples to apples and the dataset, not
-the method, is the fixed point. See `src/catchbench/core.py` for the contract and
-`detection.py` / `post.py` for the implemented baselines.
+<details>
+<summary>How every manuscript number is regenerated, checked, and pinned</summary>
 
-## Status and Release
+Every number the manuscript reports is regenerated from this repository, so the code is checkable
+against the write-up. The board-derived tables come from `run.py` through
+`tools/emit_boards_table.py`; the significance tables from `tools/statistical_tests.py` through
+`tools/emit_stats_table.py`; the transfer table from `tools/emit_transfer_table.py`; and the
+remaining reported quantities from `tools/whoandwhen_split_report.py`,
+`tools/pre_merge_judges.py`, and `tools/gold_artifact_diagnostic.py`. The three `emit_*` tools take a
+`--check` flag that exits non-zero and prints the delta when the manuscript is stale; the last three
+print their quantities and are compared by reading. All of it runs locally rather than in CI, for the
+reason given under [The Full Board](#the-full-board).
+
+`run.py` computes the boards from the inputs available to a checkout. A repository commit fixes the
+benchmark code, committed PRE artifacts, and cached LLM-judge predictions. It also records immutable
+Hugging Face commits for Who&When, SWE-Gym, and tau-bench in `catchbench.corpora`. Before scoring,
+the runner verifies that each dataset head still equals its recorded commit, forces GRADE's Hub calls
+through that full revision, and verifies the observed fetch or Who&When snapshot metadata. The printed
+board header records all three commits. Direct execution of GRADE outside this runner is not covered by
+the CatchBench-side pin. The documented setup and both workflows pin the GRADE commit, but the runner
+does not verify the sibling checkout's revision at run time, the `auditable` revision is not pinned at
+all, and the remaining Python dependencies are not locked.
+
+</details>
+
+<details>
+<summary>Release scope, hosted artifacts, and current Gold limitations</summary>
 
 This repository implements POST localization, detection, cause attribution, and Gold injection;
 LIVE streaming early warning and online stale-state detection; and the PRE over-privilege audit
-across six config corpora. The accompanying preprint is not yet posted; the Paper section above
-carries the link once it is.
+across six config corpora.
 
 The repository ships benchmark code, cached LLM-judge predictions, and a PRE derived feature with
 labels. It does not re-host the raw upstream trace corpora or the upstream PRE task and role prose.
@@ -716,3 +739,92 @@ target-selection control. A broken-predecessor baseline still separates both fau
 file-level substrate (`tools/gold_artifact_diagnostic.py`), so the Gold boards are mechanism
 diagnostics. An artifact-controlled version requires a named-value corpus and a human-audited
 validation slice.
+
+</details>
+
+<details>
+<summary>Licensing, origins, and unresolved terms for distributed records and cached outputs</summary>
+
+### Data and Generated-Artifact Licensing
+
+The repository's MIT `LICENSE` covers CatchBench-authored code and the 56 authored synthetic PRE
+records. It is not a blanket licence for derived third-party records or cached model output. Of the
+1187 committed PRE records, 663 carry an established licence: 626 MIT, 24 Apache-2.0, 9 GPL-3.0,
+2 CC-BY-4.0, 1 AGPL-3.0, and 1 BUSL-1.1. The remaining 524 declare none.
+
+Those 524 were checked rather than left unexamined, on 2026-08-21. Every n8n and SWE-agent record is
+among them: `SWE-bench/experiments` carries no licence file and states no submitter terms, and the
+n8n gallery terms grant other users a licence to use and adapt a template rather than to redistribute
+it. A re-check of the CrewAI and MCP records recorded as `NOASSERTION` found that 106 of them do
+carry a licence their upstream states in a README or package manifest, which is why the counts above
+are higher than an earlier reading of the same data. All 524 are recorded as `NOASSERTION` and marked
+unfinished in [THIRD_PARTY_LICENSES.md](THIRD_PARTY_LICENSES.md).
+
+The GPL-3.0, AGPL-3.0, CC-BY-4.0, and BUSL-1.1 records stay in the release. The first three ship
+their licence texts in [`third_party/licenses/`](third_party/licenses/); the BUSL-1.1 record's notice
+is reproduced inline in
+[THIRD_PARTY_LICENSES.md](THIRD_PARTY_LICENSES.md#the-busl-11-record) instead, because BUSL-1.1 is a
+template whose Parameters block each licensor fills in, so one shared copy would state somebody
+else's terms.
+[THIRD_PARTY_LICENSES.md](THIRD_PARTY_LICENSES.md#why-the-gpl-30-and-cc-by-40-records-are-in-the-release)
+sets out exactly what those records carry and why, so a reader can judge the position rather than
+take it. Every licence value the committed records declare is either carried as local text or
+recorded as a non-declaration, and
+[`tools/emit_third_party_notices.py --check`](tools/emit_third_party_notices.py) enumerates the
+declared values rather than a fixed list, so a source declaring something unanticipated fails the
+check instead of passing it.
+
+The associated Who&When code repository is MIT, but the pinned Who&When dataset card does not
+declare a dataset licence. The pinned tau-bench trajectory card likewise does not declare a licence;
+neither project's code licence is presented here as licensing separately hosted generated
+trajectories. Exact artifact paths, source identifiers, and declared distributions are in
+[`ASSET_MANIFEST.json`](ASSET_MANIFEST.json). Reproduced notices, local third-party licence texts,
+source links, and clearly marked unresolved blocks are in [`NOTICE`](NOTICE) and
+[`THIRD_PARTY_LICENSES.md`](THIRD_PARTY_LICENSES.md).
+
+</details>
+
+<details>
+<summary>Why the shared name does not make auditable the referee</summary>
+
+### Posture: Branded Name, Neutral Content
+
+Because the benchmark shares a name with one entrant, the relationship is stated explicitly:
+
+- **The borrowed POST labels come from source corpora.** Localization scores against Who&When's
+  human-verified attribution; detection scores against SWE-Gym and tau-bench outcome labels. Gold
+  injection-site labels and PRE labels are constructed within this benchmark and carry the
+  limitations stated below.
+- **`auditable` is one baseline, not the referee.** It sits on the board next to a random floor,
+  a size-and-counts baseline, PyOD on flattened features, a supervised reference, and a full-feature
+  reference. Its scores use the same interface as the other entries, and it is not required to lead.
+
+</details>
+
+<details>
+<summary>Where CatchBench sits in the auditable ecosystem</summary>
+
+### The Auditable Ecosystem
+
+| Cell | Role | Asset |
+|---|---|---|
+| Tool | the SDK people build on | [`auditable`](https://github.com/yzhao062/auditable) |
+| Evidence | the benchmark methods compete on | **CatchBench** (this repo) |
+| Knowledge | the curated reading list | [`awesome-auditable-ai`](https://github.com/yzhao062/awesome-auditable-ai) |
+| Method | graph construction and reused loaders | [`GRADE`](https://github.com/yzhao062/grade) |
+
+</details>
+
+## Citation
+
+If you use CatchBench, please cite the paper:
+
+```bibtex
+@misc{zhao2026catchbench,
+  title  = {{CatchBench}: When Can an Agent Failure Be Caught?},
+  author = {Yue Zhao},
+  year   = {2026},
+  eprint = {2608.22808},
+  archivePrefix = {arXiv}
+}
+```
