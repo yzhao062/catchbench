@@ -128,7 +128,7 @@ def check_assets(board: Path = DEFAULT_BOARD, stats: Path = DEFAULT_STATS,
         if figure_id == "board_pre_source":
             expected_source += "; tools/statistical_tests_results.json (verdict words only)"
         elif figure_id == "board_live_prefix":
-            expected_source += "; tools/statistical_tests_results.json (threshold verdicts only)"
+            expected_source += "; tools/statistical_tests_results.json (threshold verdicts and estimate sides)"
         elif figure_id == "hero-lifecycle":
             expected_source += "; README.md (phrase checks only)"
         # catchbench_data_at_a_glance reads the board alone, so the bare description stands.

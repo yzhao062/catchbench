@@ -288,7 +288,7 @@ def test_clean_fixture_passes():
     number_problems, seen, board_backed, allowed = cb.check_prose_numbers(
         REAL_README.read_text(encoding="utf-8"), blocks, cb.PROSE_NUMBER_ALLOWLIST)
     assert number_problems == []
-    assert (seen, board_backed, allowed) == (225, 98, 127)
+    assert (seen, board_backed, allowed) == (236, 100, 136)
 
     # A comparative paragraph with a registered separating claim is the green claim-gate case.
     claim_result = cb.check_readme_detailed(

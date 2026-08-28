@@ -59,7 +59,7 @@ DATA = {
 }
 
 BENCHMARK = """\
-Two comparison families are declared in the module and adjusted within family by Holm.
+The module brings the registry to Two comparison families, adjusted within family by Holm.
 That file is the definition of multiplicity: it regenerates all 5 reported contrasts.
 """
 
@@ -352,7 +352,7 @@ def test_spelled_family_count_is_accepted(tmp_path, families, word):
     count = est.counts(data)
     assert count["families"] == families
     (tmp_path / "03_benchmark.tex").write_text(
-        f"{word} comparison families are declared in the module.\n"
+        f"The module brings the registry to {word} comparison families.\n"
         f"It regenerates all {count['total']} reported contrasts.\n", encoding="utf-8")
     (tmp_path / "09_appendix.tex").write_text(
         APPENDIX_TEMPLATE.format(families=word, total=count["total"],

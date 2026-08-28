@@ -3717,6 +3717,1374 @@
     {
       "crosscheck": {
         "interval_95": [
+          0.5772075882752377,
+          0.6952244369624265
+        ],
+        "method": "stratified bootstrap",
+        "replicates": 10000,
+        "statistic": "ROC-AUC"
+      },
+      "direction": 0,
+      "estimate": {
+        "a": 0.6367558850158442,
+        "a_name": "size (flat)",
+        "b": 0.7,
+        "b_name": "fixed bar",
+        "difference_a_minus_b": -0.06324411498415572
+      },
+      "expected_verdict": "does_not_separate",
+      "family": "live_swegym_threshold_auc",
+      "id": "live.swe.bar.25.size (flat)",
+      "interval": {
+        "axis": "run-level sampling",
+        "high": -0.0038925172963983276,
+        "level": 0.95,
+        "low": -0.1225957126719131,
+        "method": "single-curve DeLong"
+      },
+      "label": "SWE-Gym 25%: size (flat) vs 0.70",
+      "matches_stated_claim": true,
+      "metric": "roc_auc",
+      "one_line_verdict": "SWE-Gym 25%: size (flat) vs 0.70: does not separate (Holm p=0.221959).",
+      "test": {
+        "name": "two-sided DeLong z test against 0.70",
+        "p_adjusted_holm": 0.22195877530755773,
+        "p_raw": 0.03675218479290633,
+        "statistic": {
+          "log_p_raw": -3.30355760494327,
+          "n_negative": 188,
+          "n_positive": 188,
+          "se": 0.030281983830272,
+          "z": -2.0885063323008732
+        }
+      },
+      "variance_axes": {
+        "board_point_estimate": {
+          "axis": "board scoring convention",
+          "value": 0.6294377479973048
+        },
+        "cv_seed": {
+          "axis": "cross-validation split seed",
+          "max": -0.06719884704649237,
+          "mean": -0.07056225200269517,
+          "mean_t_interval_95": [
+            -0.07369390908251103,
+            -0.06743059492287931
+          ],
+          "min": -0.07406416111402259,
+          "sd_population": 0.002255875381042517,
+          "statistic": "per-seed board AUC minus 0.70",
+          "values": [
+            -0.06991277981582689,
+            -0.06719884704649237,
+            -0.07406416111402259,
+            -0.07000636370442459,
+            -0.07162910833270941
+          ]
+        },
+        "run_sampling": {
+          "axis": "labeled runs",
+          "n": 376,
+          "statistic": "single-curve DeLong variance"
+        }
+      },
+      "verdict": "does_not_separate"
+    },
+    {
+      "crosscheck": {
+        "interval_95": [
+          0.6868478383884111,
+          0.7874610966500679
+        ],
+        "method": "stratified bootstrap",
+        "replicates": 10000,
+        "statistic": "ROC-AUC"
+      },
+      "direction": 0,
+      "estimate": {
+        "a": 0.7380036215482119,
+        "a_name": "auditable (size+deps)",
+        "b": 0.7,
+        "b_name": "fixed bar",
+        "difference_a_minus_b": 0.03800362154821191
+      },
+      "expected_verdict": "does_not_separate",
+      "family": "live_swegym_threshold_auc",
+      "id": "live.swe.bar.25.auditable (size+deps)",
+      "interval": {
+        "axis": "run-level sampling",
+        "high": 0.08888324561177689,
+        "level": 0.95,
+        "low": -0.012876002515353077,
+        "method": "single-curve DeLong"
+      },
+      "label": "SWE-Gym 25%: auditable (size+deps) vs 0.70",
+      "matches_stated_claim": true,
+      "metric": "roc_auc",
+      "one_line_verdict": "SWE-Gym 25%: auditable (size+deps) vs 0.70: does not separate (Holm p=0.548669).",
+      "test": {
+        "name": "two-sided DeLong z test against 0.70",
+        "p_adjusted_holm": 0.5486685276925903,
+        "p_raw": 0.14320490435161157,
+        "statistic": {
+          "log_p_raw": -1.9434787767766064,
+          "n_negative": 188,
+          "n_positive": 188,
+          "se": 0.0259594688804983,
+          "z": 1.4639599031535508
+        }
+      },
+      "variance_axes": {
+        "board_point_estimate": {
+          "axis": "board scoring convention",
+          "value": 0.741857453020888
+        },
+        "cv_seed": {
+          "axis": "cross-validation split seed",
+          "max": 0.046951036909485655,
+          "mean": 0.041857453020888016,
+          "mean_t_interval_95": [
+            0.03702666117777807,
+            0.04668824486399796
+          ],
+          "min": 0.038088642659279914,
+          "sd_population": 0.0034798396223042175,
+          "statistic": "per-seed board AUC minus 0.70",
+          "values": [
+            0.04443737366175049,
+            0.04165418881485383,
+            0.046951036909485655,
+            0.038088642659279914,
+            0.03815602305907018
+          ]
+        },
+        "run_sampling": {
+          "axis": "labeled runs",
+          "n": 376,
+          "statistic": "single-curve DeLong variance"
+        }
+      },
+      "verdict": "does_not_separate"
+    },
+    {
+      "crosscheck": {
+        "interval_95": [
+          0.7621364305115437,
+          0.8521962709370756
+        ],
+        "method": "stratified bootstrap",
+        "replicates": 10000,
+        "statistic": "ROC-AUC"
+      },
+      "direction": 0,
+      "estimate": {
+        "a": 0.8083408782254414,
+        "a_name": "full",
+        "b": 0.7,
+        "b_name": "fixed bar",
+        "difference_a_minus_b": 0.10834087822544147
+      },
+      "expected_verdict": "separates_as_stated",
+      "family": "live_swegym_threshold_auc",
+      "id": "live.swe.bar.25.full",
+      "interval": {
+        "axis": "run-level sampling",
+        "high": 0.15422603691786974,
+        "level": 0.95,
+        "low": 0.062455719533013224,
+        "method": "single-curve DeLong"
+      },
+      "label": "SWE-Gym 25%: full vs 0.70",
+      "matches_stated_claim": true,
+      "metric": "roc_auc",
+      "one_line_verdict": "SWE-Gym 25%: full vs 0.70: separates as stated (Holm p=5.54538e-05).",
+      "test": {
+        "name": "two-sided DeLong z test against 0.70",
+        "p_adjusted_holm": 5.545378549422787e-05,
+        "p_raw": 3.6969190329485246e-06,
+        "statistic": {
+          "log_p_raw": -12.50801077899385,
+          "n_negative": 188,
+          "n_positive": 188,
+          "se": 0.02341122543800015,
+          "z": 4.627732047276217
+        }
+      },
+      "variance_axes": {
+        "board_point_estimate": {
+          "axis": "board scoring convention",
+          "value": 0.8130860223103992
+        },
+        "cv_seed": {
+          "axis": "cross-validation split seed",
+          "max": 0.1160833270944075,
+          "mean": 0.11308602231039908,
+          "mean_t_interval_95": [
+            0.10984169978498562,
+            0.11633034483581253
+          ],
+          "min": 0.11019877217938157,
+          "sd_population": 0.002337033438435172,
+          "statistic": "per-seed board AUC minus 0.70",
+          "values": [
+            0.1122632327618478,
+            0.11019877217938157,
+            0.1160833270944075,
+            0.1113142921314666,
+            0.11557048738489195
+          ]
+        },
+        "run_sampling": {
+          "axis": "labeled runs",
+          "n": 376,
+          "statistic": "single-curve DeLong variance"
+        }
+      },
+      "verdict": "separates_as_stated"
+    },
+    {
+      "crosscheck": {
+        "interval_95": [
+          0.7045888269578995,
+          0.8052590255771842
+        ],
+        "method": "stratified bootstrap",
+        "replicates": 10000,
+        "statistic": "ROC-AUC"
+      },
+      "direction": 0,
+      "estimate": {
+        "a": 0.7557011090991399,
+        "a_name": "pyod (ECOD)",
+        "b": 0.7,
+        "b_name": "fixed bar",
+        "difference_a_minus_b": 0.055701109099139945
+      },
+      "expected_verdict": "does_not_separate",
+      "family": "live_swegym_threshold_auc",
+      "id": "live.swe.bar.25.pyod (ECOD)",
+      "interval": {
+        "axis": "run-level sampling",
+        "high": 0.10652454438380261,
+        "level": 0.95,
+        "low": 0.004877673814477276,
+        "method": "single-curve DeLong"
+      },
+      "label": "SWE-Gym 25%: pyod (ECOD) vs 0.70",
+      "matches_stated_claim": true,
+      "metric": "roc_auc",
+      "one_line_verdict": "SWE-Gym 25%: pyod (ECOD) vs 0.70: does not separate (Holm p=0.221959).",
+      "test": {
+        "name": "two-sided DeLong z test against 0.70",
+        "p_adjusted_holm": 0.22195877530755773,
+        "p_raw": 0.03170839647250825,
+        "statistic": {
+          "log_p_raw": -3.451173760221762,
+          "n_negative": 188,
+          "n_positive": 188,
+          "se": 0.025930800609374173,
+          "z": 2.1480674637945265
+        }
+      },
+      "variance_axes": {
+        "board_point_estimate": {
+          "axis": "board scoring convention",
+          "value": 0.7557011090991399
+        },
+        "run_sampling": {
+          "axis": "labeled runs",
+          "n": 376,
+          "statistic": "single-curve DeLong variance"
+        }
+      },
+      "verdict": "does_not_separate"
+    },
+    {
+      "crosscheck": {
+        "interval_95": [
+          0.3088218650973291,
+          0.4184306388637392
+        ],
+        "method": "stratified bootstrap",
+        "replicates": 10000,
+        "statistic": "ROC-AUC"
+      },
+      "direction": 0,
+      "estimate": {
+        "a": 0.3637533952014486,
+        "a_name": "dep-span (online)",
+        "b": 0.7,
+        "b_name": "fixed bar",
+        "difference_a_minus_b": -0.33624660479855134
+      },
+      "expected_verdict": "separates_as_stated",
+      "family": "live_swegym_threshold_auc",
+      "id": "live.swe.bar.25.dep-span (online)",
+      "interval": {
+        "axis": "run-level sampling",
+        "high": -0.2812240630702167,
+        "level": 0.95,
+        "low": -0.391269146526886,
+        "method": "single-curve DeLong"
+      },
+      "label": "SWE-Gym 25%: dep-span (online) vs 0.70",
+      "matches_stated_claim": true,
+      "metric": "roc_auc",
+      "one_line_verdict": "SWE-Gym 25%: dep-span (online) vs 0.70: separates as stated (Holm p=9.32598e-32).",
+      "test": {
+        "name": "two-sided DeLong z test against 0.70",
+        "p_adjusted_holm": 9.325975676656372e-32,
+        "p_raw": 4.662987838328186e-33,
+        "statistic": {
+          "log_p_raw": -74.4456516591025,
+          "n_negative": 188,
+          "n_positive": 188,
+          "se": 0.028073241223994634,
+          "z": -11.977477132606838
+        }
+      },
+      "variance_axes": {
+        "board_point_estimate": {
+          "axis": "board scoring convention",
+          "value": 0.36375339520144867
+        },
+        "run_sampling": {
+          "axis": "labeled runs",
+          "n": 376,
+          "statistic": "single-curve DeLong variance"
+        }
+      },
+      "verdict": "separates_as_stated"
+    },
+    {
+      "crosscheck": {
+        "interval_95": [
+          0.6002995557944771,
+          0.7173211860570394
+        ],
+        "method": "stratified bootstrap",
+        "replicates": 10000,
+        "statistic": "ROC-AUC"
+      },
+      "direction": 0,
+      "estimate": {
+        "a": 0.6587681077410593,
+        "a_name": "size (flat)",
+        "b": 0.7,
+        "b_name": "fixed bar",
+        "difference_a_minus_b": -0.04123189225894064
+      },
+      "expected_verdict": "does_not_separate",
+      "family": "live_swegym_threshold_auc",
+      "id": "live.swe.bar.50.size (flat)",
+      "interval": {
+        "axis": "run-level sampling",
+        "high": 0.018053670427913386,
+        "level": 0.95,
+        "low": -0.10051745494579467,
+        "method": "single-curve DeLong"
+      },
+      "label": "SWE-Gym 50%: size (flat) vs 0.70",
+      "matches_stated_claim": true,
+      "metric": "roc_auc",
+      "one_line_verdict": "SWE-Gym 50%: size (flat) vs 0.70: does not separate (Holm p=0.548669).",
+      "test": {
+        "name": "two-sided DeLong z test against 0.70",
+        "p_adjusted_holm": 0.5486685276925903,
+        "p_raw": 0.17284635481202013,
+        "statistic": {
+          "log_p_raw": -1.7553522015726557,
+          "n_negative": 188,
+          "n_positive": 188,
+          "se": 0.030248291884183067,
+          "z": -1.3631147311329976
+        }
+      },
+      "variance_axes": {
+        "board_point_estimate": {
+          "axis": "board scoring convention",
+          "value": 0.6631227071947293
+        },
+        "cv_seed": {
+          "axis": "cross-validation split seed",
+          "max": -0.028825709365875585,
+          "mean": -0.03687729280527061,
+          "mean_t_interval_95": [
+            -0.0446535036332946,
+            -0.029101081977246625
+          ],
+          "min": -0.044877217938159686,
+          "sd_population": 0.005601559212149462,
+          "statistic": "per-seed board AUC minus 0.70",
+          "values": [
+            -0.044877217938159686,
+            -0.03257093658755705,
+            -0.0389571011454668,
+            -0.028825709365875585,
+            -0.039155498989293935
+          ]
+        },
+        "run_sampling": {
+          "axis": "labeled runs",
+          "n": 376,
+          "statistic": "single-curve DeLong variance"
+        }
+      },
+      "verdict": "does_not_separate"
+    },
+    {
+      "crosscheck": {
+        "interval_95": [
+          0.7110117700316886,
+          0.8125007073336351
+        ],
+        "method": "stratified bootstrap",
+        "replicates": 10000,
+        "statistic": "ROC-AUC"
+      },
+      "direction": 0,
+      "estimate": {
+        "a": 0.7630432322317791,
+        "a_name": "auditable (size+deps)",
+        "b": 0.7,
+        "b_name": "fixed bar",
+        "difference_a_minus_b": 0.0630432322317791
+      },
+      "expected_verdict": "does_not_separate",
+      "family": "live_swegym_threshold_auc",
+      "id": "live.swe.bar.50.auditable (size+deps)",
+      "interval": {
+        "axis": "run-level sampling",
+        "high": 0.11453889583293324,
+        "level": 0.95,
+        "low": 0.011547568630624963,
+        "method": "single-curve DeLong"
+      },
+      "label": "SWE-Gym 50%: auditable (size+deps) vs 0.70",
+      "matches_stated_claim": true,
+      "metric": "roc_auc",
+      "one_line_verdict": "SWE-Gym 50%: auditable (size+deps) vs 0.70: does not separate (Holm p=0.131647).",
+      "test": {
+        "name": "two-sided DeLong z test against 0.70",
+        "p_adjusted_holm": 0.13164738663399703,
+        "p_raw": 0.016418681720312314,
+        "statistic": {
+          "log_p_raw": -4.109335463180118,
+          "n_negative": 188,
+          "n_positive": 188,
+          "se": 0.026273780542573927,
+          "z": 2.3994731983706763
+        }
+      },
+      "variance_axes": {
+        "board_point_estimate": {
+          "axis": "board scoring convention",
+          "value": 0.7657516657932172
+        },
+        "cv_seed": {
+          "axis": "cross-validation split seed",
+          "max": 0.07065583589129298,
+          "mean": 0.06575166579321708,
+          "mean_t_interval_95": [
+            0.06125974301450769,
+            0.07024358857192646
+          ],
+          "min": 0.06175600808564807,
+          "sd_population": 0.0032357367846387727,
+          "statistic": "per-seed board AUC minus 0.70",
+          "values": [
+            0.07065583589129298,
+            0.06478999775398675,
+            0.06338998278056451,
+            0.06816650445459305,
+            0.06175600808564807
+          ]
+        },
+        "run_sampling": {
+          "axis": "labeled runs",
+          "n": 376,
+          "statistic": "single-curve DeLong variance"
+        }
+      },
+      "verdict": "does_not_separate"
+    },
+    {
+      "crosscheck": {
+        "interval_95": [
+          0.762872764825713,
+          0.8540353383884111
+        ],
+        "method": "stratified bootstrap",
+        "replicates": 10000,
+        "statistic": "ROC-AUC"
+      },
+      "direction": 0,
+      "estimate": {
+        "a": 0.8098970122227253,
+        "a_name": "full",
+        "b": 0.7,
+        "b_name": "fixed bar",
+        "difference_a_minus_b": 0.1098970122227253
+      },
+      "expected_verdict": "separates_as_stated",
+      "family": "live_swegym_threshold_auc",
+      "id": "live.swe.bar.50.full",
+      "interval": {
+        "axis": "run-level sampling",
+        "high": 0.15600058581772616,
+        "level": 0.95,
+        "low": 0.06379343862772444,
+        "method": "single-curve DeLong"
+      },
+      "label": "SWE-Gym 50%: full vs 0.70",
+      "matches_stated_claim": true,
+      "metric": "roc_auc",
+      "one_line_verdict": "SWE-Gym 50%: full vs 0.70: separates as stated (Holm p=4.77336e-05).",
+      "test": {
+        "name": "two-sided DeLong z test against 0.70",
+        "p_adjusted_holm": 4.7733573950186184e-05,
+        "p_raw": 2.9833483718866365e-06,
+        "statistic": {
+          "log_p_raw": -12.72246427350247,
+          "n_negative": 188,
+          "n_positive": 188,
+          "se": 0.023522663660485586,
+          "z": 4.671962912403291
+        }
+      },
+      "variance_axes": {
+        "board_point_estimate": {
+          "axis": "board scoring convention",
+          "value": 0.8157898480197648
+        },
+        "cv_seed": {
+          "axis": "cross-validation split seed",
+          "max": 0.1211799056674403,
+          "mean": 0.11578984801976497,
+          "mean_t_interval_95": [
+            0.10796366337945258,
+            0.12361603266007735
+          ],
+          "min": 0.10668001796810678,
+          "sd_population": 0.005637557627673569,
+          "statistic": "per-seed board AUC minus 0.70",
+          "values": [
+            0.1211799056674403,
+            0.12103017144568406,
+            0.1120086845848619,
+            0.11805046043273182,
+            0.10668001796810678
+          ]
+        },
+        "run_sampling": {
+          "axis": "labeled runs",
+          "n": 376,
+          "statistic": "single-curve DeLong variance"
+        }
+      },
+      "verdict": "separates_as_stated"
+    },
+    {
+      "crosscheck": {
+        "interval_95": [
+          0.7107550079221366,
+          0.8108165459483929
+        ],
+        "method": "stratified bootstrap",
+        "replicates": 10000,
+        "statistic": "ROC-AUC"
+      },
+      "direction": 0,
+      "estimate": {
+        "a": 0.761968085106383,
+        "a_name": "pyod (ECOD)",
+        "b": 0.7,
+        "b_name": "fixed bar",
+        "difference_a_minus_b": 0.061968085106383075
+      },
+      "expected_verdict": "does_not_separate",
+      "family": "live_swegym_threshold_auc",
+      "id": "live.swe.bar.50.pyod (ECOD)",
+      "interval": {
+        "axis": "run-level sampling",
+        "high": 0.11171478372904925,
+        "level": 0.95,
+        "low": 0.0122213864837169,
+        "method": "single-curve DeLong"
+      },
+      "label": "SWE-Gym 50%: pyod (ECOD) vs 0.70",
+      "matches_stated_claim": true,
+      "metric": "roc_auc",
+      "one_line_verdict": "SWE-Gym 50%: pyod (ECOD) vs 0.70: does not separate (Holm p=0.131647).",
+      "test": {
+        "name": "two-sided DeLong z test against 0.70",
+        "p_adjusted_holm": 0.13164738663399703,
+        "p_raw": 0.014627487403777449,
+        "statistic": {
+          "log_p_raw": -4.224852821435226,
+          "n_negative": 188,
+          "n_positive": 188,
+          "se": 0.025381435074859432,
+          "z": 2.44147286879626
+        }
+      },
+      "variance_axes": {
+        "board_point_estimate": {
+          "axis": "board scoring convention",
+          "value": 0.7619680851063829
+        },
+        "run_sampling": {
+          "axis": "labeled runs",
+          "n": 376,
+          "statistic": "single-curve DeLong variance"
+        }
+      },
+      "verdict": "does_not_separate"
+    },
+    {
+      "crosscheck": {
+        "interval_95": [
+          0.47562457559981897,
+          0.5919961662516976
+        ],
+        "method": "stratified bootstrap",
+        "replicates": 10000,
+        "statistic": "ROC-AUC"
+      },
+      "direction": 0,
+      "estimate": {
+        "a": 0.5340368945224083,
+        "a_name": "dep-span (online)",
+        "b": 0.7,
+        "b_name": "fixed bar",
+        "difference_a_minus_b": -0.16596310547759163
+      },
+      "expected_verdict": "separates_as_stated",
+      "family": "live_swegym_threshold_auc",
+      "id": "live.swe.bar.50.dep-span (online)",
+      "interval": {
+        "axis": "run-level sampling",
+        "high": -0.10728816993894363,
+        "level": 0.95,
+        "low": -0.22463804101623963,
+        "method": "single-curve DeLong"
+      },
+      "label": "SWE-Gym 50%: dep-span (online) vs 0.70",
+      "matches_stated_claim": true,
+      "metric": "roc_auc",
+      "one_line_verdict": "SWE-Gym 50%: dep-span (online) vs 0.70: separates as stated (Holm p=5.62378e-07).",
+      "test": {
+        "name": "two-sided DeLong z test against 0.70",
+        "p_adjusted_holm": 5.623778923493922e-07,
+        "p_raw": 2.9598836439441692e-08,
+        "statistic": {
+          "log_p_raw": -17.335530785867356,
+          "n_negative": 188,
+          "n_positive": 188,
+          "se": 0.029936741696004833,
+          "z": -5.54379321446796
+        }
+      },
+      "variance_axes": {
+        "board_point_estimate": {
+          "axis": "board scoring convention",
+          "value": 0.5340368945224083
+        },
+        "run_sampling": {
+          "axis": "labeled runs",
+          "n": 376,
+          "statistic": "single-curve DeLong variance"
+        }
+      },
+      "verdict": "separates_as_stated"
+    },
+    {
+      "crosscheck": {
+        "interval_95": [
+          0.6131443809416025,
+          0.7280160706201901
+        ],
+        "method": "stratified bootstrap",
+        "replicates": 10000,
+        "statistic": "ROC-AUC"
+      },
+      "direction": 0,
+      "estimate": {
+        "a": 0.6712313263920326,
+        "a_name": "size (flat)",
+        "b": 0.7,
+        "b_name": "fixed bar",
+        "difference_a_minus_b": -0.02876867360796731
+      },
+      "expected_verdict": "does_not_separate",
+      "family": "live_swegym_threshold_auc",
+      "id": "live.swe.bar.75.size (flat)",
+      "interval": {
+        "axis": "run-level sampling",
+        "high": 0.02949120495608419,
+        "level": 0.95,
+        "low": -0.08702855217201881,
+        "method": "single-curve DeLong"
+      },
+      "label": "SWE-Gym 75%: size (flat) vs 0.70",
+      "matches_stated_claim": true,
+      "metric": "roc_auc",
+      "one_line_verdict": "SWE-Gym 75%: size (flat) vs 0.70: does not separate (Holm p=0.548669).",
+      "test": {
+        "name": "two-sided DeLong z test against 0.70",
+        "p_adjusted_holm": 0.5486685276925903,
+        "p_raw": 0.3331300853943016,
+        "statistic": {
+          "log_p_raw": -1.0992222184545657,
+          "n_negative": 188,
+          "n_positive": 188,
+          "se": 0.02972497404217526,
+          "z": -0.9678283845479191
+        }
+      },
+      "variance_axes": {
+        "board_point_estimate": {
+          "axis": "board scoring convention",
+          "value": 0.6734888073669236
+        },
+        "cv_seed": {
+          "axis": "cross-validation split seed",
+          "max": -0.022170023208804235,
+          "mean": -0.0265111926330762,
+          "mean_t_interval_95": [
+            -0.03044694939924507,
+            -0.02257543586690733
+          ],
+          "min": -0.0290259788874746,
+          "sd_population": 0.002835105047674614,
+          "statistic": "per-seed board AUC minus 0.70",
+          "values": [
+            -0.02854121434453838,
+            -0.0290259788874746,
+            -0.028741483866137507,
+            -0.022170023208804235,
+            -0.024077262858426263
+          ]
+        },
+        "run_sampling": {
+          "axis": "labeled runs",
+          "n": 376,
+          "statistic": "single-curve DeLong variance"
+        }
+      },
+      "verdict": "does_not_separate"
+    },
+    {
+      "crosscheck": {
+        "interval_95": [
+          0.751923947487551,
+          0.8462256677229516
+        ],
+        "method": "stratified bootstrap",
+        "replicates": 10000,
+        "statistic": "ROC-AUC"
+      },
+      "direction": 0,
+      "estimate": {
+        "a": 0.8003055681303758,
+        "a_name": "auditable (size+deps)",
+        "b": 0.7,
+        "b_name": "fixed bar",
+        "difference_a_minus_b": 0.10030556813037583
+      },
+      "expected_verdict": "separates_as_stated",
+      "family": "live_swegym_threshold_auc",
+      "id": "live.swe.bar.75.auditable (size+deps)",
+      "interval": {
+        "axis": "run-level sampling",
+        "high": 0.147837755241746,
+        "level": 0.95,
+        "low": 0.05277338101900567,
+        "method": "single-curve DeLong"
+      },
+      "label": "SWE-Gym 75%: auditable (size+deps) vs 0.70",
+      "matches_stated_claim": true,
+      "metric": "roc_auc",
+      "one_line_verdict": "SWE-Gym 75%: auditable (size+deps) vs 0.70: separates as stated (Holm p=0.000459344).",
+      "test": {
+        "name": "two-sided DeLong z test against 0.70",
+        "p_adjusted_holm": 0.0004593442865018291,
+        "p_raw": 3.5334175884756084e-05,
+        "statistic": {
+          "log_p_raw": -10.25065990700964,
+          "n_negative": 188,
+          "n_positive": 188,
+          "se": 0.02425156150128165,
+          "z": 4.136045760396701
+        }
+      },
+      "variance_axes": {
+        "board_point_estimate": {
+          "axis": "board scoring convention",
+          "value": 0.8038066182526016
+        },
+        "cv_seed": {
+          "axis": "cross-validation split seed",
+          "max": 0.11160627386389166,
+          "mean": 0.10380661825260165,
+          "mean_t_interval_95": [
+            0.09807925565669781,
+            0.10953398084850549
+          ],
+          "min": 0.10025454817698576,
+          "sd_population": 0.004125680414269039,
+          "statistic": "per-seed board AUC minus 0.70",
+          "values": [
+            0.11160627386389166,
+            0.10416073968705553,
+            0.10081979486411619,
+            0.1021917346709591,
+            0.10025454817698576
+          ]
+        },
+        "run_sampling": {
+          "axis": "labeled runs",
+          "n": 376,
+          "statistic": "single-curve DeLong variance"
+        }
+      },
+      "verdict": "separates_as_stated"
+    },
+    {
+      "crosscheck": {
+        "interval_95": [
+          0.7754901822091443,
+          0.8641077693526482
+        ],
+        "method": "stratified bootstrap",
+        "replicates": 10000,
+        "statistic": "ROC-AUC"
+      },
+      "direction": 0,
+      "estimate": {
+        "a": 0.8207616568583069,
+        "a_name": "full",
+        "b": 0.7,
+        "b_name": "fixed bar",
+        "difference_a_minus_b": 0.12076165685830698
+      },
+      "expected_verdict": "separates_as_stated",
+      "family": "live_swegym_threshold_auc",
+      "id": "live.swe.bar.75.full",
+      "interval": {
+        "axis": "run-level sampling",
+        "high": 0.16480587231044128,
+        "level": 0.95,
+        "low": 0.07671744140617268,
+        "method": "single-curve DeLong"
+      },
+      "label": "SWE-Gym 75%: full vs 0.70",
+      "matches_stated_claim": true,
+      "metric": "roc_auc",
+      "one_line_verdict": "SWE-Gym 75%: full vs 0.70: separates as stated (Holm p=1.38705e-06).",
+      "test": {
+        "name": "two-sided DeLong z test against 0.70",
+        "p_adjusted_holm": 1.3870531025266795e-06,
+        "p_raw": 7.705850569592664e-08,
+        "statistic": {
+          "log_p_raw": -16.378700889372613,
+          "n_negative": 188,
+          "n_positive": 188,
+          "se": 0.022471951423367706,
+          "z": 5.373883851169758
+        }
+      },
+      "variance_axes": {
+        "board_point_estimate": {
+          "axis": "board scoring convention",
+          "value": 0.8255832147937412
+        },
+        "cv_seed": {
+          "axis": "cross-validation split seed",
+          "max": 0.13350864715130661,
+          "mean": 0.12558321479374118,
+          "mean_t_interval_95": [
+            0.11888099064840857,
+            0.1322854389390738
+          ],
+          "min": 0.11985662948266818,
+          "sd_population": 0.004827917636682499,
+          "statistic": "per-seed board AUC minus 0.70",
+          "values": [
+            0.13350864715130661,
+            0.12829040952309667,
+            0.12401736916972372,
+            0.11985662948266818,
+            0.12224301864191078
+          ]
+        },
+        "run_sampling": {
+          "axis": "labeled runs",
+          "n": 376,
+          "statistic": "single-curve DeLong variance"
+        }
+      },
+      "verdict": "separates_as_stated"
+    },
+    {
+      "crosscheck": {
+        "interval_95": [
+          0.7165257893843369,
+          0.8142991031009507
+        ],
+        "method": "stratified bootstrap",
+        "replicates": 10000,
+        "statistic": "ROC-AUC"
+      },
+      "direction": 0,
+      "estimate": {
+        "a": 0.7671033272974197,
+        "a_name": "pyod (ECOD)",
+        "b": 0.7,
+        "b_name": "fixed bar",
+        "difference_a_minus_b": 0.06710332729741975
+      },
+      "expected_verdict": "does_not_separate",
+      "family": "live_swegym_threshold_auc",
+      "id": "live.swe.bar.75.pyod (ECOD)",
+      "interval": {
+        "axis": "run-level sampling",
+        "high": 0.11612972387418835,
+        "level": 0.95,
+        "low": 0.01807693072065114,
+        "method": "single-curve DeLong"
+      },
+      "label": "SWE-Gym 75%: pyod (ECOD) vs 0.70",
+      "matches_stated_claim": true,
+      "metric": "roc_auc",
+      "one_line_verdict": "SWE-Gym 75%: pyod (ECOD) vs 0.70: does not separate (Holm p=0.0803483).",
+      "test": {
+        "name": "two-sided DeLong z test against 0.70",
+        "p_adjusted_holm": 0.08034826106775453,
+        "p_raw": 0.007304387369795866,
+        "statistic": {
+          "log_p_raw": -4.919280101800629,
+          "n_negative": 188,
+          "n_positive": 188,
+          "se": 0.02501392727799213,
+          "z": 2.682638617745519
+        }
+      },
+      "variance_axes": {
+        "board_point_estimate": {
+          "axis": "board scoring convention",
+          "value": 0.7671033272974197
+        },
+        "run_sampling": {
+          "axis": "labeled runs",
+          "n": 376,
+          "statistic": "single-curve DeLong variance"
+        }
+      },
+      "verdict": "does_not_separate"
+    },
+    {
+      "crosscheck": {
+        "interval_95": [
+          0.5317589265504753,
+          0.6475925899728384
+        ],
+        "method": "stratified bootstrap",
+        "replicates": 10000,
+        "statistic": "ROC-AUC"
+      },
+      "direction": 0,
+      "estimate": {
+        "a": 0.5894918515165233,
+        "a_name": "dep-span (online)",
+        "b": 0.7,
+        "b_name": "fixed bar",
+        "difference_a_minus_b": -0.11050814848347668
+      },
+      "expected_verdict": "separates_as_stated",
+      "family": "live_swegym_threshold_auc",
+      "id": "live.swe.bar.75.dep-span (online)",
+      "interval": {
+        "axis": "run-level sampling",
+        "high": -0.052311154462397584,
+        "level": 0.95,
+        "low": -0.16870514250455576,
+        "method": "single-curve DeLong"
+      },
+      "label": "SWE-Gym 75%: dep-span (online) vs 0.70",
+      "matches_stated_claim": true,
+      "metric": "roc_auc",
+      "one_line_verdict": "SWE-Gym 75%: dep-span (online) vs 0.70: separates as stated (Holm p=0.00237459).",
+      "test": {
+        "name": "two-sided DeLong z test against 0.70",
+        "p_adjusted_holm": 0.002374593967726558,
+        "p_raw": 0.00019788283064387985,
+        "statistic": {
+          "log_p_raw": -8.527835466856262,
+          "n_negative": 188,
+          "n_positive": 188,
+          "se": 0.02969288950211818,
+          "z": -3.721704096046073
+        }
+      },
+      "variance_axes": {
+        "board_point_estimate": {
+          "axis": "board scoring convention",
+          "value": 0.5894918515165234
+        },
+        "run_sampling": {
+          "axis": "labeled runs",
+          "n": 376,
+          "statistic": "single-curve DeLong variance"
+        }
+      },
+      "verdict": "separates_as_stated"
+    },
+    {
+      "crosscheck": {
+        "interval_95": [
+          0.5962532537347216,
+          0.7139549852874604
+        ],
+        "method": "stratified bootstrap",
+        "replicates": 10000,
+        "statistic": "ROC-AUC"
+      },
+      "direction": 0,
+      "estimate": {
+        "a": 0.6551324128564961,
+        "a_name": "size (flat)",
+        "b": 0.7,
+        "b_name": "fixed bar",
+        "difference_a_minus_b": -0.044867587143503807
+      },
+      "expected_verdict": "does_not_separate",
+      "family": "live_swegym_threshold_auc",
+      "id": "live.swe.bar.100.size (flat)",
+      "interval": {
+        "axis": "run-level sampling",
+        "high": 0.014293784817622654,
+        "level": 0.95,
+        "low": -0.10402895910463027,
+        "method": "single-curve DeLong"
+      },
+      "label": "SWE-Gym 100%: size (flat) vs 0.70",
+      "matches_stated_claim": true,
+      "metric": "roc_auc",
+      "one_line_verdict": "SWE-Gym 100%: size (flat) vs 0.70: does not separate (Holm p=0.548669).",
+      "test": {
+        "name": "two-sided DeLong z test against 0.70",
+        "p_adjusted_holm": 0.5486685276925903,
+        "p_raw": 0.13716713192314758,
+        "statistic": {
+          "log_p_raw": -1.986555155632574,
+          "n_negative": 188,
+          "n_positive": 188,
+          "se": 0.030184928104691627,
+          "z": -1.4864235219606192
+        }
+      },
+      "variance_axes": {
+        "board_point_estimate": {
+          "axis": "board scoring convention",
+          "value": 0.6626285842629334
+        },
+        "cv_seed": {
+          "axis": "cross-validation split seed",
+          "max": -0.03299955079733463,
+          "mean": -0.037371415737066614,
+          "mean_t_interval_95": [
+            -0.044421189527678887,
+            -0.030321641946454342
+          ],
+          "min": -0.04723553193082275,
+          "sd_population": 0.005078273492542219,
+          "statistic": "per-seed board AUC minus 0.70",
+          "values": [
+            -0.035135135135135,
+            -0.04723553193082275,
+            -0.03679905667440275,
+            -0.03299955079733463,
+            -0.034687804147637946
+          ]
+        },
+        "run_sampling": {
+          "axis": "labeled runs",
+          "n": 376,
+          "statistic": "single-curve DeLong variance"
+        }
+      },
+      "verdict": "does_not_separate"
+    },
+    {
+      "crosscheck": {
+        "interval_95": [
+          0.7546394013128113,
+          0.8492254696695337
+        ],
+        "method": "stratified bootstrap",
+        "replicates": 10000,
+        "statistic": "ROC-AUC"
+      },
+      "direction": 0,
+      "estimate": {
+        "a": 0.8025690357627886,
+        "a_name": "auditable (size+deps)",
+        "b": 0.7,
+        "b_name": "fixed bar",
+        "difference_a_minus_b": 0.10256903576278864
+      },
+      "expected_verdict": "separates_as_stated",
+      "family": "live_swegym_threshold_auc",
+      "id": "live.swe.bar.100.auditable (size+deps)",
+      "interval": {
+        "axis": "run-level sampling",
+        "high": 0.15016172315870227,
+        "level": 0.95,
+        "low": 0.05497634836687501,
+        "method": "single-curve DeLong"
+      },
+      "label": "SWE-Gym 100%: auditable (size+deps) vs 0.70",
+      "matches_stated_claim": true,
+      "metric": "roc_auc",
+      "one_line_verdict": "SWE-Gym 100%: auditable (size+deps) vs 0.70: separates as stated (Holm p=0.000336002).",
+      "test": {
+        "name": "two-sided DeLong z test against 0.70",
+        "p_adjusted_holm": 0.00033600239376890535,
+        "p_raw": 2.400017098349324e-05,
+        "statistic": {
+          "log_p_raw": -10.637449603329488,
+          "n_negative": 188,
+          "n_positive": 188,
+          "se": 0.0242824295606035,
+          "z": 4.224002194953323
+        }
+      },
+      "variance_axes": {
+        "board_point_estimate": {
+          "axis": "board scoring convention",
+          "value": 0.8042535749045444
+        },
+        "cv_seed": {
+          "axis": "cross-validation split seed",
+          "max": 0.11100733697686604,
+          "mean": 0.10425357490454443,
+          "mean_t_interval_95": [
+            0.09929838704957056,
+            0.1092087627595183
+          ],
+          "min": 0.10149921389533567,
+          "sd_population": 0.003569447741428229,
+          "statistic": "per-seed board AUC minus 0.70",
+          "values": [
+            0.11100733697686604,
+            0.10204574380474674,
+            0.10149921389533567,
+            0.10477652167402862,
+            0.10193905817174509
+          ]
+        },
+        "run_sampling": {
+          "axis": "labeled runs",
+          "n": 376,
+          "statistic": "single-curve DeLong variance"
+        }
+      },
+      "verdict": "separates_as_stated"
+    },
+    {
+      "crosscheck": {
+        "interval_95": [
+          0.768700486645541,
+          0.8565541534631055
+        ],
+        "method": "stratified bootstrap",
+        "replicates": 10000,
+        "statistic": "ROC-AUC"
+      },
+      "direction": 0,
+      "estimate": {
+        "a": 0.8138014938886374,
+        "a_name": "full",
+        "b": 0.7,
+        "b_name": "fixed bar",
+        "difference_a_minus_b": 0.11380149388863747
+      },
+      "expected_verdict": "separates_as_stated",
+      "family": "live_swegym_threshold_auc",
+      "id": "live.swe.bar.100.full",
+      "interval": {
+        "axis": "run-level sampling",
+        "high": 0.15870100543225166,
+        "level": 0.95,
+        "low": 0.06890198234502329,
+        "method": "single-curve DeLong"
+      },
+      "label": "SWE-Gym 100%: full vs 0.70",
+      "matches_stated_claim": true,
+      "metric": "roc_auc",
+      "one_line_verdict": "SWE-Gym 100%: full vs 0.70: separates as stated (Holm p=1.15184e-05).",
+      "test": {
+        "name": "two-sided DeLong z test against 0.70",
+        "p_adjusted_holm": 1.151841054531868e-05,
+        "p_raw": 6.775535614893341e-07,
+        "statistic": {
+          "log_p_raw": -14.204777229768606,
+          "n_negative": 188,
+          "n_positive": 188,
+          "se": 0.022908334998895795,
+          "z": 4.967689441162914
+        }
+      },
+      "variance_axes": {
+        "board_point_estimate": {
+          "axis": "board scoring convention",
+          "value": 0.8186228194953958
+        },
+        "cv_seed": {
+          "axis": "cross-validation split seed",
+          "max": 0.1259320955304335,
+          "mean": 0.1186228194953957,
+          "mean_t_interval_95": [
+            0.11112104288268586,
+            0.12612459610810556
+          ],
+          "min": 0.11075840383319613,
+          "sd_population": 0.005403871734157999,
+          "statistic": "per-seed board AUC minus 0.70",
+          "values": [
+            0.1259320955304335,
+            0.12320693269446736,
+            0.11571273489556055,
+            0.11075840383319613,
+            0.11750393052332098
+          ]
+        },
+        "run_sampling": {
+          "axis": "labeled runs",
+          "n": 376,
+          "statistic": "single-curve DeLong variance"
+        }
+      },
+      "verdict": "separates_as_stated"
+    },
+    {
+      "crosscheck": {
+        "interval_95": [
+          0.7142007837256676,
+          0.8142414554096876
+        ],
+        "method": "stratified bootstrap",
+        "replicates": 10000,
+        "statistic": "ROC-AUC"
+      },
+      "direction": 0,
+      "estimate": {
+        "a": 0.7653774332277048,
+        "a_name": "pyod (ECOD)",
+        "b": 0.7,
+        "b_name": "fixed bar",
+        "difference_a_minus_b": 0.06537743322770484
+      },
+      "expected_verdict": "does_not_separate",
+      "family": "live_swegym_threshold_auc",
+      "id": "live.swe.bar.100.pyod (ECOD)",
+      "interval": {
+        "axis": "run-level sampling",
+        "high": 0.11458502704664059,
+        "level": 0.95,
+        "low": 0.016169839408769086,
+        "method": "single-curve DeLong"
+      },
+      "label": "SWE-Gym 100%: pyod (ECOD) vs 0.70",
+      "matches_stated_claim": true,
+      "metric": "roc_auc",
+      "one_line_verdict": "SWE-Gym 100%: pyod (ECOD) vs 0.70: does not separate (Holm p=0.0921382).",
+      "test": {
+        "name": "two-sided DeLong z test against 0.70",
+        "p_adjusted_holm": 0.09213816631374631,
+        "p_raw": 0.009213816631374631,
+        "statistic": {
+          "log_p_raw": -4.6870511137544995,
+          "n_negative": 188,
+          "n_positive": 188,
+          "se": 0.025106376549303446,
+          "z": 2.604017075077235
+        }
+      },
+      "variance_axes": {
+        "board_point_estimate": {
+          "axis": "board scoring convention",
+          "value": 0.7653774332277048
+        },
+        "run_sampling": {
+          "axis": "labeled runs",
+          "n": 376,
+          "statistic": "single-curve DeLong variance"
+        }
+      },
+      "verdict": "does_not_separate"
+    },
+    {
+      "crosscheck": {
+        "interval_95": [
+          0.5907643447261204,
+          0.7048724677455863
+        ],
+        "method": "stratified bootstrap",
+        "replicates": 10000,
+        "statistic": "ROC-AUC"
+      },
+      "direction": 0,
+      "estimate": {
+        "a": 0.6484693300135808,
+        "a_name": "dep-span (online)",
+        "b": 0.7,
+        "b_name": "fixed bar",
+        "difference_a_minus_b": -0.0515306699864192
+      },
+      "expected_verdict": "does_not_separate",
+      "family": "live_swegym_threshold_auc",
+      "id": "live.swe.bar.100.dep-span (online)",
+      "interval": {
+        "axis": "run-level sampling",
+        "high": 0.005394824576956489,
+        "level": 0.95,
+        "low": -0.10845616454979488,
+        "method": "single-curve DeLong"
+      },
+      "label": "SWE-Gym 100%: dep-span (online) vs 0.70",
+      "matches_stated_claim": true,
+      "metric": "roc_auc",
+      "one_line_verdict": "SWE-Gym 100%: dep-span (online) vs 0.70: does not separate (Holm p=0.380135).",
+      "test": {
+        "name": "two-sided DeLong z test against 0.70",
+        "p_adjusted_holm": 0.38013519697654125,
+        "p_raw": 0.07602703939530825,
+        "statistic": {
+          "log_p_raw": -2.5766662204538284,
+          "n_negative": 188,
+          "n_positive": 188,
+          "se": 0.029044153368325505,
+          "z": -1.7742183541358334
+        }
+      },
+      "variance_axes": {
+        "board_point_estimate": {
+          "axis": "board scoring convention",
+          "value": 0.6484693300135808
+        },
+        "run_sampling": {
+          "axis": "labeled runs",
+          "n": 376,
+          "statistic": "single-curve DeLong variance"
+        }
+      },
+      "verdict": "does_not_separate"
+    },
+    {
+      "crosscheck": {
+        "interval_95": [
           0.021728766081383185,
           0.1377790763465694
         ],
@@ -4040,7 +5408,7 @@
         "replicates": 10000,
         "statistic": "ROC-AUC"
       },
-      "direction": -1,
+      "direction": 0,
       "estimate": {
         "a": 0.6256458060865774,
         "a_name": "size (flat)",
@@ -4061,13 +5429,13 @@
       "label": "tau-bench 25%: size (flat) vs 0.70",
       "matches_stated_claim": true,
       "metric": "roc_auc",
-      "one_line_verdict": "tau-bench 25%: size (flat) vs 0.70: separates as stated (Holm p=0.00229868).",
+      "one_line_verdict": "tau-bench 25%: size (flat) vs 0.70: separates as stated (Holm p=0.00459737).",
       "test": {
-        "name": "one-sided DeLong z test (less than 0.70)",
-        "p_adjusted_holm": 0.002298682739733753,
-        "p_raw": 0.0002949152692828633,
+        "name": "two-sided DeLong z test against 0.70",
+        "p_adjusted_holm": 0.004597365479467506,
+        "p_raw": 0.0005898305385657266,
         "statistic": {
-          "log_p_raw": -8.128822465650769,
+          "log_p_raw": -7.435675285090824,
           "n_negative": 297,
           "n_positive": 363,
           "se": 0.021638191270771514,
@@ -4116,7 +5484,7 @@
         "replicates": 10000,
         "statistic": "ROC-AUC"
       },
-      "direction": -1,
+      "direction": 0,
       "estimate": {
         "a": 0.6254881227333018,
         "a_name": "auditable (size+deps)",
@@ -4137,13 +5505,13 @@
       "label": "tau-bench 25%: auditable (size+deps) vs 0.70",
       "matches_stated_claim": true,
       "metric": "roc_auc",
-      "one_line_verdict": "tau-bench 25%: auditable (size+deps) vs 0.70: separates as stated (Holm p=0.00229868).",
+      "one_line_verdict": "tau-bench 25%: auditable (size+deps) vs 0.70: separates as stated (Holm p=0.00459737).",
       "test": {
-        "name": "one-sided DeLong z test (less than 0.70)",
-        "p_adjusted_holm": 0.002298682739733753,
-        "p_raw": 0.0002873353424667191,
+        "name": "two-sided DeLong z test against 0.70",
+        "p_adjusted_holm": 0.004597365479467506,
+        "p_raw": 0.0005746706849334382,
         "statistic": {
-          "log_p_raw": -8.154860583649567,
+          "log_p_raw": -7.461713403089622,
           "n_negative": 297,
           "n_positive": 363,
           "se": 0.021639697725909037,
@@ -4192,7 +5560,7 @@
         "replicates": 10000,
         "statistic": "ROC-AUC"
       },
-      "direction": -1,
+      "direction": 0,
       "estimate": {
         "a": 0.6353015926018681,
         "a_name": "full",
@@ -4213,13 +5581,13 @@
       "label": "tau-bench 25%: full vs 0.70",
       "matches_stated_claim": true,
       "metric": "roc_auc",
-      "one_line_verdict": "tau-bench 25%: full vs 0.70: separates as stated (Holm p=0.00637644).",
+      "one_line_verdict": "tau-bench 25%: full vs 0.70: separates as stated (Holm p=0.0127529).",
       "test": {
-        "name": "one-sided DeLong z test (less than 0.70)",
-        "p_adjusted_holm": 0.006376438595053265,
-        "p_raw": 0.001275287719010653,
+        "name": "two-sided DeLong z test against 0.70",
+        "p_adjusted_holm": 0.012752877190106532,
+        "p_raw": 0.0025505754380213065,
         "statistic": {
-          "log_p_raw": -6.66458346386044,
+          "log_p_raw": -5.971436283300495,
           "n_negative": 297,
           "n_positive": 363,
           "se": 0.021442655339402813,
@@ -4268,7 +5636,7 @@
         "replicates": 10000,
         "statistic": "ROC-AUC"
       },
-      "direction": -1,
+      "direction": 0,
       "estimate": {
         "a": 0.546382094591461,
         "a_name": "pyod (ECOD)",
@@ -4289,13 +5657,13 @@
       "label": "tau-bench 25%: pyod (ECOD) vs 0.70",
       "matches_stated_claim": true,
       "metric": "roc_auc",
-      "one_line_verdict": "tau-bench 25%: pyod (ECOD) vs 0.70: separates as stated (Holm p=6.76752e-11).",
+      "one_line_verdict": "tau-bench 25%: pyod (ECOD) vs 0.70: separates as stated (Holm p=1.3535e-10).",
       "test": {
-        "name": "one-sided DeLong z test (less than 0.70)",
-        "p_adjusted_holm": 6.767522969918893e-11,
-        "p_raw": 3.980895864658172e-12,
+        "name": "two-sided DeLong z test against 0.70",
+        "p_adjusted_holm": 1.3535045939837762e-10,
+        "p_raw": 7.96179172931633e-12,
         "statistic": {
-          "log_p_raw": -26.249514230338864,
+          "log_p_raw": -25.55636704977892,
           "n_negative": 297,
           "n_positive": 363,
           "se": 0.0224612745223374,
@@ -4325,7 +5693,7 @@
         "replicates": 10000,
         "statistic": "ROC-AUC"
       },
-      "direction": -1,
+      "direction": 0,
       "estimate": {
         "a": 0.5027548209366391,
         "a_name": "dep-span (online)",
@@ -4348,11 +5716,11 @@
       "metric": "roc_auc",
       "one_line_verdict": "tau-bench 25%: dep-span (online) vs 0.70: separates as stated (Holm p=4.45015e-307).",
       "test": {
-        "name": "one-sided DeLong z test (less than 0.70)",
+        "name": "two-sided DeLong z test against 0.70",
         "p_adjusted_holm": 4.450147717014525e-307,
         "p_raw": 2.2250738585072626e-308,
         "statistic": {
-          "log_p_raw": -5146.299084792337,
+          "log_p_raw": -5145.605937611777,
           "n_negative": 297,
           "n_positive": 363,
           "se": 0.001945260162354843,
@@ -4382,7 +5750,7 @@
         "replicates": 10000,
         "statistic": "ROC-AUC"
       },
-      "direction": -1,
+      "direction": 0,
       "estimate": {
         "a": 0.61710771628127,
         "a_name": "size (flat)",
@@ -4403,13 +5771,13 @@
       "label": "tau-bench 50%: size (flat) vs 0.70",
       "matches_stated_claim": true,
       "metric": "roc_auc",
-      "one_line_verdict": "tau-bench 50%: size (flat) vs 0.70: separates as stated (Holm p=0.000695939).",
+      "one_line_verdict": "tau-bench 50%: size (flat) vs 0.70: separates as stated (Holm p=0.00139188).",
       "test": {
-        "name": "one-sided DeLong z test (less than 0.70)",
-        "p_adjusted_holm": 0.0006959394772704692,
-        "p_raw": 6.911079843515017e-05,
+        "name": "two-sided DeLong z test against 0.70",
+        "p_adjusted_holm": 0.0013918789545409383,
+        "p_raw": 0.00013822159687030034,
         "statistic": {
-          "log_p_raw": -9.579799566821787,
+          "log_p_raw": -8.886652386261842,
           "n_negative": 297,
           "n_positive": 363,
           "se": 0.02174891786518995,
@@ -4458,7 +5826,7 @@
         "replicates": 10000,
         "statistic": "ROC-AUC"
       },
-      "direction": -1,
+      "direction": 0,
       "estimate": {
         "a": 0.6172468486518073,
         "a_name": "auditable (size+deps)",
@@ -4479,13 +5847,13 @@
       "label": "tau-bench 50%: auditable (size+deps) vs 0.70",
       "matches_stated_claim": true,
       "metric": "roc_auc",
-      "one_line_verdict": "tau-bench 50%: auditable (size+deps) vs 0.70: separates as stated (Holm p=0.000695939).",
+      "one_line_verdict": "tau-bench 50%: auditable (size+deps) vs 0.70: separates as stated (Holm p=0.00139188).",
       "test": {
-        "name": "one-sided DeLong z test (less than 0.70)",
-        "p_adjusted_holm": 0.0006959394772704692,
-        "p_raw": 7.467278482450978e-05,
+        "name": "two-sided DeLong z test against 0.70",
+        "p_adjusted_holm": 0.0013918789545409383,
+        "p_raw": 0.00014934556964901958,
         "statistic": {
-          "log_p_raw": -9.50239485852024,
+          "log_p_raw": -8.809247677960295,
           "n_negative": 297,
           "n_positive": 363,
           "se": 0.02182219569755553,
@@ -4534,7 +5902,7 @@
         "replicates": 10000,
         "statistic": "ROC-AUC"
       },
-      "direction": -1,
+      "direction": 0,
       "estimate": {
         "a": 0.6276168480025229,
         "a_name": "full",
@@ -4555,13 +5923,13 @@
       "label": "tau-bench 50%: full vs 0.70",
       "matches_stated_claim": true,
       "metric": "roc_auc",
-      "one_line_verdict": "tau-bench 50%: full vs 0.70: separates as stated (Holm p=0.00246676).",
+      "one_line_verdict": "tau-bench 50%: full vs 0.70: separates as stated (Holm p=0.00493351).",
       "test": {
-        "name": "one-sided DeLong z test (less than 0.70)",
-        "p_adjusted_holm": 0.0024667565326877304,
-        "p_raw": 0.00041112608878128836,
+        "name": "two-sided DeLong z test against 0.70",
+        "p_adjusted_holm": 0.004933513065375461,
+        "p_raw": 0.0008222521775625767,
         "statistic": {
-          "log_p_raw": -7.796610605161112,
+          "log_p_raw": -7.103463424601166,
           "n_negative": 297,
           "n_positive": 363,
           "se": 0.021637957420335578,
@@ -4610,7 +5978,7 @@
         "replicates": 10000,
         "statistic": "ROC-AUC"
       },
-      "direction": -1,
+      "direction": 0,
       "estimate": {
         "a": 0.5532598714416896,
         "a_name": "pyod (ECOD)",
@@ -4631,13 +5999,13 @@
       "label": "tau-bench 50%: pyod (ECOD) vs 0.70",
       "matches_stated_claim": true,
       "metric": "roc_auc",
-      "one_line_verdict": "tau-bench 50%: pyod (ECOD) vs 0.70: separates as stated (Holm p=5.23175e-10).",
+      "one_line_verdict": "tau-bench 50%: pyod (ECOD) vs 0.70: separates as stated (Holm p=1.04635e-09).",
       "test": {
-        "name": "one-sided DeLong z test (less than 0.70)",
-        "p_adjusted_holm": 5.231751881624412e-10,
-        "p_raw": 3.269844926015258e-11,
+        "name": "two-sided DeLong z test against 0.70",
+        "p_adjusted_holm": 1.0463503763248806e-09,
+        "p_raw": 6.539689852030504e-11,
         "statistic": {
-          "log_p_raw": -24.143693462386782,
+          "log_p_raw": -23.45054628182684,
           "n_negative": 297,
           "n_positive": 363,
           "se": 0.022468759673913517,
@@ -4667,7 +6035,7 @@
         "replicates": 10000,
         "statistic": "ROC-AUC"
       },
-      "direction": -1,
+      "direction": 0,
       "estimate": {
         "a": 0.530108244984278,
         "a_name": "dep-span (online)",
@@ -4688,13 +6056,13 @@
       "label": "tau-bench 50%: dep-span (online) vs 0.70",
       "matches_stated_claim": true,
       "metric": "roc_auc",
-      "one_line_verdict": "tau-bench 50%: dep-span (online) vs 0.70: separates as stated (Holm p=4.06337e-61).",
+      "one_line_verdict": "tau-bench 50%: dep-span (online) vs 0.70: separates as stated (Holm p=8.12673e-61).",
       "test": {
-        "name": "one-sided DeLong z test (less than 0.70)",
-        "p_adjusted_holm": 4.063365037048113e-61,
-        "p_raw": 2.1386131773937437e-62,
+        "name": "two-sided DeLong z test against 0.70",
+        "p_adjusted_holm": 8.12673007409624e-61,
+        "p_raw": 4.277226354787495e-62,
         "statistic": {
-          "log_p_raw": -142.00011819461776,
+          "log_p_raw": -141.3069710140578,
           "n_negative": 297,
           "n_positive": 363,
           "se": 0.01021642447672101,
@@ -4724,7 +6092,7 @@
         "replicates": 10000,
         "statistic": "ROC-AUC"
       },
-      "direction": -1,
+      "direction": 0,
       "estimate": {
         "a": 0.6167598853549267,
         "a_name": "size (flat)",
@@ -4745,13 +6113,13 @@
       "label": "tau-bench 75%: size (flat) vs 0.70",
       "matches_stated_claim": true,
       "metric": "roc_auc",
-      "one_line_verdict": "tau-bench 75%: size (flat) vs 0.70: separates as stated (Holm p=0.000695939).",
+      "one_line_verdict": "tau-bench 75%: size (flat) vs 0.70: separates as stated (Holm p=0.00139188).",
       "test": {
-        "name": "one-sided DeLong z test (less than 0.70)",
-        "p_adjusted_holm": 0.0006959394772704692,
-        "p_raw": 6.326722520640629e-05,
+        "name": "two-sided DeLong z test against 0.70",
+        "p_adjusted_holm": 0.0013918789545409383,
+        "p_raw": 0.00012653445041281258,
         "statistic": {
-          "log_p_raw": -9.668143132154015,
+          "log_p_raw": -8.97499595159407,
           "n_negative": 297,
           "n_positive": 363,
           "se": 0.021716089964733155,
@@ -4800,7 +6168,7 @@
         "replicates": 10000,
         "statistic": "ROC-AUC"
       },
-      "direction": -1,
+      "direction": 0,
       "estimate": {
         "a": 0.6392946916362894,
         "a_name": "auditable (size+deps)",
@@ -4821,13 +6189,13 @@
       "label": "tau-bench 75%: auditable (size+deps) vs 0.70",
       "matches_stated_claim": true,
       "metric": "roc_auc",
-      "one_line_verdict": "tau-bench 75%: auditable (size+deps) vs 0.70: separates as stated (Holm p=0.00887155).",
+      "one_line_verdict": "tau-bench 75%: auditable (size+deps) vs 0.70: separates as stated (Holm p=0.0177431).",
       "test": {
-        "name": "one-sided DeLong z test (less than 0.70)",
-        "p_adjusted_holm": 0.008871554609657072,
-        "p_raw": 0.002217888652414268,
+        "name": "two-sided DeLong z test against 0.70",
+        "p_adjusted_holm": 0.017743109219314147,
+        "p_raw": 0.004435777304828537,
         "statistic": {
-          "log_p_raw": -6.111199593111108,
+          "log_p_raw": -5.418052412551162,
           "n_negative": 297,
           "n_positive": 363,
           "se": 0.021334655353958204,
@@ -4876,7 +6244,7 @@
         "replicates": 10000,
         "statistic": "ROC-AUC"
       },
-      "direction": -1,
+      "direction": 0,
       "estimate": {
         "a": 0.6425689400896012,
         "a_name": "full",
@@ -4897,13 +6265,13 @@
       "label": "tau-bench 75%: full vs 0.70",
       "matches_stated_claim": true,
       "metric": "roc_auc",
-      "one_line_verdict": "tau-bench 75%: full vs 0.70: separates as stated (Holm p=0.0105119).",
+      "one_line_verdict": "tau-bench 75%: full vs 0.70: separates as stated (Holm p=0.0210239).",
       "test": {
-        "name": "one-sided DeLong z test (less than 0.70)",
-        "p_adjusted_holm": 0.010511945028709876,
-        "p_raw": 0.0035039816762366255,
+        "name": "two-sided DeLong z test against 0.70",
+        "p_adjusted_holm": 0.021023890057419756,
+        "p_raw": 0.007007963352473252,
         "statistic": {
-          "log_p_raw": -5.65385533530619,
+          "log_p_raw": -4.960708154746245,
           "n_negative": 297,
           "n_positive": 363,
           "se": 0.021298643566241476,
@@ -4952,7 +6320,7 @@
         "replicates": 10000,
         "statistic": "ROC-AUC"
       },
-      "direction": -1,
+      "direction": 0,
       "estimate": {
         "a": 0.561853614195212,
         "a_name": "pyod (ECOD)",
@@ -4973,13 +6341,13 @@
       "label": "tau-bench 75%: pyod (ECOD) vs 0.70",
       "matches_stated_claim": true,
       "metric": "roc_auc",
-      "one_line_verdict": "tau-bench 75%: pyod (ECOD) vs 0.70: separates as stated (Holm p=5.79674e-09).",
+      "one_line_verdict": "tau-bench 75%: pyod (ECOD) vs 0.70: separates as stated (Holm p=1.15935e-08).",
       "test": {
-        "name": "one-sided DeLong z test (less than 0.70)",
-        "p_adjusted_holm": 5.79674105303259e-09,
-        "p_raw": 4.1405293235947066e-10,
+        "name": "two-sided DeLong z test against 0.70",
+        "p_adjusted_holm": 1.1593482106065158e-08,
+        "p_raw": 8.281058647189399e-10,
         "statistic": {
-          "log_p_raw": -21.605027294335358,
+          "log_p_raw": -20.911880113775414,
           "n_negative": 297,
           "n_positive": 363,
           "se": 0.022501447387568364,
@@ -5009,7 +6377,7 @@
         "replicates": 10000,
         "statistic": "ROC-AUC"
       },
-      "direction": -1,
+      "direction": 0,
       "estimate": {
         "a": 0.5648959753642949,
         "a_name": "dep-span (online)",
@@ -5030,13 +6398,13 @@
       "label": "tau-bench 75%: dep-span (online) vs 0.70",
       "matches_stated_claim": true,
       "metric": "roc_auc",
-      "one_line_verdict": "tau-bench 75%: dep-span (online) vs 0.70: separates as stated (Holm p=7.51519e-13).",
+      "one_line_verdict": "tau-bench 75%: dep-span (online) vs 0.70: separates as stated (Holm p=1.50304e-12).",
       "test": {
-        "name": "one-sided DeLong z test (less than 0.70)",
-        "p_adjusted_holm": 7.51518521008196e-13,
-        "p_raw": 4.175102894489978e-14,
+        "name": "two-sided DeLong z test against 0.70",
+        "p_adjusted_holm": 1.5030370420163895e-12,
+        "p_raw": 8.350205788979942e-14,
         "statistic": {
-          "log_p_raw": -30.807052298530692,
+          "log_p_raw": -30.11390511797075,
           "n_negative": 297,
           "n_positive": 363,
           "se": 0.018099103767711112,
@@ -5066,7 +6434,7 @@
         "replicates": 10000,
         "statistic": "ROC-AUC"
       },
-      "direction": -1,
+      "direction": 0,
       "estimate": {
         "a": 0.616152340670247,
         "a_name": "size (flat)",
@@ -5087,13 +6455,13 @@
       "label": "tau-bench 100%: size (flat) vs 0.70",
       "matches_stated_claim": true,
       "metric": "roc_auc",
-      "one_line_verdict": "tau-bench 100%: size (flat) vs 0.70: separates as stated (Holm p=0.000668881).",
+      "one_line_verdict": "tau-bench 100%: size (flat) vs 0.70: separates as stated (Holm p=0.00133776).",
       "test": {
-        "name": "one-sided DeLong z test (less than 0.70)",
-        "p_adjusted_holm": 0.000668880849058505,
-        "p_raw": 5.574007075487541e-05,
+        "name": "two-sided DeLong z test against 0.70",
+        "p_adjusted_holm": 0.0013377616981170102,
+        "p_raw": 0.00011148014150975084,
         "statistic": {
-          "log_p_raw": -9.79481126653784,
+          "log_p_raw": -9.101664085977895,
           "n_negative": 297,
           "n_positive": 363,
           "se": 0.02169890470276464,
@@ -5142,7 +6510,7 @@
         "replicates": 10000,
         "statistic": "ROC-AUC"
       },
-      "direction": -1,
+      "direction": 0,
       "estimate": {
         "a": 0.662446318093701,
         "a_name": "auditable (size+deps)",
@@ -5163,13 +6531,13 @@
       "label": "tau-bench 100%: auditable (size+deps) vs 0.70",
       "matches_stated_claim": true,
       "metric": "roc_auc",
-      "one_line_verdict": "tau-bench 100%: auditable (size+deps) vs 0.70: does not separate (Holm p=0.073718).",
+      "one_line_verdict": "tau-bench 100%: auditable (size+deps) vs 0.70: does not separate (Holm p=0.147436).",
       "test": {
-        "name": "one-sided DeLong z test (less than 0.70)",
-        "p_adjusted_holm": 0.07371801805656664,
-        "p_raw": 0.03685900902828332,
+        "name": "two-sided DeLong z test against 0.70",
+        "p_adjusted_holm": 0.14743603611313327,
+        "p_raw": 0.07371801805656664,
         "statistic": {
-          "log_p_raw": -3.3006552118472947,
+          "log_p_raw": -2.6075080312873493,
           "n_negative": 297,
           "n_positive": 363,
           "se": 0.02099895511505893,
@@ -5218,7 +6586,7 @@
         "replicates": 10000,
         "statistic": "ROC-AUC"
       },
-      "direction": -1,
+      "direction": 0,
       "estimate": {
         "a": 0.6646817115136674,
         "a_name": "full",
@@ -5239,13 +6607,13 @@
       "label": "tau-bench 100%: full vs 0.70",
       "matches_stated_claim": true,
       "metric": "roc_auc",
-      "one_line_verdict": "tau-bench 100%: full vs 0.70: does not separate (Holm p=0.073718).",
+      "one_line_verdict": "tau-bench 100%: full vs 0.70: does not separate (Holm p=0.147436).",
       "test": {
-        "name": "one-sided DeLong z test (less than 0.70)",
-        "p_adjusted_holm": 0.07371801805656664,
-        "p_raw": 0.0458214605325161,
+        "name": "two-sided DeLong z test against 0.70",
+        "p_adjusted_holm": 0.14743603611313327,
+        "p_raw": 0.0916429210650322,
         "statistic": {
-          "log_p_raw": -3.0830027270279565,
+          "log_p_raw": -2.389855546468011,
           "n_negative": 297,
           "n_positive": 363,
           "se": 0.020938112896485728,
@@ -5294,7 +6662,7 @@
         "replicates": 10000,
         "statistic": "ROC-AUC"
       },
-      "direction": -1,
+      "direction": 0,
       "estimate": {
         "a": 0.555430336422072,
         "a_name": "pyod (ECOD)",
@@ -5315,13 +6683,13 @@
       "label": "tau-bench 100%: pyod (ECOD) vs 0.70",
       "matches_stated_claim": true,
       "metric": "roc_auc",
-      "one_line_verdict": "tau-bench 100%: pyod (ECOD) vs 0.70: separates as stated (Holm p=9.60922e-10).",
+      "one_line_verdict": "tau-bench 100%: pyod (ECOD) vs 0.70: separates as stated (Holm p=1.92184e-09).",
       "test": {
-        "name": "one-sided DeLong z test (less than 0.70)",
-        "p_adjusted_holm": 9.609222987164572e-10,
-        "p_raw": 6.406148658109715e-11,
+        "name": "two-sided DeLong z test against 0.70",
+        "p_adjusted_holm": 1.9218445974329114e-09,
+        "p_raw": 1.281229731621941e-10,
         "statistic": {
-          "log_p_raw": -23.471177765942844,
+          "log_p_raw": -22.7780305853829,
           "n_negative": 297,
           "n_positive": 363,
           "se": 0.022485775801849798,
@@ -5351,7 +6719,7 @@
         "replicates": 10000,
         "statistic": "ROC-AUC"
       },
-      "direction": -1,
+      "direction": 0,
       "estimate": {
         "a": 0.5679939894815927,
         "a_name": "dep-span (online)",
@@ -5372,13 +6740,13 @@
       "label": "tau-bench 100%: dep-span (online) vs 0.70",
       "matches_stated_claim": true,
       "metric": "roc_auc",
-      "one_line_verdict": "tau-bench 100%: dep-span (online) vs 0.70: separates as stated (Holm p=1.73296e-08).",
+      "one_line_verdict": "tau-bench 100%: dep-span (online) vs 0.70: separates as stated (Holm p=3.46592e-08).",
       "test": {
-        "name": "one-sided DeLong z test (less than 0.70)",
-        "p_adjusted_holm": 1.7329607479225103e-08,
-        "p_raw": 1.3330467291711617e-09,
+        "name": "two-sided DeLong z test against 0.70",
+        "p_adjusted_holm": 3.465921495845015e-08,
+        "p_raw": 2.666093458342319e-09,
         "statistic": {
-          "log_p_raw": -20.435798740721992,
+          "log_p_raw": -19.74265156016205,
           "n_negative": 297,
           "n_positive": 363,
           "se": 0.022182385466088497,
@@ -7078,6 +8446,34 @@
     },
     {
       "claim_ids": [
+        "live.swe.bar.25.size (flat)",
+        "live.swe.bar.25.auditable (size+deps)",
+        "live.swe.bar.25.full",
+        "live.swe.bar.25.pyod (ECOD)",
+        "live.swe.bar.25.dep-span (online)",
+        "live.swe.bar.50.size (flat)",
+        "live.swe.bar.50.auditable (size+deps)",
+        "live.swe.bar.50.full",
+        "live.swe.bar.50.pyod (ECOD)",
+        "live.swe.bar.50.dep-span (online)",
+        "live.swe.bar.75.size (flat)",
+        "live.swe.bar.75.auditable (size+deps)",
+        "live.swe.bar.75.full",
+        "live.swe.bar.75.pyod (ECOD)",
+        "live.swe.bar.75.dep-span (online)",
+        "live.swe.bar.100.size (flat)",
+        "live.swe.bar.100.auditable (size+deps)",
+        "live.swe.bar.100.full",
+        "live.swe.bar.100.pyod (ECOD)",
+        "live.swe.bar.100.dep-span (online)"
+      ],
+      "correction": "Holm step-down with monotonicity enforcement",
+      "description": "Exploratory family added after its scores were examined: twenty nonrandom SWE-Gym method-prefix cells against 0.70, two-sided.",
+      "id": "live_swegym_threshold_auc",
+      "size": 20
+    },
+    {
+      "claim_ids": [
         "live.tau.25.auditable.vs.ecod",
         "live.tau.50.auditable.vs.ecod",
         "live.tau.75.auditable.vs.ecod",
@@ -7112,7 +8508,7 @@
         "live.tau.bar.100.dep-span (online)"
       ],
       "correction": "Holm step-down with monotonicity enforcement",
-      "description": "Twenty nonrandom tau method-prefix cells against 0.70.",
+      "description": "Twenty nonrandom tau method-prefix cells against 0.70, two-sided.",
       "id": "live_tau_threshold_auc",
       "size": 20
     },
@@ -7535,10 +8931,10 @@
     ],
     "no_api_key_required": true,
     "package_versions": {
-      "numpy": "2.4.4",
+      "numpy": "2.2.6",
       "pygod": "1.1.0",
       "pyod": "3.6.5",
-      "scikit-learn": "1.8.0",
+      "scikit-learn": "1.9.0",
       "scipy": "1.17.1",
       "torch": "2.10.0+cu128",
       "torch-geometric": "2.7.0"

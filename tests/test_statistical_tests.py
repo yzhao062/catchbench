@@ -13,6 +13,7 @@ from statistical_tests import (  # noqa: E402
     holm_adjust,
     paired_delong,
     poisson_binomial_tail,
+    single_delong,
 )
 
 
@@ -36,6 +37,11 @@ def test_paired_delong_identical_scores() -> None:
     result = paired_delong(labels, scores, scores)
     assert result["difference"] == 0.0
     assert result["p"] == 1.0
+    single = single_delong(labels, scores, 0.5)
+    assert np.isclose(single["p_less"] + single["p_greater"], 1.0)
+    # The sum alone also passes with the two tails swapped, which is the bug this guards.
+    assert single["auc"] > 0.5
+    assert single["p_greater"] < 0.5 < single["p_less"]
 
 
 def test_poisson_binomial_tails() -> None:

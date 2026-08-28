@@ -1325,6 +1325,21 @@ PROSE_NUMBER_ALLOWLIST: tuple[ProseNumberAllowance, ...] = (
                          "Five-seed cause-attribution mean in the golden reading notes."),
     ProseNumberAllowance("online-target-rate", "displayed 5%", ("5%",),
                          "Target false-positive-rate threshold."),
+    ProseNumberAllowance(
+        "swegym-bar-family", "20-cell SWE-Gym bar family is exploratory",
+        ("20", "75%", "50%", "75%"),
+        "Registered family size and the prefix labels of its above-bar and below-bar cells.",
+    ),
+    ProseNumberAllowance(
+        "live-figure-bar-families", "Each corpus registers all 20 nonrandom method-prefix cells",
+        ("20", "75%", "18"),
+        "Registered family size, the SWE-Gym above-bar prefixes, and the tau separating count.",
+    ),
+    ProseNumberAllowance(
+        "live-stale-descriptive-design", "displayed cells from 82 paired runs",
+        ("82", "410"),
+        "Paired-run count and the explicitly rejected pseudo-replication count.",
+    ),
     ProseNumberAllowance("pre-config-count", "It runs over 1187 configurations", ("1187",),
                          "Count of PRE configurations."),
     ProseNumberAllowance("label-kappa", "overall Cohen's kappa", ("0.666",),
@@ -1414,6 +1429,13 @@ _TAU_THRESHOLD_CLAIMS = tuple(
                    "dep-span (online)")
 )
 
+_SWE_THRESHOLD_CLAIMS = tuple(
+    f"live.swe.bar.{prefix}.{method}"
+    for prefix in ("25", "50", "75", "100")
+    for method in ("size (flat)", "auditable (size+deps)", "full", "pyod (ECOD)",
+                   "dep-span (online)")
+)
+
 _SWE_LIVE_METHOD_CLAIMS = (
     "live.swe25.auditable.vs.size",
     "live.swe.25.auditable.vs.ecod",
@@ -1467,11 +1489,12 @@ CLAIM_LICENSES: tuple[ClaimLicense, ...] = (
                  ("gold.attribution.max-span (higher=stale)",
                   "gold.attribution.edge-count (higher=stale)")),
     ClaimLicense("LIVE early-warning comparisons",
-                 "none of the reported methods reaches the 0.70 time-to-detection threshold",
-                 ("live.swe25.auditable.vs.size",) + _TAU_THRESHOLD_CLAIMS),
+                 "20-cell SWE-Gym bar family is exploratory",
+                 ("live.swe25.auditable.vs.size",) + _SWE_THRESHOLD_CLAIMS
+                 + _TAU_THRESHOLD_CLAIMS),
     ClaimLicense("LIVE domain-split figure comparison",
-                 "All fillable SWE-Gym method markers are hollow",
-                 _SWE_LIVE_METHOD_CLAIMS + _TAU_THRESHOLD_CLAIMS),
+                 "Each corpus registers all 20 nonrandom method-prefix cells",
+                 _SWE_LIVE_METHOD_CLAIMS + _SWE_THRESHOLD_CLAIMS + _TAU_THRESHOLD_CLAIMS),
     # The three rule-precision ids test each rule against the pooled base rate. They
     # license nothing about a rule against the judge, and the paragraph they cover now
     # says so outright rather than printing the three as a ranking.

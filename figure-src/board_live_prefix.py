@@ -57,10 +57,21 @@ def render(board_path: Path, stats_path: Path, output: Path) -> None:
     upper = min(1.0, max(all_values) + 0.07)
 
     titles = {"swegym": "SWE-Gym", "tau": "tau-bench"}
-    subtitles = {
-        "swegym": "No registered contrasts against 0.70",
-        "tau": "Five nonrandom entrants registered against 0.70",
-    }
+    subtitles = {}
+    for corpus in ("swegym", "tau"):
+        registered = [claim for cells in threshold_claims[corpus].values()
+                      for claim in cells if claim is not None]
+        separating = [claim for claim in registered if claim["verdict"] == "separates"]
+        # Read the side from the claims. Both families are two-sided, so SWE-Gym separates in
+        # both directions and a hardcoded word would print the wrong one for three of its cells.
+        above = sum(claim["side"] == "above" for claim in separating)
+        below = len(separating) - above
+        parts = ([f"{above} above 0.70"] if above else []) + ([f"{below} below"] if below else [])
+        summary = ", ".join(parts) if parts else "none separate"
+        # The SWE-Gym family was added after its scores were examined, so the panel says so where
+        # the counts are read. The legend's "registered, separates" is about the marker fill.
+        status = "exploratory; " if corpus == "swegym" else ""
+        subtitles[corpus] = f"{status}{len(registered)} registered cells; {summary}"
     for ax, corpus in zip(axes, ("swegym", "tau")):
         rows = corpora[corpus]
         for method, (color, label, width, marker, linestyle) in SERIES.items():

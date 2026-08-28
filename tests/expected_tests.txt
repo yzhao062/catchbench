@@ -244,6 +244,7 @@ always       tests/test_namedvalue.py::test_donor_values_are_real_corpus_values
 always       tests/test_namedvalue.py::test_dropped_donor_excludes_produced_but_unconsumed_values
 always       tests/test_namedvalue.py::test_edge_records_only_latest_producer
 always       tests/test_namedvalue.py::test_edges_are_derived_not_stored
+always       tests/test_namedvalue.py::test_gold_v2_scores_every_dropped_eligible_run
 always       tests/test_namedvalue.py::test_identifier_shape_rule
 always       tests/test_namedvalue.py::test_inject_dropped_mutates_the_exact_nested_leaf
 always       tests/test_namedvalue.py::test_inject_dropped_produces_ungrounded_provenance
@@ -251,6 +252,7 @@ always       tests/test_namedvalue.py::test_inject_stale_writes_a_superseded_val
 always       tests/test_namedvalue.py::test_list_siblings_share_key_but_have_distinct_sites
 always       tests/test_namedvalue.py::test_nested_argument_leaves_become_consumptions
 always       tests/test_namedvalue.py::test_provenance_classes
+always       tests/test_namedvalue.py::test_single_kind_corpus_rejects_an_unknown_kind
 always       tests/test_namedvalue.py::test_supersession_and_stale_eligibility
 always       tests/test_namedvalue_ties.py::test_a_strict_winner_still_scores_one_and_a_strict_loser_zero
 always       tests/test_namedvalue_ties.py::test_a_tie_below_the_leader_scores_zero_not_a_share
@@ -307,14 +309,20 @@ always       tests/test_pre_static_scanner.py::UnionAndFactoryTest::test_scanner
 always       tests/test_pre_static_scanner.py::UnionAndFactoryTest::test_union_equals_component_rules
 always       tests/test_pre_static_scanner.py::UnrequestedHighImpactRuleTest::test_composite_unrequested_action_flagged
 always       tests/test_pre_static_scanner.py::UnrequestedHighImpactRuleTest::test_requested_action_not_flagged
+always       tests/test_readme_figures.py::test_a_block_colliding_with_a_diagnostic_id_is_rejected
+always       tests/test_readme_figures.py::test_a_block_colliding_with_an_arena_id_is_rejected
 always       tests/test_readme_figures.py::test_a_changed_live_verdict_makes_only_the_live_figure_stale
 always       tests/test_readme_figures.py::test_a_changed_pre_verdict_makes_only_the_pre_figure_stale
+always       tests/test_readme_figures.py::test_a_diagnostic_block_that_stops_printing_is_rejected
 always       tests/test_readme_figures.py::test_a_moved_board_number_makes_the_live_figure_stale
 always       tests/test_readme_figures.py::test_a_renamed_board_section_is_a_hard_failure
+always       tests/test_readme_figures.py::test_a_renamed_pre_breakdown_is_rejected
 always       tests/test_readme_figures.py::test_a_renamed_scored_block_makes_only_the_hero_stale
 always       tests/test_readme_figures.py::test_a_truecolor_png_carrying_trns_is_not_read_as_opaque
 always       tests/test_readme_figures.py::test_an_opaque_palette_png_is_read_as_opaque
+always       tests/test_readme_figures.py::test_an_unknown_printed_block_is_rejected
 always       tests/test_readme_figures.py::test_committed_figures_match_their_semantic_inputs
+always       tests/test_readme_figures.py::test_every_printed_block_is_accounted_for
 always       tests/test_readme_figures.py::test_no_committed_asset_leaks_an_absolute_path
 always       tests/test_readme_figures.py::test_the_glance_figure_is_not_stale_against_the_board
 always       tests/test_statistical_tests.py::test_exact_mcnemar_uses_discordant_pairs

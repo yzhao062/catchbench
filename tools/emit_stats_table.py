@@ -9,7 +9,7 @@ families and 101 contrasts, so a reader following the abstract's 0.048 claim int
 Usage::
 
     python tools/emit_stats_table.py             # rows plus the counts sentence
-    python tools/emit_stats_table.py --contrasts # the full 118-row matrix block for Appendix F
+    python tools/emit_stats_table.py --contrasts # the full contrast matrix block for Appendix F
     python tools/emit_stats_table.py --check     # exit 1 if the paper is stale, printing the delta
 
 ``--check`` needs ``--paper <dir>`` or the ``CATCHBENCH_PAPER_DIR`` environment variable.
@@ -71,9 +71,18 @@ _APPENDIX = "09_appendix.tex"
 _BENCHMARK = "03_benchmark.tex"
 _STATS_SECTION = (r"\label{app:stats}", r"\label{tab:stat-families}")
 
+# One wrapped sentence, never two paragraphs: horizontal whitespace, or a single line break.
+_PROSE_GAP = r"(?:[ \t]+|[ \t]*\r?\n[ \t]*)"
+
 _PATTERNS = {
     _BENCHMARK: (
-        (r"([\w-]+)\s+comparison families are declared", "families", "families declared"),
+        # Was "N comparison families are declared", which stopped being true when one family
+        # arrived a wave after the rest. The clause moved; the count it pins did not. The gap
+        # spans a line wrap because the sentence wraps, and no more than that: ``\s+`` also
+        # spans a blank line, which would let the checker certify a count statement that a
+        # paragraph break had split into two sentences the reader never sees as one.
+        (rf"registry to ([\w-]+){_PROSE_GAP}comparison{_PROSE_GAP}families",
+         "families", "families declared"),
         (r"all (\d+) reported contrasts", "total", "reported contrasts"),
     ),
     _APPENDIX: (
@@ -227,7 +236,7 @@ def contrasts(data: dict) -> str:
         first = claims[0]
         # One metric per family in every family but localization_exec_position, which runs the same
         # pair on Top-1, Top-3, and MRR. Naming the metric in the header where it is constant keeps
-        # 115 rows clean; where it is not, the metric goes on the row, because three rows reading
+        # most rows clean; where it is not, the metric goes on the row, because three rows reading
         # "exec-rank (sup.) vs position" with three different numbers name nothing.
         metrics = {claim["metric"] for claim in claims}
         shared = _tex(sorted(metrics)[0]) if len(metrics) == 1 else "metric on each row"
@@ -410,7 +419,7 @@ def main() -> int:
     parser.add_argument("--check", action="store_true",
                         help="verify the paper's counts and family rows instead of printing them")
     parser.add_argument("--contrasts", action="store_true",
-                        help="print the full 118-row contrast matrix block for the appendix")
+                        help="print the full contrast matrix block for the appendix")
     parser.add_argument("--paper", default=os.environ.get("CATCHBENCH_PAPER_DIR"),
                         help="paper source directory (or set CATCHBENCH_PAPER_DIR)")
     args = parser.parse_args()
@@ -432,8 +441,9 @@ def main() -> int:
     print(r"\midrule")
     print(f"Total & {n['total']} & \\\\")
     print()
-    print(f"% {_BENCHMARK} prose: \"{_NUMBER_WORDS.get(n['families'], n['families'])} comparison "
-          f"families are declared\" and \"all {n['total']} reported contrasts\".")
+    print(f"% {_BENCHMARK} prose: \"registry to "
+          f"{_NUMBER_WORDS.get(n['families'], n['families'])} comparison families\" and "
+          f"\"all {n['total']} reported contrasts\".")
     return 0
 
 

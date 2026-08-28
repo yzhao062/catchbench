@@ -34,6 +34,27 @@ H_LIVE_TAU = "[LIVE] live_streaming :: tau"
 BOARD_HEADER = re.compile(r"^\[(PRE|LIVE|POST)\]\s+(\S+)\s+::\s+(\S+)$")
 METHOD_ROW = re.compile(r"^\s{2}(.+?)\s{2,}[-+]?(?:\d+(?:\.\d*)?|\.\d+)")
 
+# Blocks the runner scores and prints that are not part of the competitive arena. Gold v2 is an
+# admissibility diagnostic: its rows are a matched floor, six construction controls, and two
+# semantic oracles, and the registry declares no contrast over it. Counting it would put
+# construction controls into the entrant total and place a board that establishes nothing beside
+# boards that do. It joins the arena when it carries registered contrasts and competitive entrants,
+# at which point this set, ``_BOARDS`` in tools/emit_boards_table.py, and the paper's board and
+# entrant counts all move together. Removing it here alone would produce a board with no row.
+#
+# The identity is the whole header, not the board id. An id-only set excludes anything that
+# reuses the id, so a block printed as ``[POST] gold_v2_namedvalue :: some_other_corpus`` would
+# be dropped from every count without anyone deciding that. Two blocks already share the id
+# ``pre_over_privilege``, so id collision is a shape this board actually has.
+#
+# What this set does not reach: ``check_partition`` attributes a contrast to a board through its
+# family, so a Gold v2 contrast filed into a family an arena board already covers is attributed to
+# that board while the block stays excluded here. Closing that needs per-claim board ownership in
+# the registry, which the schema does not carry. ``test_every_printed_block_is_accounted_for``
+# below covers the case this set is actually for, a new block appearing with nobody deciding
+# whether it competes.
+DIAGNOSTIC_HEADERS = frozenset({"[POST] gold_v2_namedvalue :: tau-bench-gold-v2"})
+
 HERO_HEADER = re.compile(r"^\[(PRE|LIVE|POST)\]\s+([^:]+?)\s+::\s+(.+)$", re.MULTILINE)
 HERO_PREFIX_DECLARATION = "streaming prefixes [25%, 50%, 75%, 100%]"
 
@@ -120,7 +141,8 @@ def parse_board(path: Path | str = DEFAULT_BOARD) -> BoardFacts:
         raise BoardDataError("Gold fault counts do not reconcile with the Gold total")
 
     headers = [(index, match) for index, line in enumerate(lines)
-               if (match := BOARD_HEADER.fullmatch(line))]
+               if (match := BOARD_HEADER.fullmatch(line))
+               and match.group(0).strip() not in DIAGNOSTIC_HEADERS]
     entrants: set[str] = set()
     for index, _ in headers:
         for row in lines[index + 2:]:
@@ -436,7 +458,16 @@ def _live_threshold_claims(
     threshold: float,
     stats_path: Path | str = DEFAULT_STATS,
 ) -> dict[str, dict[str, list[dict[str, str] | None]]]:
-    """Registered method-versus-0.70 claims, with absent cells left as point estimates."""
+    """Registered method-versus-0.70 claims, with absent cells left as point estimates.
+
+    Each cell carries which side of the bar its estimate falls on. The bar families are two-sided,
+    so a separation says the cell differs from 0.70 without saying which way, and a caller that
+    wants to name a direction has to read it from the estimate. Carrying it here rather than in the
+    caller puts it inside the figure payload, so a figure whose subtitle names a side goes stale
+    when a side moves. A subtitle that hardcoded the side was how a nine-cell two-sided result was
+    rendered as nine cells above the bar, with the asset checker passing because the image matched
+    the generator that produced it.
+    """
 
     path = Path(stats_path)
     by_id = _registered_claims(path)
@@ -476,8 +507,14 @@ def _live_threshold_claims(
                     raise BoardDataError(
                         f"{path} claim {claim_id!r} has unknown verdict {raw!r}"
                     )
+                difference = estimate.get("difference_a_minus_b")
+                if not isinstance(difference, (int, float)):
+                    raise BoardDataError(
+                        f"{path} claim {claim_id!r} carries no numeric difference"
+                    )
                 cells.append({"claim_id": claim_id, "family": expected_family,
-                              "verdict": verdict})
+                              "verdict": verdict,
+                              "side": "above" if difference > 0 else "below"})
             out[corpus][method] = cells
     return out
 
@@ -496,6 +533,7 @@ def scored_blocks(board_path: Path | str = DEFAULT_BOARD) -> list[str]:
         f"{phase}|{board_id.strip()}|{corpus.strip()}"
         for phase, board_id, corpus in HERO_HEADER.findall(board)
         if corpus.strip() != "F1 by source"
+        and f"[{phase}] {board_id.strip()} :: {corpus.strip()}" not in DIAGNOSTIC_HEADERS
     )
 
 

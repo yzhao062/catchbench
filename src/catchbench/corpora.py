@@ -41,8 +41,17 @@ class CorpusRevisionError(RuntimeError):
     """The runner cannot prove that it will score the recorded corpus revisions."""
 
 
-def verify_corpus_heads(api: Any = None) -> dict[str, str]:
-    """Resolve every dataset head and refuse to score if it differs from the board record."""
+def _selected_corpora(names: set[str] | None = None) -> tuple[CorpusRevision, ...]:
+    if names is None:
+        return CORPUS_REVISIONS
+    unknown = names - {corpus.name for corpus in CORPUS_REVISIONS}
+    if unknown:
+        raise ValueError(f"unknown corpus name(s): {', '.join(sorted(unknown))}")
+    return tuple(corpus for corpus in CORPUS_REVISIONS if corpus.name in names)
+
+
+def verify_corpus_heads(api: Any = None, names: set[str] | None = None) -> dict[str, str]:
+    """Resolve selected dataset heads and refuse to score if one differs from the board record."""
     if api is None:
         try:
             from huggingface_hub import HfApi
@@ -54,7 +63,7 @@ def verify_corpus_heads(api: Any = None) -> dict[str, str]:
 
     resolved: dict[str, str] = {}
     errors = []
-    for corpus in CORPUS_REVISIONS:
+    for corpus in _selected_corpora(names):
         try:
             actual = str(api.dataset_info(corpus.repo_id, revision="main").sha)
         except Exception as exc:
@@ -79,7 +88,11 @@ def verify_corpus_heads(api: Any = None) -> dict[str, str]:
 def revision_header(revisions: dict[str, str] | None = None) -> str:
     """One board-header line recording the exact population revisions being scored."""
     revisions = revisions or {corpus.name: corpus.revision for corpus in CORPUS_REVISIONS}
-    cells = [f"{corpus.name}={revisions[corpus.name]}" for corpus in CORPUS_REVISIONS]
+    cells = [
+        f"{corpus.name}={revisions[corpus.name]}"
+        for corpus in CORPUS_REVISIONS
+        if corpus.name in revisions
+    ]
     return "Corpus revisions :: " + " | ".join(cells)
 
 
@@ -136,10 +149,10 @@ def _whoandwhen_cached_revisions() -> set[str]:
     return revisions
 
 
-def verify_pinned_fetches() -> None:
-    """Check that each loader used a pinned Hub call, or a verified Who&When local snapshot."""
+def verify_pinned_fetches(names: set[str] | None = None) -> None:
+    """Check that each selected loader used a pinned Hub call or a verified local snapshot."""
     errors = []
-    for corpus in CORPUS_REVISIONS:
+    for corpus in _selected_corpora(names):
         calls = {name for repo_id, name in _PINNED_FETCHES if repo_id == corpus.repo_id}
         if corpus.name == "Who&When" and not calls:
             cached = _whoandwhen_cached_revisions()

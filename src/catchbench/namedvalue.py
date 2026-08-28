@@ -19,9 +19,10 @@ import copy
 import json
 import random
 import re
-from collections import defaultdict
+import statistics as st
+from collections import Counter, defaultdict
 from dataclasses import dataclass, field
-from typing import Any, Dict, List, Optional, Sequence, Tuple
+from typing import Any, Dict, List, Mapping, Optional, Sequence, Tuple
 
 from catchbench import _reuse  # noqa: F401  side effect: sys.path for grade + auditable
 
@@ -420,7 +421,14 @@ class Pair:
 
 def build_corpus(graphs: Sequence[ValueGraph], seed: int = 0) -> List[Pair]:
     """Paired corpus: alternate fault kind across eligible runs so the label is the fault, not
-    the run. Deterministic under ``seed``."""
+    the run. Deterministic under ``seed``.
+
+    Use this for a corpus whose label is the fault kind. It is the wrong builder for a
+    single-kind board: alternating the try-order and stopping at the first success means a run
+    eligible for both kinds is assigned one of them, so filtering the result down to one kind
+    silently drops the runs that went the other way. ``build_single_kind_corpus`` is the builder
+    for that case.
+    """
     rng = random.Random(seed)
     pool = donor_pool(graphs)
     pairs: List[Pair] = []
@@ -434,3 +442,409 @@ def build_corpus(graphs: Sequence[ValueGraph], seed: int = 0) -> List[Pair]:
                 pairs.append(Pair(g, inj_graph, label))
                 break
     return pairs
+
+
+def build_single_kind_corpus(
+    graphs: Sequence[ValueGraph], kind: str, seed: int = 0
+) -> List[Pair]:
+    """Paired corpus of one fault kind, over every run that kind is eligible for.
+
+    A board that scores one kind declares its population by that kind's eligibility and by
+    nothing else. Building the mixed corpus and filtering it does not produce that population:
+    it lost two of the 614 dropped-eligible runs to stale injections chosen by graph-enumeration
+    parity, a rule with no bearing on what dropped grounding is. Deterministic under ``seed``.
+    """
+    if kind not in ("stale", "dropped"):
+        raise ValueError(f"unknown fault kind: {kind}")
+    rng = random.Random(seed)
+    pool = donor_pool(graphs) if kind == "dropped" else None
+    pairs: List[Pair] = []
+    for g in graphs:
+        res = (inject_stale(g, rng) if kind == "stale"
+               else inject_dropped(g, rng, pool))
+        if res is not None:
+            inj_graph, label = res
+            pairs.append(Pair(g, inj_graph, label))
+    return pairs
+
+
+# --- Gold v2 scored task ----------------------------------------------------------------------
+
+GOLD_V2_SEEDS = (0, 1, 2, 3, 4)
+GOLD_V2_TOP1_MARGIN = 0.05
+GOLD_V2_AUC_BAND = (0.45, 0.55)
+_T975_DF4 = 2.776
+_GRAPH_CACHE: Optional[List[ValueGraph]] = None
+
+
+def corpus_stats(graphs: Sequence[ValueGraph]) -> dict:
+    """Corpus summaries used by process controls. They are computed on the clean substrate."""
+    field_len: Dict[str, list] = defaultdict(list)
+    field_charclass: Dict[str, Counter] = defaultdict(Counter)
+    tool_keys: Dict[str, Counter] = defaultdict(Counter)
+    key_count = Counter()
+    for graph in graphs:
+        for consumption in graph.consumptions:
+            field_len[consumption.key].append(len(consumption.value))
+            field_charclass[consumption.key][_charclass(consumption.value)] += 1
+            key_count[consumption.key] += 1
+        for event in graph.events:
+            if event.kind == "call":
+                tool_keys[event.tool][tuple(sorted(event.args))] += 1
+    return {
+        "field_len": {
+            key: (st.mean(values), st.pstdev(values) or 1.0)
+            for key, values in field_len.items()
+        },
+        "field_charclass": field_charclass,
+        "tool_keys": tool_keys,
+        "key_count": key_count,
+    }
+
+
+def _charclass(value: str) -> tuple:
+    return (
+        any(char.isdigit() for char in value),
+        any(char.isalpha() for char in value),
+        any(not char.isalnum() for char in value),
+    )
+
+
+def _ctl_format_outlier(graph: ValueGraph, consumption: Consumption, stats: dict) -> float:
+    mu, sd = stats["field_len"].get(consumption.key, (len(consumption.value), 1.0))
+    z_score = abs(len(consumption.value) - mu) / (sd or 1.0)
+    classes = stats["field_charclass"].get(consumption.key, Counter())
+    total = sum(classes.values()) or 1
+    rarity = 1.0 - classes.get(_charclass(consumption.value), 0) / total
+    return z_score + rarity
+
+
+def _ctl_schema_shape(graph: ValueGraph, consumption: Consumption, stats: dict) -> float:
+    event = graph.events[consumption.event_idx]
+    observed = stats["tool_keys"].get(event.tool, Counter())
+    total = sum(observed.values()) or 1
+    return 1.0 - observed.get(tuple(sorted(event.args)), 0) / total
+
+
+def _ctl_position_prior(graph: ValueGraph, consumption: Consumption, stats: dict) -> float:
+    return consumption.event_idx / max(len(graph.events) - 1, 1)
+
+
+def _ctl_field_prior(graph: ValueGraph, consumption: Consumption, stats: dict) -> float:
+    return -stats["key_count"].get(consumption.key, 0)
+
+
+def _ctl_tool_prior(graph: ValueGraph, consumption: Consumption, stats: dict) -> float:
+    event = graph.events[consumption.event_idx]
+    return -sum(stats["tool_keys"].get(event.tool, Counter()).values())
+
+
+def _ctl_edit_distance(graph: ValueGraph, consumption: Consumption, stats: dict) -> float:
+    neighbours = [
+        other.value
+        for other in graph.consumptions
+        if other.key == consumption.key and other.value != consumption.value
+    ]
+    return min((_lev(consumption.value, other) for other in neighbours), default=0)
+
+
+def _orc_superseded(graph: ValueGraph, consumption: Consumption, stats: dict) -> float:
+    """Return one when the consumption carries a field value superseded earlier in the run."""
+    for observations in graph.entities.values():
+        for (_old_idx, old_map), (new_idx, new_map) in zip(observations, observations[1:]):
+            if consumption.event_idx <= new_idx:
+                continue
+            for path, old_values in old_map.items():
+                new_values = new_map.get(path)
+                if new_values and consumption.value in (old_values - new_values):
+                    return 1.0
+    return 0.0
+
+
+def _orc_provenance(graph: ValueGraph, consumption: Consumption, stats: dict) -> float:
+    return 1.0 if consumption.provenance == UNGROUNDED else 0.0
+
+
+GOLD_V2_CONTROLS = (
+    ("format-outlier", _ctl_format_outlier),
+    ("schema-shape", _ctl_schema_shape),
+    ("position-prior", _ctl_position_prior),
+    ("field-prior", _ctl_field_prior),
+    ("tool-prior", _ctl_tool_prior),
+    ("edit-distance", _ctl_edit_distance),
+)
+GOLD_V2_ORACLES = (
+    ("superseded-value", _orc_superseded),
+    ("provenance", _orc_provenance),
+)
+
+
+def _eligible_pool(graph: ValueGraph, kind: str) -> List[Consumption]:
+    """Exact clean-run candidate pool used by the injector for one fault kind."""
+    if kind == "dropped":
+        return graph.eligible_dropped()
+    seen = set()
+    pool = []
+    for site in graph.eligible_stale():
+        consumption = site["consumption"]
+        identity = (consumption.event_idx, consumption.path)
+        if identity not in seen:
+            seen.add(identity)
+            pool.append(consumption)
+    return pool
+
+
+def _pools_for(pairs: Sequence[Pair]) -> List[List[tuple]]:
+    """Candidate site identities from each clean graph, never from its injected copy."""
+    pools = []
+    for pair in pairs:
+        pool = [(c.event_idx, c.path) for c in _eligible_pool(pair.clean, pair.label.kind)]
+        target = (pair.label.event_idx, pair.label.path)
+        if target not in pool:
+            pool.append(target)
+        pools.append(pool)
+    return pools
+
+
+def _tie_aware_top1(pool_scores: Sequence[float], target_idx: int) -> float:
+    """Expected Top-1 under uniform tie breaking."""
+    target_score = pool_scores[target_idx]
+    greater = sum(score > target_score for score in pool_scores)
+    tied = sum(score == target_score for score in pool_scores)
+    return (1.0 / tied) if greater == 0 else 0.0
+
+
+def _top1_and_floor(pairs: Sequence[Pair], score_fn, stats: dict,
+                    pools: Sequence[Sequence[tuple]]) -> tuple[float, float]:
+    """Tie-aware site Top-1 and its per-run eligibility-matched random floor."""
+    hits, floors = [], []
+    for pair, pool in zip(pairs, pools):
+        if not pool:
+            continue
+        by_site = {(c.event_idx, c.path): c for c in pair.injected.consumptions}
+        scored = [
+            (site, score_fn(pair.injected, by_site[site], stats))
+            for site in pool
+            if site in by_site
+        ]
+        if not scored:
+            continue
+        target = (pair.label.event_idx, pair.label.path)
+        target_idx = next((i for i, (site, _score) in enumerate(scored) if site == target), None)
+        hits.append(
+            _tie_aware_top1([score for _site, score in scored], target_idx)
+            if target_idx is not None
+            else 0.0
+        )
+        floors.append(1.0 / len(scored))
+    return (st.mean(hits) if hits else 0.0), (st.mean(floors) if floors else 0.0)
+
+
+def _run_auc(pairs: Sequence[Pair], score_fn, stats: dict) -> float:
+    """Clean-versus-injected ROC-AUC from each run's maximum consumption score."""
+    injected_scores, clean_scores = [], []
+    for pair in pairs:
+        injected_scores.append(max(
+            (score_fn(pair.injected, c, stats) for c in pair.injected.consumptions),
+            default=0.0,
+        ))
+        clean_scores.append(max(
+            (score_fn(pair.clean, c, stats) for c in pair.clean.consumptions),
+            default=0.0,
+        ))
+    if not injected_scores or not clean_scores:
+        return 0.5
+    wins = ties = 0
+    for injected_score in injected_scores:
+        for clean_score in clean_scores:
+            if injected_score > clean_score:
+                wins += 1
+            elif injected_score == clean_score:
+                ties += 1
+    return (wins + 0.5 * ties) / (len(injected_scores) * len(clean_scores))
+
+
+def _cached_graphs() -> List[ValueGraph]:
+    global _GRAPH_CACHE
+    if _GRAPH_CACHE is None:
+        _GRAPH_CACHE = load_graphs()
+    return _GRAPH_CACHE
+
+
+class GoldNamedValue:
+    """POST / Gold v2 task over explicit named-value flow in tau-bench trajectories.
+
+    Tau-bench does not support a scored stale-state arm: it has 16 sites in only 6 runs. The board
+    therefore scores dropped grounding only. Top-1 localizes the changed argument leaf within the
+    clean eligible pool, while run AUC tests clean-versus-injected separation by the same scorer.
+    """
+
+    task_id = "gold_v2_namedvalue"
+    pillar = "POST"
+    granularity = "value"
+    dataset = "tau-bench-gold-v2"
+
+    def __init__(self, seed: int = 0) -> None:
+        self.seed = seed
+        self._loaded = False
+        self._score_cache: Dict[str, Mapping[str, float]] = {}
+
+    def setup(self) -> None:
+        if self._loaded:
+            return
+        self.graphs = _cached_graphs()
+        self.stats = corpus_stats(self.graphs)
+        self.stale_sites = sum(len(graph.eligible_stale()) for graph in self.graphs)
+        self.stale_runs = sum(bool(graph.eligible_stale()) for graph in self.graphs)
+        self.dropped_sites = sum(len(graph.eligible_dropped()) for graph in self.graphs)
+        self.dropped_runs = sum(bool(graph.eligible_dropped()) for graph in self.graphs)
+        self.pairs = build_single_kind_corpus(self.graphs, "dropped", seed=self.seed)
+        self.pools = _pools_for(self.pairs)
+        self._loaded = True
+
+    def score(self, method_id: str, score_fn) -> Mapping[str, float]:
+        self.setup()
+        if method_id not in self._score_cache:
+            top1, _floor = _top1_and_floor(self.pairs, score_fn, self.stats, self.pools)
+            self._score_cache[method_id] = {
+                "top1": float(top1),
+                "run_auc": float(_run_auc(self.pairs, score_fn, self.stats)),
+            }
+        return self._score_cache[method_id]
+
+    def matched_floor(self) -> float:
+        self.setup()
+        return float(st.mean(1.0 / len(pool) for pool in self.pools if pool))
+
+    def corpus_line(self) -> str:
+        self.setup()
+        return (
+            f"{self.dataset}: {len(self.graphs)} tau-bench named-value runs; "
+            f"{len(self.pairs)} dropped-grounding clean/injected pairs at seed {self.seed}, "
+            f"from {self.dropped_sites} eligible sites in {self.dropped_runs} runs. "
+            f"Stale-state has {self.stale_sites} sites in {self.stale_runs} runs and is not scored."
+        )
+
+
+class _GoldV2Floor:
+    method_id = "random (matched floor)"
+    supports = {"gold_v2_namedvalue"}
+    category = "floor"
+
+    def evaluate(self, task: GoldNamedValue) -> Mapping[str, float]:
+        return {"top1": task.matched_floor(), "run_auc": 0.5}
+
+
+class _GoldV2ScoreMethod:
+    def __init__(self, method_id: str, score_fn, category: str) -> None:
+        self.method_id = method_id
+        self._score_fn = score_fn
+        self.category = category
+        self.supports = {"gold_v2_namedvalue"}
+
+    def evaluate(self, task: GoldNamedValue) -> Mapping[str, float]:
+        return task.score(self.method_id, self._score_fn)
+
+
+def gold_v2_methods() -> list:
+    """Matched floor, construction-only process controls, and fault-definitional oracles."""
+    methods = [_GoldV2Floor()]
+    methods.extend(
+        _GoldV2ScoreMethod(name, score_fn, "process control")
+        for name, score_fn in GOLD_V2_CONTROLS
+    )
+    methods.extend(
+        _GoldV2ScoreMethod(name, score_fn, "fault oracle")
+        for name, score_fn in GOLD_V2_ORACLES
+    )
+    return methods
+
+
+def _seed_interval(values: Sequence[float]) -> tuple[float, float]:
+    """Mean and 95% t half-width over the fixed five injection seeds."""
+    if len(values) != len(GOLD_V2_SEEDS):
+        raise ValueError("Gold v2 seed intervals require the fixed five-seed panel")
+    return st.mean(values), _T975_DF4 * st.stdev(values) / (len(values) ** 0.5)
+
+
+def gold_v2_breakdown(task: GoldNamedValue, methods: Sequence) -> str:
+    """Five-seed fixed-margin diagnostic, with process controls separate from semantic oracles.
+
+    Meeting the margins is not a full no-artifact-leakage PASS. Positive-control power currently
+    covers three of six controls on Top-1 and none on run AUC, so the bar item remains undetermined.
+    """
+    task.setup()
+    scored = [method for method in methods if hasattr(method, "_score_fn")]
+    per_method = {method.method_id: {"gap": [], "auc": []} for method in scored}
+    pair_counts = []
+    for seed in GOLD_V2_SEEDS:
+        if seed == task.seed:
+            pairs, pools = task.pairs, task.pools
+        else:
+            pairs = build_single_kind_corpus(task.graphs, "dropped", seed=seed)
+            pools = _pools_for(pairs)
+        pair_counts.append(len(pairs))
+        for method in scored:
+            if seed == task.seed:
+                metrics = method.evaluate(task)
+                top1, auc = metrics["top1"], metrics["run_auc"]
+                floor = task.matched_floor()
+            else:
+                top1, floor = _top1_and_floor(
+                    pairs, method._score_fn, task.stats, pools
+                )
+                auc = _run_auc(pairs, method._score_fn, task.stats)
+            per_method[method.method_id]["gap"].append(float(top1 - floor))
+            per_method[method.method_id]["auc"].append(float(auc))
+
+    lines = [
+        "\nGold v2 named-value fixed-margin diagnostic "
+        f"({len(GOLD_V2_SEEDS)} injection seeds, dropped grounding, pair counts {pair_counts}):",
+        f"  {'process control':26s}{'Top-1 - floor':>22s}{'run AUC':>20s}  fixed margin",
+    ]
+    fixed_margin_pass = True
+    for method in (item for item in scored if item.category == "process control"):
+        gap_mean, gap_half = _seed_interval(per_method[method.method_id]["gap"])
+        auc_mean, auc_half = _seed_interval(per_method[method.method_id]["auc"])
+        passes = (
+            abs(gap_mean) + gap_half <= GOLD_V2_TOP1_MARGIN
+            and GOLD_V2_AUC_BAND[0] <= auc_mean - auc_half
+            and auc_mean + auc_half <= GOLD_V2_AUC_BAND[1]
+        )
+        fixed_margin_pass &= passes
+        lines.append(
+            f"  {method.method_id:26s}"
+            f"{f'{gap_mean:+.3f}+/-{gap_half:.3f}':>22s}"
+            f"{f'{auc_mean:.3f}+/-{auc_half:.3f}':>20s}  "
+            f"{'PASS' if passes else 'FAIL'}"
+        )
+
+    lines.extend([
+        "",
+        f"  {'fault oracle':26s}{'Top-1 - floor':>22s}{'run AUC':>20s}  role",
+    ])
+    for method in (item for item in scored if item.category == "fault oracle"):
+        gap_mean, gap_half = _seed_interval(per_method[method.method_id]["gap"])
+        auc_mean, auc_half = _seed_interval(per_method[method.method_id]["auc"])
+        role = "matching oracle" if method.method_id == "provenance" else "other-fault oracle"
+        lines.append(
+            f"  {method.method_id:26s}"
+            f"{f'{gap_mean:+.3f}+/-{gap_half:.3f}':>22s}"
+            f"{f'{auc_mean:.3f}+/-{auc_half:.3f}':>20s}  {role}"
+        )
+
+    lines.extend([
+        "",
+        "  Fixed-margin panel: "
+        + ("PASS" if fixed_margin_pass else "FAIL")
+        + f" under Top-1 gap [{-GOLD_V2_TOP1_MARGIN:+.2f}, {GOLD_V2_TOP1_MARGIN:+.2f}] "
+        f"and run-AUC CI [{GOLD_V2_AUC_BAND[0]:.2f}, {GOLD_V2_AUC_BAND[1]:.2f}].",
+        "  No-artifact-leakage bar: UNDETERMINED. Positive-control power is demonstrated for "
+        "format-outlier, schema-shape, and position-prior on Top-1 only. The other three controls "
+        "and every run-AUC path still lack a planted-artifact power test.",
+        "  Registry status: every Gold v2 value above is a displayed diagnostic cell. "
+        "tools/statistical_tests_results.json registers no Gold v2 contrast.",
+        f"  Stale-state status: NOT SCORED. The full corpus has {task.stale_sites} eligible sites "
+        f"in {task.stale_runs} runs, which is inadequate for a board.",
+    ])
+    return "\n".join(lines)

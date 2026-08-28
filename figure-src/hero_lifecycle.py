@@ -60,6 +60,7 @@ def fact_check(board_path: Path, readme_path: Path) -> dict[str, int]:
         (phase, board_id.strip(), corpus.strip())
         for phase, board_id, corpus in headers
         if corpus.strip() != "F1 by source"
+        and f"[{phase}] {board_id.strip()} :: {corpus.strip()}" not in bd.DIAGNOSTIC_HEADERS
     ]
     counts = Counter(phase for phase, _, _ in scored)
     expected = {"PRE": 1, "LIVE": 3, "POST": 5}

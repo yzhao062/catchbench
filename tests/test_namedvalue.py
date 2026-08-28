@@ -130,6 +130,24 @@ def test_corpus_is_deterministic_under_seed():
     assert [(p.label.kind, p.label.event_idx, p.label.injected) for p in a] == \
            [(p.label.kind, p.label.event_idx, p.label.injected) for p in b]
 
+    # The single-kind builder carries the boards, so pin its determinism too, and pin that it
+    # yields one kind only. The mixed builder above stays public and stays covered because
+    # ``catchbench`` is released and a caller may import it for a two-kind substrate.
+    c = nv.build_single_kind_corpus(graphs, "dropped", seed=7)
+    d = nv.build_single_kind_corpus(graphs, "dropped", seed=7)
+    assert [(p.label.kind, p.label.event_idx, p.label.injected) for p in c] == \
+           [(p.label.kind, p.label.event_idx, p.label.injected) for p in d]
+    assert all(p.label.kind == "dropped" for p in c)
+
+    task = nv.GoldNamedValue(seed=7)
+    methods = nv.gold_v2_methods()
+    assert task.task_id == "gold_v2_namedvalue" and task.granularity == "value"
+    assert all(task.task_id in method.supports for method in methods)
+    assert {method.method_id for method in methods} == {
+        "random (matched floor)", "format-outlier", "schema-shape", "position-prior",
+        "field-prior", "tool-prior", "edit-distance", "superseded-value", "provenance",
+    }
+
 
 def test_nested_argument_leaves_become_consumptions():
     """Spec section 3: values nested in argument dicts/lists are consumptions too, addressed by
@@ -266,7 +284,34 @@ def test_constant_score_matches_analytic_floors():
     constant_score = lambda _graph, _consumption, _stats: 0.0
 
     top1, floor = adm.top1_and_floor([pair], constant_score, {}, [sites])
+    board_top1, board_floor = nv._top1_and_floor([pair], constant_score, {}, [sites])
 
     assert top1 == pytest.approx(floor)
     assert floor == pytest.approx(1.0 / len(sites))
     assert adm.run_auc([pair], constant_score, {}) == pytest.approx(0.5)
+    assert board_top1 == pytest.approx(board_floor)
+    assert board_floor == pytest.approx(floor)
+    assert nv._run_auc([pair], constant_score, {}) == pytest.approx(0.5)
+
+
+def test_gold_v2_scores_every_dropped_eligible_run() -> None:
+    """The dropped board's population is dropped eligibility and nothing else.
+
+    An earlier version built the mixed-fault corpus and filtered it to dropped pairs. That
+    builder alternates the try-order by graph-enumeration parity and stops at the first success,
+    so a run eligible for both kinds could be assigned a stale injection and then be filtered
+    away. It cost the board two of 614 runs by a rule with no bearing on dropped grounding.
+    """
+    from catchbench.namedvalue import GoldNamedValue
+
+    task = GoldNamedValue(seed=0)
+    task.setup()
+    assert len(task.pairs) == task.dropped_runs
+    assert all(pair.label.kind == "dropped" for pair in task.pairs)
+
+
+def test_single_kind_corpus_rejects_an_unknown_kind() -> None:
+    from catchbench.namedvalue import build_single_kind_corpus
+
+    with pytest.raises(ValueError, match="unknown fault kind"):
+        build_single_kind_corpus([], "typo")

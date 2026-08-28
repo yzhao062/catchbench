@@ -28,12 +28,30 @@ it is represented by one of these families.
 ``live_swegym_auditable_ecod_later_auc`` (3 tests)
     Auditable against ECOD at the remaining three SWE-Gym prefixes. The first prefix belongs to the
     preceding first-prefix family and is not counted twice.
+``live_swegym_threshold_auc`` (20 tests)
+    Every nonrandom SWE-Gym method-by-prefix cell against the fixed 0.70 bar. Random is a displayed
+    floor. Adjusting all 20 cells protects selection of the first crossing and of the best displayed
+    cell. The test is two-sided, and the family declares no direction. An earlier version tested the
+    positive tail alone, which was the tail the displayed cells already sat on. A one-sided test
+    whose tail is picked after the estimates are known is not prespecified whatever the docstring
+    says, so both bar families now ask whether a cell differs from the bar and report which way.
+
+    This family is exploratory, and two-sidedness does not change that. It was added after its
+    scores were examined, and Holm controls selection among these 20 cells conditional on the
+    family rather than restoring confirmatory error control to a family chosen by looking. Nor is
+    the switch to two-sided uniformly more conservative than what it replaced. It is for the six
+    above-bar cells, whose p-values doubled. For the three below-bar cells it admits an alternative
+    the positive-tail family never tested: dep-span at 25% held a greater-than p of 1 and now holds
+    a two-sided raw p of 4.7e-33. The count rose from six to nine because of those three, so the
+    honest summary is that the family asks more questions rather than that it asks the same ones
+    more strictly.
 ``live_tau_auditable_ecod_auc`` (4 tests)
     Auditable against ECOD at each tau-bench prefix. This is the four-cell within-corpus curve claim.
 ``live_tau_threshold_auc`` (20 tests)
-    Every nonrandom tau-bench method-by-prefix cell against the fixed 0.70 bar. Random is a declared
-    floor, not a candidate for the paper's "best reported cell" claim. Adjusting all 20 cells makes
-    the selected-best comparison reproducible.
+    Every nonrandom tau-bench method-by-prefix cell against the fixed 0.70 bar, two-sided for the
+    reason given above. Random is a declared floor rather than a candidate for the paper's "best
+    reported cell" claim. Adjusting all 20 cells makes the selected-best comparison reproducible.
+    The same eighteen cells separate under either tail rule, so this change moves no tau number.
 ``gold_localization_top1`` (3 tests)
     Full-pool max-span on stale-state against its analytic floor; full-pool has-dep on dropped
     grounding against its analytic floor in the inversion direction; and matched-pool PyGOD against
@@ -358,9 +376,17 @@ def single_delong(labels: Sequence[int], scores: Sequence[float], null: float) -
         z = math.copysign(math.inf, auc - null)
     log_p_less = float(special.log_ndtr(z))
     p_less = math.exp(max(log_p_less, math.log(sys.float_info.min)))
+    log_p_greater = float(special.log_ndtr(-z))
+    p_greater = math.exp(max(log_p_greater, math.log(sys.float_info.min)))
+    # Doubling the smaller tail is the two-sided p. Taken in log space because the far tail of a
+    # cell like dep-span at 0.364 underflows a float long before the doubling matters.
+    log_p_two_sided = min(0.0, math.log(2.0) + min(log_p_less, log_p_greater))
+    p_two_sided = math.exp(max(log_p_two_sided, math.log(sys.float_info.min)))
     return {
         "auc": auc, "null": null, "difference": auc - null, "se": se, "z": z,
         "p_less": p_less, "log_p_less": log_p_less,
+        "p_greater": p_greater, "log_p_greater": log_p_greater,
+        "p_two_sided": p_two_sided, "log_p_two_sided": log_p_two_sided,
         "interval_95": [auc - null - Z975 * se, auc - null + Z975 * se],
         "n_positive": n_pos, "n_negative": n_neg,
     }
@@ -1521,6 +1547,58 @@ def _live_claims(args: argparse.Namespace) -> list[dict]:
             swe[0.25]["full"], swe[0.25][other], labels, "separates_as_stated",
         ))
 
+    swe_separating = {
+        (0.25, "full"),
+        (0.25, "dep-span (online)"),
+        (0.50, "full"),
+        (0.50, "dep-span (online)"),
+        (0.75, "auditable (size+deps)"),
+        (0.75, "full"),
+        (0.75, "dep-span (online)"),
+        (1.00, "auditable (size+deps)"),
+        (1.00, "full"),
+    }
+    for prefix in PREFIXES:
+        for method in (
+            "size (flat)", "auditable (size+deps)", "full", "pyod (ECOD)",
+            "dep-span (online)",
+        ):
+            claim_id = f"live.swe.bar.{int(prefix * 100)}.{method}"
+            entry = swe[prefix][method]
+            result = single_delong(labels, entry["primary"], 0.70)
+            bootstrap = _stratified_auc_bootstrap(
+                labels, entry["primary"], None, args.bootstrap, _rng_for(claim_id, args.seed)
+            )
+            axes: dict[str, Any] = {
+                "run_sampling": {
+                    "axis": "labeled runs", "n": len(labels),
+                    "statistic": "single-curve DeLong variance",
+                },
+                "board_point_estimate": {
+                    "axis": "board scoring convention", "value": entry["board"],
+                },
+            }
+            if entry["per_seed_board"] is not None:
+                axes["cv_seed"] = _axis_summary(
+                    entry["per_seed_board"] - 0.70, "cross-validation split seed",
+                    "per-seed board AUC minus 0.70",
+                )
+            expected = (
+                "separates_as_stated"
+                if (prefix, method) in swe_separating
+                else "does_not_separate"
+            )
+            claims.append(_base_claim(
+                claim_id, "live_swegym_threshold_auc",
+                f"SWE-Gym {int(prefix * 100)}%: {method} vs 0.70", "roc_auc",
+                method, "fixed bar", result["auc"], 0.70, result["interval_95"],
+                "single-curve DeLong", "two-sided DeLong z test against 0.70",
+                {"z": result["z"], "se": result["se"],
+                 "log_p_raw": result["log_p_two_sided"],
+                 "n_positive": result["n_positive"], "n_negative": result["n_negative"]},
+                result["p_two_sided"], expected, 0, axes, bootstrap,
+            ))
+
     labels, tau = all_entries["tau"]
     for prefix in PREFIXES:
         claims.append(_auc_claim(
@@ -1564,10 +1642,10 @@ def _live_claims(args: argparse.Namespace) -> list[dict]:
                 claim_id, "live_tau_threshold_auc",
                 f"tau-bench {int(prefix * 100)}%: {method} vs 0.70", "roc_auc",
                 method, "fixed bar", result["auc"], 0.70, result["interval_95"],
-                "single-curve DeLong", "one-sided DeLong z test (less than 0.70)",
-                {"z": result["z"], "se": result["se"], "log_p_raw": result["log_p_less"],
+                "single-curve DeLong", "two-sided DeLong z test against 0.70",
+                {"z": result["z"], "se": result["se"], "log_p_raw": result["log_p_two_sided"],
                  "n_positive": result["n_positive"], "n_negative": result["n_negative"]},
-                result["p_less"], expected, -1, axes, bootstrap,
+                result["p_two_sided"], expected, 0, axes, bootstrap,
             ))
     return claims
 
@@ -1777,8 +1855,12 @@ FAMILY_DESCRIPTIONS = {
     "live_swegym_auditable_ecod_later_auc": (
         "Auditable against ECOD at the three later SWE-Gym prefixes."
     ),
+    "live_swegym_threshold_auc": (
+        "Exploratory family added after its scores were examined: twenty nonrandom SWE-Gym "
+        "method-prefix cells against 0.70, two-sided."
+    ),
     "live_tau_auditable_ecod_auc": "Auditable against ECOD at all four tau-bench prefixes.",
-    "live_tau_threshold_auc": "Twenty nonrandom tau method-prefix cells against 0.70.",
+    "live_tau_threshold_auc": "Twenty nonrandom tau method-prefix cells against 0.70, two-sided.",
     "gold_localization_top1": "Three primary Gold localization Top-1 claims.",
     "gold_attribution_auc": "Two Gold attribution features against chance.",
     "pre_rules_flag_all_f1": "Seven pooled rule-based PRE methods against flag-all.",
@@ -1798,6 +1880,7 @@ EXPECTED_FAMILY_SIZES = {
     "post_detection_auc": 7,
     "live_swegym_25_auc": 4,
     "live_swegym_auditable_ecod_later_auc": 3,
+    "live_swegym_threshold_auc": 20,
     "live_tau_auditable_ecod_auc": 4,
     "live_tau_threshold_auc": 20,
     "gold_localization_top1": 3,
@@ -1826,7 +1909,11 @@ def _finalize(claims: list[dict]) -> tuple[list[dict], list[dict]]:
             significant = value < ALPHA
             difference = claim["estimate"]["difference_a_minus_b"]
             stated_direction = claim["direction"]
-            correct_direction = difference * stated_direction > 0
+            # Direction 0 marks a family that states no direction. Its test is two-sided, so
+            # significance is the whole verdict and the estimate's sign is a reported detail.
+            correct_direction = (
+                stated_direction == 0 or difference * stated_direction > 0
+            )
             if significant and correct_direction:
                 verdict = "separates_as_stated"
             elif significant:

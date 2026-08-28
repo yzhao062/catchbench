@@ -201,3 +201,102 @@ def test_a_renamed_board_section_is_a_hard_failure(tmp_path):
 
     assert any("has no section '[PRE] pre_over_privilege :: F1 by source'" in problem
                for problem in problems)
+
+
+def _printed_headers(board_text: str) -> set[str]:
+    """Every block header the runner prints, as the full ``[PHASE] board :: corpus`` line."""
+    return {match.group(0).strip() for match in bd_header_lines(board_text)}
+
+
+def bd_header_lines(board_text: str):
+    sys.path.insert(0, str(ROOT / "figure-src"))
+    import board_data as bd
+
+    return bd.HERO_HEADER.finditer(board_text)
+
+
+def _declared_arena_headers() -> set[str]:
+    sys.path.insert(0, str(ROOT / "tools"))
+    import emit_boards_table as ebt
+
+    return {spec["header"] for spec in ebt._BOARDS}
+
+
+def _diagnostic_headers() -> set[str]:
+    sys.path.insert(0, str(ROOT / "figure-src"))
+    import board_data as bd
+
+    return set(bd.DIAGNOSTIC_HEADERS)
+
+
+PRE_BREAKDOWN_HEADER = "[PRE] pre_over_privilege :: F1 by source"
+
+
+def _unclassified(board_text: str) -> set[str]:
+    """Printed headers that are neither declared arena rows nor declared diagnostics."""
+    printed = _printed_headers(board_text)
+    return printed - _declared_arena_headers() - _diagnostic_headers() - {PRE_BREAKDOWN_HEADER}
+
+
+def test_every_printed_block_is_accounted_for():
+    """A new scored block must be classified as arena or diagnostic, never left to default.
+
+    ``DIAGNOSTIC_HEADERS`` subtracts from the counts every README figure and the paper print.
+    Subtracting is safe only while adding is deliberate: a block that appears and matches neither
+    the arena inventory nor the exclusion set would silently join the entrant total, which is the
+    ripple that cost this repository five review rounds.
+
+    Both sides are declared inventories of complete headers. The arena side reads
+    ``emit_boards_table._BOARDS``; an earlier version derived it from ``board_data.scored_blocks``,
+    which computes the arena from the same headers it was being checked against minus the exclusion
+    set, so every new block joined the arena by construction. The diagnostic side reads
+    ``board_data.DIAGNOSTIC_HEADERS``; the version after that one still reconstructed diagnostics by
+    board id, so a block reusing a diagnostic id was excluded by construction. Both mutations are
+    pinned below, because each of them passed a test that claimed to reject it.
+    """
+    board = (ROOT / "tests" / "golden" / "board.txt").read_text(encoding="utf-8")
+    assert not _unclassified(board), (
+        f"block(s) {sorted(_unclassified(board))} are printed but appear in neither "
+        f"emit_boards_table._BOARDS nor DIAGNOSTIC_HEADERS; decide which before any count moves"
+    )
+    assert _diagnostic_headers() <= _printed_headers(board), (
+        "DIAGNOSTIC_HEADERS names a block the runner no longer prints; a stale exclusion hides "
+        "nothing and reads as though it still does"
+    )
+
+
+def test_an_unknown_printed_block_is_rejected():
+    """The first mutation: a block nobody classified."""
+    board = (ROOT / "tests" / "golden" / "board.txt").read_text(encoding="utf-8")
+    appended = board + "\n[POST] surprise_board :: surprise_corpus\n  method  value\n"
+    assert _unclassified(appended) == {"[POST] surprise_board :: surprise_corpus"}
+
+
+def test_a_block_colliding_with_a_diagnostic_id_is_rejected():
+    """The second mutation: a new block reusing a declared diagnostic's board id."""
+    board = (ROOT / "tests" / "golden" / "board.txt").read_text(encoding="utf-8")
+    collided = board + "\n[POST] gold_v2_namedvalue :: surprise_corpus\n  method  value\n"
+    assert _unclassified(collided) == {"[POST] gold_v2_namedvalue :: surprise_corpus"}
+
+
+def test_a_block_colliding_with_an_arena_id_is_rejected():
+    """The third mutation: a new block reusing a declared arena row's board id."""
+    board = (ROOT / "tests" / "golden" / "board.txt").read_text(encoding="utf-8")
+    collided = board + "\n[POST] post_detection :: surprise_corpus\n  method  value\n"
+    assert _unclassified(collided) == {"[POST] post_detection :: surprise_corpus"}
+
+
+def test_a_renamed_pre_breakdown_is_rejected():
+    """The fourth mutation: the one header excluded by name stops matching that name."""
+    board = (ROOT / "tests" / "golden" / "board.txt").read_text(encoding="utf-8")
+    renamed = board.replace(PRE_BREAKDOWN_HEADER, "[PRE] pre_over_privilege :: F1 per source")
+    assert renamed != board
+    assert _unclassified(renamed) == {"[PRE] pre_over_privilege :: F1 per source"}
+
+
+def test_a_diagnostic_block_that_stops_printing_is_rejected():
+    """The fifth mutation: an exclusion that outlives the block it excludes."""
+    board = (ROOT / "tests" / "golden" / "board.txt").read_text(encoding="utf-8")
+    for header in _diagnostic_headers():
+        without = "\n".join(line for line in board.split("\n") if line.strip() != header)
+        assert not _diagnostic_headers() <= _printed_headers(without)

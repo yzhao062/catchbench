@@ -69,7 +69,7 @@ def save_web_png(fig, output: Path, figure_id: str, payload: dict[str, object], 
         if figure_id == "board_pre_source":
             provenance += "; tools/statistical_tests_results.json (verdict words only)"
         elif figure_id == "board_live_prefix":
-            provenance += "; tools/statistical_tests_results.json (threshold verdicts only)"
+            provenance += "; tools/statistical_tests_results.json (threshold verdicts and estimate sides)"
         metadata.add_text(bd.META_SOURCE, provenance)
         image.save(output, format="PNG", pnginfo=metadata, optimize=True, dpi=(dpi, dpi))
         width, height = image.size

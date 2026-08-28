@@ -20,8 +20,8 @@ from typing import Mapping, Protocol, Sequence, runtime_checkable
 class Task(Protocol):
     """One benchmark scenario: its data, its labels, and its metric.
 
-    ``pillar`` is "PRE", "LIVE", or "POST"; ``granularity`` is "run", "step", "edge", or
-    "plan". ``setup`` loads the corpus and is idempotent.
+    ``pillar`` is "PRE", "LIVE", or "POST"; ``granularity`` is "run", "step", "value", "edge",
+    or "plan". ``setup`` loads the corpus and is idempotent.
     """
 
     task_id: str

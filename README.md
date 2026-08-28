@@ -10,7 +10,7 @@ run, a growing prefix while it runs, and the finished trace after it ends.
 [![arXiv](https://img.shields.io/badge/status-arXiv%202608.22808-blue.svg)](https://arxiv.org/abs/2608.22808)
 [![Code license](https://img.shields.io/badge/code%20license-MIT-blue.svg)](LICENSE)
 [![Python](https://img.shields.io/badge/python-3.10%20%7C%203.12-blue.svg)](pyproject.toml)
-[![Tests](https://img.shields.io/badge/tests-390-brightgreen.svg)](tests/expected_tests.txt)
+[![Tests](https://img.shields.io/badge/tests-398-brightgreen.svg)](tests/expected_tests.txt)
 [![Boards](https://img.shields.io/badge/boards-PRE%20%7C%20LIVE%20%7C%20POST-orange.svg)](#the-boards)
 
 [Quickstart](#quickstart) · [The Boards](#the-boards) · [Task List](#the-full-task-list) · [Add a Method](#how-a-method-plugs-in) · [Full Install](#the-full-board)
@@ -413,21 +413,26 @@ design, not general cause attribution.
 **LIVE streaming early warning (can you tell early).** Can a method separate failing from resolved
 runs from a growing prefix? On SWE-Gym the registered 25% contrast separates the
 dependency-structure block from the flat size-and-counts baseline. Their point estimates are 0.74 and
-0.63, but neither has a
-registered contrast against the 0.70 bar. The 25% ECOD point estimate is 0.76, while the raw per-run
-span point estimate is 0.36 and length-confounded. On tau-bench, none of the reported methods reaches
-the 0.70 time-to-detection threshold. Its registered bar family resolves all five nonrandom entrants
-below 0.70 through the first three prefixes; at 100%, full features and size plus dependencies are
-unresolved against the bar, while the other three remain below it.
+0.63. The 20-cell SWE-Gym bar family is exploratory: it was added after these scores were examined
+and needs fresh data to confirm. It is two-sided and resolves nine cells. It places full
+above 0.70 at every prefix and auditable above it at 75% and 100%, and it places the online span
+scalar below the bar at 25%, 50%, and 75%. Auditable at the two early prefixes, all four ECOD cells,
+and the rest are unresolved. Random is an untested
+reference. The raw per-run span point estimate is 0.36 at 25% and is length-confounded. On tau-bench,
+none of the reported methods reaches the 0.70 time-to-detection threshold. Its registered bar family
+resolves all five nonrandom entrants below 0.70 through the first three prefixes; at 100%, full
+features and size plus dependencies are unresolved against the bar, while the other three remain
+below it.
 
 <img src="assets/board_live_prefix.png" alt="Failure ROC-AUC against observed trace prefix on SWE-Gym and tau-bench for six LIVE entrants. Marker fill distinguishes registered and separating threshold contrasts, registered but unresolved threshold contrasts, and point estimates with no registered threshold test." width="620">
 
 Marker fill states the evidence against the dashed line: method color means the registered contrast
 separates, mint means it is registered but unresolved, and hollow means the threshold reading is a
-point estimate with no registered bar test. All fillable SWE-Gym method markers are hollow, and
-random retains its x reference marker, because SWE-Gym's registered
-LIVE families compare entrants rather than testing the bar. Tau-bench registers five nonrandom
-entrants at every prefix; random remains an untested reference. The panels therefore show a
+point estimate with no registered bar test. Each corpus registers all 20 nonrandom method-prefix
+cells against the bar, two-sided. SWE-Gym resolves nine: full at every prefix and auditable at 75%
+and 100% above the bar, and the online span scalar below it at the first three prefixes. Tau-bench
+resolves 18, every one of them below the bar.
+Random retains its x reference marker and is untested on both corpora. The panels therefore show a
 descriptive domain split, not a registered cross-domain contrast. The online per-run span is the
 lowest curve at the shortest prefix on SWE-Gym, and on tau-bench it sits just above the random
 reference there; it is the only setting that is genuinely
@@ -441,8 +446,11 @@ span displays 0.122 and 0.159. Across five injection seeds, the corresponding me
 0.124 for the z-score and 0.098 and 0.151 for raw span. At the displayed 5% target, the dependency-
 count control and z-score each display 0.061, while raw span displays 0.122. No contrast is declared
 among these methods, so the cells are point estimates only. They support no claim about the effect of
-per-run normalization. The Gold 0.703 value scores post-hoc within-run localization, a different
-decision, so it is context rather than a cross-state effect estimate.
+per-run normalization. These are displayed cells from 82 paired runs. The same clean runs calibrate
+and report each empirical threshold, and the five injection seeds reuse those runs rather than
+supplying 410 independent observations. No method ordering is registered. The Gold 0.703 value
+scores post-hoc within-run localization, a different decision, so it is context rather than a
+cross-state effect estimate.
 
 </details>
 
