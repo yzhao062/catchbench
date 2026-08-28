@@ -670,7 +670,7 @@ at the precision the prose printed, or be claimed by a named `PROSE_NUMBER_ALLOW
 carries its reason. Emphasis is outside its scope: the comparison strips markup, so bolding a
 cell cannot be checked by it.
 
-Run the suite with `-ra` rather than plain `-q`. Five contract tests are marked `needs-paper` in
+Run the suite with `-ra` rather than plain `-q`. Six contract tests are marked `needs-paper` in
 [`tests/expected_tests.txt`](tests/expected_tests.txt) and skip unless `CATCHBENCH_PAPER_DIR` points
 at a checkout of the manuscript repository. Three of them hold the manuscript's tables equal to
 these boards. The other two hold its figures equal: one compares the board copy the manuscript's
