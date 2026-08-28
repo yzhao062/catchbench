@@ -10,7 +10,7 @@ run, a growing prefix while it runs, and the finished trace after it ends.
 [![arXiv](https://img.shields.io/badge/status-arXiv%202608.22808-blue.svg)](https://arxiv.org/abs/2608.22808)
 [![Code license](https://img.shields.io/badge/code%20license-MIT-blue.svg)](LICENSE)
 [![Python](https://img.shields.io/badge/python-3.10%20%7C%203.12-blue.svg)](pyproject.toml)
-[![Tests](https://img.shields.io/badge/tests-398-brightgreen.svg)](tests/expected_tests.txt)
+[![Tests](https://img.shields.io/badge/tests-399-brightgreen.svg)](tests/expected_tests.txt)
 [![Boards](https://img.shields.io/badge/boards-PRE%20%7C%20LIVE%20%7C%20POST-orange.svg)](#the-boards)
 
 [Quickstart](#quickstart) · [The Boards](#the-boards) · [Task List](#the-full-task-list) · [Add a Method](#how-a-method-plugs-in) · [Full Install](#the-full-board)
@@ -660,13 +660,15 @@ to its checkout.
 | `pytest tests --ignore=tests/canary -q -ra` | Every contract test, with every skip named | GRADE checkout, the graph-AD stack, and `CATCHBENCH_PAPER_DIR` |
 | `catchbench` | Every board reproduces | GRADE + corpora + network |
 | `python tools/check_board.py` | The board still matches the committed golden | GRADE + corpora |
-| `python tools/check_board.py --readme-only` | Every number in the tables below is a board cell | nothing |
+| `python tools/check_board.py --readme-only` | Every table number is a board cell, and every prose numeral is board-backed or allowed with a reason | nothing |
 | `python tools/print_corpus_revisions.py` | The three corpus commits are the pinned ones | network |
 
 The `--readme-only` check is why the tables above can be trusted: every numeric cell in a README
 table is compared against the committed board output, with no tolerance. A hand-typed table value
-fails it. Prose figures are outside its scope, and so is emphasis: the comparison strips markup, so
-bolding a cell cannot be checked by it.
+fails it. Prose numerals are checked too, under a looser rule: each must either equal a golden board cell
+at the precision the prose printed, or be claimed by a named `PROSE_NUMBER_ALLOWLIST` entry that
+carries its reason. Emphasis is outside its scope: the comparison strips markup, so bolding a
+cell cannot be checked by it.
 
 Run the suite with `-ra` rather than plain `-q`. Five contract tests are marked `needs-paper` in
 [`tests/expected_tests.txt`](tests/expected_tests.txt) and skip unless `CATCHBENCH_PAPER_DIR` points
@@ -701,17 +703,25 @@ arXiv:2608.22808. It carries its own work-in-progress notice: the benchmark is s
 and the numbers below are the ones the current preprint reports.
 
 <details>
-<summary>How every manuscript number is regenerated, checked, and pinned</summary>
+<summary>How manuscript numbers are regenerated and checked, and what falls outside that</summary>
 
-Every number the manuscript reports is regenerated from this repository, so the code is checkable
-against the write-up. The board-derived tables come from `run.py` through
+Nearly every number the manuscript reports is regenerated from this repository, so the code is
+checkable against the write-up. The board-derived tables come from `run.py` through
 `tools/emit_boards_table.py`; the significance tables from `tools/statistical_tests.py` through
 `tools/emit_stats_table.py`; the transfer table from `tools/emit_transfer_table.py`; and the
 remaining reported quantities from `tools/whoandwhen_split_report.py`,
-`tools/pre_merge_judges.py`, and `tools/gold_artifact_diagnostic.py`. The three `emit_*` tools take a
-`--check` flag that exits non-zero and prints the delta when the manuscript is stale; the last three
-print their quantities and are compared by reading. All of it runs locally rather than in CI, for the
-reason given under [The Full Board](#the-full-board).
+`tools/pre_merge_judges.py`, `tools/namedvalue_admissibility.py`,
+`tools/namedvalue_control_power.py`, `tools/pygod_seed_stability.py`, and
+`tools/gold_artifact_diagnostic.py`. The three `emit_*` tools take a `--check` flag that exits
+non-zero and prints the delta when the manuscript is stale; the other six print their quantities
+and are compared by reading. Two groups of reported values fall outside that coverage, and the
+paper's own provenance table lists them. No committed command reproduces the PRE label makers
+scored as methods on the judge-labeled configurations: `tools/pre_judge_method.py` builds the
+held-out prediction cache the board scores, but it does not score the two label makers, and the
+released records are de-identified, so they cannot rebuild a judge prompt. The Who&When Pro trace
+count and the AuthBench task count come from those papers and carry their citations in place. All
+of it runs locally rather than in CI, for the reason given under
+[The Full Board](#the-full-board).
 
 `run.py` computes the boards from the inputs available to a checkout. A repository commit fixes the
 benchmark code, committed PRE artifacts, and cached LLM-judge predictions. It also records immutable

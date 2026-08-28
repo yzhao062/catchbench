@@ -141,6 +141,7 @@ needs-paper  tests/test_emit_boards_table.py::test_shipped_board_matches_configu
 always       tests/test_emit_boards_table.py::test_the_figure_counts_read_the_node_after_each_state_label
 always       tests/test_emit_boards_table.py::test_the_floor_is_excluded_from_the_range
 always       tests/test_emit_boards_table.py::test_the_header_row_is_not_compared_as_content
+needs-paper  tests/test_emit_boards_table.py::test_the_papers_figure1_parser_agrees_with_the_board_accessor
 needs-paper  tests/test_emit_boards_table.py::test_the_papers_figure_board_is_the_golden_board
 always       tests/test_emit_boards_table.py::test_the_printed_fractions_sum_to_the_papers_own_totals
 always       tests/test_emit_boards_table.py::test_the_real_boards_partition_the_real_contrasts

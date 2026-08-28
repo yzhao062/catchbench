@@ -460,3 +460,77 @@ def test_the_two_figure_pipelines_read_the_board_identically():
         "the two figure pipelines read different numbers off the same board for: "
         + ", ".join(disagree)
         + ". A README figure and a manuscript figure would disagree.")
+
+
+def test_the_papers_figure1_parser_agrees_with_the_board_accessor():
+    """Figure 1(b) carries a third board parser, and nothing else holds it to the other two.
+
+    ``make_figure1_live.py`` does not import ``board_data``; it reads the same committed copy with
+    its own ``parse_live_tables``. The sibling test above compares the two ``board_data`` copies and
+    stops there, so a third parser is a third way to read a number differently. The panel it draws
+    sits beside tables that ``emit_boards_table.py`` checks against the golden board, which would put
+    two numbers for one cell on facing pages.
+
+    The generator's ``--board`` default is pinned here too. It was ``required=True`` once, which
+    pointed the panel at a sibling checkout the manuscript repository cannot reach at build time and
+    left ``board_data``'s own docstring claiming a coverage it did not have.
+
+    Opt-in through the same environment variable as the other cross-repository checks, for the reason
+    given on ``test_shipped_board_matches_configured_paper``.
+    """
+    configured = os.environ.get("CATCHBENCH_PAPER_DIR")
+    if not configured:
+        pytest.skip("set CATCHBENCH_PAPER_DIR to run the cross-repository integration check")
+    figures = Path(configured) / "figure"
+
+    def load(path, name):
+        spec = importlib.util.spec_from_file_location(name, path)
+        module = importlib.util.module_from_spec(spec)
+        sys.modules[name] = module
+        spec.loader.exec_module(module)
+        return module
+
+    source = (figures / "make_figure1_live.py").read_text(encoding="utf-8")
+    defaults = [
+        keyword.value
+        for node in ast.walk(ast.parse(source))
+        if isinstance(node, ast.Call)
+        and isinstance(node.func, ast.Attribute)
+        and node.func.attr == "add_argument"
+        and node.args
+        and isinstance(node.args[0], ast.Constant)
+        and node.args[0].value == "--board"
+        for keyword in node.keywords
+        if keyword.arg == "default"
+    ]
+    assert len(defaults) == 1, (
+        "make_figure1_live.py's --board must carry exactly one default, so Figure 1(b) is drawn from "
+        "the committed copy this test compares rather than from a caller-supplied path"
+    )
+    assert "board.txt" in ast.unparse(defaults[0]), (
+        f"--board defaults to {ast.unparse(defaults[0])!r}, which is not the committed board copy"
+    )
+
+    accessor = load(figures / "board_data.py", "_figure1_board_data_paper")
+    generator = load(figures / "make_figure1_live.py", "_figure1_live_paper")
+
+    want = accessor.live_prefix()
+    got = generator.parse_live_tables(figures / "board.txt")
+    assert len(want) == len(got) == 2, (
+        f"expected two LIVE prefix tables from each parser, got {len(want)} and {len(got)}"
+    )
+
+    disagree = []
+    for table, series in zip(got, want, strict=True):
+        rows = {entry.name: list(entry.aucs) for entry in table.series}
+        assert rows, f"the {table.corpus} table exposed no rows to compare"
+        for name in sorted(set(rows) | set(series)):
+            if rows.get(name) != series.get(name):
+                disagree.append(
+                    f"{table.corpus}:{name} ({rows.get(name)} against {series.get(name)})"
+                )
+    assert disagree == [], (
+        "the two parsers read different numbers off the same board for: "
+        + ", ".join(disagree)
+        + ". Figure 1(b) and the tables beside it would disagree."
+    )
