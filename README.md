@@ -10,7 +10,7 @@ run, a growing prefix while it runs, and the finished trace after it ends.
 [![arXiv](https://img.shields.io/badge/status-arXiv%202608.22808-blue.svg)](https://arxiv.org/abs/2608.22808)
 [![Code license](https://img.shields.io/badge/code%20license-MIT-blue.svg)](LICENSE)
 [![Python](https://img.shields.io/badge/python-3.10%20%7C%203.12-blue.svg)](pyproject.toml)
-[![Tests](https://img.shields.io/badge/tests-399-brightgreen.svg)](tests/expected_tests.txt)
+[![Tests](https://img.shields.io/badge/tests-408-brightgreen.svg)](tests/expected_tests.txt)
 [![Boards](https://img.shields.io/badge/boards-PRE%20%7C%20LIVE%20%7C%20POST-orange.svg)](#the-boards)
 
 [Quickstart](#quickstart) · [The Boards](#the-boards) · [Task List](#the-full-task-list) · [Add a Method](#how-a-method-plugs-in) · [Full Install](#the-full-board)
@@ -746,8 +746,9 @@ The repository ships benchmark code, cached LLM-judge predictions, and a PRE der
 labels. It does not re-host the raw upstream trace corpora or the upstream PRE task and role prose.
 The loaders obtain Who&When, SWE-Gym, and tau-bench during setup or the first benchmark run. Raw PRE
 prose is excluded because its licences have not all been verified and it can contain personal data.
-The 31 Who&When judge caches and four PRE judge-vote artifacts retain `raw` or `raw_response`
-model output. Some outputs quote or restate source traces, roles, workflows, or tool descriptions;
+The 31 published Who&When judge caches, the 4 addendum Who&When judge caches, and four PRE
+judge-vote artifacts retain `raw` or `raw_response` model output. Some outputs quote or
+restate source traces, roles, workflows, or tool descriptions;
 see the generated asset manifest and third-party terms. Consequently, replay of boards that use
 upstream corpora also depends on continued access to those sources.
 

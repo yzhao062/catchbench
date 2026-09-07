@@ -301,12 +301,25 @@ _FIGURE_COPIES = (
     ("figure/statistical_tests_results.json", RESULTS),
 )
 
-# Figure 1 prints a board count under each state label. It is hand-drawn TikZ, so nothing
-# recomputes it, and adding a board here would leave the figure quietly claiming the old count
-# on page 1 while Table 2 carried the new one.
+# Figure 1 used to print a board count under each state label in hand-drawn TikZ, and this checker
+# read those two token shapes back so that adding a board could not leave page 1 claiming the old
+# count while Table 2 carried the new one.
+#
+# RETIRED 2026-09-06, deliberately rather than by neglect. fig_lifecycle.tex is now a single
+# \includegraphics of a PowerPoint-derived PDF, so it carries no statelab node and no "N boards"
+# node, and the check had been failing on every run since that change: "STALE fig_lifecycle.tex
+# prints board counts none; the board has PRE 1, LIVE 3, POST 5". There is no text left to retarget
+# it at, because the counts now live inside a binary figure whose editable source is the .pptx.
+#
+# The two rejected repairs, recorded so nobody re-proposes them. Writing invisible tokens back into
+# the .tex would make the checker pass while checking nothing, since the tokens would no longer be
+# what the reader sees. Deleting the checker's other assertions to make the module green would drop
+# the data-copy, inventory and partition checks, which still work and still matter.
+#
+# What replaces it is a person: whoever changes the board inventory has to open the figure source
+# and update the counts by hand. state_counts() below is kept and is still what --emit prints, so
+# the correct numbers remain one command away.
 _FIGURE = "fig_lifecycle.tex"
-_STATE_LABEL = re.compile(r"statelab[^{}]*\{(PRE|LIVE|POST)\}")
-_BOARD_COUNT = re.compile(r"\{(\d+) boards?\}")
 
 
 def state_counts() -> dict[str, int]:
@@ -323,37 +336,13 @@ def _fmt_counts(counts: dict[str, int]) -> str:
     return named or "none"
 
 
-def figure_counts(text: str) -> dict[str, int]:
-    """The board count each state label claims, taken from the count node that follows it."""
-    labels = [(m.start(), m.group(1)) for m in _STATE_LABEL.finditer(text)]
-    counts = [(m.start(), int(m.group(1))) for m in _BOARD_COUNT.finditer(text)]
-    found: dict[str, int] = {}
-    for position, state in labels:
-        if state in found:
-            raise ValueError("%s labels %s twice" % (_FIGURE, state))
-        following = [n for p, n in counts if p > position]
-        if not following:
-            raise ValueError("%s gives no board count for %s" % (_FIGURE, state))
-        found[state] = following[0]
-    return found
-
-
 def check(paper: Path, generated: list[str]) -> int:
     stale: list[str] = []
 
-    figure = paper / _FIGURE
-    if not figure.exists():
-        stale.append("%s is missing; Figure 1's board counts cannot be checked" % _FIGURE)
-    else:
-        expected = state_counts()
-        try:
-            printed = figure_counts(figure.read_text(encoding="utf-8"))
-        except ValueError as error:
-            stale.append(str(error))
-        else:
-            if printed != expected:
-                stale.append("%s prints board counts %s; the board has %s"
-                             % (_FIGURE, _fmt_counts(printed), _fmt_counts(expected)))
+    # The figure still has to exist, because the rest of the paper references it. Its board counts
+    # are no longer machine-checkable; see the retirement note above _FIGURE.
+    if not (paper / _FIGURE).exists():
+        stale.append("%s is missing" % _FIGURE)
 
     for relative, source in _FIGURE_COPIES:
         copy = paper / relative

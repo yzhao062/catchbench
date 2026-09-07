@@ -252,7 +252,30 @@ def _row_count(path: Path, value: Any) -> int:
         if not isinstance(keys, dict):
             raise ManifestError(f"{path} has no keys object")
         return len(keys)
-    if "/data/llm_judge/whoandwhen__" in relative:
+    # The addendum caches take the same rule as the published ones, deliberately: the n_runs
+    # agreement, the raw-output requirement and the count are the checks that make a judge cache
+    # trustworthy, and an addendum cache that skipped them would be weaker evidence than the arena
+    # it sits beside.
+    if relative.endswith(".sidecar.json"):
+        # A sidecar covers the same runs its cache does, so its row count is the number of
+        # per-run records it carries, not its top-level key count. Counting keys would break
+        # the invariant that an artifact accounts for exactly the source rows it holds.
+        prompts = (value.get("prompt_manifest") or {}).get("per_run_sha256")
+        parsed = (value.get("parser_manifest") or {}).get("per_run")
+        if not isinstance(prompts, dict) or not isinstance(parsed, dict):
+            raise ManifestError(f"{path} has no per-run prompt and parser records")
+        # Key sets, not lengths. Equal counts do not establish that the two maps describe the same
+        # runs, so a renamed parser key used to pass this while the record silently covered a
+        # different set of runs from the one it claims.
+        if set(prompts) != set(parsed):
+            only_prompts = len(set(prompts) - set(parsed))
+            only_parsed = len(set(parsed) - set(prompts))
+            raise ManifestError(
+                f"{path} prompt and parser records name different runs: "
+                f"{only_prompts} only in prompts, {only_parsed} only in parsed")
+        return len(prompts)
+    if ("/data/llm_judge/whoandwhen__" in relative
+            or "/data/llm_judge_addendum/whoandwhen__" in relative):
         predictions = value.get("predictions") if isinstance(value, dict) else None
         if not isinstance(predictions, dict):
             raise ManifestError(f"{path} has no predictions object")
@@ -272,6 +295,17 @@ def _artifact_class(relative: str) -> tuple[list[str], bool, str]:
         return [WHO_AND_WHEN], False, "content-address mapping for the Who&When judge caches"
     if relative.startswith("data/llm_judge/whoandwhen__") and relative.endswith(".json"):
         return [WHO_AND_WHEN], True, "LLM localization predictions over Who&When traces"
+    # Same shape, same runs, same retained raw output as the line above. They live in a separate
+    # directory only so LLMJudgeLocalization's glob cannot reach them and move the published entrant
+    # count; that separation is about the glob, not about what the file is. They ship because they are
+    # the only way to reproduce the addendum ranking without an API call.
+    # Sidecars first: they sit beside the caches and share the prefix, but hold hashes and
+    # manifests rather than model output, so they retain no prose and carry no predictions.
+    if (relative.startswith("data/llm_judge_addendum/whoandwhen__")
+            and relative.endswith(".sidecar.json")):
+        return [WHO_AND_WHEN], False, "addendum generation record: prompt, code and parser manifests"
+    if relative.startswith("data/llm_judge_addendum/whoandwhen__") and relative.endswith(".json"):
+        return [WHO_AND_WHEN], True, "LLM localization predictions over Who&When traces, addendum"
 
     for source in PRE_SOURCES:
         if relative == f"data/pre/{source}.json":
@@ -318,7 +352,9 @@ def build_manifest(root: Path = ROOT) -> dict[str, Any]:
         else:  # guarded by _artifact_class; kept explicit so a future class cannot emit by accident
             raise ManifestError(f"no row-count rule for {relative}")
 
-        if relative.startswith("data/llm_judge/whoandwhen__") and count != who_count:
+        if (relative.startswith("data/llm_judge/whoandwhen__")
+                or relative.startswith("data/llm_judge_addendum/whoandwhen__")
+                ) and count != who_count:
             raise ManifestError(f"{relative} has {count} predictions; expected {who_count}")
         if prose_survives and not (_contains_key(value, "raw") or
                                    _contains_key(value, "raw_response")):

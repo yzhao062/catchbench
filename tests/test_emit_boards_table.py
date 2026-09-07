@@ -307,34 +307,22 @@ def test_the_table_is_found_in_the_results_section_too(tmp_path):
     assert ebt.check(tmp_path, rows) == 0
 
 
-def test_the_figure_counts_read_the_node_after_each_state_label(tmp_path):
-    """Position, not order of appearance: the count belongs to the label above it."""
-    assert ebt.figure_counts(_figure_text()) == ebt.state_counts()
-
-
-def test_a_drifted_figure_board_count_fails(tmp_path):
-    """A board added to the inventory must not leave page 1 claiming the old count."""
-    rows = ["PRE & A & 1 & F1 & 0.6 & 0.6--0.7 & x \\\\"]
-    paper = _paper(tmp_path, rows)
-    drifted = dict(ebt.state_counts())
-    drifted["LIVE"] += 1
-    paper.joinpath(ebt._FIGURE).write_text(_figure_text(drifted), encoding="utf-8")
-    assert ebt.check(paper, rows) == 1
+# RETIRED 2026-09-06, together with the assertion they covered:
+# test_the_figure_counts_read_the_node_after_each_state_label,
+# test_a_drifted_figure_board_count_fails, and test_a_state_label_with_no_count_node_fails.
+#
+# fig_lifecycle.tex is now a single includegraphics of a PowerPoint-derived PDF and carries
+# neither a statelab node nor an "N boards" node, so those three had nothing left to read. They
+# kept passing because _figure_text() still writes the old TikZ shape, while the real check had
+# failed on every run since the figure changed. A green suite guarding a checker that cannot run
+# is worse than no test. emit_boards_table.py carries the retirement note and says what replaces
+# the assertion.
 
 
 def test_a_missing_figure_fails(tmp_path):
     rows = ["PRE & A & 1 & F1 & 0.6 & 0.6--0.7 & x \\\\"]
     paper = _paper(tmp_path, rows)
     paper.joinpath(ebt._FIGURE).unlink()
-    assert ebt.check(paper, rows) == 1
-
-
-def test_a_state_label_with_no_count_node_fails(tmp_path):
-    """A count deleted from the figure is silence, not agreement."""
-    rows = ["PRE & A & 1 & F1 & 0.6 & 0.6--0.7 & x \\\\"]
-    paper = _paper(tmp_path, rows)
-    text = _figure_text().rsplit("\n", 1)[0]  # drop the trailing POST count node
-    paper.joinpath(ebt._FIGURE).write_text(text, encoding="utf-8")
     assert ebt.check(paper, rows) == 1
 
 

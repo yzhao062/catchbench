@@ -21,6 +21,11 @@ data/*
 # Exception: the committed LLM-judge prediction caches ARE the benchmark's reproducibility anchor.
 # The board scores them deterministically with no API call, so they must ship with the repo.
 !data/llm_judge/
+# The judge-addendum caches ship for the same reason: they are the only way a third party
+# can reproduce the addendum ranking without an API call. They sit outside data/llm_judge/
+# so LLMJudgeLocalization's glob cannot reach them and the published entrant count cannot
+# move; that separation is about the glob, not about whether they are released.
+!data/llm_judge_addendum/
 !data/pre/
 *.parquet
 *.jsonl

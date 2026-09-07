@@ -15,6 +15,15 @@
 #   python tools/check_test_report.py --report local.xml --update
 # The update keeps the marker of every test already listed and gives a new one
 # 'always'; change that by hand when the test needs torch or the paper repository.
+always       tests/test_addendum_tools.py::test_addendum_labels_are_kept_out_of_the_arena_directory
+always       tests/test_addendum_tools.py::test_equal_scores_take_equal_positions
+always       tests/test_addendum_tools.py::test_every_sidecar_declares_what_was_not_recorded
+always       tests/test_addendum_tools.py::test_sidecars_cover_exactly_their_cache_runs
+always       tests/test_addendum_tools.py::test_the_archived_family_tool_still_runs
+always       tests/test_addendum_tools.py::test_the_scorer_reports_positions_and_an_endpoint_count_but_never_a_tie_group
+always       tests/test_addendum_tools.py::test_the_scorer_runs_with_sidecars_sitting_beside_the_caches
+always       tests/test_addendum_tools.py::test_the_sidecar_check_rejects_a_sidecar_that_is_not_json
+always       tests/test_addendum_tools.py::test_the_sidecar_check_rejects_records_naming_the_wrong_runs
 always       tests/test_board_tolerance.py::test_a_board_that_gained_a_line_is_never_reconciled
 always       tests/test_board_tolerance.py::test_a_non_torch_row_fails_on_the_last_digit
 always       tests/test_board_tolerance.py::test_a_torch_row_beyond_the_tolerance_still_fails
@@ -120,7 +129,6 @@ always       tests/test_emit_boards_table.py::test_a_contrast_claimed_by_two_boa
 always       tests/test_emit_boards_table.py::test_a_corpus_line_that_stops_matching_is_a_hard_failure
 always       tests/test_emit_boards_table.py::test_a_corpus_pattern_matching_twice_is_a_hard_failure
 always       tests/test_emit_boards_table.py::test_a_deleted_row_fails
-always       tests/test_emit_boards_table.py::test_a_drifted_figure_board_count_fails
 always       tests/test_emit_boards_table.py::test_a_family_count_comes_from_the_claims_not_from_the_declared_size
 always       tests/test_emit_boards_table.py::test_a_matching_paper_passes
 always       tests/test_emit_boards_table.py::test_a_method_name_with_spaces_keeps_its_values
@@ -132,13 +140,11 @@ always       tests/test_emit_boards_table.py::test_a_nonseparating_claim_is_not_
 always       tests/test_emit_boards_table.py::test_a_prefix_that_selects_nothing_is_a_hard_failure
 always       tests/test_emit_boards_table.py::test_a_skipped_oracle_does_not_become_the_top_of_the_range
 always       tests/test_emit_boards_table.py::test_a_stale_figure_data_copy_fails
-always       tests/test_emit_boards_table.py::test_a_state_label_with_no_count_node_fails
 always       tests/test_emit_boards_table.py::test_an_added_row_fails
 always       tests/test_emit_boards_table.py::test_an_id_prefix_splits_one_family_across_two_boards
 always       tests/test_emit_boards_table.py::test_an_unknown_family_id_is_a_hard_failure
 always       tests/test_emit_boards_table.py::test_no_generated_cell_carries_a_literal_tab
 needs-paper  tests/test_emit_boards_table.py::test_shipped_board_matches_configured_paper
-always       tests/test_emit_boards_table.py::test_the_figure_counts_read_the_node_after_each_state_label
 always       tests/test_emit_boards_table.py::test_the_floor_is_excluded_from_the_range
 always       tests/test_emit_boards_table.py::test_the_header_row_is_not_compared_as_content
 needs-paper  tests/test_emit_boards_table.py::test_the_papers_figure1_parser_agrees_with_the_board_accessor
@@ -377,6 +383,7 @@ always       tests/test_tools_are_not_stdlib_shadows.py::test_tool_name_does_not
 always       tests/test_tools_are_not_stdlib_shadows.py::test_tool_name_does_not_shadow_a_stdlib_module[check_readme_figures]
 always       tests/test_tools_are_not_stdlib_shadows.py::test_tool_name_does_not_shadow_a_stdlib_module[check_test_report]
 always       tests/test_tools_are_not_stdlib_shadows.py::test_tool_name_does_not_shadow_a_stdlib_module[ci_smoke]
+always       tests/test_tools_are_not_stdlib_shadows.py::test_tool_name_does_not_shadow_a_stdlib_module[emit_addendum_sidecars]
 always       tests/test_tools_are_not_stdlib_shadows.py::test_tool_name_does_not_shadow_a_stdlib_module[emit_asset_manifest]
 always       tests/test_tools_are_not_stdlib_shadows.py::test_tool_name_does_not_shadow_a_stdlib_module[emit_boards_table]
 always       tests/test_tools_are_not_stdlib_shadows.py::test_tool_name_does_not_shadow_a_stdlib_module[emit_stats_table]
@@ -403,6 +410,8 @@ always       tests/test_tools_are_not_stdlib_shadows.py::test_tool_name_does_not
 always       tests/test_tools_are_not_stdlib_shadows.py::test_tool_name_does_not_shadow_a_stdlib_module[pygod_degeneracy_diagnostic]
 always       tests/test_tools_are_not_stdlib_shadows.py::test_tool_name_does_not_shadow_a_stdlib_module[pygod_seed_stability]
 always       tests/test_tools_are_not_stdlib_shadows.py::test_tool_name_does_not_shadow_a_stdlib_module[run_llm_judge_panel]
+always       tests/test_tools_are_not_stdlib_shadows.py::test_tool_name_does_not_shadow_a_stdlib_module[score_judge_addendum]
+always       tests/test_tools_are_not_stdlib_shadows.py::test_tool_name_does_not_shadow_a_stdlib_module[score_judge_addendum_family]
 always       tests/test_tools_are_not_stdlib_shadows.py::test_tool_name_does_not_shadow_a_stdlib_module[statistical_tests]
 always       tests/test_tools_are_not_stdlib_shadows.py::test_tool_name_does_not_shadow_a_stdlib_module[whoandwhen_split_report]
 always       tests/test_tools_are_not_stdlib_shadows.py::test_tools_dir_exists_and_is_populated

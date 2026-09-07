@@ -5735,6 +5735,142 @@
       ]
     },
     {
+      "path": "data/llm_judge_addendum/whoandwhen__all_at_once__claude-opus-5.json",
+      "description": "LLM localization predictions over Who&When traces, addendum",
+      "sources": [
+        "whoandwhen"
+      ],
+      "row_count": 126,
+      "declared_license_distribution": {
+        "whoandwhen": {
+          "UNRESOLVED": 126
+        }
+      },
+      "source_prose_survives": true,
+      "upstream_identifier_sets": [
+        "whoandwhen"
+      ]
+    },
+    {
+      "path": "data/llm_judge_addendum/whoandwhen__all_at_once__claude-opus-5.sidecar.json",
+      "description": "addendum generation record: prompt, code and parser manifests",
+      "sources": [
+        "whoandwhen"
+      ],
+      "row_count": 126,
+      "declared_license_distribution": {
+        "whoandwhen": {
+          "UNRESOLVED": 126
+        }
+      },
+      "source_prose_survives": false,
+      "upstream_identifier_sets": [
+        "whoandwhen"
+      ]
+    },
+    {
+      "path": "data/llm_judge_addendum/whoandwhen__all_at_once__gpt-6-astra.json",
+      "description": "LLM localization predictions over Who&When traces, addendum",
+      "sources": [
+        "whoandwhen"
+      ],
+      "row_count": 126,
+      "declared_license_distribution": {
+        "whoandwhen": {
+          "UNRESOLVED": 126
+        }
+      },
+      "source_prose_survives": true,
+      "upstream_identifier_sets": [
+        "whoandwhen"
+      ]
+    },
+    {
+      "path": "data/llm_judge_addendum/whoandwhen__all_at_once__gpt-6-astra.sidecar.json",
+      "description": "addendum generation record: prompt, code and parser manifests",
+      "sources": [
+        "whoandwhen"
+      ],
+      "row_count": 126,
+      "declared_license_distribution": {
+        "whoandwhen": {
+          "UNRESOLVED": 126
+        }
+      },
+      "source_prose_survives": false,
+      "upstream_identifier_sets": [
+        "whoandwhen"
+      ]
+    },
+    {
+      "path": "data/llm_judge_addendum/whoandwhen__all_at_once__llama-3-70b.json",
+      "description": "LLM localization predictions over Who&When traces, addendum",
+      "sources": [
+        "whoandwhen"
+      ],
+      "row_count": 126,
+      "declared_license_distribution": {
+        "whoandwhen": {
+          "UNRESOLVED": 126
+        }
+      },
+      "source_prose_survives": true,
+      "upstream_identifier_sets": [
+        "whoandwhen"
+      ]
+    },
+    {
+      "path": "data/llm_judge_addendum/whoandwhen__all_at_once__llama-3-70b.sidecar.json",
+      "description": "addendum generation record: prompt, code and parser manifests",
+      "sources": [
+        "whoandwhen"
+      ],
+      "row_count": 126,
+      "declared_license_distribution": {
+        "whoandwhen": {
+          "UNRESOLVED": 126
+        }
+      },
+      "source_prose_survives": false,
+      "upstream_identifier_sets": [
+        "whoandwhen"
+      ]
+    },
+    {
+      "path": "data/llm_judge_addendum/whoandwhen__all_at_once__llama-3.1-70b.json",
+      "description": "LLM localization predictions over Who&When traces, addendum",
+      "sources": [
+        "whoandwhen"
+      ],
+      "row_count": 126,
+      "declared_license_distribution": {
+        "whoandwhen": {
+          "UNRESOLVED": 126
+        }
+      },
+      "source_prose_survives": true,
+      "upstream_identifier_sets": [
+        "whoandwhen"
+      ]
+    },
+    {
+      "path": "data/llm_judge_addendum/whoandwhen__all_at_once__llama-3.1-70b.sidecar.json",
+      "description": "addendum generation record: prompt, code and parser manifests",
+      "sources": [
+        "whoandwhen"
+      ],
+      "row_count": 126,
+      "declared_license_distribution": {
+        "whoandwhen": {
+          "UNRESOLVED": 126
+        }
+      },
+      "source_prose_survives": false,
+      "upstream_identifier_sets": [
+        "whoandwhen"
+      ]
+    },
+    {
       "path": "data/pre/LABEL_QUALITY.md",
       "description": "generated PRE judge-agreement report",
       "sources": [
