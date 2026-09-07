@@ -288,10 +288,9 @@ def test_clean_fixture_passes():
     number_problems, seen, board_backed, allowed = cb.check_prose_numbers(
         REAL_README.read_text(encoding="utf-8"), blocks, cb.PROSE_NUMBER_ALLOWLIST)
     assert number_problems == []
-    # 237 rather than 236 since the retained-cache sentence gained a second count. The release holds
-    # 35 Who&When caches, the 31 the arena scores plus the 4 addendum caches, and the sentence used
-    # to report only the first as though it were the total.
-    assert (seen, board_backed, allowed) == (237, 100, 137)
+    # The detection paragraph no longer repeats the tau-bench +0.046 to qualify it, since the word
+    # unresolved carries that now, so one allowed numeral left the README.
+    assert (seen, board_backed, allowed) == (236, 100, 136)
 
     # A comparative paragraph with a registered separating claim is the green claim-gate case.
     claim_result = cb.check_readme_detailed(

@@ -10,7 +10,7 @@ run, a growing prefix while it runs, and the finished trace after it ends.
 [![arXiv](https://img.shields.io/badge/status-arXiv%202608.22808-blue.svg)](https://arxiv.org/abs/2608.22808)
 [![Code license](https://img.shields.io/badge/code%20license-MIT-blue.svg)](LICENSE)
 [![Python](https://img.shields.io/badge/python-3.10%20%7C%203.12-blue.svg)](pyproject.toml)
-[![Tests](https://img.shields.io/badge/tests-408-brightgreen.svg)](tests/expected_tests.txt)
+[![Tests](https://img.shields.io/badge/tests-456-brightgreen.svg)](tests/expected_tests.txt)
 [![Boards](https://img.shields.io/badge/boards-PRE%20%7C%20LIVE%20%7C%20POST-orange.svg)](#the-boards)
 
 [Quickstart](#quickstart) · [The Boards](#the-boards) · [Task List](#the-full-task-list) · [Add a Method](#how-a-method-plugs-in) · [Full Install](#the-full-board)
@@ -28,9 +28,9 @@ injected), scored as nine boards, all sharing one `Task` and `Method` interface.
 
 What the boards show, in plain terms:
 
-- On SWE-Gym, a run's dependency structure predicts failure better than its raw size and step counts.
-  The same comparison on tau-bench is inconclusive, so the board reports it as unresolved rather than
-  naming a winner.
+- In matched POST detection comparisons, the dependency increment stays positive across the three
+  tested model specifications on tau-bench and changes sign on SWE-Gym, so the model specification
+  decides the SWE-Gym reading.
 - No tested method flags a failing tau-bench run before it finishes.
 - On two of six configuration sources, no over-privilege method clearly beats the trivial baseline of
   flagging every capability.
@@ -260,10 +260,12 @@ tau-bench, 660 runs (363 failed, 297 resolved):
 | G-Safeguard (supervised GNN) | 0.626 |
 
 How to read it. The size-normalized dependency block scores above the size-and-counts baseline on both
-corpora (+0.141 on SWE-Gym, +0.046 on tau-bench), but only one of those is an established ordering.
-On SWE-Gym the paired test separates the two (Holm p=0.0001), so the structural signal predicts
-failure beyond run size and counts there. On tau-bench the same test does not resolve the pair (Holm
-p=0.068), so read that +0.046 as a point estimate and not as a result. On tau-bench the
+corpora (+0.142 on SWE-Gym, +0.046 on tau-bench), but only one of those is an established ordering.
+These increments use unrounded scores.
+The registered linear-model contrast separates on SWE-Gym (Holm p=0.0001) and remains unresolved on
+tau-bench (Holm p=0.068). The controlled audit in `tools/detection_audit_results.json` addresses
+sensitivity to the model specification: the dependency increment stays positive across all three
+tested specifications on tau-bench and changes sign on SWE-Gym. On tau-bench the
 structural block and full-feature reference tie at the displayed precision (0.665), so the full vector
 shows no displayed gain there. On SWE-Gym, PyOD ECOD exceeds the linear size model (0.765 over 0.663),
 and the dependency-structure method scores higher again at 0.804.
@@ -670,11 +672,11 @@ at the precision the prose printed, or be claimed by a named `PROSE_NUMBER_ALLOW
 carries its reason. Emphasis is outside its scope: the comparison strips markup, so bolding a
 cell cannot be checked by it.
 
-Run the suite with `-ra` rather than plain `-q`. Six contract tests are marked `needs-paper` in
+Run the suite with `-ra` rather than plain `-q`. Seven contract tests are marked `needs-paper` in
 [`tests/expected_tests.txt`](tests/expected_tests.txt) and skip unless `CATCHBENCH_PAPER_DIR` points
-at a checkout of the manuscript repository. Three of them hold the manuscript's tables equal to
-these boards. The other three hold its figures equal: one compares the board copy the manuscript's
-figure scripts read against `tests/golden/board.txt`, one runs both figure pipelines' board parsers
+at a checkout of the manuscript repository. Four of them hold the manuscript's tables equal to
+the committed records. The other three hold its figures equal: one compares the board copy the
+manuscript's figure scripts read against `tests/golden/board.txt`, one runs both figure pipelines' board parsers
 over the same board and compares the numbers they extract, because each repository carries its own
 copy of that parser, and one holds a third parser, the one the manuscript's live panel carries, to
 the same board accessor the tables use. A figure is the one place in a paper where no checker reads
@@ -682,7 +684,7 @@ the value.
 
 **No workflow sets that variable**, because the manuscript repository is not public, so CI does not
 currently fail when the paper falls behind the board. That comparison is run locally before a
-submission. Plain `-q` reports the six as a bare skip count and never names them, which is the one
+submission. Plain `-q` reports the seven as a bare skip count and never names them, which is the one
 way this suite can look complete while the paper-side checks are not running.
 
 The full board comparison is not exact everywhere. Three row prefixes (`guardian (`, `g-safeguard (`,
@@ -709,11 +711,12 @@ and the numbers below are the ones the current preprint reports.
 Nearly every number the manuscript reports is regenerated from this repository, so the code is
 checkable against the write-up. The board-derived tables come from `run.py` through
 `tools/emit_boards_table.py`; the significance tables from `tools/statistical_tests.py` through
-`tools/emit_stats_table.py`; the transfer table from `tools/emit_transfer_table.py`; and the
-remaining reported quantities from `tools/whoandwhen_split_report.py`,
+`tools/emit_stats_table.py`; the transfer table from `tools/emit_transfer_table.py`; the LIVE prefix
+tables from `tools/emit_live_prefix_table.py`; and the remaining reported quantities from
+`tools/whoandwhen_split_report.py`,
 `tools/pre_merge_judges.py`, `tools/namedvalue_admissibility.py`,
 `tools/namedvalue_control_power.py`, `tools/pygod_seed_stability.py`, and
-`tools/gold_artifact_diagnostic.py`, and `tools/pre_label_maker_diagnostic.py`. The three
+`tools/gold_artifact_diagnostic.py`, and `tools/pre_label_maker_diagnostic.py`. The four
 `emit_*` tools take a `--check` flag that exits non-zero and prints the delta when the manuscript is
 stale; the other seven print their quantities and are compared by reading. Two of those seven, the
 Who&When split report and the PRE label-maker diagnostic, additionally exit non-zero when their own

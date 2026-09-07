@@ -1274,13 +1274,17 @@ PROSE_NUMBER_ALLOWLIST: tuple[ProseNumberAllowance, ...] = (
                          ("660", "363", "297"),
                          "tau-bench total, failed, and resolved run counts."),
     ProseNumberAllowance("detection-differences", "corpora (+",
-                         ("0.141", "0.046"),
-                         "Displayed paired ROC-AUC point-estimate differences."),
+                         ("0.142", "0.046"),
+                         "Paired ROC-AUC point-estimate differences, each rounded from the exact "
+                         "difference rather than taken between the displayed cells. Subtracting "
+                         "the two displayed SWE-Gym cells gives 0.141; the exact difference is "
+                         "0.141625. Section 5 of the paper prints the same 0.142."),
     ProseNumberAllowance("swegym-holm-p", "Holm p=0.0001", ("0.0001",),
                          "Holm-adjusted p-value."),
-    ProseNumberAllowance("tau-holm-p-and-difference", "p=0.068",
-                         ("0.068", "0.046"),
-                         "Holm-adjusted p-value and explicitly qualified point estimate."),
+    ProseNumberAllowance("tau-holm-p", "p=0.068", ("0.068",),
+                         "Holm-adjusted p-value. The paragraph once repeated the tau-bench "
+                         "+0.046 here to qualify it; the qualification is now carried by the "
+                         "word unresolved, so only the p-value is claimed."),
     ProseNumberAllowance("guardian-holm-p", "p=0.376", ("0.376",),
                          "Holm-adjusted p-value."),
     ProseNumberAllowance("gsafeguard-seed-mean", "cross-validation seeds", ("0.824",),
