@@ -42,6 +42,7 @@ ROOT = pathlib.Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "src"))
 
 from catchbench import llm_judge as lj  # noqa: E402
+from run_llm_judge_panel import _MAX_OUTPUT_TOKENS, bedrock_complete  # noqa: E402
 
 ADDENDUM_DIR = ROOT / "data" / "llm_judge_addendum"
 SIDECAR_SUFFIX = ".sidecar.json"
@@ -236,8 +237,14 @@ def not_recorded(label: str) -> list:
     whole gap; four more obligations were missing from it, and one entry was inaccurate for the
     Bedrock pair, for which a CLI version is not a meaningful field at all.
     """
-    channel = (PROVIDER_MODEL_IDS.get(label) or {}).get("channel", "unknown")
+    provider = PROVIDER_MODEL_IDS.get(label) or {}
+    channel = provider.get("channel", "unknown")
     is_cli = channel in {"claude-code-cli", "codex-cli"}
+    ceiling = f"an output ceiling (limit not recorded for the {channel} channel)"
+    if channel == "aws-bedrock":
+        default = inspect.signature(bedrock_complete).parameters["max_tokens"].default
+        limit = min(default, _MAX_OUTPUT_TOKENS.get(provider["model_id"], default))
+        ceiling = f"the configured {limit}-token ceiling"
     entries = [
         {"requirement": 1, "field": "generation_start_end_utc", "value": None,
          "reason": ("Not recorded during generation. A wall-clock time is an observation, not a "
@@ -245,7 +252,7 @@ def not_recorded(label: str) -> list:
                     "modification times.")},
         {"requirement": 5, "field": "replies_stopped_at_output_ceiling", "value": None,
          "reason": ("No stop reason was retained. Reply length alone cannot distinguish a reply "
-                    "that ended at the 8000-token ceiling from one that ended on its own.")},
+                    f"that ended at {ceiling} from one that ended on its own.")},
         {"requirement": 6, "field": "pass_index_per_prediction", "value": None,
          "reason": ("Not recorded, and the attempt history is unrecoverable. A cache being complete "
                     "shows what the final state is, not how many passes or calls produced it, so "

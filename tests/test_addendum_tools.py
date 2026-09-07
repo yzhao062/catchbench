@@ -74,9 +74,12 @@ def test_equal_scores_take_equal_positions():
     assert result.returncode == 0, result.stderr[-2000:]
     rows = [line.split() for line in result.stdout.splitlines()
             if line.startswith("  ") and len(line.split()) > 6 and line.split()[0].isdigit()]
+    header = next(line.split() for line in result.stdout.splitlines()
+                  if line.lstrip().startswith("# "))
+    score_column = header.index("Top-1")
     by_score: dict[str, set[str]] = {}
     for row in rows:
-        by_score.setdefault(row[4], set()).add(row[0])
+        by_score.setdefault(row[score_column], set()).add(row[0])
     for score, positions in by_score.items():
         assert len(positions) == 1, f"score {score} occupies positions {sorted(positions)}"
 

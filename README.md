@@ -673,15 +673,16 @@ cell cannot be checked by it.
 Run the suite with `-ra` rather than plain `-q`. Six contract tests are marked `needs-paper` in
 [`tests/expected_tests.txt`](tests/expected_tests.txt) and skip unless `CATCHBENCH_PAPER_DIR` points
 at a checkout of the manuscript repository. Three of them hold the manuscript's tables equal to
-these boards. The other two hold its figures equal: one compares the board copy the manuscript's
-figure scripts read against `tests/golden/board.txt`, and one runs both figure pipelines' board
-parsers over the same board and compares the numbers they extract, because each repository carries
-its own copy of that parser and a figure is the one place in a paper where no checker reads the
-value.
+these boards. The other three hold its figures equal: one compares the board copy the manuscript's
+figure scripts read against `tests/golden/board.txt`, one runs both figure pipelines' board parsers
+over the same board and compares the numbers they extract, because each repository carries its own
+copy of that parser, and one holds a third parser, the one the manuscript's live panel carries, to
+the same board accessor the tables use. A figure is the one place in a paper where no checker reads
+the value.
 
 **No workflow sets that variable**, because the manuscript repository is not public, so CI does not
 currently fail when the paper falls behind the board. That comparison is run locally before a
-submission. Plain `-q` reports the five as a bare skip count and never names them, which is the one
+submission. Plain `-q` reports the six as a bare skip count and never names them, which is the one
 way this suite can look complete while the paper-side checks are not running.
 
 The full board comparison is not exact everywhere. Three row prefixes (`guardian (`, `g-safeguard (`,
@@ -712,14 +713,13 @@ checkable against the write-up. The board-derived tables come from `run.py` thro
 remaining reported quantities from `tools/whoandwhen_split_report.py`,
 `tools/pre_merge_judges.py`, `tools/namedvalue_admissibility.py`,
 `tools/namedvalue_control_power.py`, `tools/pygod_seed_stability.py`, and
-`tools/gold_artifact_diagnostic.py`. The three `emit_*` tools take a `--check` flag that exits
-non-zero and prints the delta when the manuscript is stale; the other six print their quantities
-and are compared by reading. Two groups of reported values fall outside that coverage, and the
-paper's own provenance table lists them. No committed command reproduces the PRE label makers
-scored as methods on the judge-labeled configurations: `tools/pre_judge_method.py` builds the
-held-out prediction cache the board scores, but it does not score the two label makers, and the
-released records are de-identified, so they cannot rebuild a judge prompt. The Who&When Pro trace
-count and the AuthBench task count come from those papers and carry their citations in place. All
+`tools/gold_artifact_diagnostic.py`, and `tools/pre_label_maker_diagnostic.py`. The three
+`emit_*` tools take a `--check` flag that exits non-zero and prints the delta when the manuscript is
+stale; the other seven print their quantities and are compared by reading. Two of those seven, the
+Who&When split report and the PRE label-maker diagnostic, additionally exit non-zero when their own
+printed values leave what the paper states. One group of reported values falls outside that
+coverage, and the paper's own source table lists it: the Who&When Pro trace count and the AuthBench
+task count come from those papers and carry their citations in place. All
 of it runs locally rather than in CI, for the reason given under
 [The Full Board](#the-full-board).
 

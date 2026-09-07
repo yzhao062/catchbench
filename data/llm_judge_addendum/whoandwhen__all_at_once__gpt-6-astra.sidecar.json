@@ -845,7 +845,7 @@
       "requirement": 5,
       "field": "replies_stopped_at_output_ceiling",
       "value": null,
-      "reason": "No stop reason was retained. Reply length alone cannot distinguish a reply that ended at the 8000-token ceiling from one that ended on its own."
+      "reason": "No stop reason was retained. Reply length alone cannot distinguish a reply that ended at an output ceiling (limit not recorded for the codex-cli channel) from one that ended on its own."
     },
     {
       "requirement": 6,

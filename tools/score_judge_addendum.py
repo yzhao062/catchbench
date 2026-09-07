@@ -120,6 +120,23 @@ _Z95 = 1.959963984540054
 _DEFAULT_ALSO = ("llama-3.3-70b",)
 
 
+# Historical generation is documented in tools/llm_judge_codex.py, lines 1 to 7.
+# Current adapter routing does not establish how a published cache was generated.
+_RECORDED_PUBLISHED_CHANNELS = {"gpt-5.5": "codex-cli"}
+
+
+def generation_channel(label: str, source: str) -> str:
+    """Read the recorded channel, retaining the sidecars' declared-configuration scope."""
+    if source == "published":
+        return _RECORDED_PUBLISHED_CHANNELS.get(label, "not-recorded")
+    path = ADDENDUM_DIR / f"whoandwhen__all_at_once__{label}{SIDECAR_SUFFIX}"
+    if not path.exists():
+        return "not-recorded"
+    sidecar = json.loads(path.read_text(encoding="utf-8"))
+    configuration = sidecar.get("provider_declared_configuration") or {}
+    return configuration.get("channel") or "not-recorded"
+
+
 def addendum_predictions(path: pathlib.Path) -> dict:
     """The predictions of an addendum cache, read by path.
 
@@ -228,6 +245,7 @@ def collect(label: str, preds: dict, runs, task, source: str) -> dict:
     return {
         "label": label,
         "source": source,
+        "channel": generation_channel(label, source),
         "top1": metrics["top1"], "top1_lo": top1_lo, "top1_hi": top1_hi,
         "top3": metrics["top3"], "top3_lo": top3_lo, "top3_hi": top3_hi,
         "mrr": metrics["mrr"],
@@ -277,14 +295,31 @@ def main() -> int:
     print("  `#`     position by Top-1 point estimate; equal scores share a position.")
     print("  `above` 1 + the number of arms whose whole interval lies above this arm's. A count,")
     print("          NOT a tie group: interval overlap is not transitive. See the docstring.\n")
-    print("  %-3s %-6s %-18s %-10s %8s %-18s %8s %-18s %8s"
-          % ("#", "above", "model", "source", "Top-1", "95% interval",
+    print("  %-3s %-6s %-18s %-16s %-10s %8s %-18s %8s %-18s %8s"
+          % ("#", "above", "model", "channel", "source", "Top-1", "95% interval",
              "Top-3", "95% interval", "MRR"))
     for arm in arms:
-        print("  %-3d %-6d %-18s %-10s %8.4f [%.4f, %.4f] %8.4f [%.4f, %.4f] %8.4f"
-              % (arm["seq"], arm["above"], arm["label"], arm["source"],
+        print("  %-3d %-6d %-18s %-16s %-10s %8.4f [%.4f, %.4f] %8.4f [%.4f, %.4f] %8.4f"
+              % (arm["seq"], arm["above"], arm["label"], arm["channel"], arm["source"],
                  arm["top1"], arm["top1_lo"], arm["top1_hi"],
                  arm["top3"], arm["top3_lo"], arm["top3_hi"], arm["mrr"]))
+    print("  %-3s %-6s %-18s %-16s %-10s %8s %-18s %8s %-18s %8s"
+          % ("-", "-", "gpt-5.6-sol", "not-run", "addendum", "-", "-", "-", "-", "-"))
+
+    # Frozen declaration, research/catchbench-m4-declaration-v3.md, Erratum 2,
+    # lines 727 to 735 and 787 to 792. This was a choice, not model unavailability.
+    print("\n  gpt-5.6-sol was declared but not run. No subscription CLI served it, and its only")
+    print("  route was the NAIRR gateway, whose remote plain HTTP endpoint the adapter refuses.")
+    print("  The required SSH forward was not set up, because gpt-6-astra was preferred as the")
+    print("  more advanced model in the same vendor family, before either OpenAI score existed.")
+    print("  This was a configuration decision, not model unavailability. No score exists for it.")
+
+    print("\n  Channel records: addendum channels come from provider_declared_configuration in")
+    print("  data/llm_judge_addendum/*.sidecar.json. These are reconstructed configurations;")
+    print("  no invocation channel was retained. gpt-5.5's Codex CLI generation is documented")
+    print("  in tools/llm_judge_codex.py. not-recorded means the published cache or addendum")
+    print("  sidecar supplies no channel and this report has no documented generation channel.")
+    print("  source means published or addendum; it does not name a generation channel.")
 
     widest = max(a["top1"] for a in arms) - min(a["top1"] for a in arms)
     print("\n  %d arms across a Top-1 spread of %.4f. Top-1 is rank == 1 after the stable sort, not"
