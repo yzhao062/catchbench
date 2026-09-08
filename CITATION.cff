@@ -1,0 +1,28 @@
+cff-version: 1.2.0
+message: "If you use this software, please cite the paper in preferred-citation below."
+title: "CatchBench"
+abstract: "A benchmark for auditing agent failures across the full lifecycle."
+type: software
+authors:
+  - family-names: "Zhao"
+    given-names: "Yue"
+    orcid: "https://orcid.org/0000-0003-3401-4921"
+repository-code: "https://github.com/yzhao062/catchbench"
+license: MIT
+keywords:
+  - "agent-evaluation"
+  - "auditing"
+  - "benchmark"
+  - "llm-agents"
+  - "ai-safety"
+  - "reproducible-research"
+preferred-citation:
+  type: article
+  title: "CatchBench: When Can an Agent Failure Be Caught?"
+  authors:
+    - family-names: "Zhao"
+      given-names: "Yue"
+      orcid: "https://orcid.org/0000-0003-3401-4921"
+  journal: "arXiv preprint arXiv:2608.22808"
+  year: 2026
+  url: "https://arxiv.org/abs/2608.22808"
