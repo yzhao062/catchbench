@@ -62,13 +62,23 @@ The first runner job answers it. Two outcomes:
 
 Do not respond by widening `check_board.py`'s tolerance. Exact comparison is what makes the check
 worth having; a tolerance hides the small real movements it exists to catch. One narrow exception is
-already in place and should stay narrow: the three row prefixes in `TORCH_ROW_PREFIXES` reconcile
-within `NEURAL_TOLERANCE`, because the golden was generated on Windows and ubuntu CI reproduces two
-of those values one digit apart from the float kernels underneath torch. Two independent CI runs
-produced the same two values, so the difference is between platforms rather than between runs.
+already in place and should stay narrow: the two rows named in `TORCH_ROW_PREFIXES` reconcile within
+`NEURAL_TOLERANCE`, because the golden was generated on Windows and ubuntu CI reproduces those two
+values a digit or two apart from the float kernels underneath torch. That list named three model
+families until 2026-09-08, which covered seventeen board lines and forty of the board's 653 values
+while only two rows had ever been seen to move. It now names those two rows and nothing else.
+
+Two independent CI runs produced the same two values, so the difference was first recorded as
+between platforms rather than between runs. A scheduled run on 2026-09-08 withdrew that reading with
+a third value for `pygod-anomalydae`, 0.485, on the same commit; the same run changed one line of
+274 and left the other sixteen previously tolerated rows byte-exact. Add a row to the list only with
+a produced board showing it move, which every board run now uploads whether it passes or fails.
+
 `tests/test_board_tolerance.py` holds that hole open no wider: a torch row that moves further fails,
-a non-torch row fails on its last digit, a renamed method is never reconciled, and the tolerance may
-not exceed the seed variance the paper publishes.
+a torch row never observed to move is compared exactly, a non-torch row fails on its last digit, a
+renamed method is never reconciled, a difference sitting exactly on the bound is tolerated rather
+than lost to binary floating point, and the tolerance may not exceed the seed variance the paper
+publishes.
 
 ## Regenerating the golden
 

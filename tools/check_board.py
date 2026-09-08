@@ -130,9 +130,14 @@ def normalize(text: str) -> list[str]:
 #     g-safeguard (sup GNN)   0.828 -> 0.829
 #     pygod-anomalydae        0.490 -> 0.487
 #
-# A second, independent CI run produced the same two values, so this is a stable difference between
-# platforms rather than nondeterminism between runs. The cause is underneath torch: a different BLAS,
-# a different reduction order, a different build.
+# A second, independent CI run produced the same two values, which is why this was first recorded as a
+# stable difference between platforms rather than nondeterminism between runs. That reading is
+# withdrawn. A scheduled run on 2026-09-08 produced pygod-anomalydae 0.485, a third value for the same
+# row on the same commit, so the row does move between runs and not only between platforms. What that
+# run also showed is how narrow the movement is: of 274 board lines it changed exactly one, and the
+# other sixteen rows this tolerance covers, g-safeguard among them, reproduced byte for byte.
+# The cause is still underneath torch: a different BLAS, a different reduction order, a different
+# build, and now also a run-to-run path that is not pinned by the seed.
 #
 # The tolerance is 0.005, smaller than the seed variance the paper already reports for the larger of
 # the two rows, 0.824 +/- 0.007 for g-safeguard over five joint split and initialization seeds. A
@@ -142,8 +147,27 @@ def normalize(text: str) -> list[str]:
 # Everything outside these rows stays byte-exact. Widening the tolerance to the whole board would
 # leave it unable to see a real regression in the rule methods, which are exact by construction and
 # are most of the board.
-TORCH_ROW_PREFIXES = ("guardian (", "g-safeguard (", "pygod")
+#
+# The list names the two rows rather than three model families, and that narrowing is the point. The
+# family prefixes ("guardian (", "g-safeguard (", "pygod") matched seventeen board lines carrying
+# forty of the board's 653 values, while the rows ever observed to move are the two below, carrying
+# four. Thirty-six values were being tolerated on no evidence at all, which is the same mistake the
+# paragraph above warns about, made one level down. The paper states the exception as two torch-backed
+# cells, so this is also what makes that sentence exactly true rather than an understatement.
+#
+# A row that starts moving later will fail this check, and that is the intended outcome: a red run
+# saying "a new row moved" is the observation, and absorbing it silently is what this list is for
+# avoiding. Add a row here only with a produced board showing it move, which every run now uploads.
+TORCH_ROW_PREFIXES = ("g-safeguard (sup GNN)", "pygod-anomalydae")
 NEURAL_TOLERANCE = 0.005
+
+# The comparison runs on Decimal, not float, and the reason is a run this check rejected. A scheduled
+# CI job produced pygod-anomalydae 0.485 against a golden 0.490, a difference of exactly the tolerance
+# above. In binary floating point that subtraction is 0.0050000000000000044, which is greater than
+# 0.005 by 4.3e-18, so a difference sitting on the documented bound failed the bound. The board prints
+# decimals, so the arithmetic that decides whether two printed cells agree is done on decimals. The
+# float form is kept as the published constant because it is what the prose quotes.
+_NEURAL_TOLERANCE = Decimal(str(NEURAL_TOLERANCE))
 
 _FLOAT = re.compile(r"-?\d+\.\d+")
 
@@ -165,7 +189,7 @@ def within_neural_tolerance(want_line: str, got_line: str) -> bool:
         return False
     if _FLOAT.sub("#", want_line) != _FLOAT.sub("#", got_line):
         return False
-    return all(abs(float(x) - float(y)) <= NEURAL_TOLERANCE for x, y in zip(a, b))
+    return all(abs(Decimal(x) - Decimal(y)) <= _NEURAL_TOLERANCE for x, y in zip(a, b))
 
 
 def reconcile_neural_rows(want: list[str], got: list[str]) -> tuple[list[str], list[str], int]:

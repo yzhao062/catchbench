@@ -6,15 +6,19 @@ found the golden, generated on Windows, disagreeing with ubuntu-latest on exactl
     g-safeguard (sup GNN)   0.828 -> 0.829
     pygod-anomalydae        0.490 -> 0.487
 
-A second, independent CI run reproduced the same two values, so the difference is stable between
-platforms rather than random between runs, and it comes from the float kernels underneath torch. The
-paper already reports 0.824 +/- 0.007 for the larger of the two over five seeds, so a movement of
-0.001 is inside the uncertainty it publishes.
+A second, independent CI run reproduced the same two values, which is why the difference was first
+recorded as stable between platforms rather than random between runs. A scheduled run on 2026-09-08
+withdrew that reading by producing a third value, pygod-anomalydae 0.485, for the same row on the
+same commit. It also showed how narrow the movement is: of 274 board lines it changed exactly one.
+The cause is the float kernels underneath torch. The paper already reports 0.824 +/- 0.007 for the
+larger of the two over five seeds, so a movement of 0.001 is inside the uncertainty it publishes.
 
-A tolerance is a hole in a check, so this file bounds it: the exact values CI produced pass, a torch
-row that moves further than the tolerance fails, and a non-torch row that moves by one digit in the
-last place fails. Without the third of those the tolerance could quietly widen to the whole board,
-which is most of the check's value, because the rule methods are exact by construction.
+A tolerance is a hole in a check, so this file bounds it four ways: the exact values CI produced
+pass, a difference sitting exactly on the documented bound passes, a torch row that moves further
+than the tolerance fails, and rows that no produced board has ever shown moving are compared
+exactly, as is any non-torch row that moves by one digit in the last place. Without the last two the
+tolerance would quietly widen to the whole board, which is most of the check's value, because the
+rule methods are exact by construction.
 """
 from __future__ import annotations
 
@@ -81,9 +85,13 @@ def test_a_non_torch_row_fails_on_the_last_digit(golden_lines):
 
 
 def test_a_torch_row_whose_label_changed_is_not_reconciled():
-    """Only the numbers may move. A renamed method is a different method."""
+    """Only the numbers may move. A renamed method is a different method.
+
+    Both lines name a tolerated row, so this reaches the label comparison rather than stopping at
+    the is-this-row-covered guard, which is what the test is for.
+    """
     assert not check_board.within_neural_tolerance(
-        "  pygod-anomalydae          0.490", "  pygod-dominant            0.491")
+        "  pygod-anomalydae          0.490", "  g-safeguard (sup GNN)     0.491")
 
 
 def test_a_board_that_gained_a_line_is_never_reconciled(golden_lines):
@@ -96,3 +104,51 @@ def test_a_board_that_gained_a_line_is_never_reconciled(golden_lines):
 def test_the_tolerance_is_smaller_than_the_published_seed_variance():
     """0.005 is a claim about the paper, so it fails here if someone widens it past that claim."""
     assert check_board.NEURAL_TOLERANCE < 0.007
+
+
+def test_a_difference_sitting_exactly_on_the_bound_is_tolerated():
+    """The regression this covers rejected a run for being 4.3e-18 over its own documented bound.
+
+    A scheduled CI job produced pygod-anomalydae 0.485 against a golden 0.490. That difference is
+    exactly NEURAL_TOLERANCE, so it has to pass, but in binary floating point the subtraction is
+    0.0050000000000000044 and the comparison failed. The check now subtracts decimals, which is what
+    the board prints.
+    """
+    assert check_board.within_neural_tolerance(
+        "  pygod-anomalydae          0.490", "  pygod-anomalydae          0.485")
+
+
+def test_the_bound_is_exact_at_several_magnitudes():
+    """One passing pair could be luck in binary. These differ by exactly the bound as well."""
+    for want, got in (("0.500", "0.495"), ("0.300", "0.295"), ("0.828", "0.823")):
+        assert check_board.within_neural_tolerance(
+            "  pygod-anomalydae          %s" % want,
+            "  pygod-anomalydae          %s" % got), (want, got)
+
+
+def test_one_printed_step_past_the_bound_still_fails():
+    """The control in the red direction: fixing the boundary must not widen the tolerance."""
+    assert not check_board.within_neural_tolerance(
+        "  pygod-anomalydae          0.490", "  pygod-anomalydae          0.484")
+
+
+def test_a_torch_row_never_observed_to_move_is_compared_exactly():
+    """The narrowing itself, in the red direction.
+
+    pygod-gaan, pygod-conad and the guardian and pygod family rows are scored by torch too, but no
+    produced board has ever shown them move. They were tolerated by family prefix, which meant a real
+    regression on any of them would have been folded into agreement. They are exact again.
+    """
+    for label in ("pygod-gaan               ", "pygod-conad              ",
+                  "guardian (recon-AE)      ", "pygod (graph AD)         "):
+        assert not check_board.within_neural_tolerance(
+            "  %s 0.490" % label, "  %s 0.489" % label), label
+
+
+def test_the_tolerated_rows_are_the_ones_the_paper_names():
+    """The paper states the exception as two torch-backed cells. This is that sentence, mechanically.
+
+    It fails if someone re-widens the list to families without also changing 08_statements.tex.
+    """
+    assert len(check_board.TORCH_ROW_PREFIXES) == 2
+    assert set(check_board.TORCH_ROW_PREFIXES) == {"g-safeguard (sup GNN)", "pygod-anomalydae"}

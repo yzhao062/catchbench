@@ -113,8 +113,14 @@ jobs:
 
       # The board prints the corpus revisions it scored, so keeping it means a mismatch can be read
       # without re-running anything.
+      #
+      # Kept on every run, not only on failure. Uploading only the failures means the sample of what
+      # this board actually does run to run is the sample of what already broke, which is how a
+      # tolerance ends up covering forty values on evidence from two. A passing run that moved a
+      # torch row within tolerance is the observation worth having, and it is invisible unless the
+      # board it produced is kept.
       - name: Upload the produced board
-        if: failure()
+        if: always()
         uses: actions/upload-artifact@v6
         with:
           name: board-produced

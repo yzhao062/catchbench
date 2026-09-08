@@ -25,12 +25,17 @@ always       tests/test_addendum_tools.py::test_the_scorer_runs_with_sidecars_si
 always       tests/test_addendum_tools.py::test_the_sidecar_check_rejects_a_sidecar_that_is_not_json
 always       tests/test_addendum_tools.py::test_the_sidecar_check_rejects_records_naming_the_wrong_runs
 always       tests/test_board_tolerance.py::test_a_board_that_gained_a_line_is_never_reconciled
+always       tests/test_board_tolerance.py::test_a_difference_sitting_exactly_on_the_bound_is_tolerated
 always       tests/test_board_tolerance.py::test_a_non_torch_row_fails_on_the_last_digit
 always       tests/test_board_tolerance.py::test_a_torch_row_beyond_the_tolerance_still_fails
+always       tests/test_board_tolerance.py::test_a_torch_row_never_observed_to_move_is_compared_exactly
 always       tests/test_board_tolerance.py::test_a_torch_row_whose_label_changed_is_not_reconciled
+always       tests/test_board_tolerance.py::test_one_printed_step_past_the_bound_still_fails
+always       tests/test_board_tolerance.py::test_the_bound_is_exact_at_several_magnitudes
 always       tests/test_board_tolerance.py::test_the_exact_values_ci_produced_reconcile[g-safeguard (sup GNN)     0.828-g-safeguard (sup GNN)     0.829]
 always       tests/test_board_tolerance.py::test_the_exact_values_ci_produced_reconcile[pygod-anomalydae          0.490-pygod-anomalydae          0.487]
 always       tests/test_board_tolerance.py::test_the_tolerance_is_smaller_than_the_published_seed_variance
+always       tests/test_board_tolerance.py::test_the_tolerated_rows_are_the_ones_the_paper_names
 always       tests/test_board_tolerance.py::test_the_two_rows_ci_moved_are_still_in_the_golden
 always       tests/test_check_board.py::test_a_bare_zero_is_a_value_and_not_a_placeholder
 always       tests/test_check_board.py::test_a_recorded_exemption_claims_a_non_board_table
@@ -190,6 +195,64 @@ always       tests/test_emit_live_prefix_table.py::test_the_centre_gap_bound_is_
 always       tests/test_emit_live_prefix_table.py::test_the_centre_gap_bound_is_enforced[outside-above]
 always       tests/test_emit_live_prefix_table.py::test_the_centre_gap_bound_is_enforced[outside-below]
 always       tests/test_emit_live_prefix_table.py::test_the_shipped_records_shift_the_worked_example_and_preserve_t2d
+always       tests/test_emit_pre_tables.py::test_all_110_original_printed_points
+always       tests/test_emit_pre_tables.py::test_check_accepts_both_blocks_and_environment
+always       tests/test_emit_pre_tables.py::test_check_rejects_damage_in_each_block[cell-tab:pre-main]
+always       tests/test_emit_pre_tables.py::test_check_rejects_damage_in_each_block[cell-tab:pre-source]
+always       tests/test_emit_pre_tables.py::test_check_rejects_damage_in_each_block[duplicate-tab:pre-main]
+always       tests/test_emit_pre_tables.py::test_check_rejects_damage_in_each_block[duplicate-tab:pre-source]
+always       tests/test_emit_pre_tables.py::test_check_rejects_damage_in_each_block[missing_begin-tab:pre-main]
+always       tests/test_emit_pre_tables.py::test_check_rejects_damage_in_each_block[missing_begin-tab:pre-source]
+always       tests/test_emit_pre_tables.py::test_check_rejects_damage_in_each_block[missing_end-tab:pre-main]
+always       tests/test_emit_pre_tables.py::test_check_rejects_damage_in_each_block[missing_end-tab:pre-source]
+always       tests/test_emit_pre_tables.py::test_check_rejects_damage_in_each_block[reversed-tab:pre-main]
+always       tests/test_emit_pre_tables.py::test_check_rejects_damage_in_each_block[reversed-tab:pre-source]
+always       tests/test_emit_pre_tables.py::test_check_rejects_directory_without_tables[No PRE tables here.]
+always       tests/test_emit_pre_tables.py::test_check_rejects_directory_without_tables[None]
+always       tests/test_emit_pre_tables.py::test_check_rejects_directory_without_tables[\\label{app:board-values}\n\\subsection{Additional PRE Board Values}\n\\subsection{Additional LIVE Prefix Results}]
+always       tests/test_emit_pre_tables.py::test_check_rejects_directory_without_tables[]
+always       tests/test_emit_pre_tables.py::test_check_rejects_hidden_misplaced_and_crlf_blocks
+always       tests/test_emit_pre_tables.py::test_cli_missing_paper_argument_exits_nonzero
+always       tests/test_emit_pre_tables.py::test_independent_cluster_ratio_bootstrap[llm_judge_needed(llama-3.3-70b)-overall-recall]
+always       tests/test_emit_pre_tables.py::test_independent_cluster_ratio_bootstrap[owasp_excess_functionality-n8n-f1]
+always       tests/test_emit_pre_tables.py::test_independent_cluster_ratio_bootstrap[owasp_excess_permissions-overall-precision]
+always       tests/test_emit_pre_tables.py::test_record_order_and_parsed_support
+always       tests/test_emit_pre_tables.py::test_recorded_precision_intervals_keep_endpoints_and_seed
+always       tests/test_emit_pre_tables.py::test_section_guards_are_required[\\label{app:board-values}]
+always       tests/test_emit_pre_tables.py::test_section_guards_are_required[\\subsection{Additional LIVE Prefix Results}]
+always       tests/test_emit_pre_tables.py::test_section_guards_are_required[\\subsection{Additional PRE Board Values}]
+always       tests/test_emit_pre_tables.py::test_stream_resets_for_every_method_and_metric
+always       tests/test_emit_pre_tables.py::test_zero_cells_exemptions_and_metadata
+always       tests/test_emit_protocol_table.py::test_all_30_counts_reproduce_the_original_printed_rates
+always       tests/test_emit_protocol_table.py::test_all_at_once_labels_are_shared_with_localization
+always       tests/test_emit_protocol_table.py::test_bin_uses_the_frozen_stream_for_every_cell
+always       tests/test_emit_protocol_table.py::test_check_cli_accepts_matching_block[False]
+always       tests/test_emit_protocol_table.py::test_check_cli_accepts_matching_block[True]
+always       tests/test_emit_protocol_table.py::test_check_cli_rejects_stale_paper[changed_cell-protocol table differs]
+always       tests/test_emit_protocol_table.py::test_check_cli_rejects_stale_paper[crlf-protocol table differs]
+always       tests/test_emit_protocol_table.py::test_check_cli_rejects_stale_paper[duplicate_marker-appears 2 times]
+always       tests/test_emit_protocol_table.py::test_check_cli_rejects_stale_paper[missing_begin-appears 0 times]
+always       tests/test_emit_protocol_table.py::test_check_cli_rejects_stale_paper[missing_end-appears 0 times]
+always       tests/test_emit_protocol_table.py::test_check_cli_rejects_stale_paper[no_appendix-cannot read appendix]
+always       tests/test_emit_protocol_table.py::test_check_cli_rejects_stale_paper[no_table-appears 0 times]
+always       tests/test_emit_protocol_table.py::test_check_cli_rejects_stale_paper[reversed_markers-precedes its begin marker]
+always       tests/test_emit_protocol_table.py::test_check_cli_rejects_stale_paper[whitespace-protocol table differs]
+always       tests/test_emit_protocol_table.py::test_check_cli_requires_paper_path
+always       tests/test_emit_protocol_table.py::test_claim_order_and_pairwise_intervals_cannot_change_marginal_results
+always       tests/test_emit_protocol_table.py::test_cli_prints_deterministic_lf_bytes
+always       tests/test_emit_protocol_table.py::test_incompatible_record_is_a_hard_failure[duplicate_arm-duplicate all-at-once scalars disagree]
+always       tests/test_emit_protocol_table.py::test_incompatible_record_is_a_hard_failure[duplicate_claim-found 2]
+always       tests/test_emit_protocol_table.py::test_incompatible_record_is_a_hard_failure[identity-incompatible metric or arm identity]
+always       tests/test_emit_protocol_table.py::test_incompatible_record_is_a_hard_failure[metric-incompatible metric or arm identity]
+always       tests/test_emit_protocol_table.py::test_incompatible_record_is_a_hard_failure[missing_claim-found 0]
+always       tests/test_emit_protocol_table.py::test_incompatible_record_is_a_hard_failure[support-expected n=126]
+always       tests/test_emit_protocol_table.py::test_invalid_scalar_is_a_hard_failure[-0.1]
+always       tests/test_emit_protocol_table.py::test_invalid_scalar_is_a_hard_failure[0.003968253968253968]
+always       tests/test_emit_protocol_table.py::test_invalid_scalar_is_a_hard_failure[0.452]
+always       tests/test_emit_protocol_table.py::test_invalid_scalar_is_a_hard_failure[1.1]
+always       tests/test_emit_protocol_table.py::test_invalid_scalar_is_a_hard_failure[inf]
+always       tests/test_emit_protocol_table.py::test_invalid_scalar_is_a_hard_failure[nan]
+always       tests/test_emit_protocol_table.py::test_roundoff_within_tolerance_is_accepted
 always       tests/test_emit_stats_table.py::test_a_changed_caption_fails
 always       tests/test_emit_stats_table.py::test_a_changed_cell_fails
 always       tests/test_emit_stats_table.py::test_a_changed_group_header_fails
@@ -437,6 +500,8 @@ always       tests/test_tools_are_not_stdlib_shadows.py::test_tool_name_does_not
 always       tests/test_tools_are_not_stdlib_shadows.py::test_tool_name_does_not_shadow_a_stdlib_module[emit_boards_table]
 always       tests/test_tools_are_not_stdlib_shadows.py::test_tool_name_does_not_shadow_a_stdlib_module[emit_detection_audit]
 always       tests/test_tools_are_not_stdlib_shadows.py::test_tool_name_does_not_shadow_a_stdlib_module[emit_live_prefix_table]
+always       tests/test_tools_are_not_stdlib_shadows.py::test_tool_name_does_not_shadow_a_stdlib_module[emit_pre_tables]
+always       tests/test_tools_are_not_stdlib_shadows.py::test_tool_name_does_not_shadow_a_stdlib_module[emit_protocol_table]
 always       tests/test_tools_are_not_stdlib_shadows.py::test_tool_name_does_not_shadow_a_stdlib_module[emit_stats_table]
 always       tests/test_tools_are_not_stdlib_shadows.py::test_tool_name_does_not_shadow_a_stdlib_module[emit_third_party_notices]
 always       tests/test_tools_are_not_stdlib_shadows.py::test_tool_name_does_not_shadow_a_stdlib_module[emit_transfer_table]
