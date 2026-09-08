@@ -2,8 +2,7 @@
 
 The benchmark board is the source of truth for every plotted number.  Each accessor below names
 the exact section header it expects, so a renamed section is a hard failure rather than an empty
-figure.  The PRE and LIVE figures also display registered verdicts; those non-numeric annotations
-come from ``tools/statistical_tests_results.json`` and are included in the figure provenance payload.
+figure. The provenance payload carries the measurements used by each figure.
 """
 
 from __future__ import annotations
@@ -411,114 +410,6 @@ def live_prefix(
     return prefixes, threshold, resolved
 
 
-def _registered_claims(
-    stats_path: Path | str = DEFAULT_STATS,
-) -> dict[str, dict[str, object]]:
-    path = Path(stats_path)
-    try:
-        root = json.loads(path.read_text(encoding="utf-8"))
-    except (OSError, json.JSONDecodeError) as exc:
-        raise BoardDataError(f"cannot read registered verdicts at {path}: {exc}") from exc
-    claims = root.get("claims")
-    if not isinstance(claims, list):
-        raise BoardDataError(f"{path} has no claims list")
-    by_id: dict[str, dict[str, object]] = {}
-    for claim in claims:
-        if not isinstance(claim, dict) or not isinstance(claim.get("id"), str):
-            raise BoardDataError(f"{path} carries a claim without an id")
-        claim_id = claim["id"]
-        if claim_id in by_id:
-            raise BoardDataError(f"{path} repeats claim {claim_id!r}")
-        by_id[claim_id] = claim
-    return by_id
-
-
-def _pre_verdicts(stats_path: Path | str = DEFAULT_STATS) -> dict[str, str]:
-    path = Path(stats_path)
-    by_id = _registered_claims(path)
-
-    verdicts: dict[str, str] = {}
-    for source in ("crewai", "n8n", "mcp", "injecagent", "sweagent", "synthetic"):
-        claim_id = f"pre.source.{source}.best.vs.flag_all"
-        if claim_id not in by_id:
-            raise BoardDataError(f"{path} has no registered claim {claim_id!r}")
-        raw = by_id[claim_id].get("verdict")
-        if raw == "separates_as_stated":
-            verdicts[source] = "separates"
-        elif raw == "does_not_separate":
-            verdicts[source] = "unresolved"
-        else:
-            raise BoardDataError(f"{path} claim {claim_id!r} has unknown verdict {raw!r}")
-    return verdicts
-
-
-def _live_threshold_claims(
-    prefixes: list[int],
-    corpora: dict[str, dict[str, list[float]]],
-    threshold: float,
-    stats_path: Path | str = DEFAULT_STATS,
-) -> dict[str, dict[str, list[dict[str, str] | None]]]:
-    """Registered method-versus-0.70 claims, with absent cells left as point estimates.
-
-    Each cell carries which side of the bar its estimate falls on. The bar families are two-sided,
-    so a separation says the cell differs from 0.70 without saying which way, and a caller that
-    wants to name a direction has to read it from the estimate. Carrying it here rather than in the
-    caller puts it inside the figure payload, so a figure whose subtitle names a side goes stale
-    when a side moves. A subtitle that hardcoded the side was how a nine-cell two-sided result was
-    rendered as nine cells above the bar, with the asset checker passing because the image matched
-    the generator that produced it.
-    """
-
-    path = Path(stats_path)
-    by_id = _registered_claims(path)
-    corpus_ids = {"swegym": "swe", "tau": "tau"}
-    threshold_families = {"swegym": "live_swegym_threshold_auc",
-                          "tau": "live_tau_threshold_auc"}
-    out: dict[str, dict[str, list[dict[str, str] | None]]] = {}
-    for corpus, rows in corpora.items():
-        corpus_id = corpus_ids[corpus]
-        expected_family = threshold_families[corpus]
-        out[corpus] = {}
-        for method in rows:
-            cells: list[dict[str, str] | None] = []
-            for prefix in prefixes:
-                claim_id = f"live.{corpus_id}.bar.{prefix}.{method}"
-                claim = by_id.get(claim_id)
-                if claim is None:
-                    cells.append(None)
-                    continue
-                estimate = claim.get("estimate")
-                if (claim.get("family") != expected_family
-                        or claim.get("metric") != "roc_auc"
-                        or not isinstance(estimate, dict)
-                        or estimate.get("a_name") != method
-                        or estimate.get("b_name") != "fixed bar"
-                        or not math.isclose(float(estimate.get("b", math.nan)), threshold,
-                                            abs_tol=1e-12)):
-                    raise BoardDataError(
-                        f"{path} claim {claim_id!r} is not the expected LIVE threshold contrast"
-                    )
-                raw = claim.get("verdict")
-                if raw == "separates_as_stated":
-                    verdict = "separates"
-                elif raw == "does_not_separate":
-                    verdict = "unresolved"
-                else:
-                    raise BoardDataError(
-                        f"{path} claim {claim_id!r} has unknown verdict {raw!r}"
-                    )
-                difference = estimate.get("difference_a_minus_b")
-                if not isinstance(difference, (int, float)):
-                    raise BoardDataError(
-                        f"{path} claim {claim_id!r} carries no numeric difference"
-                    )
-                cells.append({"claim_id": claim_id, "family": expected_family,
-                              "verdict": verdict,
-                              "side": "above" if difference > 0 else "below"})
-            out[corpus][method] = cells
-    return out
-
-
 def scored_blocks(board_path: Path | str = DEFAULT_BOARD) -> list[str]:
     """Every scored board block the lifecycle hero counts, as ``phase|board|corpus``.
 
@@ -542,7 +433,10 @@ def figure_payload(
     board_path: Path | str = DEFAULT_BOARD,
     stats_path: Path | str = DEFAULT_STATS,
 ) -> dict[str, object]:
-    """The complete semantic input used by one committed README figure."""
+    """The complete semantic input used by one committed README figure.
+
+    ``stats_path`` remains accepted for compatibility; figures read only the board.
+    """
 
     if figure_id == "board_live_prefix":
         prefixes, threshold, corpora = live_prefix(board_path)
@@ -552,9 +446,6 @@ def figure_payload(
             "prefixes": prefixes,
             "threshold": threshold,
             "corpora": corpora,
-            "registered_threshold_claims": _live_threshold_claims(
-                prefixes, corpora, threshold, stats_path
-            ),
         }
     if figure_id == "board_pre_source":
         columns, rows = pre_by_source(board_path)
@@ -563,7 +454,6 @@ def figure_payload(
             "metric": "F1",
             "columns": columns,
             "rows": rows,
-            "registered_verdicts": _pre_verdicts(stats_path),
         }
     if figure_id == "catchbench_data_at_a_glance":
         facts = parse_board(board_path)
@@ -588,3 +478,29 @@ def canonical_payload(payload: dict[str, object]) -> str:
 
 def payload_digest(payload: dict[str, object]) -> str:
     return hashlib.sha256(canonical_payload(payload).encode("utf-8")).hexdigest()
+
+
+def save_board_png(fig, output: Path, payload: dict[str, object], dpi: int = 160) -> None:
+    """Export a board-only RGB figure with its measurement payload and source.
+
+    Rendering imports stay local so the asset checker needs only the standard library.
+    """
+    import io
+
+    from PIL import Image, PngImagePlugin
+
+    rendered = io.BytesIO()
+    fig.savefig(rendered, format="png", dpi=dpi, facecolor="white", transparent=False,
+                bbox_inches="tight", pad_inches=0.12)
+    rendered.seek(0)
+    with Image.open(rendered) as source:
+        image = source.convert("RGB")
+        metadata = PngImagePlugin.PngInfo()
+        metadata.add_text(META_FIGURE, payload["figure"])
+        metadata.add_text(META_PAYLOAD, canonical_payload(payload))
+        metadata.add_text(META_DIGEST, payload_digest(payload))
+        metadata.add_text(META_SOURCE, SOURCE_DESCRIPTION)
+        output.parent.mkdir(parents=True, exist_ok=True)
+        image.save(output, format="PNG", pnginfo=metadata, optimize=True, dpi=(dpi, dpi))
+        width, height = image.size
+    print(f"wrote {output} ({width}x{height}, data {payload_digest(payload)})")

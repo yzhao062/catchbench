@@ -180,7 +180,7 @@ def table(five: dict, twenty: dict) -> str:
         r"committed seed records. The upper block is each unsupervised detector's ROC-AUC over "
         r"%d initialization seeds, with the interval on its mean. The supervised reference varies "
         r"on a different axis and over five seeds, so its row is separated. The lower block is the "
-        r"run-size control on GAAN, and the Welch comparison that places it below the supervised "
+        r"run-size control on GAAN, and the Welch comparison of GAAN with the supervised "
         r"reference. SD is the seed record's own \texttt{std} field, which is the population form "
         r"over the seeds drawn, and is what the body prints after a plus-or-minus; the interval is "
         r"the ordinary t interval and therefore uses the sample form, so its half-width is slightly "

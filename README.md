@@ -10,7 +10,7 @@ run, a growing prefix while it runs, and the finished trace after it ends.
 [![arXiv](https://img.shields.io/badge/status-arXiv%202608.22808-blue.svg)](https://arxiv.org/abs/2608.22808)
 [![Code license](https://img.shields.io/badge/code%20license-MIT-blue.svg)](LICENSE)
 [![Python](https://img.shields.io/badge/python-3.10%20%7C%203.12-blue.svg)](pyproject.toml)
-[![Tests](https://img.shields.io/badge/tests-448-brightgreen.svg)](tests/expected_tests.txt)
+[![Tests](https://img.shields.io/badge/tests-460-brightgreen.svg)](tests/expected_tests.txt)
 [![Boards](https://img.shields.io/badge/boards-PRE%20%7C%20LIVE%20%7C%20POST-orange.svg)](#the-boards)
 
 [Quickstart](#quickstart) · [The Boards](#the-boards) · [Task List](#the-full-task-list) · [Add a Method](#how-a-method-plugs-in) · [Full Install](#the-full-board)
@@ -417,8 +417,7 @@ Random retains its x reference marker. The panels show a
 descriptive domain split, and no comparison across the two corpora is computed. The online per-run span is the
 lowest curve at the shortest prefix on SWE-Gym, and on tau-bench it sits just above the random
 reference there; it is the only setting that is genuinely
-online. Drawn by `figure-src/board_live_prefix.py` from `tests/golden/board.txt` and
-`tools/statistical_tests_results.json`.
+online. Drawn by `figure-src/board_live_prefix.py` from `tests/golden/board.txt`.
 
 **LIVE online stale-state detection (catch it live).** The same Gold stale-state injection is detected
 online at a fixed false-positive rate instead of localized post-hoc. At realized false-positive rates
@@ -527,7 +526,7 @@ per-rule per-source numbers print from `run.py`):
 Each row prints one source's best method beside that same source's floor, which is the only
 comparison the labels support. The floor itself moves by nearly a factor of five across the six
 sources, so a pooled F1 says little about whether a method earned its false alarms anywhere. Drawn by `figure-src/board_pre_source.py`
-from `tests/golden/board.txt` and `tools/statistical_tests_results.json`.
+from `tests/golden/board.txt`.
 
 Label origin per column: crewai, n8n, and mcp carry cross-vendor LLM-judge labels (Cohen's kappa 0.666,
 `data/pre/LABEL_QUALITY.md`); injecagent is a roster relabel; sweagent is declared-minus-used; the

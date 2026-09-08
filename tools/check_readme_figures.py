@@ -125,13 +125,9 @@ def check_assets(board: Path = DEFAULT_BOARD, stats: Path = DEFAULT_STATS,
                 f"{path}: data digest is {found_digest!r}, expected {expected_digest}"
             )
         expected_source = bd.SOURCE_DESCRIPTION
-        if figure_id == "board_pre_source":
-            expected_source += "; tools/statistical_tests_results.json (verdict words only)"
-        elif figure_id == "board_live_prefix":
-            expected_source += "; tools/statistical_tests_results.json (threshold verdicts and estimate sides)"
-        elif figure_id == "hero-lifecycle":
+        if figure_id == "hero-lifecycle":
             expected_source += "; README.md (phrase checks only)"
-        # catchbench_data_at_a_glance reads the board alone, so the bare description stands.
+        # All other figures read the board alone, so the bare description stands.
         if metadata.get(bd.META_SOURCE) != expected_source:
             problems.append(f"{path}: missing or wrong {bd.META_SOURCE!r} metadata")
         if color_type in (4, 6):
@@ -152,7 +148,8 @@ def check_assets(board: Path = DEFAULT_BOARD, stats: Path = DEFAULT_STATS,
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--board", type=Path, default=DEFAULT_BOARD)
-    parser.add_argument("--stats", type=Path, default=DEFAULT_STATS)
+    parser.add_argument("--stats", type=Path, default=DEFAULT_STATS,
+                        help="accepted for compatibility; figures read only --board")
     parser.add_argument("--assets", type=Path, default=DEFAULT_ASSETS)
     args = parser.parse_args(argv)
     problems = check_assets(args.board, args.stats, args.assets)

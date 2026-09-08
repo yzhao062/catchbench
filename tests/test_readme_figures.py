@@ -1,4 +1,4 @@
-"""The README-image gate must detect stale data and stale verdict annotations."""
+"""The README-image gate must detect stale measurements and incorrect provenance."""
 
 from __future__ import annotations
 
@@ -8,6 +8,8 @@ import struct
 import sys
 import zlib
 from pathlib import Path
+
+import pytest
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -85,16 +87,44 @@ def _stats_with_one_verdict_flipped(tmp_path, claim_id: str) -> Path:
     return stats
 
 
-def test_a_changed_pre_verdict_makes_only_the_pre_figure_stale(tmp_path):
-    """One flipped PRE verdict must reach the PRE figure and leave the LIVE one alone.
-
-    The two figures annotate different claim families out of the same file. A test that
-    flipped one of each at once would still pass if those dependencies became crossed,
-    so each figure gets its own mutation and its own sibling assertion.
-    """
+def test_a_changed_pre_verdict_does_not_change_the_figures(tmp_path):
     stats = _stats_with_one_verdict_flipped(tmp_path, "pre.source.mcp.best.vs.flag_all")
 
-    problems = checker.check_assets(stats=stats)
+    assert checker.check_assets(stats=stats) == []
+
+
+def test_a_changed_live_verdict_does_not_change_the_figures(tmp_path):
+    stats = _stats_with_one_verdict_flipped(tmp_path, "live.tau.bar.100.full")
+
+    assert checker.check_assets(stats=stats) == []
+
+
+def test_figures_do_not_read_the_statistics_record(tmp_path, monkeypatch):
+    stats = tmp_path / "absent-statistics.json"
+    read_text = Path.read_text
+
+    def board_only(path, *args, **kwargs):
+        assert path not in (stats, checker.DEFAULT_STATS)
+        return read_text(path, *args, **kwargs)
+
+    monkeypatch.setattr(Path, "read_text", board_only)
+
+    assert checker.check_assets(stats=stats) == []
+
+
+@pytest.mark.parametrize("method,old,new", [
+    ("flag_all", "0.388", "0.387"),
+    ("llm_judge_needed(llama-3.3-70b)", "0.518", "0.517"),
+])
+def test_a_moved_pre_floor_or_score_makes_only_pre_stale(tmp_path, method, old, new):
+    text = checker.DEFAULT_BOARD.read_text(encoding="utf-8")
+    line = next(line for line in text.splitlines()
+                if line.strip().startswith(method + " ") and old in line)
+    assert text.count(line) == 1
+    board = tmp_path / "board.txt"
+    board.write_text(text.replace(line, line.replace(old, new, 1)), encoding="utf-8")
+
+    problems = checker.check_assets(board=board)
 
     assert any("board_pre_source.png: stale semantic payload" in problem
                for problem in problems)
@@ -102,20 +132,86 @@ def test_a_changed_pre_verdict_makes_only_the_pre_figure_stale(tmp_path):
                    for problem in problems)
 
 
-def test_a_changed_live_verdict_makes_only_the_live_figure_stale(tmp_path):
-    stats = _stats_with_one_verdict_flipped(tmp_path, "live.tau.bar.100.full")
+def test_a_moved_prefix_position_makes_live_stale(tmp_path):
+    text = checker.DEFAULT_BOARD.read_text(encoding="utf-8")
+    board = tmp_path / "board.txt"
+    board.write_text(text.replace("25%", "20%"), encoding="utf-8")
 
-    problems = checker.check_assets(stats=stats)
+    problems = checker.check_assets(board=board)
 
     assert any("board_live_prefix.png: stale semantic payload" in problem
                for problem in problems)
-    assert not any("board_pre_source.png: stale semantic payload" in problem
-                   for problem in problems)
+
+
+@pytest.mark.parametrize("figure_id", ["board_pre_source", "board_live_prefix"])
+def test_board_pngs_carry_no_significance_annotations(figure_id):
+    raw = (checker.DEFAULT_ASSETS / f"{figure_id}.png").read_bytes().lower()
+    assert not any(word in raw for word in (b"separates", b"unresolved", b"holm", b"verdict"))
 
 
 def _png_chunk(kind: bytes, data: bytes) -> bytes:
     return (struct.pack(">I", len(data)) + kind + data
             + struct.pack(">I", zlib.crc32(kind + data) & 0xFFFFFFFF))
+
+
+def _assets_with_replaced_metadata(tmp_path, figure_id, replacements):
+    for path in checker.DEFAULT_ASSETS.glob("*.png"):
+        raw = path.read_bytes()
+        if path.stem == figure_id:
+            chunks = [checker.PNG_SIGNATURE]
+            offset = len(checker.PNG_SIGNATURE)
+            while offset < len(raw):
+                length = struct.unpack(">I", raw[offset:offset + 4])[0]
+                kind = raw[offset + 4:offset + 8]
+                data = raw[offset + 8:offset + 8 + length]
+                if kind == b"tEXt":
+                    key = data.partition(b"\0")[0].decode("latin-1")
+                    if key in replacements:
+                        value = replacements[key]
+                        if value is None:
+                            offset += length + 12
+                            continue
+                        data = key.encode("latin-1") + b"\0" + value.encode("latin-1")
+                chunks.append(_png_chunk(kind, data))
+                offset += length + 12
+            raw = b"".join(chunks)
+        (tmp_path / path.name).write_bytes(raw)
+    return tmp_path
+
+
+@pytest.mark.parametrize("figure_id,old_suffix", [
+    ("board_pre_source", "verdict words only"),
+    ("board_live_prefix", "threshold verdicts and estimate sides"),
+])
+@pytest.mark.parametrize("missing", [False, True])
+def test_old_or_missing_board_provenance_fails(tmp_path, figure_id, old_suffix, missing):
+    source = None if missing else (
+        checker.bd.SOURCE_DESCRIPTION + f"; tools/statistical_tests_results.json ({old_suffix})"
+    )
+    assets = _assets_with_replaced_metadata(tmp_path, figure_id, {checker.bd.META_SOURCE: source})
+
+    problems = checker.check_assets(assets=assets)
+
+    assert any(f"{figure_id}.png: missing or wrong 'CatchBench source'" in problem
+               for problem in problems)
+
+
+@pytest.mark.parametrize("figure_id", ["board_pre_source", "board_live_prefix"])
+def test_a_stale_payload_with_its_own_valid_digest_still_fails(tmp_path, figure_id):
+    payload = checker.bd.figure_payload(figure_id)
+    if figure_id == "board_pre_source":
+        payload["rows"]["flag_all"][0] -= 0.001
+    else:
+        payload["corpora"]["swegym"]["full"][0] -= 0.001
+    assets = _assets_with_replaced_metadata(tmp_path, figure_id, {
+        checker.bd.META_PAYLOAD: checker.bd.canonical_payload(payload),
+        checker.bd.META_DIGEST: checker.bd.payload_digest(payload),
+    })
+
+    problems = checker.check_assets(assets=assets)
+
+    assert any(f"{figure_id}.png: stale semantic payload" in problem for problem in problems)
+    assert any(f"{figure_id}.png: data digest is" in problem for problem in problems)
 
 
 def _write_png(path: Path, color_type: int, *, palette=None, trns=None) -> None:

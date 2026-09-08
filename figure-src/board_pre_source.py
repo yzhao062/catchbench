@@ -35,7 +35,6 @@ def render(board_path: Path, stats_path: Path, output: Path) -> None:
     payload = bd.figure_payload("board_pre_source", board_path, stats_path)
     columns = payload["columns"]
     rows = payload["rows"]
-    verdicts = payload["registered_verdicts"]
     sources = [column for column in columns if column != "overall"]
 
     if "flag_all" not in rows:
@@ -51,20 +50,19 @@ def render(board_path: Path, stats_path: Path, output: Path) -> None:
     for source in sources:
         column = columns.index(source)
         best = max(methods, key=lambda name: (rows[name][column], name))
-        comparisons.append((source, rows["flag_all"][column], best, rows[best][column],
-                            verdicts[source]))
+        comparisons.append((source, rows["flag_all"][column], best, rows[best][column]))
 
     fb.style(matplotlib)
     fig, ax = plt.subplots(figsize=(8.0, 6.4))
     y_positions = list(reversed(range(len(comparisons))))
-    for y, (source, floor, best, score, verdict) in zip(y_positions, comparisons):
-        color = fb.GREEN if verdict == "separates" else fb.MUTED
+    for y, (source, floor, best, score) in zip(y_positions, comparisons):
+        color = fb.INK
         ax.plot([floor, score], [y, y], color=color, linewidth=3.2, alpha=0.75,
                 solid_capstyle="round", zorder=2)
         ax.plot(floor, y, marker="s", markersize=10, markerfacecolor="white",
                 markeredgecolor=fb.INK, markeredgewidth=1.8, zorder=4)
         ax.plot(score, y, marker="o", markersize=11,
-                markerfacecolor=color if verdict == "separates" else "white",
+                markerfacecolor="white",
                 markeredgecolor=color, markeredgewidth=2.2, zorder=5)
         ax.text(floor, y + 0.22, f"{floor:.3f}", fontsize=11.5, ha="center", va="bottom",
                 color=fb.INK)
@@ -74,12 +72,10 @@ def render(board_path: Path, stats_path: Path, output: Path) -> None:
             label_x, align = score + 0.018, "left"
         ax.text(label_x, y - 0.22, f"{SHORT[best]}  {score:.3f}", fontsize=11.5,
                 ha=align, va="top", color=color, fontweight="bold")
-        ax.text(1.04, y, verdict, fontsize=12.5, ha="left", va="center", color=color,
-                fontweight="bold" if verdict == "separates" else "normal")
 
     ax.set_yticks(y_positions)
     ax.set_yticklabels(sources, fontsize=14)
-    ax.set_xlim(0.0, 1.27)
+    ax.set_xlim(0.0, 1.08)
     ax.set_ylim(-0.65, len(comparisons) - 0.35)
     ax.set_xticks([0.0, 0.25, 0.5, 0.75, 1.0])
     ax.set_xlabel("F1", fontsize=15, labelpad=8)
@@ -91,31 +87,29 @@ def render(board_path: Path, stats_path: Path, output: Path) -> None:
         Line2D([0], [0], marker="s", color="none", markerfacecolor="white",
                markeredgecolor=fb.INK, markeredgewidth=1.8, markersize=9,
                label="flag-everything floor"),
-        Line2D([0], [0], marker="o", color=fb.GREEN, markerfacecolor=fb.GREEN,
-               markeredgecolor=fb.GREEN, markersize=9, linewidth=2.5,
-               label="best method; registered separation"),
-        Line2D([0], [0], marker="o", color=fb.MUTED, markerfacecolor="white",
-               markeredgecolor=fb.MUTED, markersize=9, linewidth=2.5,
-               label="best method; unresolved"),
+        Line2D([0], [0], marker="o", color=fb.INK, markerfacecolor="white",
+               markeredgecolor=fb.INK, markersize=9, linewidth=2.5,
+               label="best method by F1"),
     ]
     fig.legend(handles=legend, loc="upper left", bbox_to_anchor=(0.14, 0.90), frameon=False,
                fontsize=11.5, handlelength=2.0)
-    fig.suptitle("PRE: does the best method beat flagging everything?", fontsize=19,
+    fig.suptitle("PRE: best method and flag-everything floor", fontsize=19,
                  fontweight="bold", y=0.99)
-    fig.text(0.14, 0.93, "Per-source F1; verdicts come from registered source-level tests",
+    fig.text(0.14, 0.93, "Per-source F1",
              fontsize=12.5, color=fb.MUTED)
     fig.text(0.14, 0.018,
-             "injecagent uses roster-derived labels; its separation is specific to that construction.",
+             "injecagent uses roster-derived labels.",
              fontsize=11.5, color=fb.MUTED)
     fig.subplots_adjust(top=0.78, bottom=0.12, left=0.15, right=0.98)
-    fb.save_web_png(fig, output, "board_pre_source", payload)
+    bd.save_board_png(fig, output, payload)
     plt.close(fig)
 
 
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--board", type=Path, default=bd.DEFAULT_BOARD)
-    parser.add_argument("--stats", type=Path, default=bd.DEFAULT_STATS)
+    parser.add_argument("--stats", type=Path, default=bd.DEFAULT_STATS,
+                        help="accepted for compatibility; figures read only --board")
     parser.add_argument("--output", type=Path, default=DEFAULT_OUTPUT)
     args = parser.parse_args(argv)
     render(args.board, args.stats, args.output)

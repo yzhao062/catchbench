@@ -1,14 +1,13 @@
-"""Shared web rendering and semantic provenance for board-derived README figures."""
+"""Shared matplotlib styling for the board-derived README figures.
+
+The PNG writer that used to live here is gone. It stamped each export with a source string naming
+the statistics record, which the two board figures no longer read, and it had no callers left once
+they moved to ``board_data.save_board_png``. Keeping a second copy of the metadata contract, with
+the wrong source on it, was the failure waiting to happen. This module now carries palette and axis
+styling only, so it needs neither Pillow nor the board module.
+"""
 
 from __future__ import annotations
-
-import io
-from pathlib import Path
-
-from PIL import Image, PngImagePlugin
-
-import board_data as bd
-
 
 WHITE = "#FFFFFF"
 INK = "#17212B"
@@ -50,27 +49,3 @@ def clean_axes(ax) -> None:
     ax.tick_params(axis="both", length=0)
     ax.set_axisbelow(True)
 
-
-def save_web_png(fig, output: Path, figure_id: str, payload: dict[str, object], dpi: int = 160) -> None:
-    """Save an opaque RGB PNG and bind its semantic inputs as PNG text chunks."""
-
-    output.parent.mkdir(parents=True, exist_ok=True)
-    rendered = io.BytesIO()
-    fig.savefig(rendered, format="png", dpi=dpi, facecolor=WHITE, transparent=False,
-                bbox_inches="tight", pad_inches=0.12)
-    rendered.seek(0)
-    with Image.open(rendered) as source:
-        image = source.convert("RGB")
-        metadata = PngImagePlugin.PngInfo()
-        metadata.add_text(bd.META_FIGURE, figure_id)
-        metadata.add_text(bd.META_PAYLOAD, bd.canonical_payload(payload))
-        metadata.add_text(bd.META_DIGEST, bd.payload_digest(payload))
-        provenance = bd.SOURCE_DESCRIPTION
-        if figure_id == "board_pre_source":
-            provenance += "; tools/statistical_tests_results.json (verdict words only)"
-        elif figure_id == "board_live_prefix":
-            provenance += "; tools/statistical_tests_results.json (threshold verdicts and estimate sides)"
-        metadata.add_text(bd.META_SOURCE, provenance)
-        image.save(output, format="PNG", pnginfo=metadata, optimize=True, dpi=(dpi, dpi))
-        width, height = image.size
-    print(f"wrote {output} ({width}x{height}, data {bd.payload_digest(payload)})")
