@@ -11,24 +11,47 @@ The README half does three narrower things. It extracts every numeric pipe table
 and compares each cell exactly against the committed golden board. It scans every decimal numeral
 outside pipe tables and fenced code blocks; a numeral must either equal a parsed golden cell at its
 displayed precision or be claimed exactly once by ``PROSE_NUMBER_ALLOWLIST``, with a one-line
-reason. Allowances and claim licences use unique content substrings, not line numbers, so unrelated
+reason. Allowances and board claims use unique content substrings, not line numbers, so unrelated
 insertions do not invalidate them. Finally, it scans prose paragraphs under ``The Boards`` for the
-comparison spellings in ``COMPARATIVE_WORD``. Every paragraph it finds must map through
-``CLAIM_LICENSES`` to claim IDs in ``tools/statistical_tests_results.json``.
+comparison spellings in ``COMPARATIVE_WORD``. Every paragraph it finds must be claimed by
+exactly one ``BOARD_CLAIMS`` entry, which declares the measurements that paragraph states.
 
-For a registered claim, ``separates_as_stated`` licenses an ordering. A
-``does_not_separate`` verdict licenses only disclosure: the paragraph must also contain one of the
-explicit phrases in ``NON_SEPARATION_PHRASES``. Without such a phrase, the same verdict makes a bare
-ordering fail.
+*What replaced the verdict licence.* Until this change, a paragraph was licensed by a registered
+claim's ``verdict``: ``separates_as_stated`` licensed an ordering, and ``does_not_separate``
+licensed only a paragraph carrying an explicit non-separation phrase. That gate encoded a
+reporting policy this benchmark no longer follows. A benchmark reports measurements; whether a
+comparison reaches significance is not the benchmark's claim to make, and a non-significant result
+is as much a finding as a significant one. So the gate now reads the measurement, not the verdict.
 
-The comparison scan is a registry gate, not natural-language understanding. It catches a new
-paragraph that uses one of the registered comparison spellings, a removed content licence, a missing
-claim ID, and a non-separating claim presented without an explicit disclosure phrase. It cannot catch
-a comparison phrased without those spellings, inspect prose outside ``The Boards``, or prove that a
-registered ID semantically names every method and metric asserted in a paragraph. Reviewers still
-have to check that mapping. It also cannot distinguish assertion from disclosure when one sentence
-contains both. Such a sentence is treated as disclosure, so the rule errs toward passing it. A new
-comparison added to an already licensed paragraph can likewise escape the registry.
+A ``BoardClaim`` declares two kinds of measurement. A ``BoardOrdering`` names two golden board cells
+and asserts which one the paragraph puts higher; the checker resolves both cells through the same
+source binding ``TABLE_SPECS`` uses and fails when the printed values do not agree with the stated
+order. A ``RecordedDifference`` names one contrast in ``tools/statistical_tests_results.json`` and
+says whether the paragraph orders the contrast's two arms, or cites it without ordering them; the
+checker reads that record's ``estimate`` and fails when the sign of ``difference_a_minus_b``
+disagrees. It reads no ``verdict``, no ``p_raw``, and no ``p_adjusted_holm``, and it never asks
+whether an interval excludes zero. A paragraph that orders nothing declares
+``reports_no_ordering`` with its reason, in the shape ``NON_BOARD_TABLES`` uses for a table.
+
+The rewritten README retains the Gold analytic-floor measurements and LIVE point-estimate
+comparisons. Their bindings follow that prose. The removed LIVE figure family counts and SWE-Gym
+threshold-side statements have no bindings; source comments record what those entries used to bind.
+
+The comparison scan is a coverage gate over a registry, not natural-language understanding. It
+catches a new paragraph that uses one of the registered comparison spellings, a removed entry, a
+missing or duplicated claim ID, a stated order the board contradicts, a stated order the recorded
+estimate contradicts, and a record whose own arithmetic disagrees with itself. It cannot catch a
+comparison phrased without those spellings, inspect prose outside ``The Boards``, or prove that a
+registered measurement is the one a sentence actually rests on. A new comparison added to an already
+claimed paragraph can still escape it. Reviewers still have to read the mapping.
+
+``check_adjudicating_numbers`` is the one lexical rule kept, and it is deliberately narrow: a
+printed ``Holm`` or a printed p-value fails, anywhere outside a fenced code block. Those two
+spellings have no other use in this README. The wider vocabulary a reader might expect here,
+``separates``, ``resolves`` and ``unresolved``, is **not** gated, because this README spends all
+three on ordinary English and on SWE-Gym run outcomes ("188 failed, 188 resolved"). A gate that
+fires there would be noise. The policy binds the inference a sentence makes, and no regular
+expression sees that.
 
 Two rules govern the README check.
 
@@ -38,9 +61,10 @@ golden cell is rounded to the precision the prose chose before comparison.
 
 *Fail closed.* Every numeric README table must be claimed exactly once by ``TABLE_SPECS`` (or by a
 reasoned ``NON_BOARD_TABLES`` entry), and every non-board prose numeral must be claimed exactly once
-by its registry. Every comparator paragraph in scope must have one content licence. A table,
-numeral, paragraph, allowance, licence, golden source, or claim ID that matches nothing or matches
-more than once is a failure, never a silent skip.
+by its registry. Every comparator paragraph in scope must be claimed by one ``BOARD_CLAIMS`` entry,
+and that entry must name a measurement or record why the paragraph orders nothing. A table,
+numeral, paragraph, allowance, board claim, golden source, or claim ID that matches nothing or
+matches more than once is a failure, never a silent skip.
 
 Usage::
 
@@ -743,13 +767,66 @@ class ProseParagraph:
     text: str
 
 
+# What a paragraph may say about the two arms of a recorded contrast. The vocabulary is about
+# order, not about evidence strength: a benchmark reports which cell is higher and by how much, and
+# says so or declines to. ``NO_ORDERING`` is the honest registration for a pair the paragraph cites
+# without ranking, and it is what a near-tie should carry.
+A_ABOVE_B = "a_above_b"
+B_ABOVE_A = "b_above_a"
+NO_ORDERING = "no_ordering"
+_STATES = frozenset({A_ABOVE_B, B_ABOVE_A, NO_ORDERING})
+
+
 @dataclass(frozen=True)
-class ClaimLicense:
-    """The statistical claim IDs licensed for one uniquely anchored README paragraph."""
+class Cell:
+    """One golden board cell, named the way a :class:`TableSpec` names one."""
+
+    block: str
+    row: str
+    column: str
+    part: int | None = None  # index into a "/"-joined cell, e.g. Top-1 of "0.309/0.414/0.402"
+
+    def render(self) -> str:
+        part = "" if self.part is None else f" part {self.part}"
+        return f"{self.block} / {self.row} / {self.column}{part}"
+
+
+@dataclass(frozen=True)
+class BoardOrdering:
+    """Two golden cells a README paragraph puts in an order, highest first."""
+
+    above: Cell
+    below: Cell
+
+
+@dataclass(frozen=True)
+class RecordedDifference:
+    """One recorded contrast a README paragraph cites, and the order it states over the two arms.
+
+    ``states`` is :data:`A_ABOVE_B`, :data:`B_ABOVE_A`, or :data:`NO_ORDERING`. The checker compares
+    it against the sign of the record's ``estimate.difference_a_minus_b`` and reads nothing else
+    from the record. The record's p-values and verdict stay where they are; this gate does not
+    consult them, so a changed verdict cannot turn a stated ordering green or red.
+    """
+
+    claim_id: str
+    states: str = NO_ORDERING
+
+
+@dataclass(frozen=True)
+class BoardClaim:
+    """The measurements one uniquely anchored README paragraph states.
+
+    An entry must declare at least one ordering or one recorded difference, or say in
+    ``reports_no_ordering`` why the paragraph orders nothing. An entry that declares neither is a
+    failure rather than a silent pass, for the same reason a numeric table with no spec is.
+    """
 
     name: str
     paragraph_contains: str
-    claim_ids: tuple[str, ...]
+    orderings: tuple[BoardOrdering, ...] = ()
+    differences: tuple[RecordedDifference, ...] = ()
+    reports_no_ordering: str = ""
 
 
 def _logical_markdown_line(line: str) -> str:
@@ -990,10 +1067,12 @@ COMPARATIVE_WORD = re.compile(
     re.IGNORECASE,
 )
 
-# A non-separating claim is accepted only when its paragraph says so explicitly. Keep this tuple
-# named and literal: adding a euphemism here changes which negative claims the gate treats as honest
-# disclosure rather than unsupported ordering.
-NON_SEPARATION_PHRASES = (
+# Phrases that discuss a pair without ordering it. They are trigger vocabulary for the paragraph
+# scan and nothing more: they license no claim and satisfy no rule. Their job is that a paragraph
+# which touches a comparison only in the negative is still accounted for by ``BOARD_CLAIMS`` rather
+# than falling outside the scan. Keep the tuple literal, because every addition widens what the
+# coverage gate has to account for.
+NON_ORDERING_PHRASES = (
     r"do not separate",
     r"does not separate",
     r"fail to separate",
@@ -1011,10 +1090,26 @@ NON_SEPARATION_PHRASES = (
     r"unresolved",
     r"tie(?:s|d)?\s+(?:at|the|with)",
 )
-NON_SEPARATION_WORD = re.compile(
-    r"\b(?:" + "|".join(NON_SEPARATION_PHRASES) + r")\b",
+NON_ORDERING_WORD = re.compile(
+    r"\b(?:" + "|".join(NON_ORDERING_PHRASES) + r")\b",
     re.IGNORECASE,
 )
+
+# The whole lexical surface of the reporting policy, and it is two spellings wide on purpose.
+#
+# The policy is about inference: prose reports observed scores, differences, and explicitly labelled
+# marginal intervals, and does not read a reliable advantage out of a threshold crossing. No regular
+# expression sees an inference. What a regular expression can see is the apparatus a reader is
+# invited to do the inference with, and in this README that apparatus is exactly two things: the
+# name of the family-wise correction, and a printed p-value.
+#
+# Nothing wider is gated. ``separates``, ``resolves`` and ``unresolved`` all carry ordinary meanings
+# in this file -- "separate tracks", "the pillars are separate", "188 failed, 188 resolved" as
+# SWE-Gym run outcomes, "unresolved terms" in the licensing section, "pip resolves whatever torch is
+# newest". A gate over those would fire on ten sentences that are not comparisons at all, and a gate
+# that cries wolf is switched off within a week. This one has no false positive in the file it
+# guards.
+ADJUDICATION_MARKER = re.compile(r"\bHolm\b|\bp\s*[=<>]\s*\.?\d", re.IGNORECASE)
 
 
 def scan_comparative_paragraphs(text: str) -> list[ProseParagraph]:
@@ -1031,7 +1126,7 @@ def scan_comparative_paragraphs(text: str) -> list[ProseParagraph]:
         nonlocal paragraph, start_line
         if paragraph:
             prose = " ".join(part.strip() for part in paragraph)
-            if COMPARATIVE_WORD.search(prose) or NON_SEPARATION_WORD.search(prose):
+            if COMPARATIVE_WORD.search(prose) or NON_ORDERING_WORD.search(prose):
                 paragraphs.append(ProseParagraph(start_line, end_line, prose))
         paragraph, start_line = [], 0
 
@@ -1084,14 +1179,141 @@ def _claim_index(data: Mapping[str, Any]) -> tuple[dict[str, Mapping[str, Any]],
     return index, counts
 
 
-def check_comparative_claims(readme_text: str, statistical_data: Mapping[str, Any],
-                             licenses: Sequence[ClaimLicense]) -> tuple[list[Problem], int, int]:
-    """Validate content licences and verdicts. Returns problems, paragraphs seen, and licensed.
+def _cell_number(text: str) -> tuple[Decimal, bool] | None:
+    """Parse the leading printed value out of a golden cell, with its percent flag.
 
-    ``separates_as_stated`` licenses an ordering. ``does_not_separate`` licenses only a paragraph
-    carrying a phrase from :data:`NON_SEPARATION_PHRASES`. This lexical rule cannot distinguish an
-    assertion from disclosure when the same sentence contains both; it treats that sentence as
-    disclosure and therefore errs toward passing it.
+    Board cells are not bare numbers. They carry spreads (``0.824+/-0.007``), realized rates in
+    parentheses (``0.024 (6.1%)``), and slash triples that ``Cell.part`` has already split. Taking
+    the first numeral is what every other consumer of these cells does, and the percent flag travels
+    with it so a fraction and a percentage can never be ordered against each other by accident.
+    """
+    match = _PROSE_NUMBER.search(text.strip())
+    if match is None:
+        return None
+    token = match.group(0)
+    percent = token.endswith("%")
+    try:
+        return Decimal(token[:-1] if percent else token), percent
+    except InvalidOperation:
+        return None
+
+
+def _check_ordering(name: str, ordering: BoardOrdering, blocks: Mapping[str, GoldenBlock],
+                    counts: Counter, line: int | None) -> list[Problem]:
+    """Compare one stated ordering against the two golden cells it names."""
+    values: list[tuple[Decimal, bool]] = []
+    for cell in (ordering.above, ordering.below):
+        source = Source(cell.block, cell.column, cell.part)
+        printed, why = _golden_value(blocks, counts, source, cell.row)
+        if printed is None:
+            return [Problem("board-claim-unresolved",
+                            f"{name}: {cell.render()}: {why}", line=line)]
+        parsed = _cell_number(printed)
+        if parsed is None:
+            return [Problem("board-claim-unreadable",
+                            f"{name}: {cell.render()} prints {printed!r}, which carries no value "
+                            "this ordering can compare", line=line)]
+        values.append(parsed)
+    (high, high_percent), (low, low_percent) = values
+    if high_percent != low_percent:
+        return [Problem("board-claim-unreadable",
+                        f"{name}: {ordering.above.render()} and {ordering.below.render()} are "
+                        "printed on different scales, so ordering them compares nothing",
+                        line=line)]
+    if high > low:
+        return []
+    relation = "equals" if high == low else "is below"
+    return [Problem("ordering-contradicted",
+                    f"{name}: the paragraph puts {ordering.above.render()} above "
+                    f"{ordering.below.render()}, and the board {relation} it ({high} against "
+                    f"{low})", line=line)]
+
+
+def _check_difference(name: str, difference: RecordedDifference,
+                      claims: Mapping[str, Mapping[str, Any]], claim_counts: Counter[str],
+                      line: int | None) -> list[Problem]:
+    """Compare one stated ordering against the recorded contrast's own estimate."""
+    claim_id = difference.claim_id
+    if difference.states not in _STATES:
+        return [Problem("board-claim-states",
+                        f"{name}: {claim_id} states {difference.states!r}; it must be one of "
+                        f"{', '.join(sorted(_STATES))}", line=line)]
+    if claim_counts.get(claim_id, 0) > 1:
+        return [Problem("claim-duplicate",
+                        f"{name}: claim ID {claim_id!r} occurs {claim_counts[claim_id]} times",
+                        line=line)]
+    claim = claims.get(claim_id)
+    if claim is None:
+        return [Problem("claim-missing", f"{name}: no statistical claim has ID {claim_id!r}",
+                        line=line)]
+    estimate = claim.get("estimate")
+    parts: list[float] = []
+    if isinstance(estimate, Mapping):
+        for field_name in ("a", "b", "difference_a_minus_b"):
+            value = estimate.get(field_name)
+            if isinstance(value, (int, float)) and not isinstance(value, bool):
+                parts.append(float(value))
+    if len(parts) != 3:
+        return [Problem("measurement-missing",
+                        f"{name}: {claim_id} carries no numeric estimate with 'a', 'b', and "
+                        "'difference_a_minus_b', so it measures nothing this paragraph can state",
+                        line=line)]
+    a, b, recorded = parts
+    if abs((a - b) - recorded) > 1e-9:
+        return [Problem("measurement-inconsistent",
+                        f"{name}: {claim_id} records a={a!r} and b={b!r}, whose difference is "
+                        f"{a - b!r}, and reports difference_a_minus_b={recorded!r}", line=line)]
+    if difference.states == NO_ORDERING:
+        return []
+    wanted_above = difference.states == A_ABOVE_B
+    if (recorded > 0) == wanted_above and recorded != 0:
+        return []
+    high, low = ((estimate.get("a_name"), estimate.get("b_name")) if wanted_above
+                 else (estimate.get("b_name"), estimate.get("a_name")))
+    return [Problem("ordering-contradicted",
+                    f"{name}: the paragraph puts {high!r} above {low!r}, and {claim_id} records "
+                    f"difference_a_minus_b={recorded!r}", line=line)]
+
+
+def check_adjudicating_numbers(readme_text: str) -> list[Problem]:
+    """Report every printed correction name and p-value outside a fenced code block.
+
+    This is the whole lexical half of the reporting policy. See :data:`ADJUDICATION_MARKER` for why
+    it is two spellings wide and for what deliberately stays ungated.
+    """
+    problems: list[Problem] = []
+    fence_char = ""
+    fence_width = 0
+    for line_number, line in enumerate(readme_text.replace("\r\n", "\n").split("\n"), start=1):
+        logical = _logical_markdown_line(line)
+        marker = _FENCE.match(logical)
+        if marker:
+            token = marker.group(1)
+            if not fence_char:
+                fence_char, fence_width = token[0], len(token)
+            elif token[0] == fence_char and len(token) >= fence_width:
+                fence_char, fence_width = "", 0
+            continue
+        if fence_char:
+            continue
+        for hit in ADJUDICATION_MARKER.finditer(line):
+            problems.append(Problem(
+                "adjudicating-number",
+                f"{hit.group(0)!r} prints a correction name or a p-value. This benchmark reports "
+                "the measurement and leaves every p-value in "
+                "tools/statistical_tests_results.json", line=line_number))
+    return problems
+
+
+def check_board_claims(readme_text: str, blocks: Mapping[str, GoldenBlock], counts: Counter,
+                       statistical_data: Mapping[str, Any],
+                       board_claims: Sequence[BoardClaim]) -> tuple[list[Problem], int, int]:
+    """Validate each comparative paragraph's measurements. Returns problems, seen, and claimed.
+
+    A stated board ordering is checked against the two golden cells it names. A stated ordering over
+    a recorded contrast is checked against the sign of that record's ``difference_a_minus_b``. No
+    verdict, p-value, or interval endpoint is read, so a comparison that reaches significance and
+    one that does not are checked exactly alike.
     """
     paragraphs = scan_comparative_paragraphs(readme_text)
     claims, claim_counts = _claim_index(statistical_data)
@@ -1103,80 +1325,60 @@ def check_comparative_claims(readme_text: str, statistical_data: Mapping[str, An
         problems.append(Problem("claim-schema",
                                 "statistical results must contain a list named 'claims'"))
 
-    for license_ in licenses:
-        if license_.name in seen_names:
-            problems.append(Problem("licence-duplicate",
-                                    f"claim licence name {license_.name!r} appears twice"))
+    for entry in board_claims:
+        if entry.name in seen_names:
+            problems.append(Problem("board-claim-duplicate",
+                                    f"board claim name {entry.name!r} appears twice"))
             continue
-        seen_names.add(license_.name)
-        if not license_.claim_ids:
-            problems.append(Problem("licence-empty",
-                                    f"{license_.name}: licence names no claim IDs"))
-            continue
-        if not license_.paragraph_contains.strip() or "\n" in license_.paragraph_contains:
+        seen_names.add(entry.name)
+        if not entry.orderings and not entry.differences:
+            reason = entry.reports_no_ordering
+            if not reason.strip() or "\n" in reason:
+                problems.append(Problem(
+                    "board-claim-empty",
+                    f"{entry.name}: declares no ordering and no recorded difference. Name the "
+                    "measurements the paragraph states, or record in reports_no_ordering, on one "
+                    "line, why it orders nothing."))
+                continue
+        if not entry.paragraph_contains.strip() or "\n" in entry.paragraph_contains:
             problems.append(Problem(
-                "licence-anchor",
-                f"{license_.name}: content anchor must be one non-empty line"))
+                "board-claim-anchor",
+                f"{entry.name}: content anchor must be one non-empty line"))
             continue
-        matched = [(paragraph, paragraph.text.count(license_.paragraph_contains))
+        matched = [(paragraph, paragraph.text.count(entry.paragraph_contains))
                    for paragraph in paragraphs
-                   if license_.paragraph_contains in paragraph.text]
+                   if entry.paragraph_contains in paragraph.text]
         match_count = sum(count for _, count in matched)
         if match_count != 1:
             first_line = matched[0][0].start_line if matched else None
             problems.append(Problem(
-                "licence-unmatched",
-                f"{license_.name}: content anchor {license_.paragraph_contains!r} occurs "
+                "board-claim-unmatched",
+                f"{entry.name}: content anchor {entry.paragraph_contains!r} occurs "
                 f"{match_count} times in comparative paragraphs; it must occur exactly once",
                 line=first_line))
             continue
         paragraph = matched[0][0]
-        claimed.setdefault(id(paragraph), []).append(license_.name)
-        disclosure = NON_SEPARATION_WORD.search(paragraph.text)
-        for claim_id in license_.claim_ids:
-            if claim_counts.get(claim_id, 0) > 1:
-                problems.append(Problem(
-                    "claim-duplicate",
-                    f"{license_.name}: claim ID {claim_id!r} occurs {claim_counts[claim_id]} times",
-                    line=paragraph.start_line))
-                continue
-            claim = claims.get(claim_id)
-            if claim is None:
-                problems.append(Problem(
-                    "claim-missing",
-                    f"{license_.name}: no statistical claim has ID {claim_id!r}",
-                    line=paragraph.start_line))
-                continue
-            verdict = claim.get("verdict")
-            if verdict == "separates_as_stated":
-                continue
-            if verdict == "does_not_separate" and disclosure:
-                continue
-            if verdict == "does_not_separate":
-                problems.append(Problem(
-                    "claim-not-separating",
-                    f"{license_.name}: {claim_id} has verdict 'does_not_separate', but the "
-                    "paragraph has no explicit phrase from NON_SEPARATION_PHRASES",
-                    line=paragraph.start_line))
-                continue
-            problems.append(Problem(
-                "claim-verdict",
-                f"{license_.name}: {claim_id} has unsupported verdict {verdict!r}",
-                line=paragraph.start_line))
+        claimed.setdefault(id(paragraph), []).append(entry.name)
+        for ordering in entry.orderings:
+            problems.extend(_check_ordering(entry.name, ordering, blocks, counts,
+                                            paragraph.start_line))
+        for difference in entry.differences:
+            problems.extend(_check_difference(entry.name, difference, claims, claim_counts,
+                                              paragraph.start_line))
 
     for paragraph in paragraphs:
         claimers = claimed.get(id(paragraph), [])
         if not claimers:
-            word = COMPARATIVE_WORD.search(paragraph.text) or NON_SEPARATION_WORD.search(
+            word = COMPARATIVE_WORD.search(paragraph.text) or NON_ORDERING_WORD.search(
                 paragraph.text)
             problems.append(Problem(
-                "unlicensed-comparison",
+                "unaccounted-comparison",
                 f"paragraph {paragraph.start_line}-{paragraph.end_line} contains comparative "
-                f"word {word.group(0)!r} but no CLAIM_LICENSES content anchor claims it",
+                f"word {word.group(0)!r} but no BOARD_CLAIMS content anchor claims it",
                 line=paragraph.start_line))
         elif len(claimers) > 1:
             problems.append(Problem(
-                "comparison-double-licensed",
+                "comparison-double-claimed",
                 f"paragraph {paragraph.start_line}-{paragraph.end_line} is claimed by "
                 f"{', '.join(claimers)}", line=paragraph.start_line))
     return problems, len(paragraphs), len(claimed)
@@ -1257,6 +1459,10 @@ PROSE_NUMBER_ALLOWLIST: tuple[ProseNumberAllowance, ...] = (
     ProseNumberAllowance("localization-corpus-counts", "126 failed runs",
                          ("126", "1099", "11%"),
                          "Who&When run, step, and fault-rate counts."),
+    ProseNumberAllowance("headline-localization-counts",
+                         "Eight of eleven LLM judges score between",
+                         ("1", "126"),
+                         "Top-1 metric index and Who&When run count in the headline summary."),
     ProseNumberAllowance("judge-panel-count", "11-model panel", ("11",),
                          "Count of judge models in the panel."),
     ProseNumberAllowance("localization-band-run-count", "band from 0.333",
@@ -1279,14 +1485,10 @@ PROSE_NUMBER_ALLOWLIST: tuple[ProseNumberAllowance, ...] = (
                          "difference rather than taken between the displayed cells. Subtracting "
                          "the two displayed SWE-Gym cells gives 0.141; the exact difference is "
                          "0.141625. Section 5 of the paper prints the same 0.142."),
-    ProseNumberAllowance("swegym-holm-p", "Holm p=0.0001", ("0.0001",),
-                         "Holm-adjusted p-value."),
-    ProseNumberAllowance("tau-holm-p", "p=0.068", ("0.068",),
-                         "Holm-adjusted p-value. The paragraph once repeated the tau-bench "
-                         "+0.046 here to qualify it; the qualification is now carried by the "
-                         "word unresolved, so only the p-value is claimed."),
-    ProseNumberAllowance("guardian-holm-p", "p=0.376", ("0.376",),
-                         "Holm-adjusted p-value."),
+    # The four Holm-adjusted p-value allowances that stood here are gone. Under this benchmark's
+    # reporting policy no printed p-value is a board number the README may carry with a reason: the
+    # p-values live in tools/statistical_tests_results.json. The matching README prose has been
+    # removed; reintroducing it fails both the numeral and adjudication checks.
     ProseNumberAllowance("gsafeguard-seed-mean", "cross-validation seeds", ("0.824",),
                          "Five-seed mean reported in the golden reading notes."),
     ProseNumberAllowance("dominant-publication-year", "Ding et al.", ("2019",),
@@ -1297,8 +1499,6 @@ PROSE_NUMBER_ALLOWLIST: tuple[ProseNumberAllowance, ...] = (
     ProseNumberAllowance("gsafeguard-citation", "G-Safeguard (Wang et al.",
                          ("2025", "2502.11127"),
                          "Publication year and arXiv identifier."),
-    ProseNumberAllowance("gsafeguard-holm-p", "Holm p=1", ("1",),
-                         "Holm-adjusted p-value."),
     ProseNumberAllowance("gold-run-count", "There are 188 clean SWE-Gym runs", ("188",),
                          "Count of clean SWE-Gym runs used for injection."),
     ProseNumberAllowance("gold-fault-counts", "fault each: 82 stale-state", ("82", "106"),
@@ -1306,9 +1506,13 @@ PROSE_NUMBER_ALLOWLIST: tuple[ProseNumberAllowance, ...] = (
     ProseNumberAllowance("eligible-candidate-count", "mean of 7.4", ("7.4",),
                          "Mean eligible candidate count from the golden board heading."),
     ProseNumberAllowance("gold-dropped-analytic-floor",
-                         "below the dropped-grounding analytic floor", ("0.035",),
-                         "Analytic random floor for dropped grounding. It comes from the registered "
+                         "`has-dep` scores 0.005 on dropped grounding", ("0.035",),
+                         "Analytic random floor for dropped grounding. It comes from the recorded "
                          "gold.hasdep.dropped.floor contrast, not from a displayed board cell."),
+    ProseNumberAllowance("gold-mechanism-dropped-analytic-floor",
+                         "dropped-grounding column carries no comparable margin", ("0.035",),
+                         "The mechanism summary repeats the analytic random floor from "
+                         "gold.hasdep.dropped.floor, which is not a displayed board cell."),
     ProseNumberAllowance("gold-seed-mean", "0.795 +/-", ("0.795",),
                          "Selection-controlled five-seed mean in the golden reading notes."),
     ProseNumberAllowance("artifact-target-counts-a", "uniquely ranks all",
@@ -1330,15 +1534,15 @@ PROSE_NUMBER_ALLOWLIST: tuple[ProseNumberAllowance, ...] = (
     ProseNumberAllowance("online-target-rate", "displayed 5%", ("5%",),
                          "Target false-positive-rate threshold."),
     ProseNumberAllowance(
-        "swegym-bar-family", "20-cell SWE-Gym bar family is exploratory",
-        ("20", "75%", "50%", "75%"),
-        "Registered family size and the prefix labels of its above-bar and below-bar cells.",
+        "swegym-bar-family", "The 20 SWE-Gym cells read against the 0.70 bar",
+        ("20",),
+        "Count of SWE-Gym method-prefix cells whose exploratory intervals the paper reports.",
     ),
-    ProseNumberAllowance(
-        "live-figure-bar-families", "Each corpus registers all 20 nonrandom method-prefix cells",
-        ("20", "75%", "18"),
-        "Registered family size, the SWE-Gym above-bar prefixes, and the tau separating count.",
-    ),
+    # swegym-bar-family also bound 75%, 50%, and 75% labels in statements about sides of the bar.
+    # Those statements were removed; the rewritten paragraph retains only the exploratory count.
+    # live-figure-bar-families bound "Each corpus registers all 20 nonrandom method-prefix cells"
+    # and its 20, 75%, and 18 numerals. The caption now describes curves and individual intervals;
+    # it no longer reports a family size, above-bar prefixes, or a tau separating count.
     ProseNumberAllowance(
         "live-stale-descriptive-design", "displayed cells from 82 paired runs",
         ("82", "410"),
@@ -1395,9 +1599,10 @@ PROSE_NUMBER_ALLOWLIST: tuple[ProseNumberAllowance, ...] = (
 )
 
 
-# Populated below with distinctive content from each README paragraph. A non-separating ID remains
-# registered when it is the evidence the prose invokes, so the disclosure phrase is checked rather
-# than hiding the statistical contract as an omission.
+# The eight-model Who&When band. The paragraph cites the pair set and ranks nothing inside it, so
+# every member is registered with NO_ORDERING: the binding is to the record, and the ordering check
+# has nothing to check. Deleting one of these contrasts from the record still turns the README red,
+# which is the source binding this registry exists for.
 _LOCALIZATION_BAND_CLAIMS = (
     "loc.band.gpt-5.5.vs.claude-opus-4.8",
     "loc.band.gpt-5.5.vs.gpt-5.4",
@@ -1429,100 +1634,311 @@ _LOCALIZATION_BAND_CLAIMS = (
     "loc.band.gpt-oss-20b.vs.llama-3.3-70b",
 )
 
-_TAU_THRESHOLD_CLAIMS = tuple(
-    f"live.tau.bar.{prefix}.{method}"
-    for prefix in ("25", "50", "75", "100")
-    for method in ("size (flat)", "auditable (size+deps)", "full", "pyod (ECOD)",
-                   "dep-span (online)")
+_GOLD_ATTRIB = "[post] gold-attribution :: swegym-gold"
+# The prefix board prints one block per corpus under the same title, so the golden index numbers
+# them. SWE-Gym is first in the board and tau-bench second.
+_LIVE_PREFIX_SWE = "live streaming early-warning#1"
+_LIVE_PREFIX_TAU = "live streaming early-warning#2"
+
+_LIVE_METHODS = ("size (flat)", "auditable (size+deps)", "full", "pyod (ECOD)",
+                 "dep-span (online)")
+_LIVE_PREFIXES = ("25", "50", "75", "100")
+
+# Every tau-bench prefix cell sits below the fixed 0.70 bar, which is what the paragraph says and
+# what the board prints: the highest tau cell anywhere on that board is full at 100%, 0.665. Each
+# bar contrast records the cell as ``a`` and 0.70 as ``b``, so "below the bar" is B_ABOVE_A.
+_TAU_BELOW_BAR = tuple(
+    RecordedDifference(f"live.tau.bar.{prefix}.{method}", B_ABOVE_A)
+    for prefix in _LIVE_PREFIXES for method in _LIVE_METHODS
 )
 
-_SWE_THRESHOLD_CLAIMS = tuple(
-    f"live.swe.bar.{prefix}.{method}"
-    for prefix in ("25", "50", "75", "100")
-    for method in ("size (flat)", "auditable (size+deps)", "full", "pyod (ECOD)",
-                   "dep-span (online)")
-)
+# _SWE_BAR_SIDES bound full above the bar at all four prefixes and dep-span below it at 25%, 50%,
+# and 75%. The rewritten LIVE paragraph no longer states those sides, so those bindings are gone.
+# It retains the SWE-Gym 25% method comparison and the tau-bench below-bar measurements.
 
-_SWE_LIVE_METHOD_CLAIMS = (
-    "live.swe25.auditable.vs.size",
-    "live.swe.25.auditable.vs.ecod",
-    "live.swe25.full.vs.auditable (size+deps)",
-    "live.swe25.full.vs.pyod (ECOD)",
-    "live.swe.50.auditable.vs.ecod",
-    "live.swe.75.auditable.vs.ecod",
-    "live.swe.100.auditable.vs.ecod",
-)
 
-CLAIM_LICENSES: tuple[ClaimLicense, ...] = (
-    ClaimLicense(
-        "Who&When localization comparisons",
-        "band from 0.333 up that 126 runs do not separate",
-        _LOCALIZATION_BAND_CLAIMS + (
-            "loc.gpt55.vs.random",
-            "loc.gpt55.vs.auditable (blast)",
-            "loc.gpt55.vs.position",
-            "loc.gpt55.vs.pygod (graph AD)",
-            "loc.gpt55.vs.exec-rank (sup.)",
-            "loc.exec.vs.position.top1",
-            "loc.exec.vs.position.top3",
-            "loc.exec.vs.position.mrr",
-            "loc.position.vs.mistral-small",
-            "loc.position.vs.nova-micro",
+def _loc(row: str, column: str = "top1") -> Cell:
+    return Cell(_POST_LOC, row, column)
+
+
+def _det_swe(row: str) -> Cell:
+    return Cell(_POST_DET_SWE, row, "roc-auc")
+
+
+def _det_tau(row: str) -> Cell:
+    return Cell(_POST_DET_TAU, row, "roc-auc")
+
+
+def _matched(row: str, column: str) -> Cell:
+    """One Top-1 cell of the Gold eligibility-matched control, whose cells are Top-1/Top-3/MRR."""
+    return Cell(_GOLD_MATCHED, row, column, part=0)
+
+
+def _prefix(block: str, row: str, prefix: str) -> Cell:
+    return Cell(block, row, f"{prefix}%")
+
+
+# Each entry names the measurements one README paragraph states. Anchors are chosen from the
+# descriptive half of a paragraph rather than from a sentence about a test outcome. A rewrite that
+# changes a bound measurement must reconcile its entry even when the new prose remains descriptive.
+BOARD_CLAIMS: tuple[BoardClaim, ...] = (
+    BoardClaim(
+        "Who&When localization board",
+        "GPT-5.5 has the highest Top-1 score here",
+        orderings=(
+            # "the highest Top-1 score here at 0.452", against the runner-up that would displace it.
+            BoardOrdering(_loc("llm-judge all-at-once (gpt-5.5)"),
+                          _loc("llm-judge all-at-once (claude-opus-4.8)")),
+            # "Mistral-Small and Nova-Micro fall below the position prior on point estimate".
+            BoardOrdering(_loc("position"), _loc("llm-judge all-at-once (mistral-small)")),
+            BoardOrdering(_loc("position"), _loc("llm-judge all-at-once (nova-micro)")),
+            # "localizes beyond the prior on Top-3", and the Top-1 margin the same sentence names.
+            BoardOrdering(_loc("exec-rank (sup.)", "top3"), _loc("position", "top3")),
+            BoardOrdering(_loc("exec-rank (sup.)"), _loc("position")),
+            # "the only displayed Top-1 point estimate below chance, 0.048 against the 0.119 floor".
+            BoardOrdering(_loc("random"), _loc("pygod (graph AD)")),
+        ),
+        differences=tuple(RecordedDifference(claim_id) for claim_id in _LOCALIZATION_BAND_CLAIMS)
+        + (
+            RecordedDifference("loc.exec.vs.position.top1", A_ABOVE_B),
+            RecordedDifference("loc.exec.vs.position.top3", A_ABOVE_B),
+            RecordedDifference("loc.exec.vs.position.mrr"),
+            RecordedDifference("loc.position.vs.mistral-small", A_ABOVE_B),
+            RecordedDifference("loc.position.vs.nova-micro", A_ABOVE_B),
+            RecordedDifference("loc.gpt55.vs.random", A_ABOVE_B),
+            RecordedDifference("loc.gpt55.vs.pygod (graph AD)", A_ABOVE_B),
+            RecordedDifference("loc.gpt55.vs.position", A_ABOVE_B),
+            RecordedDifference("loc.gpt55.vs.exec-rank (sup.)", A_ABOVE_B),
+            # The blast share ties the prior at displayed precision, so the paragraph ranks neither.
+            RecordedDifference("loc.gpt55.vs.auditable (blast)", A_ABOVE_B),
         ),
     ),
-    ClaimLicense("headline detection comparison",
-                 "size-normalized dependency block scores above the size-and-counts baseline",
-                 ("det.swe.auditable.vs.size", "det.tau.auditable.vs.size",
-                  "det.tau.auditable.vs.full", "det.swe.auditable.vs.ecod")),
-    ClaimLicense("unsupervised arena comparison",
-                 "GUARDIAN, the agent-specific reconstruction autoencoder",
-                 ("det.swe.guardian.vs.ecod",)),
-    ClaimLicense("G-Safeguard displayed maximum",
-                 "Neither does the task-aware structural method against the better ones",
-                 ("det.swe.auditable.vs.ecod", "det.swe.auditable.vs.guardian",
-                  "det.swe.gsafeguard.vs.full")),
-    ClaimLicense("G-Safeguard lineage maximum",
-                 "paired test against the full-feature reference does not resolve the two",
-                 ("det.swe.gsafeguard.vs.full",)),
-    ClaimLicense("Gold displayed floor comparisons",
-                 "establishes max-span above the stale-state analytic",
-                 ("gold.maxspan.stale.floor", "gold.hasdep.dropped.floor",
-                  "gold.pygod.maxspan.matched")),
-    ClaimLicense("Gold leakage-control comparisons",
-                 "Leakage check, two levels",
-                 ("gold.maxspan.stale.floor", "gold.hasdep.dropped.floor")),
-    ClaimLicense("Gold cause-attribution comparisons",
-                 "the two injections leave opposite traces",
-                 ("gold.attribution.max-span (higher=stale)",
-                  "gold.attribution.edge-count (higher=stale)")),
-    ClaimLicense("LIVE early-warning comparisons",
-                 "20-cell SWE-Gym bar family is exploratory",
-                 ("live.swe25.auditable.vs.size",) + _SWE_THRESHOLD_CLAIMS
-                 + _TAU_THRESHOLD_CLAIMS),
-    ClaimLicense("LIVE domain-split figure comparison",
-                 "Each corpus registers all 20 nonrandom method-prefix cells",
-                 _SWE_LIVE_METHOD_CLAIMS + _SWE_THRESHOLD_CLAIMS + _TAU_THRESHOLD_CLAIMS),
-    # The three rule-precision ids test each rule against the pooled base rate. They
-    # license nothing about a rule against the judge, and the paragraph they cover now
-    # says so outright rather than printing the three as a ranking.
-    ClaimLicense("PRE pooled comparisons",
-                 "combined OWASP/CWE scanner has the highest displayed rule-based F1",
-                 ("pre.combined.vs.heldout_judge",
-                   "pre.precision.owasp_privilege_escalation.vs.base_rate",
-                   "pre.precision.unrequested_high_impact.vs.base_rate",
-                   "pre.precision.sensitive_access.vs.base_rate")),
-    ClaimLicense("PRE per-source comparisons",
-                 "registered paired test declines to separate the best method from the floor",
-                 ("pre.source.crewai.best.vs.flag_all", "pre.source.n8n.best.vs.flag_all",
-                  "pre.source.mcp.best.vs.flag_all", "pre.source.injecagent.best.vs.flag_all",
-                  "pre.source.sweagent.best.vs.flag_all",
-                  "pre.source.synthetic.best.vs.flag_all")),
-    ClaimLicense("PRE declaration-order diagnostic comparison",
-                 "above the 0.990 held-out judge and above every other method",
-                 ("pre.source.injecagent.best.vs.flag_all",)),
-    ClaimLicense("PRE n8n displayed range comparison",
-                 "non-oracle methods in the table score from 0.095 to 0.411",
-                 ("pre.source.n8n.best.vs.flag_all",)),
+    BoardClaim(
+        "headline detection boards",
+        "size-normalized dependency block scores above the size-and-counts baseline",
+        orderings=(
+            BoardOrdering(_det_swe("auditable (size+deps)"), _det_swe("size (flat)")),
+            BoardOrdering(_det_tau("auditable (size+deps)"), _det_tau("size (flat)")),
+            # "PyOD ECOD exceeds the linear size model (0.765 over 0.663)", and the dependency
+            # method "scores higher again at 0.804".
+            BoardOrdering(_det_swe("pyod-flatten (ECOD)"), _det_swe("size (flat)")),
+            BoardOrdering(_det_swe("auditable (size+deps)"), _det_swe("pyod-flatten (ECOD)")),
+        ),
+        differences=(
+            RecordedDifference("det.swe.auditable.vs.size", A_ABOVE_B),
+            RecordedDifference("det.tau.auditable.vs.size", A_ABOVE_B),
+            # The structural block and the full reference tie at displayed precision on tau-bench,
+            # and the recorded difference is -0.002. Ordering them either way is what this
+            # registration refuses.
+            RecordedDifference("det.tau.auditable.vs.full"),
+            RecordedDifference("det.swe.auditable.vs.ecod", A_ABOVE_B),
+        ),
+    ),
+    BoardClaim(
+        "unsupervised arena spans",
+        "wider unsupervised arena behind the headline table",
+        orderings=(
+            # "the tabular detectors span 0.319 to 0.625, all below the 0.663 size baseline": the
+            # top of that span is the cell that would break the statement.
+            BoardOrdering(_det_swe("size (flat)"), _det_swe("pyod-copod")),
+            # "two of its members clear that baseline: CONAD at 0.750 and GAAN at 0.850".
+            BoardOrdering(_det_swe("pygod-conad"), _det_swe("size (flat)")),
+            BoardOrdering(_det_swe("pygod-gaan"), _det_swe("size (flat)")),
+            # "On tau-bench both families stay below the 0.619 size baseline", again at the top of
+            # each span.
+            BoardOrdering(_det_tau("size (flat)"), _det_tau("pyod-copod")),
+            BoardOrdering(_det_tau("size (flat)"), _det_tau("pygod-conad")),
+        ),
+        # GUARDIAN "scores 0.767 next to ECOD at 0.765", which prints both and ranks neither.
+        differences=(RecordedDifference("det.swe.guardian.vs.ecod"),),
+    ),
+    BoardClaim(
+        "SWE-Gym graph maximum",
+        "GAAN's 0.850 is a single-seed number",
+        orderings=(
+            # "DOMINANT lands under the random floor on Who&When localization".
+            BoardOrdering(_loc("random"), _loc("pygod (graph AD)")),
+            # "every PyGOD entry stays below the size baseline on tau-bench", at the family top.
+            BoardOrdering(_det_tau("size (flat)"), _det_tau("pygod-conad")),
+            # "the highest supervised SWE-Gym point estimate at 0.828".
+            BoardOrdering(_det_swe("g-safeguard (sup GNN)"), _det_swe("full")),
+        ),
+        differences=(
+            RecordedDifference("det.swe.auditable.vs.ecod"),
+            RecordedDifference("det.swe.auditable.vs.guardian"),
+        ),
+    ),
+    BoardClaim(
+        "detection baselines and lineage",
+        "The graph-AD baselines are ports of published methods",
+        orderings=(
+            # "Its 0.828 is the highest displayed value on the SWE-Gym table".
+            BoardOrdering(_det_swe("g-safeguard (sup GNN)"), _det_swe("full")),
+        ),
+        # The paragraph cites the paired comparison with the full-feature reference and orders
+        # neither arm through it; the displayed maximum above carries the ordering it does state.
+        differences=(RecordedDifference("det.swe.gsafeguard.vs.full"),),
+    ),
+    BoardClaim(
+        "Gold displayed floor comparisons",
+        "In the full pool, max-span scores 0.703 on stale-state",
+        orderings=(
+            # "max-span displays 0.805 against the displayed 0.350 floor", "degree displays 0.394".
+            BoardOrdering(_matched("max-span (control)", "stale-state"),
+                          _matched("random (matched)", "stale-state")),
+            BoardOrdering(_matched("degree", "stale-state"),
+                          _matched("random (matched)", "stale-state")),
+            # "For dropped grounding, position displays 0.321 against 0.277."
+            BoardOrdering(_matched("position", "dropped-grounding"),
+                          _matched("random (matched)", "dropped-grounding")),
+            # "PyGOD displays ... 0.404 overall", above the max-span cell beside it.
+            BoardOrdering(_matched("pygod (graph AD)", "overall"),
+                          _matched("max-span (control)", "overall")),
+        ),
+        differences=(
+            RecordedDifference("gold.maxspan.stale.floor", A_ABOVE_B),
+            # has-dep sits below the dropped-grounding analytic floor, so the record's ``b`` is the
+            # higher arm. A registration that said A_ABOVE_B here would fail on the sign.
+            RecordedDifference("gold.hasdep.dropped.floor", B_ABOVE_A),
+            RecordedDifference("gold.pygod.maxspan.matched"),
+        ),
+    ),
+    BoardClaim(
+        "Gold measured localization mechanism",
+        "Stale-state max-span scores 0.703 against its 0.029 analytic floor",
+        orderings=(
+            # The graph detector is the highest dropped-grounding cell; degree is the runner-up.
+            BoardOrdering(Cell(_GOLD_BREAKDOWN, "pygod (graph AD)", "dropped-grounding", part=0),
+                          Cell(_GOLD_BREAKDOWN, "degree", "dropped-grounding", part=0)),
+        ),
+        differences=(
+            RecordedDifference("gold.maxspan.stale.floor", A_ABOVE_B),
+            RecordedDifference("gold.hasdep.dropped.floor", B_ABOVE_A),
+        ),
+    ),
+    BoardClaim(
+        "Gold leakage controls",
+        "Leakage check, two levels",
+        orderings=(
+            # "position, degree, and `has-dep` display 0.000, 0.045, and 0.078 overall against the
+            # 0.032 random floor", with the latter two named as above it.
+            BoardOrdering(Cell(_GOLD_LOC, "has-dep (control)", "top1"),
+                          Cell(_GOLD_LOC, "random", "top1")),
+            BoardOrdering(Cell(_GOLD_LOC, "degree", "top1"),
+                          Cell(_GOLD_LOC, "random", "top1")),
+            BoardOrdering(Cell(_GOLD_LOC, "random", "top1"),
+                          Cell(_GOLD_LOC, "position", "top1")),
+            # "`has-dep` equals the matched floor at 0.350, degree scores 0.394, and the
+            # dependency-span detector scores 0.805".
+            BoardOrdering(_matched("degree", "stale-state"),
+                          _matched("has-dep (control)", "stale-state")),
+            BoardOrdering(_matched("max-span (control)", "stale-state"),
+                          _matched("has-dep (control)", "stale-state")),
+        ),
+        # The stale-state and dropped-grounding analytic-floor differences moved to "One measured
+        # localization mechanism". This paragraph now reports overall and eligible-pool controls.
+    ),
+    BoardClaim(
+        "Gold cause attribution",
+        "the two injections leave opposite traces",
+        orderings=(
+            BoardOrdering(Cell(_GOLD_ATTRIB, "max-span (higher=stale)", "roc-auc"),
+                          Cell(_GOLD_ATTRIB, "random", "roc-auc")),
+            BoardOrdering(Cell(_GOLD_ATTRIB, "edge-count (higher=stale)", "roc-auc"),
+                          Cell(_GOLD_ATTRIB, "random", "roc-auc")),
+        ),
+        differences=(
+            RecordedDifference("gold.attribution.max-span (higher=stale)", A_ABOVE_B),
+            RecordedDifference("gold.attribution.edge-count (higher=stale)", A_ABOVE_B),
+        ),
+    ),
+    BoardClaim(
+        "LIVE early warning",
+        "dependency-structure block scores 0.74",
+        orderings=(
+            # The dependency block's 0.74 is above the flat baseline's 0.63 at the 25% prefix.
+            BoardOrdering(_prefix(_LIVE_PREFIX_SWE, "auditable (size+deps)", "25"),
+                          _prefix(_LIVE_PREFIX_SWE, "size (flat)", "25")),
+        ),
+        differences=(RecordedDifference("live.swe25.auditable.vs.size", A_ABOVE_B),)
+        + _TAU_BELOW_BAR,
+    ),
+    BoardClaim(
+        "LIVE prefix figure",
+        "Drawn by `figure-src/board_live_prefix.py`",
+        orderings=(
+            # "the lowest curve at the shortest prefix on SWE-Gym", against the reference it is
+            # below there.
+            BoardOrdering(_prefix(_LIVE_PREFIX_SWE, "random", "25"),
+                          _prefix(_LIVE_PREFIX_SWE, "dep-span (online)", "25")),
+            # "on tau-bench it sits just above the random reference there".
+            BoardOrdering(_prefix(_LIVE_PREFIX_TAU, "dep-span (online)", "25"),
+                          _prefix(_LIVE_PREFIX_TAU, "random", "25")),
+        ),
+    ),
+    BoardClaim(
+        "PRE pooled board",
+        "combined OWASP/CWE scanner has the highest displayed rule-based F1",
+        orderings=(
+            # "the highest displayed rule-based F1 (0.654 ...)", against the next rule down.
+            BoardOrdering(Cell(_PRE_MULTI, "owasp_asi_combined", "f1"),
+                          Cell(_PRE_MULTI, "owasp_excess_functionality", "f1")),
+            # "Three rules display a higher precision cell than the judge's 0.594".
+            BoardOrdering(Cell(_PRE_MULTI, "owasp_privilege_escalation", "precision"),
+                          Cell(_PRE_MULTI, "llm_judge_needed(llama-3.3-70b)", "precision")),
+            BoardOrdering(Cell(_PRE_MULTI, "sensitive_access", "precision"),
+                          Cell(_PRE_MULTI, "llm_judge_needed(llama-3.3-70b)", "precision")),
+            BoardOrdering(Cell(_PRE_MULTI, "unrequested_high_impact", "precision"),
+                          Cell(_PRE_MULTI, "llm_judge_needed(llama-3.3-70b)", "precision")),
+        ),
+        differences=(
+            # "0.654 ... against 0.695 F1 for the held-out LLM judge", whose record carries the
+            # judge as ``a``.
+            RecordedDifference("pre.combined.vs.heldout_judge", A_ABOVE_B),
+            # These three test a rule against the pooled base rate. The paragraph prints the three
+            # precision cells and says outright that they are not a ranking against the judge, so
+            # they are bound to the record and ordered by nothing.
+            RecordedDifference("pre.precision.owasp_privilege_escalation.vs.base_rate"),
+            RecordedDifference("pre.precision.unrequested_high_impact.vs.base_rate"),
+            RecordedDifference("pre.precision.sensitive_access.vs.base_rate"),
+        ),
+    ),
+    BoardClaim(
+        "PRE per-source figure",
+        "Drawn by `figure-src/board_pre_source.py`",
+        orderings=(
+            # "The floor itself moves by nearly a factor of five across the six sources": the two
+            # ends of that move.
+            BoardOrdering(Cell(_PRE_SOURCE, "flag_all", "mcp"),
+                          Cell(_PRE_SOURCE, "flag_all", "n8n")),
+        ),
+        # Each row pairs one source's best method with that source's floor. The caption states no
+        # ordering for those pairs, and it is right not to: on sweagent the best method's F1 is
+        # 0.00006 below the floor, so a blanket "best beats floor" registration would be false.
+        differences=tuple(
+            RecordedDifference(f"pre.source.{source}.best.vs.flag_all")
+            for source in ("crewai", "n8n", "mcp", "injecagent", "sweagent", "synthetic")
+        ),
+    ),
+    BoardClaim(
+        "PRE declaration-order shortcut",
+        "The injecagent column carries a shortcut",
+        orderings=(
+            # "above the 0.990 held-out judge and above every other method in the table": the judge
+            # is the highest of those, so this is the cell the statement rests on.
+            BoardOrdering(Cell(_PRE_SOURCE, "llm_judge_needed(llama-3.3-70b)", "injecagent"),
+                          Cell(_PRE_SOURCE, "owasp_asi_combined", "injecagent")),
+        ),
+    ),
+    BoardClaim(
+        "PRE n8n displayed range",
+        "Using a different scoring judge avoids direct label reuse",
+        orderings=(
+            # "the non-oracle methods in the table score from 0.095 to 0.411 F1": the two ends.
+            BoardOrdering(Cell(_PRE_SOURCE, "owasp_asi_combined", "n8n"),
+                          Cell(_PRE_SOURCE, "flag_risky_perms", "n8n")),
+        ),
+    ),
 )
 
 
@@ -1668,7 +2084,7 @@ class Result:
     prose_numbers_board: int = 0
     prose_numbers_allowed: int = 0
     comparative_paragraphs: int = 0
-    comparative_licensed: int = 0
+    comparative_claimed: int = 0
 
     @property
     def ok(self) -> bool:
@@ -1679,7 +2095,7 @@ def check_readme_detailed(readme_text: str, golden_text: str,
                           specs: Sequence[TableSpec] | None = None,
                           exemptions: Sequence[Exemption] | None = None,
                           number_allowances: Sequence[ProseNumberAllowance] | None = None,
-                          claim_licenses: Sequence[ClaimLicense] | None = None,
+                          board_claims: Sequence[BoardClaim] | None = None,
                           statistical_data: Mapping[str, Any] | None = None) -> Result:
     """Check README tables, prose numerals, and comparative claims against committed evidence.
 
@@ -1695,7 +2111,7 @@ def check_readme_detailed(readme_text: str, golden_text: str,
     exemptions = NON_BOARD_TABLES if exemptions is None else exemptions
     number_allowances = (PROSE_NUMBER_ALLOWLIST if number_allowances is None
                          else number_allowances)
-    claim_licenses = CLAIM_LICENSES if claim_licenses is None else claim_licenses
+    board_claims = BOARD_CLAIMS if board_claims is None else board_claims
     if statistical_data is None:
         statistical_data = json.loads(STATISTICAL_RESULTS.read_text(encoding="utf-8"))
     blocks, counts = parse_golden(golden_text)
@@ -1764,11 +2180,13 @@ def check_readme_detailed(readme_text: str, golden_text: str,
     result.prose_numbers_board = board_backed
     result.prose_numbers_allowed = allowed
 
-    claim_problems, comparative_seen, comparative_licensed = check_comparative_claims(
-        readme_text, statistical_data, claim_licenses)
+    claim_problems, comparative_seen, comparative_claimed = check_board_claims(
+        readme_text, blocks, counts, statistical_data, board_claims)
     problems.extend(claim_problems)
     result.comparative_paragraphs = comparative_seen
-    result.comparative_licensed = comparative_licensed
+    result.comparative_claimed = comparative_claimed
+
+    problems.extend(check_adjudicating_numbers(readme_text))
     return result
 
 
@@ -1776,11 +2194,11 @@ def check_readme(readme_text: str, golden_text: str,
                  specs: Sequence[TableSpec] | None = None,
                  exemptions: Sequence[Exemption] | None = None,
                  number_allowances: Sequence[ProseNumberAllowance] | None = None,
-                 claim_licenses: Sequence[ClaimLicense] | None = None,
+                 board_claims: Sequence[BoardClaim] | None = None,
                  statistical_data: Mapping[str, Any] | None = None) -> list[Problem]:
     """The problem list alone, for callers that do not need the counts."""
     return check_readme_detailed(readme_text, golden_text, specs, exemptions, number_allowances,
-                                 claim_licenses, statistical_data).problems
+                                 board_claims, statistical_data).problems
 
 
 def readme_report(result: Result) -> str:
@@ -1790,7 +2208,8 @@ def readme_report(result: Result) -> str:
                 f"README.md, all claimed; {result.prose_numbers_seen} prose numeral(s), "
                 f"{result.prose_numbers_board} board-backed and "
                 f"{result.prose_numbers_allowed} allowed; "
-                f"{result.comparative_paragraphs} comparative paragraph(s), all licensed")
+                f"{result.comparative_paragraphs} comparative paragraph(s), all bound to "
+                "recorded measurements")
     lines = [f"README DRIFT: {len(result.problems)} problem(s)", ""]
     lines += [p.render() for p in sorted(result.problems, key=lambda p: (p.line or 0, p.kind))]
     lines += ["",
@@ -1801,7 +2220,7 @@ def readme_report(result: Result) -> str:
               f"{result.prose_numbers_board} board-backed at printed precision, "
               f"{result.prose_numbers_allowed} allowed with reasons.",
               f"Comparative paragraphs: {result.comparative_paragraphs} seen, "
-              f"{result.comparative_licensed} claimed by content licences."]
+              f"{result.comparative_claimed} claimed by a BOARD_CLAIMS content anchor."]
     return "\n".join(lines)
 
 

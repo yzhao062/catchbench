@@ -107,7 +107,8 @@ def test_both_tables_keep_all_rows_columns_and_the_estimand_guard(records):
                    "board point estimates only; no interval is recorded",
                    "B is mean fold AUC and P is the AUC of seed-averaged",
                    "an unadjusted 95\\% single-curve DeLong interval for P",
-                   "do not encode the separate multiplicity-adjusted conclusions",
+                   "no simultaneous",
+                   "coverage across methods or prefixes",
                    "whose board ROC-AUC reaches",
                    f"absolute gap is at most {elpt.MAX_CENTRE_GAP:.3f}",
                    r"Appendix~\ref{app:board-values}"):

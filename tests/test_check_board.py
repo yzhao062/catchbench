@@ -17,9 +17,14 @@ as soon as an unrelated check fires.
 The table fixtures are a miniature board and a miniature README written here, so an ordinary README
 edit does not invalidate all of the table-corruption tests. The prose extension also has targeted
 checks against the shipped README: its registry must account for every current prose numeral, a
-one-digit mutation must fail, and every member of the disputed localization band must report its
-committed verdict. Those assertions are deliberately specific because matching no prose at all is
-the false green they prevent.
+one-digit mutation must fail, and every comparative paragraph must bind to the measurements it
+states. Those assertions are deliberately specific because matching no prose at all is the false
+green they prevent.
+
+The checker validates a stated ordering against golden cells or the sign of a recorded difference,
+and reads no verdict. The README sweep is complete: the shipped prose must report no problems,
+every numeral and comparative paragraph is accounted for, and their exact census is pinned below.
+There is no pending-sweep exemption for printed p-values or any other defect.
 
 ``CHECK_BOARD_TOOLS`` points the import at a different copy of the checker. That is the seam used to
 mutation-test the checker itself: copy ``tools/check_board.py``, break one check in the copy, and
@@ -228,6 +233,12 @@ def run(readme=README, golden=GOLDEN, specs=SPECS, exemptions=()):
         readme, golden, specs, exemptions, MINI_NUMBER_ALLOWLIST, (), {"claims": []})
 
 
+def board_claims(readme, data, entries, golden=GOLDEN):
+    """Run the claim gate over a fixture, resolving cell orderings against a golden board."""
+    blocks, counts = cb.parse_golden(golden)
+    return cb.check_board_claims(readme, blocks, counts, data, entries)
+
+
 def kinds(result):
     return sorted(p.kind for p in result.problems)
 
@@ -267,11 +278,36 @@ CLAIM_README = """\
 
 Alpha beats Beta.
 """
+
+# The verdict here is the negative one on purpose. Under the retired gate this record could not
+# license an ordering; under the current one the verdict is not read at all, and what settles the
+# sentence is that the recorded difference is positive in the direction the paragraph states.
 CLAIM_DATA = {
-    "claims": [{"id": "demo.alpha.vs.beta", "verdict": "separates_as_stated"}],
+    "claims": [{"id": "demo.alpha.vs.beta",
+                "verdict": "does_not_separate",
+                "estimate": {"a": 0.8, "a_name": "Alpha",
+                             "b": 0.6, "b_name": "Beta",
+                             "difference_a_minus_b": 0.2}}],
 }
-CLAIM_LICENSE = cb.ClaimLicense("demo ordering", "Alpha beats Beta",
-                                ("demo.alpha.vs.beta",))
+CLAIM_ENTRY = cb.BoardClaim(
+    "demo ordering", "Alpha beats Beta",
+    differences=(cb.RecordedDifference("demo.alpha.vs.beta", cb.A_ABOVE_B),))
+
+# The same gate over a golden cell rather than a recorded contrast. corpusA prints 0.804 for the
+# dependency block and 0.483 for random.
+CELL_CLAIM_README = """\
+# Demo
+
+## The Boards
+
+### Result
+
+The dependency block scores higher than random on corpusA.
+"""
+CELL_CLAIM_ENTRY = cb.BoardClaim(
+    "demo cell ordering", "scores higher than random on corpusA",
+    orderings=(cb.BoardOrdering(cb.Cell(DET_A, "auditable (size+deps)", "roc-auc"),
+                                cb.Cell(DET_A, "random", "roc-auc")),))
 
 
 # --------------------------------------------------------------------------------------------
@@ -281,48 +317,70 @@ CLAIM_LICENSE = cb.ClaimLicense("demo ordering", "Alpha beats Beta",
 
 def test_clean_fixture_passes():
     assert run().problems == []
+    assert cb.check_adjudicating_numbers(README) == []
+
+    real = REAL_README.read_text(encoding="utf-8")
+    golden = REAL_GOLDEN.read_text(encoding="utf-8")
 
     # The shipped prose-number registry is populated against the current README. Comparative
     # wording defects are checked separately below, so they cannot mask a number-registry hole.
-    blocks, _ = cb.parse_golden(REAL_GOLDEN.read_text(encoding="utf-8"))
+    blocks, _ = cb.parse_golden(golden)
     number_problems, seen, board_backed, allowed = cb.check_prose_numbers(
-        REAL_README.read_text(encoding="utf-8"), blocks, cb.PROSE_NUMBER_ALLOWLIST)
+        real, blocks, cb.PROSE_NUMBER_ALLOWLIST)
     assert number_problems == []
-    # The detection paragraph no longer repeats the tau-bench +0.046 to qualify it, since the word
-    # unresolved carries that now, so one allowed numeral left the README.
-    assert (seen, board_backed, allowed) == (236, 100, 136)
+    assert (seen, board_backed, allowed) == (238, 109, 129)
+    names = [allowance.name for allowance in cb.PROSE_NUMBER_ALLOWLIST]
+    assert len(names) == len(set(names))
+    assert all(allowance.values and allowance.reason.strip() and allowance.context_contains.strip()
+               for allowance in cb.PROSE_NUMBER_ALLOWLIST)
 
-    # A comparative paragraph with a registered separating claim is the green claim-gate case.
+    # A comparative paragraph whose stated ordering agrees with the recorded difference is the
+    # green claim-gate case, and it stays green on a record whose verdict is the negative one.
     claim_result = cb.check_readme_detailed(
         CLAIM_README, "", specs=(), exemptions=(), number_allowances=(),
-        claim_licenses=(CLAIM_LICENSE,), statistical_data=CLAIM_DATA)
+        board_claims=(CLAIM_ENTRY,), statistical_data=CLAIM_DATA)
     assert claim_result.problems == []
+    assert claim_result.comparative_paragraphs == claim_result.comparative_claimed == 1
 
-    # Content anchors are unaffected by unrelated insertions above them.
-    real = REAL_README.read_text(encoding="utf-8")
-    golden = REAL_GOLDEN.read_text(encoding="utf-8")
+    # The same for an ordering settled by two golden cells rather than by a recorded contrast.
+    cell_problems, cell_seen, cell_claimed = board_claims(
+        CELL_CLAIM_README, {"claims": []}, (CELL_CLAIM_ENTRY,))
+    assert cell_problems == []
+    assert (cell_seen, cell_claimed) == (1, 1)
+
+    # Content anchors are unaffected by unrelated insertions above them, so the same problems come
+    # back with the same messages once the shift in line numbers is set aside.
     baseline = cb.check_readme_detailed(real, golden)
     shifted = cb.check_readme_detailed("\n" * 20 + real, golden)
 
     assert baseline.problems == []
-    assert shifted.problems == []
-    assert cb.readme_report(shifted) == cb.readme_report(baseline)
+    assert sorted(p.message for p in baseline.problems) == sorted(
+        p.message for p in shifted.problems)
+    shifted_lines = {q.line for q in shifted.problems}
+    assert all(p.line + 20 in shifted_lines for p in baseline.problems if p.line is not None)
+    assert baseline.comparative_claimed == shifted.comparative_claimed == 15
 
-    # Removing one paragraph stales only the allowances and licence anchored inside it.
-    real = REAL_README.read_text(encoding="utf-8")
+    # Removing one paragraph stales the allowances and the board claim anchored inside it, and
+    # nothing else. Which entries those are is computed from the removed text rather than listed,
+    # so the assertion survives a rewording of the paragraph that remains.
     start = real.index("How to read it. The direct LLM control")
     end = real.index("\n\n### Failure Detection", start)
+    # Both registries match against whitespace-joined paragraph text, so the removed span is
+    # joined the same way before asking which anchors lived inside it.
+    removed = " ".join(line.strip() for line in real[start:end].split("\n"))
     changed = real[:start] + real[end + 2:]
-    result = cb.check_readme_detailed(changed, REAL_GOLDEN.read_text(encoding="utf-8"))
+    result = cb.check_readme_detailed(changed, golden)
 
-    assert len(result.problems) == 6
-    assert {problem.kind for problem in result.problems} == {
-        "allowance-unmatched", "licence-unmatched"}
-    assert all(any(name in problem.message for name in (
-        "judge-panel-count", "localization-band-run-count", "gpt-model-version",
-        "localization-metric-name", "localization-metric-name-random",
-        "Who&When localization comparisons",
-    )) for problem in result.problems)
+    anchored = {allowance.name for allowance in cb.PROSE_NUMBER_ALLOWLIST
+                if allowance.context_contains in removed}
+    anchored |= {entry.name for entry in cb.BOARD_CLAIMS
+                 if entry.paragraph_contains in removed}
+    assert len(anchored) >= 3
+    stale = [problem for problem in result.problems
+             if problem.kind in {"allowance-unmatched", "board-claim-unmatched"}]
+    assert len(stale) == len(anchored)
+    assert all(any(name in problem.message for name in anchored) for problem in stale)
+    assert [problem for problem in result.problems if problem not in stale] == []
 
     # Duplicating an anchor cannot silently absorb a second copy of the same numbers.
     text = "# Demo\n\n126 failed and 1099 steps.\n\n126 failed and 1099 steps.\n"
@@ -377,17 +435,38 @@ def test_changed_digit_fails():
     assert "'0.451'" in problems[0].message and "'0.452'" in problems[0].message
 
     # The same corruption in prose must go red. This uses the current README and shipped registry,
-    # not a table fixture, so it proves the hole this extension closes.
+    # not a table fixture, so it proves the hole this extension closes. The numeral to mutate is
+    # found rather than named, because the sentence carrying any particular one can be reworded.
     real = REAL_README.read_text(encoding="utf-8")
-    assert real.count("score here at 0.452.") == 1
-    changed = real.replace("score here at 0.452.", "score here at 0.453.")
     blocks, _ = cb.parse_golden(REAL_GOLDEN.read_text(encoding="utf-8"))
-    prose_problems, _, _, _ = cb.check_prose_numbers(
-        changed, blocks, cb.PROSE_NUMBER_ALLOWLIST)
-    hits = [problem for problem in prose_problems if problem.kind == "unclaimed-number"]
+    baseline, _, _, _ = cb.check_prose_numbers(real, blocks, cb.PROSE_NUMBER_ALLOWLIST)
+    golden_values = cb._golden_cell_values(blocks)
+    numbers, _ = cb.scan_prose_numbers(real)
+
+    target, mutated = None, None
+    for number in numbers:
+        if not cb._matches_golden_precision(number.value, golden_values):
+            continue
+        for suffix in ("1", "7"):
+            candidate = number.value + suffix
+            if not cb._matches_golden_precision(candidate, golden_values):
+                target, mutated = number, candidate
+                break
+        if target is not None:
+            break
+    assert target is not None, "the README prints no board-backed prose numeral to mutate"
+
+    line = real.split("\n")[target.line - 1]
+    changed = "\n".join(real.split("\n")[:target.line - 1]
+                        + [line[:target.column - 1] + mutated
+                           + line[target.column - 1 + len(target.value):]]
+                        + real.split("\n")[target.line:])
+    prose_problems, _, _, _ = cb.check_prose_numbers(changed, blocks, cb.PROSE_NUMBER_ALLOWLIST)
+    hits = [problem for problem in prose_problems
+            if problem.kind == "unclaimed-number" and problem not in baseline]
     assert len(hits) == 1
-    assert hits[0].line == readme_line(changed, "Top-1 score here")
-    assert "'0.453'" in hits[0].message
+    assert hits[0].line == target.line
+    assert repr(mutated) in hits[0].message
 
 
 def test_truncated_precision_fails():
@@ -527,12 +606,31 @@ def test_a_stale_exemption_fails():
                              reason="counts of the input corpora, not scored cells")
     assert len(only(run(exemptions=(exemption,)), "exemption-unmatched")) == 1
 
-    # Removing a paragraph's registered licence leaves its comparative word visible and goes red.
-    claim_problems, seen, licensed = cb.check_comparative_claims(
-        CLAIM_README, CLAIM_DATA, ())
-    assert (seen, licensed) == (1, 0)
+    # Removing a paragraph's registry entry leaves its comparative word unaccounted and goes red.
+    claim_problems, seen, claimed = board_claims(CLAIM_README, CLAIM_DATA, ())
+    assert (seen, claimed) == (1, 0)
     assert len(claim_problems) == 1
-    assert claim_problems[0].kind == "unlicensed-comparison"
+    assert claim_problems[0].kind == "unaccounted-comparison"
+
+    # An entry that claims a paragraph and declares no measurement is the same silent skip in
+    # another shape, so it fails unless it records on one line why the paragraph orders nothing.
+    empty = cb.BoardClaim("demo empty", "Alpha beats Beta")
+    problems, _, _ = board_claims(CLAIM_README, CLAIM_DATA, (empty,))
+    assert [problem.kind for problem in problems] == ["board-claim-empty", "unaccounted-comparison"]
+
+    excused = cb.BoardClaim("demo descriptive", "Alpha beats Beta",
+                            reports_no_ordering="Fixture paragraph, kept to exercise the reason.")
+    problems, _, claimed = board_claims(CLAIM_README, CLAIM_DATA, (excused,))
+    assert (problems, claimed) == ([], 1)
+
+    # Two entries cannot both claim one paragraph; that is how a second, unchecked reading of the
+    # same sentence would get in.
+    problems, _, _ = board_claims(CLAIM_README, CLAIM_DATA, (CLAIM_ENTRY, excused))
+    assert [problem.kind for problem in problems] == ["comparison-double-claimed"]
+
+    # A duplicated entry name is a registry defect, not a second claim.
+    problems, _, _ = board_claims(CLAIM_README, CLAIM_DATA, (CLAIM_ENTRY, CLAIM_ENTRY))
+    assert [problem.kind for problem in problems] == ["board-claim-duplicate"]
 
 
 def test_spec_that_matches_no_table_fails():
@@ -689,63 +787,84 @@ def test_removed_golden_row_fails():
     problems = only(run(golden=text), "unresolved")
     assert "has no row 'position'" in problems[0].message
 
-    # A claim result moving under a still-registered paragraph is the statistical analogue.
+    # A measurement moving under a still-registered paragraph is the statistical analogue. The
+    # sign of the recorded difference is what settles the stated ordering.
     flipped = {"claims": [{"id": "demo.alpha.vs.beta",
-                            "verdict": "does_not_separate"}]}
-    claim_problems, seen, licensed = cb.check_comparative_claims(
-        CLAIM_README, flipped, (CLAIM_LICENSE,))
-    assert (seen, licensed) == (1, 1)
+                           "verdict": "separates_as_stated",
+                           "estimate": {"a": 0.6, "a_name": "Alpha",
+                                        "b": 0.8, "b_name": "Beta",
+                                        "difference_a_minus_b": -0.2}}]}
+    claim_problems, seen, claimed = board_claims(CLAIM_README, flipped, (CLAIM_ENTRY,))
+    assert (seen, claimed) == (1, 1)
     assert len(claim_problems) == 1
-    assert claim_problems[0].kind == "claim-not-separating"
-    assert "does_not_separate" in claim_problems[0].message
+    assert claim_problems[0].kind == "ordering-contradicted"
+    assert "'Alpha'" in claim_problems[0].message and "-0.2" in claim_problems[0].message
 
-    # The same negative verdict is valid when the prose explicitly discloses non-separation.
-    readme = CLAIM_README.replace("Alpha beats Beta.",
-                                  "Alpha and Beta do not separate, so their ordering is not a result.")
-    data = {"claims": [{"id": "demo.alpha.vs.beta",
-                        "verdict": "does_not_separate"}]}
-    license_ = cb.ClaimLicense("demo disclosure", "Alpha and Beta do not separate",
-                               ("demo.alpha.vs.beta",))
+    # The verdict is the field this gate used to read and now does not. Moving it either way over
+    # the same estimate changes nothing, and that is the whole point of the migration.
+    for verdict in ("separates_as_stated", "does_not_separate", "something_else", None):
+        data = json.loads(json.dumps(CLAIM_DATA))
+        data["claims"][0]["verdict"] = verdict
+        assert board_claims(CLAIM_README, data, (CLAIM_ENTRY,))[0] == []
 
-    problems, seen, licensed = cb.check_comparative_claims(readme, data, (license_,))
-    assert problems == []
-    assert (seen, licensed) == (1, 1)
+    # An exact tie orders nothing, so a stated ordering over one fails and NO_ORDERING passes.
+    tied = json.loads(json.dumps(CLAIM_DATA))
+    tied["claims"][0]["estimate"].update(b=0.8, difference_a_minus_b=0.0)
+    problems, _, _ = board_claims(CLAIM_README, tied, (CLAIM_ENTRY,))
+    assert [problem.kind for problem in problems] == ["ordering-contradicted"]
+    cited = cb.BoardClaim("demo tie", "Alpha beats Beta",
+                          differences=(cb.RecordedDifference("demo.alpha.vs.beta"),))
+    assert board_claims(CLAIM_README, tied, (cited,))[0] == []
 
-    # The documented ambiguous case errs toward disclosure.
-    readme = CLAIM_README.replace("Alpha beats Beta.",
-                                  "Alpha beats Beta, but the test does not separate them.")
-    data = {"claims": [{"id": "demo.alpha.vs.beta",
-                        "verdict": "does_not_separate"}]}
-    license_ = cb.ClaimLicense("mixed sentence", "Alpha beats Beta",
-                               ("demo.alpha.vs.beta",))
+    # A record whose own arithmetic disagrees with itself cannot settle anything.
+    broken = json.loads(json.dumps(CLAIM_DATA))
+    broken["claims"][0]["estimate"]["difference_a_minus_b"] = 0.9
+    problems, _, _ = board_claims(CLAIM_README, broken, (CLAIM_ENTRY,))
+    assert [problem.kind for problem in problems] == ["measurement-inconsistent"]
 
-    problems, _, _ = cb.check_comparative_claims(readme, data, (license_,))
-    assert problems == []
-    assert "errs toward passing" in cb.check_comparative_claims.__doc__
+    # A record with no estimate, a missing ID, a duplicated ID, and an unknown direction each fail
+    # by name rather than passing for want of something to compare.
+    for mutation, kind in (
+            (lambda d: d["claims"][0].pop("estimate"), "measurement-missing"),
+            (lambda d: d["claims"][0].__setitem__("id", "demo.other"), "claim-missing"),
+            (lambda d: d["claims"].append(dict(d["claims"][0])), "claim-duplicate"),
+    ):
+        data = json.loads(json.dumps(CLAIM_DATA))
+        mutation(data)
+        problems, _, _ = board_claims(CLAIM_README, data, (CLAIM_ENTRY,))
+        assert [problem.kind for problem in problems] == [kind], kind
 
-    # Replacing the corrected disclosure with the old ordering invalidates its content licence.
-    real = REAL_README.read_text(encoding="utf-8")
-    corrected = (
-        "The panel spans 0.127 to 0.452, but eight of the eleven models sit in one\n"
-        "band from 0.333 up that 126 runs do not separate, so read the band rather than the "
-        "ordering inside it.\n"
-        "Mistral-Small and Nova-Micro fall below the position prior on point estimate, but the "
-        "registered\ntests leave both unresolved against it."
-    )
-    old = (
-        "The four highest Top-1 scores range from 0.405 to 0.452; Llama and Qwen score from "
-        "0.333 to 0.349,\n"
-        "while Mistral and Nova score from 0.127 to 0.135 and below the position prior."
-    )
-    assert real.count(corrected) == 1
-    changed = real.replace(corrected, old)
+    misdirected = cb.BoardClaim(
+        "demo direction", "Alpha beats Beta",
+        differences=(cb.RecordedDifference("demo.alpha.vs.beta", "higher"),))
+    problems, _, _ = board_claims(CLAIM_README, CLAIM_DATA, (misdirected,))
+    assert [problem.kind for problem in problems] == ["board-claim-states"]
 
-    result = cb.check_readme_detailed(changed, REAL_GOLDEN.read_text(encoding="utf-8"))
-    stale = [problem for problem in result.problems
-             if problem.kind == "licence-unmatched"
-             and "Who&When localization comparisons" in problem.message]
-    assert len(stale) == 1
-    assert not result.ok
+    # A stated cell ordering the board contradicts fails the same way, and a cell the board no
+    # longer prints is reported rather than skipped.
+    reversed_cells = cb.BoardClaim(
+        "demo reversed", "scores higher than random on corpusA",
+        orderings=(cb.BoardOrdering(cb.Cell(DET_A, "random", "roc-auc"),
+                                    cb.Cell(DET_A, "auditable (size+deps)", "roc-auc")),))
+    problems, _, _ = board_claims(CELL_CLAIM_README, {"claims": []}, (reversed_cells,))
+    assert [problem.kind for problem in problems] == ["ordering-contradicted"]
+    assert "0.483" in problems[0].message and "0.804" in problems[0].message
+
+    equal_cells = cb.BoardClaim(
+        "demo equal", "scores higher than random on corpusA",
+        orderings=(cb.BoardOrdering(cb.Cell(DET_A, "random", "roc-auc"),
+                                    cb.Cell(DET_A, "random", "roc-auc")),))
+    problems, _, _ = board_claims(CELL_CLAIM_README, {"claims": []}, (equal_cells,))
+    assert [problem.kind for problem in problems] == ["ordering-contradicted"]
+    assert "equals" in problems[0].message
+
+    gone = cb.BoardClaim(
+        "demo missing cell", "scores higher than random on corpusA",
+        orderings=(cb.BoardOrdering(cb.Cell(DET_A, "no-such-method", "roc-auc"),
+                                    cb.Cell(DET_A, "random", "roc-auc")),))
+    problems, _, _ = board_claims(CELL_CLAIM_README, {"claims": []}, (gone,))
+    assert [problem.kind for problem in problems] == ["board-claim-unresolved"]
+    assert "no row" in problems[0].message
 
 
 def test_renamed_golden_column_fails():
@@ -808,30 +927,49 @@ def test_prose_lines_are_not_indexed_as_golden_blocks():
 
 
 def test_live_stale_ordering_has_no_unrelated_gold_license():
-    """The LIVE stale-state paragraph must not be licensed by a Gold floor contrast.
+    """A new ordering inside ``The Boards`` must be accounted for, and no p-value may return.
 
-    It was. The paragraph ordered raw span against the z-score and compared both with the
-    post-hoc Gold value, while the registry declares no LIVE stale-state contrast at all,
-    and a licence anchored there named ``gold.maxspan.stale.floor``. That claim separates,
-    so the gate reported the paragraph as licensed: a false negative rather than a miss.
-    Restoring the ordering must now be caught as an unlicensed comparison.
+    The historical defect this name records: the LIVE stale-state paragraph ordered raw span
+    against the z-score while the registry declared no LIVE stale-state contrast at all, and a
+    licence anchored there named ``gold.maxspan.stale.floor``. That claim separated, so the gate
+    reported the paragraph as licensed, a false negative rather than a miss. The verdict half of
+    that gate is gone; the half that caught it, the coverage accounting, is what this holds. An
+    ordering added anywhere under ``The Boards`` with no registry entry behind it goes red.
     """
     readme = REAL_README.read_text(encoding="utf-8")
-    disclosure = (
-        "point estimates only. They support no claim about the effect of\n"
-        "per-run normalization."
-    )
-    assert readme.count(disclosure) == 1
-    bad = readme.replace(
-        disclosure,
-        "point estimates only. Raw span scores higher than the z-score, so\n"
-        "per-run normalization does not help.",
-    )
+    golden = REAL_GOLDEN.read_text(encoding="utf-8")
+    blocks, counts = cb.parse_golden(golden)
     stats = json.loads(REAL_STATS.read_text(encoding="utf-8"))
 
-    problems, _, _ = cb.check_comparative_claims(bad, stats, cb.CLAIM_LICENSES)
+    anchor = "\n## How a Method Plugs In"
+    assert readme.count(anchor) == 1
+    bad = readme.replace(
+        anchor,
+        "\nRaw span scores higher than the z-score, so per-run normalization does not help.\n"
+        + anchor)
 
-    assert any(problem.kind == "unlicensed-comparison" for problem in problems)
+    clean, _, _ = cb.check_board_claims(readme, blocks, counts, stats, cb.BOARD_CLAIMS)
+    problems, _, _ = cb.check_board_claims(bad, blocks, counts, stats, cb.BOARD_CLAIMS)
+
+    added = [problem for problem in problems if problem not in clean]
+    assert [problem.kind for problem in added] == ["unaccounted-comparison"]
+    assert "'higher'" in added[0].message
+
+    # The other half of the reporting policy is lexical and deliberately two spellings wide.
+    printed = cb.check_adjudicating_numbers(
+        "# Demo\n\nThe gap holds under correction (Holm p=0.004).\n")
+    assert [problem.kind for problem in printed] == ["adjudicating-number"] * 2
+    assert all(problem.line == 3 for problem in printed)
+
+    # Ordinary English that shares those stems is not a comparison and must not fire, and neither
+    # may a pinned dependency or anything inside a fenced block.
+    quiet = (
+        "# Demo\n\n"
+        "The pillars are separate tracks. SWE-Gym, 376 runs (188 failed, 188 resolved).\n"
+        "One unresolved licensing term remains, and pip resolves scipy>=1.10 on its own.\n"
+        "```text\nHolm p=0.004\n```\n"
+    )
+    assert cb.check_adjudicating_numbers(quiet) == []
 
 
 def test_shipped_specs_resolve_against_the_committed_golden():
@@ -854,16 +992,52 @@ def test_shipped_specs_resolve_against_the_committed_golden():
                     missing.append(f"{spec.name}: {label} / {column}: {why}")
     assert missing == []
 
-    # The shipped localization disclosure registers every member of the disputed 8-model band. Its
-    # explicit non-separation wording makes all 28 committed negative verdicts valid disclosures.
+    # Every measurement the shipped registry states must hold against the committed board and the
+    # committed record. This half reads no allowance and no numeral, so those checks cannot mask a
+    # missing or incorrect measurement binding.
     stats = json.loads(REAL_STATS.read_text(encoding="utf-8"))
-    claim_problems, _, _ = cb.check_comparative_claims(
-        REAL_README.read_text(encoding="utf-8"), stats, cb.CLAIM_LICENSES)
+    claim_problems, seen, claimed = cb.check_board_claims(
+        REAL_README.read_text(encoding="utf-8"), blocks, counts, stats, cb.BOARD_CLAIMS)
     assert claim_problems == []
-    localization = next(license_ for license_ in cb.CLAIM_LICENSES
-                        if license_.name == "Who&When localization comparisons")
-    assert len([claim_id for claim_id in localization.claim_ids
-                if claim_id.startswith("loc.band.")]) == 28
+    assert seen == claimed == len(cb.BOARD_CLAIMS) == 15
+
+    # The 8-model Who&When band is bound to the record and ordered by nothing inside it.
+    localization = next(entry for entry in cb.BOARD_CLAIMS
+                        if entry.name == "Who&When localization board")
+    band = [difference for difference in localization.differences
+            if difference.claim_id.startswith("loc.band.")]
+    assert len(band) == 28
+    assert {difference.states for difference in band} == {cb.NO_ORDERING}
+
+    # The registry has teeth on the shipped board: reversing any stated ordering must fail. Doing
+    # it for all of them is what rules out a registry of orderings that resolve to nothing.
+    reversible = [(entry, ordering) for entry in cb.BOARD_CLAIMS
+                  for ordering in entry.orderings]
+    assert len(reversible) >= 25
+    for entry, ordering in reversible:
+        flipped = cb.BoardClaim(entry.name, entry.paragraph_contains,
+                                orderings=(cb.BoardOrdering(ordering.below, ordering.above),),
+                                reports_no_ordering=entry.reports_no_ordering or "fixture")
+        problems, _, _ = cb.check_board_claims(
+            REAL_README.read_text(encoding="utf-8"), blocks, counts, stats,
+            tuple(other for other in cb.BOARD_CLAIMS if other is not entry) + (flipped,))
+        assert [problem.kind for problem in problems] == ["ordering-contradicted"], (
+            f"{entry.name}: {ordering.above.render()} over {ordering.below.render()}")
+
+    # The same for every stated direction over a recorded contrast.
+    directed = [(entry, difference) for entry in cb.BOARD_CLAIMS
+                for difference in entry.differences if difference.states != cb.NO_ORDERING]
+    assert len(directed) >= 30
+    for entry, difference in directed:
+        opposite = cb.A_ABOVE_B if difference.states == cb.B_ABOVE_A else cb.B_ABOVE_A
+        flipped = cb.BoardClaim(
+            entry.name, entry.paragraph_contains,
+            differences=(cb.RecordedDifference(difference.claim_id, opposite),))
+        problems, _, _ = cb.check_board_claims(
+            REAL_README.read_text(encoding="utf-8"), blocks, counts, stats,
+            tuple(other for other in cb.BOARD_CLAIMS if other is not entry) + (flipped,))
+        assert [problem.kind for problem in problems] == ["ordering-contradicted"], (
+            f"{entry.name}: {difference.claim_id}")
 
 
 def test_shipped_specs_cover_every_column_they_claim():
@@ -910,7 +1084,7 @@ def fixture_registry(monkeypatch):
     monkeypatch.setattr(cb, "TABLE_SPECS", SPECS)
     monkeypatch.setattr(cb, "NON_BOARD_TABLES", ())
     monkeypatch.setattr(cb, "PROSE_NUMBER_ALLOWLIST", MINI_NUMBER_ALLOWLIST)
-    monkeypatch.setattr(cb, "CLAIM_LICENSES", ())
+    monkeypatch.setattr(cb, "BOARD_CLAIMS", ())
 
 
 def test_main_exits_zero_on_a_clean_readme(tmp_path, fixture_registry, monkeypatch):

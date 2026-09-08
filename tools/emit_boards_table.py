@@ -2,16 +2,16 @@
 
 The paper prints eleven tables and a reader has no single place to see what the benchmark actually
 scores. This generates that place: one row per scored block, with the corpus it runs on, the metric,
-the trivial floor, the spread of the entrants, and the verdict the registered tests support.
+the trivial floor, and the spread of the entrants. Every row reports what a board measured and
+orders nothing. The verdict column that used to close each row is retired; the note above
+``rows_latex`` records what it asserted and why it is gone.
 
-The Separates column is the reason this is generated rather than typed. A hand-written summary
-table is where a paper's numbers rot first, because nothing recomputes it: the README carried a
-PyGOD row at three times its scored value for weeks, and only a checker caught it. That column also
-has to stay complete, not merely current, so ``check_partition`` requires the boards to partition
-the declared contrasts exactly; the fractions therefore sum to the total the abstract quotes. Everything here is read from
-``tests/golden/board.txt`` and ``tools/statistical_tests_results.json``. The only hand-authored
-content is the mapping from a board to the claim ids that speak for it, and even that is validated:
-an unknown claim id, a missing board, or a corpus line that stops matching is a hard failure.
+Generating the table rather than typing it is what keeps it current. A hand-written summary table is
+where a paper's numbers rot first, because nothing recomputes it: the README carried a PyGOD row at
+three times its scored value for weeks, and only a checker caught it. Every number here is read from
+``tests/golden/board.txt``. The only hand-authored content is the board inventory below, and even
+that is validated: a missing board, a missing floor row, or a corpus line that stops matching is a
+hard failure.
 
 Usage::
 
@@ -23,7 +23,6 @@ Usage::
 from __future__ import annotations
 
 import argparse
-import json
 import os
 import re
 import sys
@@ -41,69 +40,54 @@ _BENCHMARK = "03_benchmark.tex"
 #
 # floor      the entrant that answers "what does doing the trivial thing score", by its board name
 # skip       rows that are not entrants: the floor itself, and any oracle that is an identity check
-# claims     claim ids from statistical_tests_results.json, or ("family", <id>) for a whole family
 _BOARDS = (
     dict(header="[PRE] pre_over_privilege :: multi",
          state="PRE", name="Over-privilege", metric="f1", metric_label="F1",
          corpus=r"^PRE over_privilege: (\d+) configs across (\d+) corpora",
          corpus_name="{1} sources", size="{0}", unit="configs",
-         floor="flag_all", skip=("flag_none", "oracle_privilege_diff"),
-         coverage=(("pre_combined_judge_f1", None), ("pre_source_best_flag_all_f1", None),
-                   ("pre_rules_flag_all_f1", None), ("pre_narrow_precision", None))),
+         floor="flag_all", skip=("flag_none", "oracle_privilege_diff")),
     dict(header="[LIVE] live_streaming :: swegym",
          state="LIVE", name="Early warning", metric="prefix_auc", metric_label="ROC-AUC",
          corpus=r"^swegym: (\d+) runs \(>=4 steps",
          corpus_name="SWE-Gym", size="{0}", unit="runs",
-         floor="random", skip=(),
-         coverage=(("live_swegym_25_auc", None),
-                   ("live_swegym_auditable_ecod_later_auc", None),
-                   ("live_swegym_threshold_auc", None))),
+         floor="random", skip=()),
     dict(header="[LIVE] live_streaming :: tau",
          state="LIVE", name="Early warning", metric="prefix_auc", metric_label="ROC-AUC",
          corpus=r"^tau: (\d+) runs \(>=4 steps",
          corpus_name="tau-bench", size="{0}", unit="runs",
-         floor="random", skip=(),
-         coverage=(("live_tau_threshold_auc", None), ("live_tau_auditable_ecod_auc", None))),
+         floor="random", skip=()),
     dict(header="[LIVE] live_stale_state :: swegym-gold",
          state="LIVE", name="Online stale$^{\\dagger}$", metric="tpr@5fpr",
          metric_label="TPR@5\\%FPR",
          corpus=r"^swegym-gold: (\d+) stale-state injections",
          corpus_name="Gold", size="{0}", unit="injections",
-         floor="random", skip=(), gold=True,
-         coverage=()),
+         floor="random", skip=(), gold=True),
     dict(header="[POST] post_localization :: whoandwhen",
          state="POST", name="Localization", metric="top1", metric_label="Top-1",
          corpus=r"^Who&When: (\d+) failed runs, (\d+) steps",
          corpus_name="Who\\&When", size="{0}", unit="runs",
-         floor="random", skip=(),
-         coverage=(("localization_gpt55_no_llm_top1", None), ("localization_band_top1", None),
-                   ("localization_exec_position", None), ("localization_protocol_top1", None),
-                   ("localization_small_position_top1", None))),
+         floor="random", skip=()),
     dict(header="[POST] post_detection :: swegym",
          state="POST", name="Detection", metric="roc_auc", metric_label="ROC-AUC",
          corpus=r"^swegym: (\d+) runs \((\d+) failed",
          corpus_name="SWE-Gym", size="{0}", unit="runs",
-         floor="random", skip=(),
-         coverage=(("post_detection_auc", "det.swe."),)),
+         floor="random", skip=()),
     dict(header="[POST] post_detection :: tau",
          state="POST", name="Detection", metric="roc_auc", metric_label="ROC-AUC",
          corpus=r"^tau: (\d+) runs \((\d+) failed",
          corpus_name="tau-bench", size="{0}", unit="runs",
-         floor="random", skip=(),
-         coverage=(("post_detection_auc", "det.tau."),)),
+         floor="random", skip=()),
     dict(header="[POST] gold_localization :: swegym-gold",
          state="POST", name="Localization$^{\\dagger}$", metric="top1", metric_label="Top-1",
          corpus=r"^swegym-gold: (\d+) clean SWE-Gym runs",
          corpus_name="Gold", size="{0}", unit="runs",
-         floor="random", skip=(), gold=True,
-         coverage=(("gold_localization_top1", None),)),
+         floor="random", skip=(), gold=True),
     dict(header="[POST] gold_attribution :: swegym-gold",
          state="POST", name="Cause attribution$^{\\dagger}$", metric="roc_auc",
          metric_label="ROC-AUC",
          corpus=r"^swegym-gold: (\d+) runs affording both faults",
          corpus_name="Gold", size="{0}", unit="paired runs",
-         floor="random", skip=(), gold=True,
-         coverage=(("gold_attribution_auc", None),)),
+         floor="random", skip=(), gold=True),
 )
 
 # The six-word gloss each state's banded group row carries in the paper. Hand-written scaffolding
@@ -114,8 +98,6 @@ _STATE_GLOSS = {
     "LIVE": "during the run, a growing prefix",
     "POST": "after the run, the complete trace",
 }
-
-_SEPARATING = frozenset({"separates_as_stated", "separates_opposite_to_statement"})
 
 _TABLE_BEGIN = re.compile(r"(?m)^[ \t]*\\begin\{tabular\}\{[^\r\n]*\}[ \t]*$")
 _TABLE_END = re.compile(r"(?m)^[ \t]*\\end\{tabular\}[ \t]*$")
@@ -189,61 +171,48 @@ def spread(rows: dict[str, dict[str, float]], spec: dict) -> tuple[float, float,
     return floor, min(entrants), max(entrants)
 
 
-# ------------------------------------------------------------------------- reading the verdicts
-
-def covered(spec: dict, families: dict) -> list[dict]:
-    """Every declared contrast this board speaks for.
-
-    A board usually owns whole families. ``post_detection_auc`` is the exception: one declared
-    family spans both corpora, so the two Detection rows each take an id prefix out of it. The
-    prefix is matched, never inferred, and an empty selection is a hard failure rather than an
-    empty fraction.
-    """
-    out: list[dict] = []
-    for fid, prefix in spec["coverage"]:
-        members = families.get(fid)
-        if members is None:
-            raise SystemExit("unknown comparison family: %s" % fid)
-        chosen = [c for c in members if prefix is None or c["id"].startswith(prefix)]
-        if not chosen:
-            raise SystemExit("family %s has no claim under prefix %r (board %r)"
-                             % (fid, prefix, spec["header"]))
-        out.extend(chosen)
-    return out
-
-
-def separates_cell(spec: dict, families: dict) -> str:
-    """How many of the board's declared contrasts the Holm-adjusted tests separate."""
-    members = covered(spec, families)
-    if not members:
-        return "--"
-    return "%d/%d" % (sum(c["verdict"] in _SEPARATING for c in members), len(members))
-
-
-def check_partition(families: dict) -> None:
-    """The boards must partition the declared contrasts: each one covered exactly once.
-
-    Without this the Separates column can shrink silently. It is the failure the column replaced:
-    the prose it supersedes reported 7 of 16 families, and as prose that read as a selection. A
-    fraction does not, so the denominators have to be the real ones.
-    """
-    everything = {c["id"] for members in families.values() for c in members}
-    seen: dict[str, str] = {}
-    for spec in _BOARDS:
-        for claim in covered(spec, families):
-            first = seen.get(claim["id"])
-            if first is not None:
-                raise SystemExit("claim %s is claimed by both %r and %r"
-                                 % (claim["id"], first, spec["header"]))
-            seen[claim["id"]] = spec["header"]
-    missing = sorted(everything - set(seen))
-    if missing:
-        raise SystemExit("%d declared contrast(s) belong to no board, so the Separates column "
-                         "would under-count: %s" % (len(missing), ", ".join(missing[:6])))
+# ------------------------------------------------------------------- the retired verdict column
+#
+# RETIRED 2026-09-07, deliberately rather than by neglect. The table's eighth column, *Separates*,
+# printed a fraction per board: how many of the contrasts that board declares the Holm-adjusted
+# tests resolved, over how many it declares. Four pieces of machinery existed only to produce and
+# protect it, and all four go with it.
+#
+#   _SEPARATING                     the two verdict strings that counted as a separation,
+#                                   "separates_as_stated" and "separates_opposite_to_statement".
+#   covered(spec, families)         resolved a board's declared coverage into claim records, taking
+#                                   an id prefix where one declared family spanned both detection
+#                                   corpora. It failed hard on an unknown family id and on a prefix
+#                                   that selected nothing, because either one prints a smaller
+#                                   denominator without printing an error.
+#   separates_cell(spec, families)  counted _SEPARATING verdicts over covered(), and printed "--"
+#                                   for a board that declares no contrast.
+#   check_partition(families)       required the boards to partition the declared contrasts exactly:
+#                                   every claim covered once, none orphaned. It ran on every
+#                                   emission, --check included, so that the printed fractions summed
+#                                   to the 138 the abstract quoted rather than to a silently
+#                                   shrinking subset. It is the orphan-contrast guard.
+#
+# Why they are gone rather than repaired. This benchmark reports measurements and no longer
+# adjudicates them, so a per-board count of contrasts that "separate" is the one thing the table may
+# not print. The Holm correction the count read is off the printed table for the same reason.
+# check_partition guarded that count and nothing else, and each board's ``coverage`` key was
+# hand-authored input to it alone, so the key leaves _BOARDS with the functions.
+#
+# The two rejected repairs, recorded so nobody re-proposes them. Keeping the column and dropping
+# only the correction would still print an adjudication, from uncorrected p-values, which is a
+# weaker form of the thing being removed. Keeping check_partition without the column would assert a
+# property of a mapping that nothing reads, which is the shape of a checker that passes because
+# there is nothing left for it to check.
+#
+# What is not retired. ``tools/statistical_tests_results.json`` keeps every claim, verdict and
+# p-value it has, and the paper's committed copy of it is still held byte-equal by _FIGURE_COPIES
+# below. The record stays a record; what stopped is quoting its verdicts in this table. Nothing else
+# this module asserts moved: the board inventory, the entrant counts, the floors and the spreads,
+# the two data-copy drift checks, and the row-by-row comparison against the manuscript all stand.
 
 
-def rows_latex(preamble: list[str], blocks: dict, claims: dict, families: dict) -> list[str]:
-    check_partition(families)
+def rows_latex(preamble: list[str], blocks: dict) -> list[str]:
     out = []
     for spec in _BOARDS:
         rows = blocks.get(spec["header"])
@@ -252,22 +221,14 @@ def rows_latex(preamble: list[str], blocks: dict, claims: dict, families: dict) 
         floor, low, high = spread(rows, spec)
         name, size, unit = corpus_cells(preamble, spec)
         tint = r"\rowcolor{abMint!35}" if spec.get("gold") else ""
-        out.append("%s%s & %s & %s & %s & %s & %.3f & %.3f--%.3f & %s \\\\"
+        out.append("%s%s & %s & %s & %s & %s & %.3f & %.3f--%.3f \\\\"
                    % (tint, spec["name"], name, size, unit, spec["metric_label"],
-                      floor, low, high, separates_cell(spec, families)))
+                      floor, low, high))
     return out
 
 
 def load():
-    board = BOARD.read_text(encoding="utf-8")
-    data = json.loads(RESULTS.read_text(encoding="utf-8"))
-    claims = {c["id"]: c for c in data["claims"]}
-    families: dict[str, list] = {}
-    for c in data["claims"]:
-        families.setdefault(c["family"], []).append(c)
-    for fam in data["comparison_families"]:
-        families.setdefault(fam["id"], [])
-    return read_board(board), claims, families
+    return read_board(BOARD.read_text(encoding="utf-8"))
 
 
 def table_body(text: str, label: str) -> list[str]:
@@ -314,7 +275,10 @@ _FIGURE_COPIES = (
 # The two rejected repairs, recorded so nobody re-proposes them. Writing invisible tokens back into
 # the .tex would make the checker pass while checking nothing, since the tokens would no longer be
 # what the reader sees. Deleting the checker's other assertions to make the module green would drop
-# the data-copy, inventory and partition checks, which still work and still matter.
+# the data-copy, inventory and partition checks, which still work and still matter. (The partition
+# check was retired separately on 2026-09-07, with the verdict column it existed to guard; see the
+# note above rows_latex. That was a decision about what the table may print, not the shortcut this
+# paragraph rejects. The data-copy and inventory checks stand.)
 #
 # What replaces it is a person: whoever changes the board inventory has to open the figure source
 # and update the counts by hand. state_counts() below is kept and is still what --emit prints, so
@@ -395,8 +359,8 @@ def main() -> int:
     parser.add_argument("--paper", default=os.environ.get("CATCHBENCH_PAPER_DIR"),
                         help="paper source directory (or set CATCHBENCH_PAPER_DIR)")
     args = parser.parse_args()
-    (preamble, blocks), claims, families = load()
-    generated = rows_latex(preamble, blocks, claims, families)
+    preamble, blocks = load()
+    generated = rows_latex(preamble, blocks)
     if args.check:
         if not args.paper:
             parser.error("--check needs --paper <dir> or CATCHBENCH_PAPER_DIR")

@@ -1,10 +1,10 @@
 """The board-inventory checker must fail on every corruption it exists to catch.
 
 ``tab:boards`` is the one float a reader consults to see what the benchmark scores, so it is also
-the one whose staleness would be least visible: a floor that drifted or a verdict word that flipped
-still looks like a table. The sibling checker in ``tools/emit_stats_table.py`` shipped twice in a
-state that passed most of its own mutations, which is worse than having no checker, because a green
-result on a corrupted table is what a reader trusts.
+the one whose staleness would be least visible: a floor that drifted or a corpus size that fell
+behind still looks like a table. The sibling checker in ``tools/emit_stats_table.py`` shipped twice
+in a state that passed most of its own mutations, which is worse than having no checker, because a
+green result on a corrupted table is what a reader trusts.
 
 Each test is one corruption, pinned on its own. The fixtures build a minimal board and a minimal
 paper rather than copying the real ones, so a legitimate edit to either cannot turn these red. The
@@ -13,8 +13,8 @@ dependency on a sibling checkout.
 """
 import ast
 import importlib.util
-import json
 import os
+import re
 import sys
 from pathlib import Path
 
@@ -43,9 +43,7 @@ SPEC = dict(header="[PRE] pre_over_privilege :: multi",
             state="PRE", name="Over-privilege", metric="f1", metric_label="F1",
             corpus=r"^PRE over_privilege: (\d+) configs across (\d+) corpora",
             corpus_name="{1} sources", size="{0}", unit="configs",
-            coverage=(),
-            floor="flag_all", skip=("flag_none", "oracle_privilege_diff"),
-            claims=())
+            floor="flag_all", skip=("flag_none", "oracle_privilege_diff"))
 
 
 @pytest.fixture
@@ -100,98 +98,63 @@ def test_a_corpus_pattern_matching_twice_is_a_hard_failure(parsed):
         ebt.corpus_cells(preamble + list(preamble), SPEC)
 
 
-# --- reading the verdicts -------------------------------------------------------------------------
+# --- the generated rows -----------------------------------------------------------------------
+#
+# RETIRED 2026-09-07, together with the assertions they covered. Ten tests exercised the *Separates*
+# column and the guard that kept its denominators honest:
+#
+#   test_an_unknown_family_id_is_a_hard_failure
+#   test_a_prefix_that_selects_nothing_is_a_hard_failure
+#   test_a_board_with_no_declared_contrast_says_so
+#   test_a_nonseparating_claim_is_not_reported_as_separating
+#   test_a_family_count_comes_from_the_claims_not_from_the_declared_size
+#   test_an_id_prefix_splits_one_family_across_two_boards
+#   test_a_contrast_belonging_to_no_board_is_a_hard_failure
+#   test_a_contrast_claimed_by_two_boards_is_a_hard_failure
+#   test_the_real_boards_partition_the_real_contrasts
+#   test_the_printed_fractions_sum_to_the_papers_own_totals
+#
+# The first six pinned separates_cell() and covered(): an unknown family id or an id prefix that
+# selects nothing fails loudly rather than printing a smaller denominator, a board declaring no
+# contrast prints "--", and the fraction is counted from the claims rather than from a declared
+# family size. The last four pinned check_partition(): an orphaned contrast fails, a
+# double-claimed one fails, the shipped boards partition the shipped contrasts, and the printed
+# fractions sum to the 56 of 138 the abstract quoted.
+#
+# Everything they called is gone from emit_boards_table.py, which carries the reason at length: the
+# table reports measurements and no longer adjudicates them, so a per-board count of contrasts that
+# "separate" is the one thing it may not print. A test whose subject no longer exists cannot be kept
+# green without reintroducing the subject, and a monkeypatched stand-in would pin a mechanism the
+# emitter does not have.
+#
+# What replaces them is the first test below, which pins the generated row shape directly, so a
+# verdict column cannot return unnoticed. It reads the real board and runs without the paper, unlike
+# the cross-repository comparison further down, which skips when CATCHBENCH_PAPER_DIR is unset.
 
 
-def test_an_unknown_family_id_is_a_hard_failure():
-    spec = dict(SPEC, coverage=(("no_such_family", None),))
-    with pytest.raises(SystemExit):
-        ebt.separates_cell(spec, {})
+def test_a_generated_row_carries_no_verdict_column():
+    """Seven cells per row, none of them the ``k/n`` fraction or ``--`` the retired column printed.
 
-
-def test_a_prefix_that_selects_nothing_is_a_hard_failure():
-    """An empty selection must fail loudly; silently it prints a smaller denominator."""
-    spec = dict(SPEC, coverage=(("f", "det.nosuch."),))
-    with pytest.raises(SystemExit):
-        ebt.separates_cell(spec, {"f": [{"id": "det.swe.a", "verdict": "separates_as_stated"}]})
-
-
-def test_a_board_with_no_declared_contrast_says_so():
-    assert ebt.separates_cell(SPEC, {}) == "--"
-
-
-def test_a_nonseparating_claim_is_not_reported_as_separating():
-    members = [{"id": "x", "verdict": "does_not_separate"}]
-    assert ebt.separates_cell(dict(SPEC, coverage=(("f", None),)), {"f": members}) == "0/1"
-
-
-def test_a_family_count_comes_from_the_claims_not_from_the_declared_size():
-    """A family that grows must move the printed count, which is the drift this exists to catch."""
-    members = [{"id": "a", "verdict": "separates_as_stated"},
-               {"id": "b", "verdict": "does_not_separate"}]
-    assert ebt.separates_cell(dict(SPEC, coverage=(("f", None),)), {"f": members}) == "1/2"
-
-
-def test_an_id_prefix_splits_one_family_across_two_boards():
-    """post_detection_auc spans both corpora, so each Detection row takes its own half."""
-    members = [{"id": "det.swe.a", "verdict": "separates_as_stated"},
-               {"id": "det.swe.b", "verdict": "does_not_separate"},
-               {"id": "det.tau.a", "verdict": "does_not_separate"}]
-    assert ebt.separates_cell(dict(SPEC, coverage=(("f", "det.swe."),)), {"f": members}) == "1/2"
-    assert ebt.separates_cell(dict(SPEC, coverage=(("f", "det.tau."),)), {"f": members}) == "0/1"
-
-
-# --- the partition gate ---------------------------------------------------------------------------
-
-
-def test_a_contrast_belonging_to_no_board_is_a_hard_failure(monkeypatch):
-    """The failure the fraction replaced: a dropped family shrinks the denominator in silence."""
-    boards = (dict(SPEC, coverage=(("f", None),)),)
-    monkeypatch.setattr(ebt, "_BOARDS", boards)
-    families = {"f": [{"id": "a", "verdict": "separates_as_stated"}],
-                "orphan": [{"id": "b", "verdict": "does_not_separate"}]}
-    with pytest.raises(SystemExit):
-        ebt.check_partition(families)
-
-
-def test_a_contrast_claimed_by_two_boards_is_a_hard_failure(monkeypatch):
-    boards = (dict(SPEC, coverage=(("f", None),)), dict(SPEC, coverage=(("f", None),)))
-    monkeypatch.setattr(ebt, "_BOARDS", boards)
-    with pytest.raises(SystemExit):
-        ebt.check_partition({"f": [{"id": "a", "verdict": "separates_as_stated"}]})
-
-
-def test_the_real_boards_partition_the_real_contrasts():
-    """Every declared contrast is on exactly one board, so the column cannot under-count."""
-    _, _, families = ebt.load()
-    ebt.check_partition(families)
-
-
-def test_the_printed_fractions_sum_to_the_papers_own_totals():
-    """The abstract quotes a separation count; a reader who adds up the column must get it.
-
-    This is the reconciliation the redesign exists to protect. Before it, the column showed 7 of
-    16 families, so summing the table gave 32 of 65 against an abstract that said 47 of 118.
+    Split on unescaped ampersands only: the Who\\&When corpus name carries a literal ``\\&`` that a
+    naive split would read as a cell boundary.
     """
-    (preamble, blocks), claims, families = ebt.load()
-    printed = [ebt.separates_cell(spec, families) for spec in ebt._BOARDS]
-    pairs = [cell.split("/") for cell in printed if cell != "--"]
-    separates = sum(int(a) for a, _ in pairs)
-    total = sum(int(b) for _, b in pairs)
-    every = [c for members in families.values() for c in members]
-    assert total == len(every)
-    assert separates == sum(c["verdict"] in ebt._SEPARATING for c in every)
+    preamble, blocks = ebt.load()
+    for row in ebt.rows_latex(preamble, blocks):
+        cells = [c.strip() for c in re.split(r"(?<!\\)&", row.removesuffix(r"\\"))]
+        assert len(cells) == 7, f"expected seven cells, got {len(cells)}: {row!r}"
+        verdicts = [c for c in cells if re.fullmatch(r"\d+/\d+|--", c)]
+        assert not verdicts, f"verdict-shaped cell {verdicts} is back in {row!r}"
 
 
 def test_no_generated_cell_carries_a_literal_tab():
     """A mangled backslash turns \\times into a tab and prints ``imes`` in the PDF."""
-    (preamble, blocks), claims, families = ebt.load()
-    for row in ebt.rows_latex(preamble, blocks, claims, families):
+    preamble, blocks = ebt.load()
+    for row in ebt.rows_latex(preamble, blocks):
         assert "\t" not in row
 
 
 def test_the_shipped_board_still_carries_every_declared_block():
-    (preamble, blocks), _, _ = ebt.load()
+    _, blocks = ebt.load()
     for spec in ebt._BOARDS:
         assert spec["header"] in blocks
 
@@ -229,31 +192,32 @@ def _paper(tmp_path, rows):
     tmp_path.joinpath("03_benchmark.tex").write_text(
         "\\begin{table}[t]\n\\caption{x}\n\\label{tab:boards}\n"
         "\\begin{tabular}{@{}ll@{}}\n\\toprule\n"
-        "Board & Corpus & Size & Metric & Floor & Field & Separates \\\\\n"
+        "Board & Corpus & Size & Metric & Floor & Field \\\\\n"
         "\\midrule\n" + body + "\n\\bottomrule\n\\end{tabular}\n\\end{table}\n",
         encoding="utf-8")
     return tmp_path
 
 
 def test_a_matching_paper_passes(tmp_path):
-    rows = ["PRE & Over-privilege & 1 & F1 & 0.601 & 0.654--0.654 & no registered contrast \\\\"]
+    rows = ["Over-privilege & 6 sources & 1 & configs & F1 & 0.601 & 0.654--0.654 \\\\"]
     assert ebt.check(_paper(tmp_path, rows), rows) == 0
 
 
 def test_a_changed_cell_fails(tmp_path):
-    rows = ["PRE & Over-privilege & 1 & F1 & 0.601 & 0.654--0.654 & no registered contrast \\\\"]
+    rows = ["Over-privilege & 6 sources & 1 & configs & F1 & 0.601 & 0.654--0.654 \\\\"]
     stale = [rows[0].replace("0.601", "0.610")]
     assert ebt.check(_paper(tmp_path, stale), rows) == 1
 
 
 def test_a_deleted_row_fails(tmp_path):
-    rows = ["PRE & A & 1 & F1 & 0.6 & 0.6--0.7 & x \\\\", "POST & B & 2 & Top-1 & 0.1 & 0.2--0.3 & y \\\\"]
+    rows = ["A & PRE & 1 & configs & F1 & 0.6 & 0.6--0.7 \\\\",
+            "B & POST & 2 & runs & Top-1 & 0.1 & 0.2--0.3 \\\\"]
     assert ebt.check(_paper(tmp_path, rows[:1]), rows) == 1
 
 
 def test_an_added_row_fails(tmp_path):
-    rows = ["PRE & A & 1 & F1 & 0.6 & 0.6--0.7 & x \\\\"]
-    extra = rows + ["POST & B & 2 & Top-1 & 0.1 & 0.2--0.3 & y \\\\"]
+    rows = ["A & PRE & 1 & configs & F1 & 0.6 & 0.6--0.7 \\\\"]
+    extra = rows + ["B & POST & 2 & runs & Top-1 & 0.1 & 0.2--0.3 \\\\"]
     assert ebt.check(_paper(tmp_path, extra), rows) == 1
 
 
@@ -265,7 +229,7 @@ def test_a_missing_label_fails(tmp_path):
 
 def test_a_stale_figure_data_copy_fails(tmp_path):
     """The figure scripts read a committed copy of the board; a copy that drifts is silent."""
-    rows = ["PRE & A & 1 & F1 & 0.6 & 0.6--0.7 & x \\\\"]
+    rows = ["A & PRE & 1 & configs & F1 & 0.6 & 0.6--0.7 \\\\"]
     paper = _paper(tmp_path, rows)
     copy = paper / "figure" / "board.txt"
     copy.write_text(copy.read_text(encoding="utf-8").replace("0.703", "0.704", 1), encoding="utf-8")
@@ -273,7 +237,7 @@ def test_a_stale_figure_data_copy_fails(tmp_path):
 
 
 def test_a_missing_figure_data_copy_fails(tmp_path):
-    rows = ["PRE & A & 1 & F1 & 0.6 & 0.6--0.7 & x \\\\"]
+    rows = ["A & PRE & 1 & configs & F1 & 0.6 & 0.6--0.7 \\\\"]
     paper = _paper(tmp_path, rows)
     (paper / "figure" / "board.txt").unlink()
     assert ebt.check(paper, rows) == 1
@@ -281,13 +245,13 @@ def test_a_missing_figure_data_copy_fails(tmp_path):
 
 def test_a_commented_row_does_not_count_as_present(tmp_path):
     """A row behind a percent sign is not a row, and neither is a stale one hiding behind it."""
-    rows = ["PRE & A & 1 & F1 & 0.6 & 0.6--0.7 & x \\\\"]
+    rows = ["A & PRE & 1 & configs & F1 & 0.6 & 0.6--0.7 \\\\"]
     assert ebt.check(_paper(tmp_path, ["% " + rows[0]]), rows) == 1
 
 
 def test_the_header_row_is_not_compared_as_content(tmp_path):
     """Renaming a column heading is a legitimate edit; adding a row is not."""
-    rows = ["PRE & A & 1 & F1 & 0.6 & 0.6--0.7 & x \\\\"]
+    rows = ["A & PRE & 1 & configs & F1 & 0.6 & 0.6--0.7 \\\\"]
     paper = _paper(tmp_path, rows)
     text = paper.joinpath("03_benchmark.tex").read_text(encoding="utf-8")
     paper.joinpath("03_benchmark.tex").write_text(
@@ -298,7 +262,7 @@ def test_the_header_row_is_not_compared_as_content(tmp_path):
 
 def test_the_table_is_found_in_the_results_section_too(tmp_path):
     """The float may live in Section 3 or Section 5; both are legitimate placements."""
-    rows = ["PRE & A & 1 & F1 & 0.6 & 0.6--0.7 & x \\\\"]
+    rows = ["A & PRE & 1 & configs & F1 & 0.6 & 0.6--0.7 \\\\"]
     _paper(tmp_path, rows)
     moved = tmp_path.joinpath("05_results.tex")
     moved.write_text(tmp_path.joinpath("03_benchmark.tex").read_text(encoding="utf-8"),
@@ -320,7 +284,7 @@ def test_the_table_is_found_in_the_results_section_too(tmp_path):
 
 
 def test_a_missing_figure_fails(tmp_path):
-    rows = ["PRE & A & 1 & F1 & 0.6 & 0.6--0.7 & x \\\\"]
+    rows = ["A & PRE & 1 & configs & F1 & 0.6 & 0.6--0.7 \\\\"]
     paper = _paper(tmp_path, rows)
     paper.joinpath(ebt._FIGURE).unlink()
     assert ebt.check(paper, rows) == 1
@@ -336,8 +300,8 @@ def test_shipped_board_matches_configured_paper():
     configured = os.environ.get("CATCHBENCH_PAPER_DIR")
     if not configured:
         pytest.skip("set CATCHBENCH_PAPER_DIR to run the cross-repository integration check")
-    (preamble, blocks), claims, families = ebt.load()
-    assert ebt.check(Path(configured), ebt.rows_latex(preamble, blocks, claims, families)) == 0
+    preamble, blocks = ebt.load()
+    assert ebt.check(Path(configured), ebt.rows_latex(preamble, blocks)) == 0
 
 
 def test_the_papers_figure_board_is_the_golden_board():

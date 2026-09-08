@@ -35,6 +35,21 @@
       "family_size": 7,
       "id": "holm_monotonicity",
       "issue": "A prior Holm calculation reported a rankwise product without the running maximum."
+    },
+    {
+      "affected_values": [
+        {
+          "claim_id": "live.tau.25.auditable.vs.ecod",
+          "endpoint": "low",
+          "monte_carlo_noise": 0.002,
+          "reference": "zero",
+          "value": 0.0014044339716716876
+        }
+      ],
+      "clustered_rows_scanned": 26,
+      "id": "clustered_endpoint_proximity",
+      "issue": "An interval endpoint within Monte Carlo noise of its reference value is a place where the third printed decimal decides whether the interval contains that value, and no draw count fixes it. Reported so a reader is not led by the last digit.",
+      "monte_carlo_noise": 0.002
     }
   ],
   "claims": [
@@ -2710,7 +2725,35 @@
       "verdict": "separates_as_stated"
     },
     {
+      "clustered_interval": {
+        "axis": "task-cluster resampling",
+        "bootstrap_mean": 0.04664000899368094,
+        "bootstrap_sd": 0.02625977017684419,
+        "clusters_per_stratum": {
+          "airline": 50,
+          "retail": 115
+        },
+        "discarded_single_class_draws": 0,
+        "draws": 10000,
+        "interval_95": [
+          -0.004845272198967515,
+          0.09774498809289103
+        ],
+        "method": "task-clustered stratified percentile bootstrap",
+        "monte_carlo_noise_on_one_endpoint": 0.002,
+        "n_clusters": 165,
+        "n_rows": 660,
+        "point": 0.04629397742345398,
+        "replicates": 10000,
+        "rows_per_cluster": 4,
+        "seed": 20260907,
+        "statistic": "ROC-AUC difference",
+        "stratum": "tau-bench domain",
+        "unit": "tau-bench task instance; all four agent-model attempts travel together",
+        "usable_replicates": 10000
+      },
       "crosscheck": {
+        "assumes_independent_runs": true,
         "interval_95": [
           0.011055458162896131,
           0.08298898071625341
@@ -2732,17 +2775,35 @@
       "family": "post_detection_auc",
       "id": "det.tau.auditable.vs.size",
       "interval": {
-        "axis": "run-level sampling",
-        "high": 0.0821273854376387,
+        "axis": "task-cluster resampling",
+        "high": 0.09774498809289103,
         "level": 0.95,
-        "low": 0.01046056940926926,
-        "method": "paired DeLong"
+        "low": -0.004845272198967515,
+        "method": "task-clustered stratified percentile bootstrap"
       },
       "label": "tau: auditable (size+deps) vs size (flat)",
       "matches_stated_claim": true,
       "metric": "roc_auc",
       "one_line_verdict": "tau: auditable (size+deps) vs size (flat): does not separate (Holm p=0.0680249).",
+      "reproduction_diagnostic": {
+        "axis": "run-level sampling",
+        "interval_95": [
+          0.01046056940926926,
+          0.0821273854376387
+        ],
+        "method": "paired DeLong",
+        "note": "tau-bench's 660 runs are 165 task instances each attempted by four agent models, so this interval treats repeated attempts at one task as separate observations and is narrower than the printed task-clustered interval. It reproduces the earlier record and is not a reported uncertainty.",
+        "p_raw": 0.011337482835663801,
+        "role": "reproduction diagnostic under the independence assumption",
+        "statistic": {
+          "n_negative": 297,
+          "n_positive": 363,
+          "se": 0.018282686976308787,
+          "z": 2.5321210981429045
+        }
+      },
       "test": {
+        "assumes_independent_runs": true,
         "name": "paired DeLong z test",
         "p_adjusted_holm": 0.06802489701398282,
         "p_raw": 0.011337482835663801,
@@ -3083,7 +3144,35 @@
       "verdict": "does_not_separate"
     },
     {
+      "clustered_interval": {
+        "axis": "task-cluster resampling",
+        "bootstrap_mean": -0.0022124389154101302,
+        "bootstrap_sd": 0.015572022514476303,
+        "clusters_per_stratum": {
+          "airline": 50,
+          "retail": 115
+        },
+        "discarded_single_class_draws": 0,
+        "draws": 10000,
+        "interval_95": [
+          -0.03281049808117089,
+          0.02834061539422518
+        ],
+        "method": "task-clustered stratified percentile bootstrap",
+        "monte_carlo_noise_on_one_endpoint": 0.002,
+        "n_clusters": 165,
+        "n_rows": 660,
+        "point": -0.0022353934199663694,
+        "replicates": 10000,
+        "rows_per_cluster": 4,
+        "seed": 20260907,
+        "statistic": "ROC-AUC difference",
+        "stratum": "tau-bench domain",
+        "unit": "tau-bench task instance; all four agent-model attempts travel together",
+        "usable_replicates": 10000
+      },
       "crosscheck": {
+        "assumes_independent_runs": true,
         "interval_95": [
           -0.03055393234456598,
           0.025776822402166794
@@ -3105,17 +3194,35 @@
       "family": "post_detection_auc",
       "id": "det.tau.auditable.vs.full",
       "interval": {
-        "axis": "run-level sampling",
-        "high": 0.025767480091953895,
+        "axis": "task-cluster resampling",
+        "high": 0.02834061539422518,
         "level": 0.95,
-        "low": -0.030238266931886634,
-        "method": "paired DeLong"
+        "low": -0.03281049808117089,
+        "method": "task-clustered stratified percentile bootstrap"
       },
       "label": "tau: auditable (size+deps) vs full",
       "matches_stated_claim": true,
       "metric": "roc_auc",
       "one_line_verdict": "tau: auditable (size+deps) vs full: does not separate (Holm p=1).",
+      "reproduction_diagnostic": {
+        "axis": "run-level sampling",
+        "interval_95": [
+          -0.030238266931886634,
+          0.025767480091953895
+        ],
+        "method": "paired DeLong",
+        "note": "tau-bench's 660 runs are 165 task instances each attempted by four agent models, so this interval treats repeated attempts at one task as separate observations and is narrower than the printed task-clustered interval. It reproduces the earlier record and is not a reported uncertainty.",
+        "p_raw": 0.8756715438411916,
+        "role": "reproduction diagnostic under the independence assumption",
+        "statistic": {
+          "n_negative": 297,
+          "n_positive": 363,
+          "se": 0.014287442898340663,
+          "z": -0.15645860745494122
+        }
+      },
       "test": {
+        "assumes_independent_runs": true,
         "name": "paired DeLong z test",
         "p_adjusted_holm": 1.0,
         "p_raw": 0.8756715438411916,
@@ -5083,7 +5190,35 @@
       "verdict": "does_not_separate"
     },
     {
+      "clustered_interval": {
+        "axis": "task-cluster resampling",
+        "bootstrap_mean": 0.07858157343019215,
+        "bootstrap_sd": 0.03912291173649848,
+        "clusters_per_stratum": {
+          "airline": 50,
+          "retail": 115
+        },
+        "discarded_single_class_draws": 0,
+        "draws": 10000,
+        "interval_95": [
+          0.0014044339716716876,
+          0.15638920579805987
+        ],
+        "method": "task-clustered stratified percentile bootstrap",
+        "monte_carlo_noise_on_one_endpoint": 0.002,
+        "n_clusters": 165,
+        "n_rows": 660,
+        "point": 0.07910602814184076,
+        "replicates": 10000,
+        "rows_per_cluster": 4,
+        "seed": 20260907,
+        "statistic": "ROC-AUC difference",
+        "stratum": "tau-bench domain",
+        "unit": "tau-bench task instance; all four agent-model attempts travel together",
+        "usable_replicates": 10000
+      },
       "crosscheck": {
+        "assumes_independent_runs": true,
         "interval_95": [
           0.021728766081383185,
           0.1377790763465694
@@ -5105,17 +5240,35 @@
       "family": "live_tau_auditable_ecod_auc",
       "id": "live.tau.25.auditable.vs.ecod",
       "interval": {
-        "axis": "run-level sampling",
-        "high": 0.1372578371567267,
+        "axis": "task-cluster resampling",
+        "high": 0.15638920579805987,
         "level": 0.95,
-        "low": 0.02095421912695481,
-        "method": "paired DeLong"
+        "low": 0.0014044339716716876,
+        "method": "task-clustered stratified percentile bootstrap"
       },
       "label": "tau-bench 25%: auditable vs ECOD",
       "matches_stated_claim": true,
       "metric": "roc_auc",
       "one_line_verdict": "tau-bench 25%: auditable vs ECOD: separates as stated (Holm p=0.0230135).",
+      "reproduction_diagnostic": {
+        "axis": "run-level sampling",
+        "interval_95": [
+          0.02095421912695481,
+          0.1372578371567267
+        ],
+        "method": "paired DeLong",
+        "note": "tau-bench's 660 runs are 165 task instances each attempted by four agent models, so this interval treats repeated attempts at one task as separate observations and is narrower than the printed task-clustered interval. It reproduces the earlier record and is not a reported uncertainty.",
+        "p_raw": 0.0076711634851925475,
+        "role": "reproduction diagnostic under the independence assumption",
+        "statistic": {
+          "n_negative": 297,
+          "n_positive": 363,
+          "se": 0.029669835503907213,
+          "z": 2.666210540042371
+        }
+      },
       "test": {
+        "assumes_independent_runs": true,
         "name": "paired DeLong z test",
         "p_adjusted_holm": 0.023013490455577643,
         "p_raw": 0.0076711634851925475,
@@ -5162,7 +5315,35 @@
       "verdict": "separates_as_stated"
     },
     {
+      "clustered_interval": {
+        "axis": "task-cluster resampling",
+        "bootstrap_mean": 0.06376537933087818,
+        "bootstrap_sd": 0.041711824265310574,
+        "clusters_per_stratum": {
+          "airline": 50,
+          "retail": 115
+        },
+        "discarded_single_class_draws": 0,
+        "draws": 10000,
+        "interval_95": [
+          -0.018003889552644415,
+          0.14592521803005873
+        ],
+        "method": "task-clustered stratified percentile bootstrap",
+        "monte_carlo_noise_on_one_endpoint": 0.002,
+        "n_clusters": 165,
+        "n_rows": 660,
+        "point": 0.0639869772101177,
+        "replicates": 10000,
+        "rows_per_cluster": 4,
+        "seed": 20260907,
+        "statistic": "ROC-AUC difference",
+        "stratum": "tau-bench domain",
+        "unit": "tau-bench task instance; all four agent-model attempts travel together",
+        "usable_replicates": 10000
+      },
       "crosscheck": {
+        "assumes_independent_runs": true,
         "interval_95": [
           0.005397872202280008,
           0.12501692777174858
@@ -5184,17 +5365,35 @@
       "family": "live_tau_auditable_ecod_auc",
       "id": "live.tau.50.auditable.vs.ecod",
       "interval": {
-        "axis": "run-level sampling",
-        "high": 0.12486962760385892,
+        "axis": "task-cluster resampling",
+        "high": 0.14592521803005873,
         "level": 0.95,
-        "low": 0.0031043268163764917,
-        "method": "paired DeLong"
+        "low": -0.018003889552644415,
+        "method": "task-clustered stratified percentile bootstrap"
       },
       "label": "tau-bench 50%: auditable vs ECOD",
       "matches_stated_claim": true,
       "metric": "roc_auc",
       "one_line_verdict": "tau-bench 50%: auditable vs ECOD: separates as stated (Holm p=0.0394081).",
+      "reproduction_diagnostic": {
+        "axis": "run-level sampling",
+        "interval_95": [
+          0.0031043268163764917,
+          0.12486962760385892
+        ],
+        "method": "paired DeLong",
+        "note": "tau-bench's 660 runs are 165 task instances each attempted by four agent models, so this interval treats repeated attempts at one task as separate observations and is narrower than the printed task-clustered interval. It reproduces the earlier record and is not a reported uncertainty.",
+        "p_raw": 0.03940810287225533,
+        "role": "reproduction diagnostic under the independence assumption",
+        "statistic": {
+          "n_negative": 297,
+          "n_positive": 363,
+          "se": 0.031063147524125846,
+          "z": 2.059899987933318
+        }
+      },
       "test": {
+        "assumes_independent_runs": true,
         "name": "paired DeLong z test",
         "p_adjusted_holm": 0.03940810287225533,
         "p_raw": 0.03940810287225533,
@@ -5241,7 +5440,35 @@
       "verdict": "separates_as_stated"
     },
     {
+      "clustered_interval": {
+        "axis": "task-cluster resampling",
+        "bootstrap_mean": 0.07757818989949064,
+        "bootstrap_sd": 0.042626972254350644,
+        "clusters_per_stratum": {
+          "airline": 50,
+          "retail": 115
+        },
+        "discarded_single_class_draws": 0,
+        "draws": 10000,
+        "interval_95": [
+          -0.005214542224857616,
+          0.1624337522057135
+        ],
+        "method": "task-clustered stratified percentile bootstrap",
+        "monte_carlo_noise_on_one_endpoint": 0.002,
+        "n_clusters": 165,
+        "n_rows": 660,
+        "point": 0.07744107744107742,
+        "replicates": 10000,
+        "rows_per_cluster": 4,
+        "seed": 20260907,
+        "statistic": "ROC-AUC difference",
+        "stratum": "tau-bench domain",
+        "unit": "tau-bench task instance; all four agent-model attempts travel together",
+        "usable_replicates": 10000
+      },
       "crosscheck": {
+        "assumes_independent_runs": true,
         "interval_95": [
           0.015507694020090801,
           0.13959162330374442
@@ -5263,17 +5490,35 @@
       "family": "live_tau_auditable_ecod_auc",
       "id": "live.tau.75.auditable.vs.ecod",
       "interval": {
-        "axis": "run-level sampling",
-        "high": 0.13888825628862592,
+        "axis": "task-cluster resampling",
+        "high": 0.1624337522057135,
         "level": 0.95,
-        "low": 0.015993898593528934,
-        "method": "paired DeLong"
+        "low": -0.005214542224857616,
+        "method": "task-clustered stratified percentile bootstrap"
       },
       "label": "tau-bench 75%: auditable vs ECOD",
       "matches_stated_claim": true,
       "metric": "roc_auc",
       "one_line_verdict": "tau-bench 75%: auditable vs ECOD: separates as stated (Holm p=0.0270138).",
+      "reproduction_diagnostic": {
+        "axis": "run-level sampling",
+        "interval_95": [
+          0.015993898593528934,
+          0.13888825628862592
+        ],
+        "method": "paired DeLong",
+        "note": "tau-bench's 660 runs are 165 task instances each attempted by four agent models, so this interval treats repeated attempts at one task as separate observations and is narrower than the printed task-clustered interval. It reproduces the earlier record and is not a reported uncertainty.",
+        "p_raw": 0.013506885763340365,
+        "role": "reproduction diagnostic under the independence assumption",
+        "statistic": {
+          "n_negative": 297,
+          "n_positive": 363,
+          "se": 0.03135117753807519,
+          "z": 2.470117026610157
+        }
+      },
       "test": {
+        "assumes_independent_runs": true,
         "name": "paired DeLong z test",
         "p_adjusted_holm": 0.02701377152668073,
         "p_raw": 0.013506885763340365,
@@ -5320,7 +5565,35 @@
       "verdict": "separates_as_stated"
     },
     {
+      "clustered_interval": {
+        "axis": "task-cluster resampling",
+        "bootstrap_mean": 0.1062688237057681,
+        "bootstrap_sd": 0.03944890731126981,
+        "clusters_per_stratum": {
+          "airline": 50,
+          "retail": 115
+        },
+        "discarded_single_class_draws": 0,
+        "draws": 10000,
+        "interval_95": [
+          0.028583718148371556,
+          0.18375473793905078
+        ],
+        "method": "task-clustered stratified percentile bootstrap",
+        "monte_carlo_noise_on_one_endpoint": 0.002,
+        "n_clusters": 165,
+        "n_rows": 660,
+        "point": 0.10701598167162907,
+        "replicates": 10000,
+        "rows_per_cluster": 4,
+        "seed": 20260907,
+        "statistic": "ROC-AUC difference",
+        "stratum": "tau-bench domain",
+        "unit": "tau-bench task instance; all four agent-model attempts travel together",
+        "usable_replicates": 10000
+      },
       "crosscheck": {
+        "assumes_independent_runs": true,
         "interval_95": [
           0.0509244186585784,
           0.16276516310951572
@@ -5342,17 +5615,35 @@
       "family": "live_tau_auditable_ecod_auc",
       "id": "live.tau.100.auditable.vs.ecod",
       "interval": {
-        "axis": "run-level sampling",
-        "high": 0.16322299428278192,
+        "axis": "task-cluster resampling",
+        "high": 0.18375473793905078,
         "level": 0.95,
-        "low": 0.05080896906047622,
-        "method": "paired DeLong"
+        "low": 0.028583718148371556,
+        "method": "task-clustered stratified percentile bootstrap"
       },
       "label": "tau-bench 100%: auditable vs ECOD",
       "matches_stated_claim": true,
       "metric": "roc_auc",
       "one_line_verdict": "tau-bench 100%: auditable vs ECOD: separates as stated (Holm p=0.000760781).",
+      "reproduction_diagnostic": {
+        "axis": "run-level sampling",
+        "interval_95": [
+          0.05080896906047622,
+          0.16322299428278192
+        ],
+        "method": "paired DeLong",
+        "note": "tau-bench's 660 runs are 165 task instances each attempted by four agent models, so this interval treats repeated attempts at one task as separate observations and is narrower than the printed task-clustered interval. It reproduces the earlier record and is not a reported uncertainty.",
+        "p_raw": 0.00019019513479716864,
+        "role": "reproduction diagnostic under the independence assumption",
+        "statistic": {
+          "n_negative": 297,
+          "n_positive": 363,
+          "se": 0.028677574207743917,
+          "z": 3.731695745825361
+        }
+      },
       "test": {
+        "assumes_independent_runs": true,
         "name": "paired DeLong z test",
         "p_adjusted_holm": 0.0007607805391886746,
         "p_raw": 0.00019019513479716864,
@@ -5399,7 +5690,35 @@
       "verdict": "separates_as_stated"
     },
     {
+      "clustered_interval": {
+        "axis": "task-cluster resampling",
+        "bootstrap_mean": -0.07448995559894414,
+        "bootstrap_sd": 0.030113828203486428,
+        "clusters_per_stratum": {
+          "airline": 50,
+          "retail": 115
+        },
+        "discarded_single_class_draws": 0,
+        "draws": 10000,
+        "interval_95": [
+          -0.13380962810926325,
+          -0.016814908689862407
+        ],
+        "method": "task-clustered stratified percentile bootstrap",
+        "monte_carlo_noise_on_one_endpoint": 0.002,
+        "n_clusters": 165,
+        "n_rows": 660,
+        "point": -0.07435419391342257,
+        "replicates": 10000,
+        "rows_per_cluster": 4,
+        "seed": 20260907,
+        "statistic": "ROC-AUC minus 0.7",
+        "stratum": "tau-bench domain",
+        "unit": "tau-bench task instance; all four agent-model attempts travel together",
+        "usable_replicates": 10000
+      },
       "crosscheck": {
+        "assumes_independent_runs": true,
         "interval_95": [
           0.5834720019293023,
           0.6680772370166309
@@ -5420,17 +5739,36 @@
       "family": "live_tau_threshold_auc",
       "id": "live.tau.bar.25.size (flat)",
       "interval": {
-        "axis": "run-level sampling",
-        "high": -0.03194411833212142,
+        "axis": "task-cluster resampling",
+        "high": -0.016814908689862407,
         "level": 0.95,
-        "low": -0.11676426949472372,
-        "method": "single-curve DeLong"
+        "low": -0.13380962810926325,
+        "method": "task-clustered stratified percentile bootstrap"
       },
       "label": "tau-bench 25%: size (flat) vs 0.70",
       "matches_stated_claim": true,
       "metric": "roc_auc",
       "one_line_verdict": "tau-bench 25%: size (flat) vs 0.70: separates as stated (Holm p=0.00459737).",
+      "reproduction_diagnostic": {
+        "axis": "run-level sampling",
+        "interval_95": [
+          -0.11676426949472372,
+          -0.03194411833212142
+        ],
+        "method": "single-curve DeLong",
+        "note": "tau-bench's 660 runs are 165 task instances each attempted by four agent models, so this interval treats repeated attempts at one task as separate observations and is narrower than the printed task-clustered interval. It reproduces the earlier record and is not a reported uncertainty.",
+        "p_raw": 0.0005898305385657266,
+        "role": "reproduction diagnostic under the independence assumption",
+        "statistic": {
+          "log_p_raw": -7.435675285090824,
+          "n_negative": 297,
+          "n_positive": 363,
+          "se": 0.021638191270771514,
+          "z": -3.4362481125610023
+        }
+      },
       "test": {
+        "assumes_independent_runs": true,
         "name": "two-sided DeLong z test against 0.70",
         "p_adjusted_holm": 0.004597365479467506,
         "p_raw": 0.0005898305385657266,
@@ -5475,7 +5813,35 @@
       "verdict": "separates_as_stated"
     },
     {
+      "clustered_interval": {
+        "axis": "task-cluster resampling",
+        "bootstrap_mean": -0.07441443796484445,
+        "bootstrap_sd": 0.03000923495774241,
+        "clusters_per_stratum": {
+          "airline": 50,
+          "retail": 115
+        },
+        "discarded_single_class_draws": 0,
+        "draws": 10000,
+        "interval_95": [
+          -0.13383372113421074,
+          -0.015714161332050783
+        ],
+        "method": "task-clustered stratified percentile bootstrap",
+        "monte_carlo_noise_on_one_endpoint": 0.002,
+        "n_clusters": 165,
+        "n_rows": 660,
+        "point": -0.07451187726669817,
+        "replicates": 10000,
+        "rows_per_cluster": 4,
+        "seed": 20260907,
+        "statistic": "ROC-AUC minus 0.7",
+        "stratum": "tau-bench domain",
+        "unit": "tau-bench task instance; all four agent-model attempts travel together",
+        "usable_replicates": 10000
+      },
       "crosscheck": {
+        "assumes_independent_runs": true,
         "interval_95": [
           0.5832417378560629,
           0.6680213521811318
@@ -5496,17 +5862,36 @@
       "family": "live_tau_threshold_auc",
       "id": "live.tau.bar.25.auditable (size+deps)",
       "interval": {
-        "axis": "run-level sampling",
-        "high": -0.03209884908758315,
+        "axis": "task-cluster resampling",
+        "high": -0.015714161332050783,
         "level": 0.95,
-        "low": -0.11692490544581319,
-        "method": "single-curve DeLong"
+        "low": -0.13383372113421074,
+        "method": "task-clustered stratified percentile bootstrap"
       },
       "label": "tau-bench 25%: auditable (size+deps) vs 0.70",
       "matches_stated_claim": true,
       "metric": "roc_auc",
       "one_line_verdict": "tau-bench 25%: auditable (size+deps) vs 0.70: separates as stated (Holm p=0.00459737).",
+      "reproduction_diagnostic": {
+        "axis": "run-level sampling",
+        "interval_95": [
+          -0.11692490544581319,
+          -0.03209884908758315
+        ],
+        "method": "single-curve DeLong",
+        "note": "tau-bench's 660 runs are 165 task instances each attempted by four agent models, so this interval treats repeated attempts at one task as separate observations and is narrower than the printed task-clustered interval. It reproduces the earlier record and is not a reported uncertainty.",
+        "p_raw": 0.0005746706849334382,
+        "role": "reproduction diagnostic under the independence assumption",
+        "statistic": {
+          "log_p_raw": -7.461713403089622,
+          "n_negative": 297,
+          "n_positive": 363,
+          "se": 0.021639697725909037,
+          "z": -3.443295660155442
+        }
+      },
       "test": {
+        "assumes_independent_runs": true,
         "name": "two-sided DeLong z test against 0.70",
         "p_adjusted_holm": 0.004597365479467506,
         "p_raw": 0.0005746706849334382,
@@ -5551,7 +5936,35 @@
       "verdict": "separates_as_stated"
     },
     {
+      "clustered_interval": {
+        "axis": "task-cluster resampling",
+        "bootstrap_mean": -0.06590425019462726,
+        "bootstrap_sd": 0.03007321770976784,
+        "clusters_per_stratum": {
+          "airline": 50,
+          "retail": 115
+        },
+        "discarded_single_class_draws": 0,
+        "draws": 10000,
+        "interval_95": [
+          -0.12572371213719732,
+          -0.006912025322983894
+        ],
+        "method": "task-clustered stratified percentile bootstrap",
+        "monte_carlo_noise_on_one_endpoint": 0.002,
+        "n_clusters": 165,
+        "n_rows": 660,
+        "point": -0.06469840739813182,
+        "replicates": 10000,
+        "rows_per_cluster": 4,
+        "seed": 20260907,
+        "statistic": "ROC-AUC minus 0.7",
+        "stratum": "tau-bench domain",
+        "unit": "tau-bench task instance; all four agent-model attempts travel together",
+        "usable_replicates": 10000
+      },
       "crosscheck": {
+        "assumes_independent_runs": true,
         "interval_95": [
           0.5930524250772184,
           0.6775389338750221
@@ -5572,17 +5985,36 @@
       "family": "live_tau_threshold_auc",
       "id": "live.tau.bar.25.full",
       "interval": {
-        "axis": "run-level sampling",
-        "high": -0.022671575199996817,
+        "axis": "task-cluster resampling",
+        "high": -0.006912025322983894,
         "level": 0.95,
-        "low": -0.10672523959626681,
-        "method": "single-curve DeLong"
+        "low": -0.12572371213719732,
+        "method": "task-clustered stratified percentile bootstrap"
       },
       "label": "tau-bench 25%: full vs 0.70",
       "matches_stated_claim": true,
       "metric": "roc_auc",
       "one_line_verdict": "tau-bench 25%: full vs 0.70: separates as stated (Holm p=0.0127529).",
+      "reproduction_diagnostic": {
+        "axis": "run-level sampling",
+        "interval_95": [
+          -0.10672523959626681,
+          -0.022671575199996817
+        ],
+        "method": "single-curve DeLong",
+        "note": "tau-bench's 660 runs are 165 task instances each attempted by four agent models, so this interval treats repeated attempts at one task as separate observations and is narrower than the printed task-clustered interval. It reproduces the earlier record and is not a reported uncertainty.",
+        "p_raw": 0.0025505754380213065,
+        "role": "reproduction diagnostic under the independence assumption",
+        "statistic": {
+          "log_p_raw": -5.971436283300495,
+          "n_negative": 297,
+          "n_positive": 363,
+          "se": 0.021442655339402813,
+          "z": -3.017275909818998
+        }
+      },
       "test": {
+        "assumes_independent_runs": true,
         "name": "two-sided DeLong z test against 0.70",
         "p_adjusted_holm": 0.012752877190106532,
         "p_raw": 0.0025505754380213065,
@@ -5627,7 +6059,35 @@
       "verdict": "separates_as_stated"
     },
     {
+      "clustered_interval": {
+        "axis": "task-cluster resampling",
+        "bootstrap_mean": -0.1532537331293629,
+        "bootstrap_sd": 0.028777269058283615,
+        "clusters_per_stratum": {
+          "airline": 50,
+          "retail": 115
+        },
+        "discarded_single_class_draws": 0,
+        "draws": 10000,
+        "interval_95": [
+          -0.20911505974887035,
+          -0.09669557993373082
+        ],
+        "method": "task-clustered stratified percentile bootstrap",
+        "monte_carlo_noise_on_one_endpoint": 0.002,
+        "n_clusters": 165,
+        "n_rows": 660,
+        "point": -0.15361790540853892,
+        "replicates": 10000,
+        "rows_per_cluster": 4,
+        "seed": 20260907,
+        "statistic": "ROC-AUC minus 0.7",
+        "stratum": "tau-bench domain",
+        "unit": "tau-bench task instance; all four agent-model attempts travel together",
+        "usable_replicates": 10000
+      },
       "crosscheck": {
+        "assumes_independent_runs": true,
         "interval_95": [
           0.5022166105499438,
           0.5905955793008134
@@ -5648,17 +6108,36 @@
       "family": "live_tau_threshold_auc",
       "id": "live.tau.bar.25.pyod (ECOD)",
       "interval": {
-        "axis": "run-level sampling",
-        "high": -0.10959461629789052,
+        "axis": "task-cluster resampling",
+        "high": -0.09669557993373082,
         "level": 0.95,
-        "low": -0.19764119451918732,
-        "method": "single-curve DeLong"
+        "low": -0.20911505974887035,
+        "method": "task-clustered stratified percentile bootstrap"
       },
       "label": "tau-bench 25%: pyod (ECOD) vs 0.70",
       "matches_stated_claim": true,
       "metric": "roc_auc",
       "one_line_verdict": "tau-bench 25%: pyod (ECOD) vs 0.70: separates as stated (Holm p=1.3535e-10).",
+      "reproduction_diagnostic": {
+        "axis": "run-level sampling",
+        "interval_95": [
+          -0.19764119451918732,
+          -0.10959461629789052
+        ],
+        "method": "single-curve DeLong",
+        "note": "tau-bench's 660 runs are 165 task instances each attempted by four agent models, so this interval treats repeated attempts at one task as separate observations and is narrower than the printed task-clustered interval. It reproduces the earlier record and is not a reported uncertainty.",
+        "p_raw": 7.96179172931633e-12,
+        "role": "reproduction diagnostic under the independence assumption",
+        "statistic": {
+          "log_p_raw": -25.55636704977892,
+          "n_negative": 297,
+          "n_positive": 363,
+          "se": 0.0224612745223374,
+          "z": -6.839233688888323
+        }
+      },
       "test": {
+        "assumes_independent_runs": true,
         "name": "two-sided DeLong z test against 0.70",
         "p_adjusted_holm": 1.3535045939837762e-10,
         "p_raw": 7.96179172931633e-12,
@@ -5684,7 +6163,35 @@
       "verdict": "separates_as_stated"
     },
     {
+      "clustered_interval": {
+        "axis": "task-cluster resampling",
+        "bootstrap_mean": -0.19724703174926844,
+        "bootstrap_sd": 0.0019220402243110889,
+        "clusters_per_stratum": {
+          "airline": 50,
+          "retail": 115
+        },
+        "discarded_single_class_draws": 0,
+        "draws": 10000,
+        "interval_95": [
+          -0.19999999999999996,
+          -0.19285714285714284
+        ],
+        "method": "task-clustered stratified percentile bootstrap",
+        "monte_carlo_noise_on_one_endpoint": 0.002,
+        "n_clusters": 165,
+        "n_rows": 660,
+        "point": -0.1972451790633608,
+        "replicates": 10000,
+        "rows_per_cluster": 4,
+        "seed": 20260907,
+        "statistic": "ROC-AUC minus 0.7",
+        "stratum": "tau-bench domain",
+        "unit": "tau-bench task instance; all four agent-model attempts travel together",
+        "usable_replicates": 10000
+      },
       "crosscheck": {
+        "assumes_independent_runs": true,
         "interval_95": [
           0.5,
           0.5068870523415978
@@ -5705,17 +6212,36 @@
       "family": "live_tau_threshold_auc",
       "id": "live.tau.bar.25.dep-span (online)",
       "interval": {
-        "axis": "run-level sampling",
-        "high": -0.19343253920458478,
+        "axis": "task-cluster resampling",
+        "high": -0.19285714285714284,
         "level": 0.95,
-        "low": -0.20105781892213684,
-        "method": "single-curve DeLong"
+        "low": -0.19999999999999996,
+        "method": "task-clustered stratified percentile bootstrap"
       },
       "label": "tau-bench 25%: dep-span (online) vs 0.70",
       "matches_stated_claim": true,
       "metric": "roc_auc",
       "one_line_verdict": "tau-bench 25%: dep-span (online) vs 0.70: separates as stated (Holm p=4.45015e-307).",
+      "reproduction_diagnostic": {
+        "axis": "run-level sampling",
+        "interval_95": [
+          -0.20105781892213684,
+          -0.19343253920458478
+        ],
+        "method": "single-curve DeLong",
+        "note": "tau-bench's 660 runs are 165 task instances each attempted by four agent models, so this interval treats repeated attempts at one task as separate observations and is narrower than the printed task-clustered interval. It reproduces the earlier record and is not a reported uncertainty.",
+        "p_raw": 2.2250738585072626e-308,
+        "role": "reproduction diagnostic under the independence assumption",
+        "statistic": {
+          "log_p_raw": -5145.605937611777,
+          "n_negative": 297,
+          "n_positive": 363,
+          "se": 0.001945260162354843,
+          "z": -101.39784018636603
+        }
+      },
       "test": {
+        "assumes_independent_runs": true,
         "name": "two-sided DeLong z test against 0.70",
         "p_adjusted_holm": 4.450147717014525e-307,
         "p_raw": 2.2250738585072626e-308,
@@ -5741,7 +6267,35 @@
       "verdict": "separates_as_stated"
     },
     {
+      "clustered_interval": {
+        "axis": "task-cluster resampling",
+        "bootstrap_mean": -0.08334592636222773,
+        "bootstrap_sd": 0.031463935870059835,
+        "clusters_per_stratum": {
+          "airline": 50,
+          "retail": 115
+        },
+        "discarded_single_class_draws": 0,
+        "draws": 10000,
+        "interval_95": [
+          -0.1449668066056177,
+          -0.020969538631180267
+        ],
+        "method": "task-clustered stratified percentile bootstrap",
+        "monte_carlo_noise_on_one_endpoint": 0.002,
+        "n_clusters": 165,
+        "n_rows": 660,
+        "point": -0.08289228371872992,
+        "replicates": 10000,
+        "rows_per_cluster": 4,
+        "seed": 20260907,
+        "statistic": "ROC-AUC minus 0.7",
+        "stratum": "tau-bench domain",
+        "unit": "tau-bench task instance; all four agent-model attempts travel together",
+        "usable_replicates": 10000
+      },
       "crosscheck": {
+        "assumes_independent_runs": true,
         "interval_95": [
           0.5751249872461993,
           0.6589680088302677
@@ -5762,17 +6316,36 @@
       "family": "live_tau_threshold_auc",
       "id": "live.tau.bar.50.size (flat)",
       "interval": {
-        "axis": "run-level sampling",
-        "high": -0.04026518800023786,
+        "axis": "task-cluster resampling",
+        "high": -0.020969538631180267,
         "level": 0.95,
-        "low": -0.12551937943722197,
-        "method": "single-curve DeLong"
+        "low": -0.1449668066056177,
+        "method": "task-clustered stratified percentile bootstrap"
       },
       "label": "tau-bench 50%: size (flat) vs 0.70",
       "matches_stated_claim": true,
       "metric": "roc_auc",
       "one_line_verdict": "tau-bench 50%: size (flat) vs 0.70: separates as stated (Holm p=0.00139188).",
+      "reproduction_diagnostic": {
+        "axis": "run-level sampling",
+        "interval_95": [
+          -0.12551937943722197,
+          -0.04026518800023786
+        ],
+        "method": "single-curve DeLong",
+        "note": "tau-bench's 660 runs are 165 task instances each attempted by four agent models, so this interval treats repeated attempts at one task as separate observations and is narrower than the printed task-clustered interval. It reproduces the earlier record and is not a reported uncertainty.",
+        "p_raw": 0.00013822159687030034,
+        "role": "reproduction diagnostic under the independence assumption",
+        "statistic": {
+          "log_p_raw": -8.886652386261842,
+          "n_negative": 297,
+          "n_positive": 363,
+          "se": 0.02174891786518995,
+          "z": -3.8113291076151645
+        }
+      },
       "test": {
+        "assumes_independent_runs": true,
         "name": "two-sided DeLong z test against 0.70",
         "p_adjusted_holm": 0.0013918789545409383,
         "p_raw": 0.00013822159687030034,
@@ -5817,7 +6390,35 @@
       "verdict": "separates_as_stated"
     },
     {
+      "clustered_interval": {
+        "axis": "task-cluster resampling",
+        "bootstrap_mean": -0.08300371558701683,
+        "bootstrap_sd": 0.03123982531321549,
+        "clusters_per_stratum": {
+          "airline": 50,
+          "retail": 115
+        },
+        "discarded_single_class_draws": 0,
+        "draws": 10000,
+        "interval_95": [
+          -0.14484366740659874,
+          -0.02293137083801593
+        ],
+        "method": "task-clustered stratified percentile bootstrap",
+        "monte_carlo_noise_on_one_endpoint": 0.002,
+        "n_clusters": 165,
+        "n_rows": 660,
+        "point": -0.08275315134819261,
+        "replicates": 10000,
+        "rows_per_cluster": 4,
+        "seed": 20260907,
+        "statistic": "ROC-AUC minus 0.7",
+        "stratum": "tau-bench domain",
+        "unit": "tau-bench task instance; all four agent-model attempts travel together",
+        "usable_replicates": 10000
+      },
       "crosscheck": {
+        "assumes_independent_runs": true,
         "interval_95": [
           0.5746623721141627,
           0.6597568893712144
@@ -5838,17 +6439,36 @@
       "family": "live_tau_threshold_auc",
       "id": "live.tau.bar.50.auditable (size+deps)",
       "interval": {
-        "axis": "run-level sampling",
-        "high": -0.03998243371739885,
+        "axis": "task-cluster resampling",
+        "high": -0.02293137083801593,
         "level": 0.95,
-        "low": -0.12552386897898637,
-        "method": "single-curve DeLong"
+        "low": -0.14484366740659874,
+        "method": "task-clustered stratified percentile bootstrap"
       },
       "label": "tau-bench 50%: auditable (size+deps) vs 0.70",
       "matches_stated_claim": true,
       "metric": "roc_auc",
       "one_line_verdict": "tau-bench 50%: auditable (size+deps) vs 0.70: separates as stated (Holm p=0.00139188).",
+      "reproduction_diagnostic": {
+        "axis": "run-level sampling",
+        "interval_95": [
+          -0.12552386897898637,
+          -0.03998243371739885
+        ],
+        "method": "single-curve DeLong",
+        "note": "tau-bench's 660 runs are 165 task instances each attempted by four agent models, so this interval treats repeated attempts at one task as separate observations and is narrower than the printed task-clustered interval. It reproduces the earlier record and is not a reported uncertainty.",
+        "p_raw": 0.00014934556964901958,
+        "role": "reproduction diagnostic under the independence assumption",
+        "statistic": {
+          "log_p_raw": -8.809247677960295,
+          "n_negative": 297,
+          "n_positive": 363,
+          "se": 0.02182219569755553,
+          "z": -3.7921551293512787
+        }
+      },
       "test": {
+        "assumes_independent_runs": true,
         "name": "two-sided DeLong z test against 0.70",
         "p_adjusted_holm": 0.0013918789545409383,
         "p_raw": 0.00014934556964901958,
@@ -5893,7 +6513,35 @@
       "verdict": "separates_as_stated"
     },
     {
+      "clustered_interval": {
+        "axis": "task-cluster resampling",
+        "bootstrap_mean": -0.07276017089075103,
+        "bootstrap_sd": 0.029545305255670826,
+        "clusters_per_stratum": {
+          "airline": 50,
+          "retail": 115
+        },
+        "discarded_single_class_draws": 0,
+        "draws": 10000,
+        "interval_95": [
+          -0.13168271705372683,
+          -0.015237121459498031
+        ],
+        "method": "task-clustered stratified percentile bootstrap",
+        "monte_carlo_noise_on_one_endpoint": 0.002,
+        "n_clusters": 165,
+        "n_rows": 660,
+        "point": -0.07238315199747702,
+        "replicates": 10000,
+        "rows_per_cluster": 4,
+        "seed": 20260907,
+        "statistic": "ROC-AUC minus 0.7",
+        "stratum": "tau-bench domain",
+        "unit": "tau-bench task instance; all four agent-model attempts travel together",
+        "usable_replicates": 10000
+      },
       "crosscheck": {
+        "assumes_independent_runs": true,
         "interval_95": [
           0.584735091966497,
           0.6706275333685803
@@ -5914,17 +6562,36 @@
       "family": "live_tau_threshold_auc",
       "id": "live.tau.bar.50.full",
       "interval": {
-        "axis": "run-level sampling",
-        "high": -0.029973534754608074,
+        "axis": "task-cluster resampling",
+        "high": -0.015237121459498031,
         "level": 0.95,
-        "low": -0.11479276924034598,
-        "method": "single-curve DeLong"
+        "low": -0.13168271705372683,
+        "method": "task-clustered stratified percentile bootstrap"
       },
       "label": "tau-bench 50%: full vs 0.70",
       "matches_stated_claim": true,
       "metric": "roc_auc",
       "one_line_verdict": "tau-bench 50%: full vs 0.70: separates as stated (Holm p=0.00493351).",
+      "reproduction_diagnostic": {
+        "axis": "run-level sampling",
+        "interval_95": [
+          -0.11479276924034598,
+          -0.029973534754608074
+        ],
+        "method": "single-curve DeLong",
+        "note": "tau-bench's 660 runs are 165 task instances each attempted by four agent models, so this interval treats repeated attempts at one task as separate observations and is narrower than the printed task-clustered interval. It reproduces the earlier record and is not a reported uncertainty.",
+        "p_raw": 0.0008222521775625767,
+        "role": "reproduction diagnostic under the independence assumption",
+        "statistic": {
+          "log_p_raw": -7.103463424601166,
+          "n_negative": 297,
+          "n_positive": 363,
+          "se": 0.021637957420335578,
+          "z": -3.345193383616264
+        }
+      },
       "test": {
+        "assumes_independent_runs": true,
         "name": "two-sided DeLong z test against 0.70",
         "p_adjusted_holm": 0.004933513065375461,
         "p_raw": 0.0008222521775625767,
@@ -5969,7 +6636,35 @@
       "verdict": "separates_as_stated"
     },
     {
+      "clustered_interval": {
+        "axis": "task-cluster resampling",
+        "bootstrap_mean": -0.14701495753591842,
+        "bootstrap_sd": 0.030202224124742084,
+        "clusters_per_stratum": {
+          "airline": 50,
+          "retail": 115
+        },
+        "discarded_single_class_draws": 0,
+        "draws": 10000,
+        "interval_95": [
+          -0.20574655110588677,
+          -0.08744675394122471
+        ],
+        "method": "task-clustered stratified percentile bootstrap",
+        "monte_carlo_noise_on_one_endpoint": 0.002,
+        "n_clusters": 165,
+        "n_rows": 660,
+        "point": -0.1467401285583103,
+        "replicates": 10000,
+        "rows_per_cluster": 4,
+        "seed": 20260907,
+        "statistic": "ROC-AUC minus 0.7",
+        "stratum": "tau-bench domain",
+        "unit": "tau-bench task instance; all four agent-model attempts travel together",
+        "usable_replicates": 10000
+      },
       "crosscheck": {
+        "assumes_independent_runs": true,
         "interval_95": [
           0.5091727653022419,
           0.5981351624602312
@@ -5990,17 +6685,36 @@
       "family": "live_tau_threshold_auc",
       "id": "live.tau.bar.50.pyod (ECOD)",
       "interval": {
-        "axis": "run-level sampling",
-        "high": -0.1027021688201539,
+        "axis": "task-cluster resampling",
+        "high": -0.08744675394122471,
         "level": 0.95,
-        "low": -0.19077808829646672,
-        "method": "single-curve DeLong"
+        "low": -0.20574655110588677,
+        "method": "task-clustered stratified percentile bootstrap"
       },
       "label": "tau-bench 50%: pyod (ECOD) vs 0.70",
       "matches_stated_claim": true,
       "metric": "roc_auc",
       "one_line_verdict": "tau-bench 50%: pyod (ECOD) vs 0.70: separates as stated (Holm p=1.04635e-09).",
+      "reproduction_diagnostic": {
+        "axis": "run-level sampling",
+        "interval_95": [
+          -0.19077808829646672,
+          -0.1027021688201539
+        ],
+        "method": "single-curve DeLong",
+        "note": "tau-bench's 660 runs are 165 task instances each attempted by four agent models, so this interval treats repeated attempts at one task as separate observations and is narrower than the printed task-clustered interval. It reproduces the earlier record and is not a reported uncertainty.",
+        "p_raw": 6.539689852030504e-11,
+        "role": "reproduction diagnostic under the independence assumption",
+        "statistic": {
+          "log_p_raw": -23.45054628182684,
+          "n_negative": 297,
+          "n_positive": 363,
+          "se": 0.022468759673913517,
+          "z": -6.5308513103496875
+        }
+      },
       "test": {
+        "assumes_independent_runs": true,
         "name": "two-sided DeLong z test against 0.70",
         "p_adjusted_holm": 1.0463503763248806e-09,
         "p_raw": 6.539689852030504e-11,
@@ -6026,7 +6740,35 @@
       "verdict": "separates_as_stated"
     },
     {
+      "clustered_interval": {
+        "axis": "task-cluster resampling",
+        "bootstrap_mean": -0.16980518607662276,
+        "bootstrap_sd": 0.011979909163162644,
+        "clusters_per_stratum": {
+          "airline": 50,
+          "retail": 115
+        },
+        "discarded_single_class_draws": 0,
+        "draws": 10000,
+        "interval_95": [
+          -0.19275483148387665,
+          -0.14645892433093471
+        ],
+        "method": "task-clustered stratified percentile bootstrap",
+        "monte_carlo_noise_on_one_endpoint": 0.002,
+        "n_clusters": 165,
+        "n_rows": 660,
+        "point": -0.16989175501572196,
+        "replicates": 10000,
+        "rows_per_cluster": 4,
+        "seed": 20260907,
+        "statistic": "ROC-AUC minus 0.7",
+        "stratum": "tau-bench domain",
+        "unit": "tau-bench task instance; all four agent-model attempts travel together",
+        "usable_replicates": 10000
+      },
       "crosscheck": {
+        "assumes_independent_runs": true,
         "interval_95": [
           0.5098319049076625,
           0.5506814007847066
@@ -6047,17 +6789,36 @@
       "family": "live_tau_threshold_auc",
       "id": "live.tau.bar.50.dep-span (online)",
       "interval": {
-        "axis": "run-level sampling",
-        "high": -0.1498679309905753,
+        "axis": "task-cluster resampling",
+        "high": -0.14645892433093471,
         "level": 0.95,
-        "low": -0.18991557904086862,
-        "method": "single-curve DeLong"
+        "low": -0.19275483148387665,
+        "method": "task-clustered stratified percentile bootstrap"
       },
       "label": "tau-bench 50%: dep-span (online) vs 0.70",
       "matches_stated_claim": true,
       "metric": "roc_auc",
       "one_line_verdict": "tau-bench 50%: dep-span (online) vs 0.70: separates as stated (Holm p=8.12673e-61).",
+      "reproduction_diagnostic": {
+        "axis": "run-level sampling",
+        "interval_95": [
+          -0.18991557904086862,
+          -0.1498679309905753
+        ],
+        "method": "single-curve DeLong",
+        "note": "tau-bench's 660 runs are 165 task instances each attempted by four agent models, so this interval treats repeated attempts at one task as separate observations and is narrower than the printed task-clustered interval. It reproduces the earlier record and is not a reported uncertainty.",
+        "p_raw": 4.277226354787495e-62,
+        "role": "reproduction diagnostic under the independence assumption",
+        "statistic": {
+          "log_p_raw": -141.3069710140578,
+          "n_negative": 297,
+          "n_positive": 363,
+          "se": 0.01021642447672101,
+          "z": -16.629277239100112
+        }
+      },
       "test": {
+        "assumes_independent_runs": true,
         "name": "two-sided DeLong z test against 0.70",
         "p_adjusted_holm": 8.12673007409624e-61,
         "p_raw": 4.277226354787495e-62,
@@ -6083,7 +6844,35 @@
       "verdict": "separates_as_stated"
     },
     {
+      "clustered_interval": {
+        "axis": "task-cluster resampling",
+        "bootstrap_mean": -0.08367240429568007,
+        "bootstrap_sd": 0.032103435214838855,
+        "clusters_per_stratum": {
+          "airline": 50,
+          "retail": 115
+        },
+        "discarded_single_class_draws": 0,
+        "draws": 10000,
+        "interval_95": [
+          -0.14667545387529402,
+          -0.02237970837158026
+        ],
+        "method": "task-clustered stratified percentile bootstrap",
+        "monte_carlo_noise_on_one_endpoint": 0.002,
+        "n_clusters": 165,
+        "n_rows": 660,
+        "point": -0.0832401146450733,
+        "replicates": 10000,
+        "rows_per_cluster": 4,
+        "seed": 20260907,
+        "statistic": "ROC-AUC minus 0.7",
+        "stratum": "tau-bench domain",
+        "unit": "tau-bench task instance; all four agent-model attempts travel together",
+        "usable_replicates": 10000
+      },
       "crosscheck": {
+        "assumes_independent_runs": true,
         "interval_95": [
           0.5736508797803564,
           0.6593254630789066
@@ -6104,17 +6893,36 @@
       "family": "live_tau_threshold_auc",
       "id": "live.tau.bar.75.size (flat)",
       "interval": {
-        "axis": "run-level sampling",
-        "high": -0.04067736042916463,
+        "axis": "task-cluster resampling",
+        "high": -0.02237970837158026,
         "level": 0.95,
-        "low": -0.12580286886098196,
-        "method": "single-curve DeLong"
+        "low": -0.14667545387529402,
+        "method": "task-clustered stratified percentile bootstrap"
       },
       "label": "tau-bench 75%: size (flat) vs 0.70",
       "matches_stated_claim": true,
       "metric": "roc_auc",
       "one_line_verdict": "tau-bench 75%: size (flat) vs 0.70: separates as stated (Holm p=0.00139188).",
+      "reproduction_diagnostic": {
+        "axis": "run-level sampling",
+        "interval_95": [
+          -0.12580286886098196,
+          -0.04067736042916463
+        ],
+        "method": "single-curve DeLong",
+        "note": "tau-bench's 660 runs are 165 task instances each attempted by four agent models, so this interval treats repeated attempts at one task as separate observations and is narrower than the printed task-clustered interval. It reproduces the earlier record and is not a reported uncertainty.",
+        "p_raw": 0.00012653445041281258,
+        "role": "reproduction diagnostic under the independence assumption",
+        "statistic": {
+          "log_p_raw": -8.97499595159407,
+          "n_negative": 297,
+          "n_positive": 363,
+          "se": 0.021716089964733155,
+          "z": -3.8331078375644476
+        }
+      },
       "test": {
+        "assumes_independent_runs": true,
         "name": "two-sided DeLong z test against 0.70",
         "p_adjusted_holm": 0.0013918789545409383,
         "p_raw": 0.00012653445041281258,
@@ -6159,7 +6967,35 @@
       "verdict": "separates_as_stated"
     },
     {
+      "clustered_interval": {
+        "axis": "task-cluster resampling",
+        "bootstrap_mean": -0.06129403021661619,
+        "bootstrap_sd": 0.029545290495612095,
+        "clusters_per_stratum": {
+          "airline": 50,
+          "retail": 115
+        },
+        "discarded_single_class_draws": 0,
+        "draws": 10000,
+        "interval_95": [
+          -0.12084137290034051,
+          -0.004496846356688009
+        ],
+        "method": "task-clustered stratified percentile bootstrap",
+        "monte_carlo_noise_on_one_endpoint": 0.002,
+        "n_clusters": 165,
+        "n_rows": 660,
+        "point": -0.060705308363710575,
+        "replicates": 10000,
+        "rows_per_cluster": 4,
+        "seed": 20260907,
+        "statistic": "ROC-AUC minus 0.7",
+        "stratum": "tau-bench domain",
+        "unit": "tau-bench task instance; all four agent-model attempts travel together",
+        "usable_replicates": 10000
+      },
       "crosscheck": {
+        "assumes_independent_runs": true,
         "interval_95": [
           0.598408325681053,
           0.6812229271595662
@@ -6180,17 +7016,36 @@
       "family": "live_tau_threshold_auc",
       "id": "live.tau.bar.75.auditable (size+deps)",
       "interval": {
-        "axis": "run-level sampling",
-        "high": -0.018890152247377855,
+        "axis": "task-cluster resampling",
+        "high": -0.004496846356688009,
         "level": 0.95,
-        "low": -0.10252046448004329,
-        "method": "single-curve DeLong"
+        "low": -0.12084137290034051,
+        "method": "task-clustered stratified percentile bootstrap"
       },
       "label": "tau-bench 75%: auditable (size+deps) vs 0.70",
       "matches_stated_claim": true,
       "metric": "roc_auc",
       "one_line_verdict": "tau-bench 75%: auditable (size+deps) vs 0.70: separates as stated (Holm p=0.0177431).",
+      "reproduction_diagnostic": {
+        "axis": "run-level sampling",
+        "interval_95": [
+          -0.10252046448004329,
+          -0.018890152247377855
+        ],
+        "method": "single-curve DeLong",
+        "note": "tau-bench's 660 runs are 165 task instances each attempted by four agent models, so this interval treats repeated attempts at one task as separate observations and is narrower than the printed task-clustered interval. It reproduces the earlier record and is not a reported uncertainty.",
+        "p_raw": 0.004435777304828537,
+        "role": "reproduction diagnostic under the independence assumption",
+        "statistic": {
+          "log_p_raw": -5.418052412551162,
+          "n_negative": 297,
+          "n_positive": 363,
+          "se": 0.021334655353958204,
+          "z": -2.845385001846208
+        }
+      },
       "test": {
+        "assumes_independent_runs": true,
         "name": "two-sided DeLong z test against 0.70",
         "p_adjusted_holm": 0.017743109219314147,
         "p_raw": 0.004435777304828537,
@@ -6235,7 +7090,35 @@
       "verdict": "separates_as_stated"
     },
     {
+      "clustered_interval": {
+        "axis": "task-cluster resampling",
+        "bootstrap_mean": -0.05785282731012485,
+        "bootstrap_sd": 0.029068153775743566,
+        "clusters_per_stratum": {
+          "airline": 50,
+          "retail": 115
+        },
+        "discarded_single_class_draws": 0,
+        "draws": 10000,
+        "interval_95": [
+          -0.11699919071647945,
+          -0.0025042470402190284
+        ],
+        "method": "task-clustered stratified percentile bootstrap",
+        "monte_carlo_noise_on_one_endpoint": 0.002,
+        "n_clusters": 165,
+        "n_rows": 660,
+        "point": -0.05743105991039876,
+        "replicates": 10000,
+        "rows_per_cluster": 4,
+        "seed": 20260907,
+        "statistic": "ROC-AUC minus 0.7",
+        "stratum": "tau-bench domain",
+        "unit": "tau-bench task instance; all four agent-model attempts travel together",
+        "usable_replicates": 10000
+      },
       "crosscheck": {
+        "assumes_independent_runs": true,
         "interval_95": [
           0.5997523443804436,
           0.6856923226757937
@@ -6256,17 +7139,36 @@
       "family": "live_tau_threshold_auc",
       "id": "live.tau.bar.75.full",
       "interval": {
-        "axis": "run-level sampling",
-        "high": -0.015686485601009735,
+        "axis": "task-cluster resampling",
+        "high": -0.0025042470402190284,
         "level": 0.95,
-        "low": -0.09917563421978778,
-        "method": "single-curve DeLong"
+        "low": -0.11699919071647945,
+        "method": "task-clustered stratified percentile bootstrap"
       },
       "label": "tau-bench 75%: full vs 0.70",
       "matches_stated_claim": true,
       "metric": "roc_auc",
       "one_line_verdict": "tau-bench 75%: full vs 0.70: separates as stated (Holm p=0.0210239).",
+      "reproduction_diagnostic": {
+        "axis": "run-level sampling",
+        "interval_95": [
+          -0.09917563421978778,
+          -0.015686485601009735
+        ],
+        "method": "single-curve DeLong",
+        "note": "tau-bench's 660 runs are 165 task instances each attempted by four agent models, so this interval treats repeated attempts at one task as separate observations and is narrower than the printed task-clustered interval. It reproduces the earlier record and is not a reported uncertainty.",
+        "p_raw": 0.007007963352473252,
+        "role": "reproduction diagnostic under the independence assumption",
+        "statistic": {
+          "log_p_raw": -4.960708154746245,
+          "n_negative": 297,
+          "n_positive": 363,
+          "se": 0.021298643566241476,
+          "z": -2.696465609736174
+        }
+      },
       "test": {
+        "assumes_independent_runs": true,
         "name": "two-sided DeLong z test against 0.70",
         "p_adjusted_holm": 0.021023890057419756,
         "p_raw": 0.007007963352473252,
@@ -6311,7 +7213,35 @@
       "verdict": "separates_as_stated"
     },
     {
+      "clustered_interval": {
+        "axis": "task-cluster resampling",
+        "bootstrap_mean": -0.13811871457285488,
+        "bootstrap_sd": 0.03020811249951886,
+        "clusters_per_stratum": {
+          "airline": 50,
+          "retail": 115
+        },
+        "discarded_single_class_draws": 0,
+        "draws": 10000,
+        "interval_95": [
+          -0.1974586544501301,
+          -0.07998493497773866
+        ],
+        "method": "task-clustered stratified percentile bootstrap",
+        "monte_carlo_noise_on_one_endpoint": 0.002,
+        "n_clusters": 165,
+        "n_rows": 660,
+        "point": -0.138146385804788,
+        "replicates": 10000,
+        "rows_per_cluster": 4,
+        "seed": 20260907,
+        "statistic": "ROC-AUC minus 0.7",
+        "stratum": "tau-bench domain",
+        "unit": "tau-bench task instance; all four agent-model attempts travel together",
+        "usable_replicates": 10000
+      },
       "crosscheck": {
+        "assumes_independent_runs": true,
         "interval_95": [
           0.5165277661834136,
           0.6074944810826354
@@ -6332,17 +7262,36 @@
       "family": "live_tau_threshold_auc",
       "id": "live.tau.bar.75.pyod (ECOD)",
       "interval": {
-        "axis": "run-level sampling",
-        "high": -0.09404435932513111,
+        "axis": "task-cluster resampling",
+        "high": -0.07998493497773866,
         "level": 0.95,
-        "low": -0.18224841228444488,
-        "method": "single-curve DeLong"
+        "low": -0.1974586544501301,
+        "method": "task-clustered stratified percentile bootstrap"
       },
       "label": "tau-bench 75%: pyod (ECOD) vs 0.70",
       "matches_stated_claim": true,
       "metric": "roc_auc",
       "one_line_verdict": "tau-bench 75%: pyod (ECOD) vs 0.70: separates as stated (Holm p=1.15935e-08).",
+      "reproduction_diagnostic": {
+        "axis": "run-level sampling",
+        "interval_95": [
+          -0.18224841228444488,
+          -0.09404435932513111
+        ],
+        "method": "single-curve DeLong",
+        "note": "tau-bench's 660 runs are 165 task instances each attempted by four agent models, so this interval treats repeated attempts at one task as separate observations and is narrower than the printed task-clustered interval. It reproduces the earlier record and is not a reported uncertainty.",
+        "p_raw": 8.281058647189399e-10,
+        "role": "reproduction diagnostic under the independence assumption",
+        "statistic": {
+          "log_p_raw": -20.911880113775414,
+          "n_negative": 297,
+          "n_positive": 363,
+          "se": 0.022501447387568364,
+          "z": -6.139444428855334
+        }
+      },
       "test": {
+        "assumes_independent_runs": true,
         "name": "two-sided DeLong z test against 0.70",
         "p_adjusted_holm": 1.1593482106065158e-08,
         "p_raw": 8.281058647189399e-10,
@@ -6368,7 +7317,35 @@
       "verdict": "separates_as_stated"
     },
     {
+      "clustered_interval": {
+        "axis": "task-cluster resampling",
+        "bootstrap_mean": -0.13568922127192948,
+        "bootstrap_sd": 0.02599291184394115,
+        "clusters_per_stratum": {
+          "airline": 50,
+          "retail": 115
+        },
+        "discarded_single_class_draws": 0,
+        "draws": 10000,
+        "interval_95": [
+          -0.18788235718334925,
+          -0.08563764129549432
+        ],
+        "method": "task-clustered stratified percentile bootstrap",
+        "monte_carlo_noise_on_one_endpoint": 0.002,
+        "n_clusters": 165,
+        "n_rows": 660,
+        "point": -0.13510402463570503,
+        "replicates": 10000,
+        "rows_per_cluster": 4,
+        "seed": 20260907,
+        "statistic": "ROC-AUC minus 0.7",
+        "stratum": "tau-bench domain",
+        "unit": "tau-bench task instance; all four agent-model attempts travel together",
+        "usable_replicates": 10000
+      },
       "crosscheck": {
+        "assumes_independent_runs": true,
         "interval_95": [
           0.5291713044123513,
           0.6005565294821493
@@ -6389,17 +7366,36 @@
       "family": "live_tau_threshold_auc",
       "id": "live.tau.bar.75.dep-span (online)",
       "interval": {
-        "axis": "run-level sampling",
-        "high": -0.09963043309853806,
+        "axis": "task-cluster resampling",
+        "high": -0.08563764129549432,
         "level": 0.95,
-        "low": -0.170577616172872,
-        "method": "single-curve DeLong"
+        "low": -0.18788235718334925,
+        "method": "task-clustered stratified percentile bootstrap"
       },
       "label": "tau-bench 75%: dep-span (online) vs 0.70",
       "matches_stated_claim": true,
       "metric": "roc_auc",
       "one_line_verdict": "tau-bench 75%: dep-span (online) vs 0.70: separates as stated (Holm p=1.50304e-12).",
+      "reproduction_diagnostic": {
+        "axis": "run-level sampling",
+        "interval_95": [
+          -0.170577616172872,
+          -0.09963043309853806
+        ],
+        "method": "single-curve DeLong",
+        "note": "tau-bench's 660 runs are 165 task instances each attempted by four agent models, so this interval treats repeated attempts at one task as separate observations and is narrower than the printed task-clustered interval. It reproduces the earlier record and is not a reported uncertainty.",
+        "p_raw": 8.350205788979942e-14,
+        "role": "reproduction diagnostic under the independence assumption",
+        "statistic": {
+          "log_p_raw": -30.11390511797075,
+          "n_negative": 297,
+          "n_positive": 363,
+          "se": 0.018099103767711112,
+          "z": -7.4646803714519425
+        }
+      },
       "test": {
+        "assumes_independent_runs": true,
         "name": "two-sided DeLong z test against 0.70",
         "p_adjusted_holm": 1.5030370420163895e-12,
         "p_raw": 8.350205788979942e-14,
@@ -6425,7 +7421,35 @@
       "verdict": "separates_as_stated"
     },
     {
+      "clustered_interval": {
+        "axis": "task-cluster resampling",
+        "bootstrap_mean": -0.084320827467177,
+        "bootstrap_sd": 0.03167353889789436,
+        "clusters_per_stratum": {
+          "airline": 50,
+          "retail": 115
+        },
+        "discarded_single_class_draws": 0,
+        "draws": 10000,
+        "interval_95": [
+          -0.14648055053202666,
+          -0.022765950231908624
+        ],
+        "method": "task-clustered stratified percentile bootstrap",
+        "monte_carlo_noise_on_one_endpoint": 0.002,
+        "n_clusters": 165,
+        "n_rows": 660,
+        "point": -0.08384765932975291,
+        "replicates": 10000,
+        "rows_per_cluster": 4,
+        "seed": 20260907,
+        "statistic": "ROC-AUC minus 0.7",
+        "stratum": "tau-bench domain",
+        "unit": "tau-bench task instance; all four agent-model attempts travel together",
+        "usable_replicates": 10000
+      },
       "crosscheck": {
+        "assumes_independent_runs": true,
         "interval_95": [
           0.5743565127862649,
           0.6596546270788696
@@ -6446,17 +7470,36 @@
       "family": "live_tau_threshold_auc",
       "id": "live.tau.bar.100.size (flat)",
       "interval": {
-        "axis": "run-level sampling",
-        "high": -0.04131858760836741,
+        "axis": "task-cluster resampling",
+        "high": -0.022765950231908624,
         "level": 0.95,
-        "low": -0.12637673105113842,
-        "method": "single-curve DeLong"
+        "low": -0.14648055053202666,
+        "method": "task-clustered stratified percentile bootstrap"
       },
       "label": "tau-bench 100%: size (flat) vs 0.70",
       "matches_stated_claim": true,
       "metric": "roc_auc",
       "one_line_verdict": "tau-bench 100%: size (flat) vs 0.70: separates as stated (Holm p=0.00133776).",
+      "reproduction_diagnostic": {
+        "axis": "run-level sampling",
+        "interval_95": [
+          -0.12637673105113842,
+          -0.04131858760836741
+        ],
+        "method": "single-curve DeLong",
+        "note": "tau-bench's 660 runs are 165 task instances each attempted by four agent models, so this interval treats repeated attempts at one task as separate observations and is narrower than the printed task-clustered interval. It reproduces the earlier record and is not a reported uncertainty.",
+        "p_raw": 0.00011148014150975084,
+        "role": "reproduction diagnostic under the independence assumption",
+        "statistic": {
+          "log_p_raw": -9.101664085977895,
+          "n_negative": 297,
+          "n_positive": 363,
+          "se": 0.02169890470276464,
+          "z": -3.8641424753144316
+        }
+      },
       "test": {
+        "assumes_independent_runs": true,
         "name": "two-sided DeLong z test against 0.70",
         "p_adjusted_holm": 0.0013377616981170102,
         "p_raw": 0.00011148014150975084,
@@ -6501,7 +7544,35 @@
       "verdict": "separates_as_stated"
     },
     {
+      "clustered_interval": {
+        "axis": "task-cluster resampling",
+        "bootstrap_mean": -0.038028257472986826,
+        "bootstrap_sd": 0.030258496767333394,
+        "clusters_per_stratum": {
+          "airline": 50,
+          "retail": 115
+        },
+        "discarded_single_class_draws": 0,
+        "draws": 10000,
+        "interval_95": [
+          -0.0985791041990863,
+          0.02033340780155002
+        ],
+        "method": "task-clustered stratified percentile bootstrap",
+        "monte_carlo_noise_on_one_endpoint": 0.002,
+        "n_clusters": 165,
+        "n_rows": 660,
+        "point": -0.03755368190629893,
+        "replicates": 10000,
+        "rows_per_cluster": 4,
+        "seed": 20260907,
+        "statistic": "ROC-AUC minus 0.7",
+        "stratum": "tau-bench domain",
+        "unit": "tau-bench task instance; all four agent-model attempts travel together",
+        "usable_replicates": 10000
+      },
       "crosscheck": {
+        "assumes_independent_runs": true,
         "interval_95": [
           0.6206502583224346,
           0.7035274693676897
@@ -6522,17 +7593,36 @@
       "family": "live_tau_threshold_auc",
       "id": "live.tau.bar.100.auditable (size+deps)",
       "interval": {
-        "axis": "run-level sampling",
-        "high": 0.0036035138321897225,
+        "axis": "task-cluster resampling",
+        "high": 0.02033340780155002,
         "level": 0.95,
-        "low": -0.07871087764478758,
-        "method": "single-curve DeLong"
+        "low": -0.0985791041990863,
+        "method": "task-clustered stratified percentile bootstrap"
       },
       "label": "tau-bench 100%: auditable (size+deps) vs 0.70",
       "matches_stated_claim": true,
       "metric": "roc_auc",
       "one_line_verdict": "tau-bench 100%: auditable (size+deps) vs 0.70: does not separate (Holm p=0.147436).",
+      "reproduction_diagnostic": {
+        "axis": "run-level sampling",
+        "interval_95": [
+          -0.07871087764478758,
+          0.0036035138321897225
+        ],
+        "method": "single-curve DeLong",
+        "note": "tau-bench's 660 runs are 165 task instances each attempted by four agent models, so this interval treats repeated attempts at one task as separate observations and is narrower than the printed task-clustered interval. It reproduces the earlier record and is not a reported uncertainty.",
+        "p_raw": 0.07371801805656664,
+        "role": "reproduction diagnostic under the independence assumption",
+        "statistic": {
+          "log_p_raw": -2.6075080312873493,
+          "n_negative": 297,
+          "n_positive": 363,
+          "se": 0.02099895511505893,
+          "z": -1.7883595493457742
+        }
+      },
       "test": {
+        "assumes_independent_runs": true,
         "name": "two-sided DeLong z test against 0.70",
         "p_adjusted_holm": 0.14743603611313327,
         "p_raw": 0.07371801805656664,
@@ -6577,7 +7667,35 @@
       "verdict": "does_not_separate"
     },
     {
+      "clustered_interval": {
+        "axis": "task-cluster resampling",
+        "bootstrap_mean": -0.03586837838552188,
+        "bootstrap_sd": 0.028331476140475185,
+        "clusters_per_stratum": {
+          "airline": 50,
+          "retail": 115
+        },
+        "discarded_single_class_draws": 0,
+        "draws": 10000,
+        "interval_95": [
+          -0.09308904671772808,
+          0.018548080069886203
+        ],
+        "method": "task-clustered stratified percentile bootstrap",
+        "monte_carlo_noise_on_one_endpoint": 0.002,
+        "n_clusters": 165,
+        "n_rows": 660,
+        "point": -0.03531828848633256,
+        "replicates": 10000,
+        "rows_per_cluster": 4,
+        "seed": 20260907,
+        "statistic": "ROC-AUC minus 0.7",
+        "stratum": "tau-bench domain",
+        "unit": "tau-bench task instance; all four agent-model attempts travel together",
+        "usable_replicates": 10000
+      },
       "crosscheck": {
+        "assumes_independent_runs": true,
         "interval_95": [
           0.6226073870013265,
           0.7043764087152516
@@ -6598,17 +7716,36 @@
       "family": "live_tau_threshold_auc",
       "id": "live.tau.bar.100.full",
       "interval": {
-        "axis": "run-level sampling",
-        "high": 0.005719658695013098,
+        "axis": "task-cluster resampling",
+        "high": 0.018548080069886203,
         "level": 0.95,
-        "low": -0.07635623566767821,
-        "method": "single-curve DeLong"
+        "low": -0.09308904671772808,
+        "method": "task-clustered stratified percentile bootstrap"
       },
       "label": "tau-bench 100%: full vs 0.70",
       "matches_stated_claim": true,
       "metric": "roc_auc",
       "one_line_verdict": "tau-bench 100%: full vs 0.70: does not separate (Holm p=0.147436).",
+      "reproduction_diagnostic": {
+        "axis": "run-level sampling",
+        "interval_95": [
+          -0.07635623566767821,
+          0.005719658695013098
+        ],
+        "method": "single-curve DeLong",
+        "note": "tau-bench's 660 runs are 165 task instances each attempted by four agent models, so this interval treats repeated attempts at one task as separate observations and is narrower than the printed task-clustered interval. It reproduces the earlier record and is not a reported uncertainty.",
+        "p_raw": 0.0916429210650322,
+        "role": "reproduction diagnostic under the independence assumption",
+        "statistic": {
+          "log_p_raw": -2.389855546468011,
+          "n_negative": 297,
+          "n_positive": 363,
+          "se": 0.020938112896485728,
+          "z": -1.6867942522298853
+        }
+      },
       "test": {
+        "assumes_independent_runs": true,
         "name": "two-sided DeLong z test against 0.70",
         "p_adjusted_holm": 0.14743603611313327,
         "p_raw": 0.0916429210650322,
@@ -6653,7 +7790,35 @@
       "verdict": "does_not_separate"
     },
     {
+      "clustered_interval": {
+        "axis": "task-cluster resampling",
+        "bootstrap_mean": -0.14452730075635992,
+        "bootstrap_sd": 0.02988661694917034,
+        "clusters_per_stratum": {
+          "airline": 50,
+          "retail": 115
+        },
+        "discarded_single_class_draws": 0,
+        "draws": 10000,
+        "interval_95": [
+          -0.20389199679580064,
+          -0.08614773374564012
+        ],
+        "method": "task-clustered stratified percentile bootstrap",
+        "monte_carlo_noise_on_one_endpoint": 0.002,
+        "n_clusters": 165,
+        "n_rows": 660,
+        "point": -0.144569663577928,
+        "replicates": 10000,
+        "rows_per_cluster": 4,
+        "seed": 20260907,
+        "statistic": "ROC-AUC minus 0.7",
+        "stratum": "tau-bench domain",
+        "unit": "tau-bench task instance; all four agent-model attempts travel together",
+        "usable_replicates": 10000
+      },
       "crosscheck": {
+        "assumes_independent_runs": true,
         "interval_95": [
           0.5114134921297456,
           0.5985861832280566
@@ -6674,17 +7839,36 @@
       "family": "live_tau_threshold_auc",
       "id": "live.tau.bar.100.pyod (ECOD)",
       "interval": {
-        "axis": "run-level sampling",
-        "high": -0.10049835284186014,
+        "axis": "task-cluster resampling",
+        "high": -0.08614773374564012,
         "level": 0.95,
-        "low": -0.18864097431399585,
-        "method": "single-curve DeLong"
+        "low": -0.20389199679580064,
+        "method": "task-clustered stratified percentile bootstrap"
       },
       "label": "tau-bench 100%: pyod (ECOD) vs 0.70",
       "matches_stated_claim": true,
       "metric": "roc_auc",
       "one_line_verdict": "tau-bench 100%: pyod (ECOD) vs 0.70: separates as stated (Holm p=1.92184e-09).",
+      "reproduction_diagnostic": {
+        "axis": "run-level sampling",
+        "interval_95": [
+          -0.18864097431399585,
+          -0.10049835284186014
+        ],
+        "method": "single-curve DeLong",
+        "note": "tau-bench's 660 runs are 165 task instances each attempted by four agent models, so this interval treats repeated attempts at one task as separate observations and is narrower than the printed task-clustered interval. It reproduces the earlier record and is not a reported uncertainty.",
+        "p_raw": 1.281229731621941e-10,
+        "role": "reproduction diagnostic under the independence assumption",
+        "statistic": {
+          "log_p_raw": -22.7780305853829,
+          "n_negative": 297,
+          "n_positive": 363,
+          "se": 0.022485775801849798,
+          "z": -6.42938295088911
+        }
+      },
       "test": {
+        "assumes_independent_runs": true,
         "name": "two-sided DeLong z test against 0.70",
         "p_adjusted_holm": 1.9218445974329114e-09,
         "p_raw": 1.281229731621941e-10,
@@ -6710,7 +7894,35 @@
       "verdict": "separates_as_stated"
     },
     {
+      "clustered_interval": {
+        "axis": "task-cluster resampling",
+        "bootstrap_mean": -0.1323186942120174,
+        "bootstrap_sd": 0.03372869985394281,
+        "clusters_per_stratum": {
+          "airline": 50,
+          "retail": 115
+        },
+        "discarded_single_class_draws": 0,
+        "draws": 10000,
+        "interval_95": [
+          -0.19915180515621317,
+          -0.06681158188022567
+        ],
+        "method": "task-clustered stratified percentile bootstrap",
+        "monte_carlo_noise_on_one_endpoint": 0.002,
+        "n_clusters": 165,
+        "n_rows": 660,
+        "point": -0.1320060105184072,
+        "replicates": 10000,
+        "rows_per_cluster": 4,
+        "seed": 20260907,
+        "statistic": "ROC-AUC minus 0.7",
+        "stratum": "tau-bench domain",
+        "unit": "tau-bench task instance; all four agent-model attempts travel together",
+        "usable_replicates": 10000
+      },
       "crosscheck": {
+        "assumes_independent_runs": true,
         "interval_95": [
           0.5237863019543461,
           0.6118730927270872
@@ -6731,17 +7943,36 @@
       "family": "live_tau_threshold_auc",
       "id": "live.tau.bar.100.dep-span (online)",
       "interval": {
-        "axis": "run-level sampling",
-        "high": -0.08852933391368903,
+        "axis": "task-cluster resampling",
+        "high": -0.06681158188022567,
         "level": 0.95,
-        "low": -0.1754826871231254,
-        "method": "single-curve DeLong"
+        "low": -0.19915180515621317,
+        "method": "task-clustered stratified percentile bootstrap"
       },
       "label": "tau-bench 100%: dep-span (online) vs 0.70",
       "matches_stated_claim": true,
       "metric": "roc_auc",
       "one_line_verdict": "tau-bench 100%: dep-span (online) vs 0.70: separates as stated (Holm p=3.46592e-08).",
+      "reproduction_diagnostic": {
+        "axis": "run-level sampling",
+        "interval_95": [
+          -0.1754826871231254,
+          -0.08852933391368903
+        ],
+        "method": "single-curve DeLong",
+        "note": "tau-bench's 660 runs are 165 task instances each attempted by four agent models, so this interval treats repeated attempts at one task as separate observations and is narrower than the printed task-clustered interval. It reproduces the earlier record and is not a reported uncertainty.",
+        "p_raw": 2.666093458342319e-09,
+        "role": "reproduction diagnostic under the independence assumption",
+        "statistic": {
+          "log_p_raw": -19.74265156016205,
+          "n_negative": 297,
+          "n_positive": 363,
+          "se": 0.022182385466088497,
+          "z": -5.950938447094091
+        }
+      },
       "test": {
+        "assumes_independent_runs": true,
         "name": "two-sided DeLong z test against 0.70",
         "p_adjusted_holm": 3.465921495845015e-08,
         "p_raw": 2.666093458342319e-09,
@@ -8948,7 +10179,20 @@
       "live",
       "gold",
       "pre"
-    ]
+    ],
+    "tau_task_clustering": {
+      "applies_to": "every printed tau-bench interval",
+      "axis": "task-cluster resampling",
+      "draws": 10000,
+      "method": "task-clustered stratified percentile bootstrap",
+      "monte_carlo_noise_on_one_endpoint": 0.002,
+      "no_clustered_p_value": "no cluster-aware null test is constructed, so test.p_raw stays the independent-run DeLong p that Holm adjusts",
+      "seed": 20260907,
+      "seed_is_fixed_here": "not taken from --seed, so a regenerated block and the manuscript compare like with like",
+      "stratum": "tau-bench domain",
+      "swegym": "untouched: 376 runs carry 376 distinct task ids, so run-level and task-level resampling coincide, and agent_graph_swegym.load_runs reads no instance identifier in any case",
+      "unit": "tau-bench task instance; all four agent-model attempts travel together"
+    }
   },
   "stated_claim_mismatches": []
 }

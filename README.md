@@ -10,7 +10,7 @@ run, a growing prefix while it runs, and the finished trace after it ends.
 [![arXiv](https://img.shields.io/badge/status-arXiv%202608.22808-blue.svg)](https://arxiv.org/abs/2608.22808)
 [![Code license](https://img.shields.io/badge/code%20license-MIT-blue.svg)](LICENSE)
 [![Python](https://img.shields.io/badge/python-3.10%20%7C%203.12-blue.svg)](pyproject.toml)
-[![Tests](https://img.shields.io/badge/tests-456-brightgreen.svg)](tests/expected_tests.txt)
+[![Tests](https://img.shields.io/badge/tests-448-brightgreen.svg)](tests/expected_tests.txt)
 [![Boards](https://img.shields.io/badge/boards-PRE%20%7C%20LIVE%20%7C%20POST-orange.svg)](#the-boards)
 
 [Quickstart](#quickstart) · [The Boards](#the-boards) · [Task List](#the-full-task-list) · [Add a Method](#how-a-method-plugs-in) · [Full Install](#the-full-board)
@@ -31,11 +31,9 @@ What the boards show, in plain terms:
 - In matched POST detection comparisons, the dependency increment stays positive across the three
   tested model specifications on tau-bench and changes sign on SWE-Gym, so the model specification
   decides the SWE-Gym reading.
-- No tested method flags a failing tau-bench run before it finishes.
-- On two of six configuration sources, no over-privilege method clearly beats the trivial baseline of
-  flagging every capability.
-- Eight of eleven LLM judges sit in a band these runs cannot tell apart, so the board declines to
-  rank them.
+- On tau-bench, no tested method's prefix score reaches the 0.70 early-warning bar at any prefix.
+- On `sweagent`, no over-privilege method beats the 0.574 F1 of flagging every capability.
+- Eight of eleven LLM judges score between 0.333 and 0.452 Top-1 on 126 runs.
 
 ## Quickstart
 
@@ -60,9 +58,9 @@ eleven rows are references rather than methods: the `flag_all` and `flag_none` f
 oracle that reads the answer.
 
 > [!TIP]
-> Read the `flag_all` row first. A method earns its false alarms only by clearing that floor. On two
-> of the six sources none does: on `sweagent` flagging everything ties the best method, and on `mcp`
-> the best method's lead over the floor does not resolve.
+> Read the `flag_all` row first. A method earns its false alarms only by clearing that floor, and the
+> floor moves a long way by source: on `sweagent` flagging everything scores 0.574 and no method
+> beats it, while on `mcp` the best method scores 0.744 over a 0.654 floor.
 
 The POST, LIVE, and Gold boards need the GRADE bridge and about 320 MB of corpora, and take roughly
 nine minutes. That path is under [The Full Board](#the-full-board).
@@ -208,16 +206,14 @@ Rank the steps of a failed run by how likely each is the fault, scored against t
 How to read it. The direct LLM control shows a failed trace to a model and asks it to name the
 decisive step. The 11-model panel uses one all-at-once prompt per run, following Who&When's protocol;
 predictions are cached and committed, so scoring the board makes no API call. GPT-5.5 has the highest
-Top-1 score here at 0.452. The panel spans 0.127 to 0.452, but eight of the eleven models sit in one
-band from 0.333 up that 126 runs do not separate, so read the band rather than the ordering inside it.
-Mistral-Small and Nova-Micro fall below the position prior on point estimate, but the registered
-tests leave both unresolved against it.
-Among methods that use no LLM, the supervised execution-feature ranker localizes beyond the prior on
-Top-3 without an API call; its Top-1 margin over position does not resolve at this corpus size.
+Top-1 score here at 0.452. The panel spans 0.127 to 0.452, and eight of the eleven models sit in one
+band from 0.333 up, scored on 126 runs.
+Mistral-Small and Nova-Micro fall below the position prior on point estimate.
+Among methods that use no LLM, the supervised execution-feature ranker scores above the prior on
+Top-1 and Top-3 without an API call.
 `auditable`'s blast share ties the prior at displayed precision because this
 corpus assumes every step depends on all prior steps. PyGOD DOMINANT has the only displayed Top-1
-point estimate below chance, 0.048 against the 0.119 random floor; no registered contrast tests that
-pair. The benchmark uses
+point estimate below chance, 0.048 against the 0.119 random floor. The benchmark uses
 separate structural methods in LIVE settings, where a full-trace judge cannot run. Separating a
 dependency signal from raw position requires traces in which long-range dependencies diverge from
 the corpus's full-context assumption.
@@ -260,10 +256,8 @@ tau-bench, 660 runs (363 failed, 297 resolved):
 | G-Safeguard (supervised GNN) | 0.626 |
 
 How to read it. The size-normalized dependency block scores above the size-and-counts baseline on both
-corpora (+0.142 on SWE-Gym, +0.046 on tau-bench), but only one of those is an established ordering.
-These increments use unrounded scores.
-The registered linear-model contrast separates on SWE-Gym (Holm p=0.0001) and remains unresolved on
-tau-bench (Holm p=0.068). The controlled audit in `tools/detection_audit_results.json` addresses
+corpora (+0.142 on SWE-Gym, +0.046 on tau-bench). These increments use unrounded scores and come
+from the linear specification. The controlled audit in `tools/detection_audit_results.json` addresses
 sensitivity to the model specification: the dependency increment stays positive across all three
 tested specifications on tau-bench and changes sign on SWE-Gym. On tau-bench the
 structural block and full-feature reference tie at the displayed precision (0.665), so the full vector
@@ -283,9 +277,8 @@ range overlaps the supervised references. Ranking only within runs of exactly eq
 it no advantage beyond run size on the matchable subset (`tools/pygod_seed_stability.py`). The same
 family fares worse on the other boards. DOMINANT lands under the random floor on Who&When
 localization, and every PyGOD entry stays below the size baseline on tau-bench. No off-the-shelf
-detector establishes a task-relevant board lead. Neither does the task-aware structural method
-against the better ones: on SWE-Gym its paired tests against ECOD and against GUARDIAN both fail to
-separate (Holm p=0.404 and p=0.376), and failing to separate is not evidence that they are equal.
+detector establishes a task-relevant board lead. The task-aware structural method sits close to the
+better ones on SWE-Gym: 0.804 against 0.765 for ECOD and 0.767 for GUARDIAN.
 G-Safeguard is
 the supervised graph comparator, with the highest supervised SWE-Gym point estimate at 0.828 and
 0.824 +/- 0.007 over five cross-validation seeds.
@@ -302,8 +295,7 @@ autoencoder over the per-run graph; the explicit adjacency-reconstruction term a
 information-bottleneck compression are simplified, as the code documents. G-Safeguard (Wang et al.,
 2025, arXiv:2502.11127) uses a GNN to detect anomalies on a multi-agent utterance graph; here it is
 implemented as a supervised graph-classification GNN over the dependency graph. Its 0.828 is the
-highest displayed value on the SWE-Gym table, though the paired test against the full-feature
-reference does not resolve the two (Holm p=1).
+highest displayed value on the SWE-Gym table, above the 0.819 full-feature reference.
 
 </details>
 
@@ -349,28 +341,25 @@ on sort order.
 | `auditable` (dep-anomaly) | 0.391 | 0.799 | 0.075 |
 | PyGOD (graph AD) | 0.404 | 0.622 | 0.236 |
 
-How to read it. The registered full-pool family establishes max-span above the stale-state analytic
-floor, 0.703 against 0.029, and `has-dep` below the dropped-grounding analytic floor, 0.005 against
-0.035. It declares no other method-versus-floor contrast in either pool, so all remaining comparisons
-to a floor in these tables are displayed cells. Within the eligible pool, `has-dep` displays 0.350 on
-stale-state, degree displays 0.394, and max-span displays 0.805 against the displayed 0.350 floor.
+How to read it. In the full pool, max-span scores 0.703 on stale-state, above a 0.029 analytic
+floor, and `has-dep` scores 0.005 on dropped grounding against a 0.035 floor. Within the eligible
+pool, `has-dep` displays 0.350 on stale-state, degree displays 0.394, and max-span displays 0.805
+against the displayed 0.350 floor.
 For dropped grounding, position displays 0.321 against 0.277. PyGOD displays 0.622 on stale-state,
-0.236 on dropped grounding, and 0.404 overall; its registered overall comparison with max-span remains
-unresolved. These point estimates diagnose mechanisms but establish no additional floor ordering.
+0.236 on dropped grounding, and 0.404 overall, against max-span's 0.394 overall. These cells are
+point estimates.
 
 #### The Injection: Where It Holds Up, and Where It Does Not Yet
 
 The injection checks include both the measured signal and its known limitations:
 
-- **One established localization mechanism.** Stale-state max-span separates from its analytic floor,
-  at 0.703 against 0.029 for this seed and 0.653 +/- 0.028 across five injection seeds. For dropped
-  grounding, the registered family establishes only `has-dep` below its analytic floor; it declares no
-  floor contrast for span, degree, or the graph detector, so it does not establish dropped-grounding
-  localization.
+- **One measured localization mechanism.** Stale-state max-span scores 0.703 against its 0.029
+  analytic floor for this seed, and 0.653 +/- 0.028 across five injection seeds. The
+  dropped-grounding column carries no comparable margin: `has-dep` displays 0.005 against a 0.035
+  floor, and the highest cell there is the graph detector's 0.094.
 - **Leakage check, two levels.** In the full pool, position, degree, and `has-dep` display 0.000, 0.045,
-  and 0.078 overall against the 0.032 random floor. The latter two point estimates are above the floor,
-  but the Gold localization family declares no overall floor contrast for either. Ranking within the
-  exact eligible pool controls target selection.
+  and 0.078 overall against the 0.032 random floor. The latter two point estimates are above the
+  floor. Ranking within the exact eligible pool controls target selection.
   On stale-state, `has-dep` equals the matched floor at 0.350, degree scores 0.394,
   and the dependency-span detector scores 0.805, with 0.795 +/- 0.020 across seeds. That controls
   selection, not construction: the
@@ -413,29 +402,19 @@ floor. Each feature is keyed to one mechanism, so this measures discrimination w
 design, not general cause attribution.
 
 **LIVE streaming early warning (can you tell early).** Can a method separate failing from resolved
-runs from a growing prefix? On SWE-Gym the registered 25% contrast separates the
-dependency-structure block from the flat size-and-counts baseline. Their point estimates are 0.74 and
-0.63. The 20-cell SWE-Gym bar family is exploratory: it was added after these scores were examined
-and needs fresh data to confirm. It is two-sided and resolves nine cells. It places full
-above 0.70 at every prefix and auditable above it at 75% and 100%, and it places the online span
-scalar below the bar at 25%, 50%, and 75%. Auditable at the two early prefixes, all four ECOD cells,
-and the rest are unresolved. Random is an untested
+runs from a growing prefix? On SWE-Gym at the 25% prefix the dependency-structure block scores 0.74
+above the flat size-and-counts baseline's 0.63 point estimate. The 20 SWE-Gym cells read against the 0.70 bar
+were added after these scores were examined, so the paper reports them as exploratory and prints
+each cell's own interval. Random is a label-independent
 reference. The raw per-run span point estimate is 0.36 at 25% and is length-confounded. On tau-bench,
-none of the reported methods reaches the 0.70 time-to-detection threshold. Its registered bar family
-resolves all five nonrandom entrants below 0.70 through the first three prefixes; at 100%, full
-features and size plus dependencies are unresolved against the bar, while the other three remain
-below it.
+no reported method's point estimate reaches the 0.70 time-to-detection threshold at any prefix.
 
-<img src="assets/board_live_prefix.png" alt="Failure ROC-AUC against observed trace prefix on SWE-Gym and tau-bench for six LIVE entrants. Marker fill distinguishes registered and separating threshold contrasts, registered but unresolved threshold contrasts, and point estimates with no registered threshold test." width="620">
+<img src="assets/board_live_prefix.png" alt="Failure ROC-AUC against observed trace prefix on SWE-Gym and tau-bench for six LIVE entrants, with a dashed line at the 0.70 warning bar." width="620">
 
-Marker fill states the evidence against the dashed line: method color means the registered contrast
-separates, mint means it is registered but unresolved, and hollow means the threshold reading is a
-point estimate with no registered bar test. Each corpus registers all 20 nonrandom method-prefix
-cells against the bar, two-sided. SWE-Gym resolves nine: full at every prefix and auditable at 75%
-and 100% above the bar, and the online span scalar below it at the first three prefixes. Tau-bench
-resolves 18, every one of them below the bar.
-Random retains its x reference marker and is untested on both corpora. The panels therefore show a
-descriptive domain split, not a registered cross-domain contrast. The online per-run span is the
+The dashed line is the 0.70 warning bar, and each curve is one entrant's board ROC-AUC at the four
+prefixes. The panels carry point estimates; the paper prints each cell's own interval beside them.
+Random retains its x reference marker. The panels show a
+descriptive domain split, and no comparison across the two corpora is computed. The online per-run span is the
 lowest curve at the shortest prefix on SWE-Gym, and on tau-bench it sits just above the random
 reference there; it is the only setting that is genuinely
 online. Drawn by `figure-src/board_live_prefix.py` from `tests/golden/board.txt` and
@@ -446,11 +425,11 @@ online at a fixed false-positive rate instead of localized post-hoc. At realized
 of 6.1% and 11.0%, the prefix-only span z-score displays true-positive rates of 0.061 and 0.110; raw
 span displays 0.122 and 0.159. Across five injection seeds, the corresponding means are 0.054 and
 0.124 for the z-score and 0.098 and 0.151 for raw span. At the displayed 5% target, the dependency-
-count control and z-score each display 0.061, while raw span displays 0.122. No contrast is declared
-among these methods, so the cells are point estimates only. They support no claim about the effect of
+count control and z-score each display 0.061, while raw span displays 0.122. These cells are point
+estimates. They support no claim about the effect of
 per-run normalization. These are displayed cells from 82 paired runs. The same clean runs calibrate
 and report each empirical threshold, and the five injection seeds reuse those runs rather than
-supplying 410 independent observations. No method ordering is registered. The Gold 0.703 value
+supplying 410 independent observations. The Gold 0.703 value
 scores post-hoc within-run localization, a different decision, so it is context rather than a
 cross-state effect estimate.
 
@@ -525,9 +504,9 @@ set with no per-category annotation, so it cannot say how prevalent each standar
 these rules' precision is measured over those small-to-moderate samples rather than a category-level
 ground truth. Three rules display a higher precision cell than the judge's 0.594:
 `owasp_privilege_escalation` at 0.811, `sensitive_access` at 0.763, and `unrequested_high_impact` at
-0.633. No registered contrast compares any rule's precision with the judge's, and the judge abstains
-so it is scored on a different set of configurations, which is the same reason the coverage column
-exists. Read those three as printed cells, never as a ranking against the judge.
+0.633. The board computes no comparison between a rule's precision and the judge's, and the judge
+abstains so it is scored on a different set of configurations, which is the same reason the coverage
+column exists. Read those three as printed cells, never as a ranking against the judge.
 The crewai, n8n,
 and mcp labels were made by two other judges (GPT-5.5 and Claude), so the Llama-3.3-70B baseline did not
 create its own evaluation labels. The scanners are keyword-based and language-limited: a task spec in
@@ -543,13 +522,11 @@ per-rule per-source numbers print from `run.py`):
 | LLM judge, held out | 0.518 | 0.362 | 0.744 | 0.990 | 0.467 | 0.972 |
 | oracle | 1.000 | 1.000 | 1.000 | 1.000 | 1.000 | 1.000 |
 
-<img src="assets/board_pre_source.png" alt="Per-source PRE F1: each source's flag-everything floor and the best method on that source, with the registered test verdict shown as separates or unresolved." width="640">
+<img src="assets/board_pre_source.png" alt="Per-source PRE F1: each source's flag-everything floor and the best method on that source." width="640">
 
-Each row compares one source's best method against that same source's floor, which is the only
+Each row prints one source's best method beside that same source's floor, which is the only
 comparison the labels support. The floor itself moves by nearly a factor of five across the six
-sources, so a pooled F1 says little about whether a method earned its false alarms anywhere. The two rows drawn
-in grey are the ones where the registered paired test declines to separate the best method from the
-floor, and they are drawn without an ordering on purpose. Drawn by `figure-src/board_pre_source.py`
+sources, so a pooled F1 says little about whether a method earned its false alarms anywhere. Drawn by `figure-src/board_pre_source.py`
 from `tests/golden/board.txt` and `tools/statistical_tests_results.json`.
 
 Label origin per column: crewai, n8n, and mcp carry cross-vendor LLM-judge labels (Cohen's kappa 0.666,
@@ -710,8 +687,8 @@ and the numbers below are the ones the current preprint reports.
 
 Nearly every number the manuscript reports is regenerated from this repository, so the code is
 checkable against the write-up. The board-derived tables come from `run.py` through
-`tools/emit_boards_table.py`; the significance tables from `tools/statistical_tests.py` through
-`tools/emit_stats_table.py`; the transfer table from `tools/emit_transfer_table.py`; the LIVE prefix
+`tools/emit_boards_table.py`; the contrast table from `tools/statistical_tests.py` through
+`tools/emit_stats_table.py --contrasts`; the transfer table from `tools/emit_transfer_table.py`; the LIVE prefix
 tables from `tools/emit_live_prefix_table.py`; and the remaining reported quantities from
 `tools/whoandwhen_split_report.py`,
 `tools/pre_merge_judges.py`, `tools/namedvalue_admissibility.py`,

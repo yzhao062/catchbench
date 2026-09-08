@@ -68,6 +68,22 @@ it is represented by one of these families.
 ``pre_narrow_precision`` (3 tests)
     Each narrow PRE rule's precision against the pooled capability base rate.
 
+tau-bench's rows are not independent draws, and its printed intervals are built accordingly. The
+corpus is a task-by-model grid: 165 task instances, each attempted by all four agent models, 660
+rows. A run-level interval treats four attempts at one task as four observations and is narrower
+than the data support. Every tau-bench interval this file prints therefore comes from a
+task-clustered stratified percentile bootstrap: the resampling unit is the task instance, draws are
+stratified by domain at the fixed 50 airline and 115 retail cluster counts, a selected cluster
+contributes all four of its model rows, and the interval is the 2.5 and 97.5 percentiles of 10,000
+draws with single-class draws discarded and counted. The seed is fixed in ``TAU_CLUSTER_SEED``
+rather than taken from ``--seed`` so a regenerated block compares against the paper like with like.
+SWE-Gym is deliberately untouched: its 376 rows carry 376 distinct task ids, so run-level and
+task-level resampling coincide there, and its loader reads no instance identifier in any case. The
+run-level DeLong outputs survive on every tau row under ``reproduction_diagnostic`` as reproduction
+diagnostics under the independence assumption, and are not the printed interval. No cluster-aware
+null test is constructed, so no p-value on this page is clustered; ``test.p_raw`` stays the
+independent-run DeLong p that the Holm families adjust.
+
 Binary Top-1 and Top-3 outcomes use the exact conditional McNemar test on discordant runs. For a
 five-seed method, the inferential binary call is its prespecified majority vote; the board's mean
 over seed-specific metrics is reported separately. Reciprocal rank uses Wilcoxon's paired signed-rank
@@ -153,6 +169,22 @@ PRE_PRINTED_FLAG_ALL_F1 = {
     "synthetic": 0.763,
 }
 PRE_EQUIVALENCE_MARGIN = 0.05
+
+# --- tau-bench task clustering ----------------------------------------------------------------
+# Frozen in research/catchbench-m6-change-list.md section 1. No run may vary any of it.
+TAU_CLUSTER_SEED = 20260907
+TAU_CLUSTER_DRAWS = 10_000
+TAU_CLUSTER_METHOD = "task-clustered stratified percentile bootstrap"
+TAU_CLUSTER_AXIS = "task-cluster resampling"
+TAU_CLUSTER_STRATUM = "tau-bench domain"
+TAU_CLUSTER_UNIT = (
+    "tau-bench task instance; all four agent-model attempts travel together"
+)
+# Monte Carlo spread on one endpoint at TAU_CLUSTER_DRAWS under this specification, measured across
+# eight seeds. It is not a tolerance the run enforces: it is the width within which the third
+# printed decimal carries noise rather than signal, so an endpoint this close to a reference value
+# is reported as a place where the last digit could flip whether the interval contains it.
+TAU_CLUSTER_MC_NOISE = 0.002
 
 JSON_SCHEMA: dict[str, Any] = {
     "$schema": "https://json-schema.org/draft/2020-12/schema",
@@ -424,6 +456,255 @@ def _stratified_auc_bootstrap(
         upper = (int(np.sum(values >= 0)) + 1) / (n_boot + 1)
         result["two_sided_tail_p"] = min(1.0, 2 * min(lower, upper))
     return result
+
+
+def _midranks_vectorized(values: np.ndarray) -> np.ndarray:
+    """``_midranks`` without its Python tie loop, for the clustered bootstrap's inner call.
+
+    A cluster resample duplicates whole rows, so exact ties are guaranteed on every draw and the
+    tie handling is the hot path rather than an edge case. This returns the same array as
+    ``_midranks``; ``tests/test_tau_cluster_bootstrap.py`` pins that equality on tie-heavy input.
+    """
+    count = len(values)
+    order = np.argsort(values, kind="mergesort")
+    ordered = values[order]
+    starts_group = np.empty(count, dtype=bool)
+    starts_group[0] = True
+    np.not_equal(ordered[1:], ordered[:-1], out=starts_group[1:])
+    starts = np.flatnonzero(starts_group)
+    stops = np.empty_like(starts)
+    stops[:-1] = starts[1:]
+    stops[-1] = count
+    ranks = np.empty(count, dtype=float)
+    ranks[order] = (0.5 * (starts + stops - 1) + 1.0)[np.cumsum(starts_group) - 1]
+    return ranks
+
+
+def _auc_vectorized(labels: np.ndarray, scores: np.ndarray) -> float:
+    n_pos = int(labels.sum())
+    n_neg = len(labels) - n_pos
+    ranks = _midranks_vectorized(scores)
+    return float((ranks[labels == 1].sum() - n_pos * (n_pos + 1) / 2) / (n_pos * n_neg))
+
+
+def _cluster_blocks(
+    cluster_ids: Sequence[Any], stratum_labels: Sequence[Any],
+) -> tuple[np.ndarray, dict[str, np.ndarray], list[str]]:
+    """Row indices grouped into equal-sized clusters, plus the cluster rows of each stratum.
+
+    Equal sizes are required rather than accommodated. tau-bench's grid is exactly four attempts per
+    task, and a ragged grid would mean the replay had drifted from the scored rows, which is a
+    failure to stop on rather than a shape to average over.
+    """
+    grouped: dict[str, list[int]] = {}
+    for row, cluster in enumerate(cluster_ids):
+        grouped.setdefault(str(cluster), []).append(row)
+    names = sorted(grouped)
+    sizes = sorted({len(grouped[name]) for name in names})
+    if len(sizes) != 1:
+        raise RuntimeError(
+            f"task clusters are not equal-sized: observed sizes {sizes} over {len(names)} clusters"
+        )
+    strata: dict[str, list[int]] = {}
+    for index, name in enumerate(names):
+        seen = {str(stratum_labels[row]) for row in grouped[name]}
+        if len(seen) != 1:
+            raise RuntimeError(f"task cluster {name!r} spans strata {sorted(seen)}")
+        strata.setdefault(seen.pop(), []).append(index)
+    blocks = np.asarray([grouped[name] for name in names], dtype=np.int64)
+    return blocks, {key: np.asarray(strata[key], dtype=np.int64) for key in sorted(strata)}, names
+
+
+def _tau_clustering(
+    labels: Sequence[int], cluster_ids: Sequence[Any], stratum_labels: Sequence[Any],
+) -> dict[str, Any]:
+    """Everything the clustered bootstrap needs for one corpus, validated once."""
+    blocks, strata, names = _cluster_blocks(cluster_ids, stratum_labels)
+    if blocks.size != len(labels):
+        raise RuntimeError(
+            f"the cluster blocks cover {blocks.size} rows and the corpus has {len(labels)}"
+        )
+    return {
+        "blocks": blocks,
+        "strata": strata,
+        "record": {
+            "unit": TAU_CLUSTER_UNIT,
+            "stratum": TAU_CLUSTER_STRATUM,
+            "n_rows": int(blocks.size),
+            "n_clusters": len(names),
+            "rows_per_cluster": int(blocks.shape[1]),
+            "clusters_per_stratum": {key: int(len(rows)) for key, rows in strata.items()},
+            "seed": TAU_CLUSTER_SEED,
+            "draws": TAU_CLUSTER_DRAWS,
+        },
+    }
+
+
+def _task_clustered_auc_bootstrap(
+    labels: Sequence[int], clustering: dict[str, Any], a: Sequence[float],
+    b: Sequence[float] | None, null: float | None, n_boot: int, rng: np.random.Generator,
+) -> dict[str, Any]:
+    """The frozen tau-bench interval: percentile over resampled task clusters, within domain.
+
+    With ``b`` the statistic is the AUC difference; with ``null`` it is the AUC minus that bar, which
+    is the scale the LIVE threshold rows are stored on so the emitter's endpoint shift survives. The
+    resulting interval is asymmetric about the point estimate, which is a property of a percentile
+    bootstrap and not a defect for a consumer to correct.
+    """
+    y = np.asarray(labels, dtype=int)
+    score_a = np.asarray(a, dtype=float)
+    score_b = None if b is None else np.asarray(b, dtype=float)
+    if b is not None and null is not None:
+        raise ValueError("a clustered interval is on a difference or on a bar, not on both")
+    blocks, strata = clustering["blocks"], clustering["strata"]
+    offset = 0.0 if null is None else float(null)
+    values = np.empty(n_boot, dtype=float)
+    usable = 0
+    discarded = 0
+    for _ in range(n_boot):
+        chosen = np.concatenate([
+            rows[rng.integers(0, len(rows), size=len(rows))] for rows in strata.values()
+        ])
+        indices = blocks[chosen].reshape(-1)
+        boot_y = y[indices]
+        if boot_y.min() == boot_y.max():
+            discarded += 1
+            continue
+        value = _auc_vectorized(boot_y, score_a[indices]) - offset
+        if score_b is not None:
+            value -= _auc_vectorized(boot_y, score_b[indices])
+        values[usable] = value
+        usable += 1
+    if usable < 2:
+        raise RuntimeError(f"the clustered bootstrap kept {usable} usable draws of {n_boot}")
+    drawn = values[:usable]
+    interval = np.quantile(drawn, (0.025, 0.975))
+    point = _auc_vectorized(y, score_a) - offset
+    if score_b is not None:
+        point -= _auc_vectorized(y, score_b)
+    return {
+        "method": TAU_CLUSTER_METHOD,
+        "axis": TAU_CLUSTER_AXIS,
+        "statistic": (
+            "ROC-AUC difference" if score_b is not None
+            else f"ROC-AUC minus {offset:g}" if null is not None else "ROC-AUC"
+        ),
+        "replicates": n_boot,
+        "usable_replicates": usable,
+        "discarded_single_class_draws": discarded,
+        "interval_95": [float(interval[0]), float(interval[1])],
+        "point": float(point),
+        "bootstrap_mean": float(drawn.mean()),
+        "bootstrap_sd": float(drawn.std(ddof=1)),
+        "monte_carlo_noise_on_one_endpoint": TAU_CLUSTER_MC_NOISE,
+        **clustering["record"],
+    }
+
+
+def _clustered_endpoint_proximity(claims: Sequence[dict]) -> dict[str, Any]:
+    """Report every clustered endpoint close enough to its reference that the last digit could flip.
+
+    The stored scale already carries the shift, so a threshold row's interval is on AUC minus 0.70
+    and a difference row's is on A minus B. Both therefore reference zero, and one comparison covers
+    the two cases the plan names. This reports; it does not fail the run. An endpoint legitimately
+    near zero is a finding about the corpus, and aborting on it would suppress exactly the row a
+    reader most needs to see flagged.
+    """
+    flagged = []
+    scanned = 0
+    for claim in claims:
+        clustered = claim.get("clustered_interval")
+        if clustered is None:
+            continue
+        scanned += 1
+        low, high = claim["interval"]["low"], claim["interval"]["high"]
+        for name, value in (("low", low), ("high", high)):
+            if abs(value) < TAU_CLUSTER_MC_NOISE:
+                flagged.append({
+                    "claim_id": claim["id"], "endpoint": name, "value": float(value),
+                    "reference": ("0.70 bar, on the stored AUC-minus-bar scale"
+                                  if claim["estimate"]["b_name"] == "fixed bar" else "zero"),
+                    "monte_carlo_noise": TAU_CLUSTER_MC_NOISE,
+                })
+    return {
+        "id": "clustered_endpoint_proximity",
+        "issue": "An interval endpoint within Monte Carlo noise of its reference value is a place "
+                 "where the third printed decimal decides whether the interval contains that value, "
+                 "and no draw count fixes it. Reported so a reader is not led by the last digit.",
+        "monte_carlo_noise": TAU_CLUSTER_MC_NOISE,
+        "clustered_rows_scanned": scanned,
+        "affected_values": flagged,
+    }
+
+
+def _tau_post_clustering(task) -> dict[str, Any]:
+    """tau-bench task clusters for the POST corpus, from the shipped identity replay."""
+    from catchbench.detection import run_identities
+
+    identities = run_identities(task)
+    if not identities.get("available"):
+        raise RuntimeError(
+            "POST tau-bench identifiers are unavailable, so the clustered interval cannot be "
+            f"computed: {identities.get('reason')}"
+        )
+    return _tau_clustering(task.y, identities["task_cluster"], identities["domain"])
+
+
+def _tau_live_clustering(task) -> dict[str, Any]:
+    """tau-bench task clusters for the LIVE corpus, replayed under LIVE's own row filter.
+
+    ``catchbench.detection.run_identities`` recovers these for POST and cannot be reused here: it is
+    typed to ``PostDetection``, reading ``task.layers["flat"]`` and ``task.graphs[0]``, and it
+    replays under POST's ``len(steps) >= 2``. ``LiveStreaming`` keeps no graphs, exposes
+    ``layers_at[prefix]``, and filters at ``len(steps) >= 4``. The two populations coincide on
+    today's corpora, which is a fact about the corpora rather than a guarantee, so this replays
+    under LIVE's own predicate and verifies the alignment against LIVE's labels and step counts
+    instead of assuming it. A drifted replay raises here rather than producing an interval for the
+    wrong rows.
+    """
+    import agent_graph_tau_bench as tau
+    from catchbench.live import _MIN_STEPS, _prefix_steps
+    from grade import build_graph
+    from grade.features import feature_vector
+
+    records = []
+    for record in tau.load_runs(tau._ensure_files()):
+        messages = record.get("messages")
+        outcome = record.get("eval_result") or {}
+        if not isinstance(messages, list) or len(messages) < 3 or "db_match" not in outcome:
+            continue
+        steps = tau.to_steps(messages, record.get("model_path", "model"))
+        if len(steps) >= _MIN_STEPS:
+            records.append((record, len(steps)))
+
+    labels = np.asarray(
+        [0 if bool((record.get("eval_result") or {})["db_match"]) else 1 for record, _ in records]
+    )
+    scored = np.asarray(task.y)
+    if not np.array_equal(labels, scored):
+        raise RuntimeError(
+            f"the replayed LIVE tau-bench labels no longer match the scored labels "
+            f"({len(labels)} replayed against {len(scored)} scored); the identifiers cannot be "
+            "trusted to line up with the prefix feature matrices"
+        )
+    full = build_graph(_prefix_steps(task.runs[0], 1.0), dependency="explicit",
+                       shared_resource=False)
+    names = feature_vector(full, layer="flat")[0]
+    steps_column = task.layers_at[1.0]["flat"][:, names.index("n_steps")]
+    replayed = np.asarray([float(count) for _, count in records])
+    if not np.array_equal(replayed, steps_column):
+        raise RuntimeError(
+            "the replayed LIVE tau-bench step counts do not match the 100% prefix n_steps column, "
+            "so the replay is not in the order the prefix feature matrices are in"
+        )
+    keys = [f"{record['model_path']}|{(record.get('meta') or {})['id']}" for record, _ in records]
+    if len(set(keys)) != len(keys):
+        raise RuntimeError("the LIVE tau-bench run key is not unique across the scored rows")
+    return _tau_clustering(
+        scored,
+        [(record.get("meta") or {})["id"] for record, _ in records],
+        [record["task_name"] for record, _ in records],
+    )
 
 
 def poisson_binomial_tail(probabilities: Sequence[float], observed: float, alternative: str) -> float:
@@ -1404,15 +1685,40 @@ def _auc_entry(oof: np.ndarray | None, fold_auc: np.ndarray | None, score: np.nd
     }
 
 
+def _clustered_reproduction_diagnostic(
+    interval: Sequence[float], method: str, statistic: dict[str, Any], p_raw: float,
+) -> dict[str, Any]:
+    """The run-level output a clustered row replaces, kept in a field nothing mistakes for the CI."""
+    return {
+        "interval_95": [float(interval[0]), float(interval[1])],
+        "method": method,
+        "axis": "run-level sampling",
+        "p_raw": float(p_raw),
+        "statistic": statistic,
+        "role": "reproduction diagnostic under the independence assumption",
+        "note": "tau-bench's 660 runs are 165 task instances each attempted by four agent models, "
+                "so this interval treats repeated attempts at one task as separate observations "
+                "and is narrower than the printed task-clustered interval. It reproduces the "
+                "earlier record and is not a reported uncertainty.",
+    }
+
+
 def _auc_claim(
     args: argparse.Namespace, claim_id: str, family: str, label: str, metric: str,
     a_name: str, b_name: str, a: dict[str, Any], b: dict[str, Any], labels: np.ndarray,
-    expected: str,
+    expected: str, clustering: dict[str, Any] | None = None,
 ) -> dict[str, Any]:
     result = paired_delong(labels, a["primary"], b["primary"])
     bootstrap = _stratified_auc_bootstrap(
         labels, a["primary"], b["primary"], args.bootstrap, _rng_for(claim_id, args.seed)
     )
+    clustered = None
+    if clustering is not None:
+        clustered = _task_clustered_auc_bootstrap(
+            labels, clustering, a["primary"], b["primary"], None,
+            TAU_CLUSTER_DRAWS, _rng_for(claim_id, TAU_CLUSTER_SEED),
+        )
+        bootstrap["assumes_independent_runs"] = True
     axes: dict[str, Any] = {
         "run_sampling": {
             "axis": "paired labeled runs", "n": len(labels),
@@ -1437,12 +1743,22 @@ def _auc_claim(
             seed_diff, "cross-validation split seed", "within-seed board AUC difference"
         )
         axes["cv_seed"]["positive_count"] = int(np.sum(seed_diff > 0))
-    return _base_claim(
+    statistic = {"z": result["z"], "se": result["se"], "n_positive": result["n_positive"],
+                 "n_negative": result["n_negative"]}
+    claim = _base_claim(
         claim_id, family, label, metric, a_name, b_name, result["auc_a"], result["auc_b"],
-        result["interval_95"], "paired DeLong", "paired DeLong z test",
-        {"z": result["z"], "se": result["se"], "n_positive": result["n_positive"],
-         "n_negative": result["n_negative"]}, result["p"], expected, 1, axes, bootstrap,
+        result["interval_95"] if clustered is None else clustered["interval_95"],
+        "paired DeLong" if clustered is None else TAU_CLUSTER_METHOD, "paired DeLong z test",
+        statistic, result["p"], expected, 1, axes, bootstrap,
+        interval_axis="run-level sampling" if clustered is None else TAU_CLUSTER_AXIS,
     )
+    if clustered is not None:
+        claim["clustered_interval"] = clustered
+        claim["reproduction_diagnostic"] = _clustered_reproduction_diagnostic(
+            result["interval_95"], "paired DeLong", statistic, result["p"]
+        )
+        claim["test"]["assumes_independent_runs"] = True
+    return claim
 
 
 def _post_detection_claims(args: argparse.Namespace) -> list[dict]:
@@ -1451,10 +1767,13 @@ def _post_detection_claims(args: argparse.Namespace) -> list[dict]:
     from catchbench.graph_ad import nx_to_graph
 
     corpora: dict[str, tuple[np.ndarray, dict[str, dict[str, Any]]]] = {}
+    clustering: dict[str, dict[str, Any] | None] = {"swegym": None, "tau": None}
     for corpus in ("swegym", "tau"):
         task = PostDetection(corpus)
         task.setup()
         labels = np.asarray(task.y)
+        if corpus == "tau":
+            clustering["tau"] = _tau_post_clustering(task)
         entries: dict[str, dict[str, Any]] = {}
         for name, layer in (
             ("size (flat)", "flat"), ("auditable (size+deps)", "flatdep"), ("full", "full")
@@ -1493,6 +1812,7 @@ def _post_detection_claims(args: argparse.Namespace) -> list[dict]:
         claims.append(_auc_claim(
             args, claim_id, "post_detection_auc", f"{corpus}: {a_name} vs {b_name}",
             "roc_auc", a_name, b_name, entries[a_name], entries[b_name], labels, expected,
+            clustering=clustering[corpus],
         ))
     return claims
 
@@ -1501,10 +1821,13 @@ def _live_claims(args: argparse.Namespace) -> list[dict]:
     from catchbench.live import LiveStreaming, _mean_span, _prefix_steps
 
     all_entries: dict[str, tuple[np.ndarray, dict[float, dict[str, dict[str, Any]]]]] = {}
+    tau_clustering: dict[str, Any] | None = None
     for corpus in ("swegym", "tau"):
         task = LiveStreaming(corpus, prefixes=PREFIXES)
         task.setup()
         labels = np.asarray(task.y)
+        if corpus == "tau":
+            tau_clustering = _tau_live_clustering(task)
         by_prefix: dict[float, dict[str, dict[str, Any]]] = {}
         for prefix in PREFIXES:
             entries: dict[str, dict[str, Any]] = {}
@@ -1607,7 +1930,7 @@ def _live_claims(args: argparse.Namespace) -> list[dict]:
             f"tau-bench {int(prefix * 100)}%: auditable vs ECOD",
             "roc_auc", "auditable (size+deps)", "pyod (ECOD)",
             tau[prefix]["auditable (size+deps)"], tau[prefix]["pyod (ECOD)"], labels,
-            "separates_as_stated",
+            "separates_as_stated", clustering=tau_clustering,
         ))
 
     for prefix in PREFIXES:
@@ -1620,6 +1943,11 @@ def _live_claims(args: argparse.Namespace) -> list[dict]:
             result = single_delong(labels, entry["primary"], 0.70)
             bootstrap = _stratified_auc_bootstrap(
                 labels, entry["primary"], None, args.bootstrap, _rng_for(claim_id, args.seed)
+            )
+            bootstrap["assumes_independent_runs"] = True
+            clustered = _task_clustered_auc_bootstrap(
+                labels, tau_clustering, entry["primary"], None, 0.70,
+                TAU_CLUSTER_DRAWS, _rng_for(claim_id, TAU_CLUSTER_SEED),
             )
             axes: dict[str, Any] = {
                 "run_sampling": {
@@ -1638,15 +1966,24 @@ def _live_claims(args: argparse.Namespace) -> list[dict]:
                 if prefix == 1.0 and method in ("auditable (size+deps)", "full")
                 else "separates_as_stated"
             )
-            claims.append(_base_claim(
+            statistic = {
+                "z": result["z"], "se": result["se"], "log_p_raw": result["log_p_two_sided"],
+                "n_positive": result["n_positive"], "n_negative": result["n_negative"],
+            }
+            claim = _base_claim(
                 claim_id, "live_tau_threshold_auc",
                 f"tau-bench {int(prefix * 100)}%: {method} vs 0.70", "roc_auc",
-                method, "fixed bar", result["auc"], 0.70, result["interval_95"],
-                "single-curve DeLong", "two-sided DeLong z test against 0.70",
-                {"z": result["z"], "se": result["se"], "log_p_raw": result["log_p_two_sided"],
-                 "n_positive": result["n_positive"], "n_negative": result["n_negative"]},
-                result["p_two_sided"], expected, 0, axes, bootstrap,
-            ))
+                method, "fixed bar", result["auc"], 0.70, clustered["interval_95"],
+                TAU_CLUSTER_METHOD, "two-sided DeLong z test against 0.70",
+                statistic, result["p_two_sided"], expected, 0, axes, bootstrap,
+                interval_axis=TAU_CLUSTER_AXIS,
+            )
+            claim["clustered_interval"] = clustered
+            claim["reproduction_diagnostic"] = _clustered_reproduction_diagnostic(
+                result["interval_95"], "single-curve DeLong", statistic, result["p_two_sided"]
+            )
+            claim["test"]["assumes_independent_runs"] = True
+            claims.append(claim)
     return claims
 
 
@@ -2035,6 +2372,16 @@ def main() -> int:
     claims, families = _finalize(claims)
     if "detection" in args.sections:
         corrections.append(_holm_correction_audit(claims))
+    proximity = _clustered_endpoint_proximity(claims)
+    if proximity["clustered_rows_scanned"]:
+        corrections.append(proximity)
+        for row in proximity["affected_values"]:
+            print(
+                f"clustered endpoint within Monte Carlo noise of its reference: "
+                f"{row['claim_id']} {row['endpoint']}={row['value']:+.6f} "
+                f"(reference {row['reference']}, noise {row['monte_carlo_noise']})",
+                file=sys.stderr,
+            )
     mismatches = [claim["id"] for claim in claims if not claim["matches_stated_claim"]]
     from catchbench.corpora import CORPUS_REVISIONS
 
@@ -2053,6 +2400,23 @@ def main() -> int:
             "random_seed": args.seed,
             "sections": list(args.sections),
             "cv_seeds": list(CV_SEEDS),
+            "tau_task_clustering": {
+                "applies_to": "every printed tau-bench interval",
+                "method": TAU_CLUSTER_METHOD,
+                "axis": TAU_CLUSTER_AXIS,
+                "unit": TAU_CLUSTER_UNIT,
+                "stratum": TAU_CLUSTER_STRATUM,
+                "draws": TAU_CLUSTER_DRAWS,
+                "seed": TAU_CLUSTER_SEED,
+                "seed_is_fixed_here": "not taken from --seed, so a regenerated block and the "
+                                      "manuscript compare like with like",
+                "monte_carlo_noise_on_one_endpoint": TAU_CLUSTER_MC_NOISE,
+                "swegym": "untouched: 376 runs carry 376 distinct task ids, so run-level and "
+                          "task-level resampling coincide, and agent_graph_swegym.load_runs reads "
+                          "no instance identifier in any case",
+                "no_clustered_p_value": "no cluster-aware null test is constructed, so test.p_raw "
+                                        "stays the independent-run DeLong p that Holm adjusts",
+            },
             "no_api_key_required": True,
             "python": sys.version.split()[0],
             "package_versions": package_versions,
