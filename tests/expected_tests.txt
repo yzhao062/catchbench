@@ -150,6 +150,29 @@ needs-paper  tests/test_emit_boards_table.py::test_the_papers_figure_board_is_th
 always       tests/test_emit_boards_table.py::test_the_shipped_board_still_carries_every_declared_block
 always       tests/test_emit_boards_table.py::test_the_table_is_found_in_the_results_section_too
 needs-paper  tests/test_emit_boards_table.py::test_the_two_figure_pipelines_read_the_board_identically
+always       tests/test_emit_core_contrasts.py::test_changed_frozen_inputs_fail_loudly[clusters]
+always       tests/test_emit_core_contrasts.py::test_changed_frozen_inputs_fail_loudly[labels]
+always       tests/test_emit_core_contrasts.py::test_changed_frozen_inputs_fail_loudly[scores]
+always       tests/test_emit_core_contrasts.py::test_changed_frozen_inputs_fail_loudly[seeds]
+always       tests/test_emit_core_contrasts.py::test_check_accepts_exact_block[False]
+always       tests/test_emit_core_contrasts.py::test_check_accepts_exact_block[True]
+always       tests/test_emit_core_contrasts.py::test_check_rejects_stale_paper[cell-table differs]
+always       tests/test_emit_core_contrasts.py::test_check_rejects_stale_paper[crlf-table differs]
+always       tests/test_emit_core_contrasts.py::test_check_rejects_stale_paper[duplicate-appears 2 times]
+always       tests/test_emit_core_contrasts.py::test_check_rejects_stale_paper[missing_begin-appears 0 times]
+always       tests/test_emit_core_contrasts.py::test_check_rejects_stale_paper[missing_end-appears 0 times]
+always       tests/test_emit_core_contrasts.py::test_check_rejects_stale_paper[no_appendix-cannot read appendix]
+always       tests/test_emit_core_contrasts.py::test_check_rejects_stale_paper[no_table-appears 0 times]
+always       tests/test_emit_core_contrasts.py::test_check_rejects_stale_paper[reversed-precedes its begin marker]
+always       tests/test_emit_core_contrasts.py::test_check_rejects_stale_paper[whitespace-table differs]
+always       tests/test_emit_core_contrasts.py::test_check_requires_paper_path
+always       tests/test_emit_core_contrasts.py::test_cli_prints_deterministic_lf_bytes
+always       tests/test_emit_core_contrasts.py::test_emitted_block_never_contains_the_fold_mean_spline_increment
+always       tests/test_emit_core_contrasts.py::test_four_effects_are_aucs_of_mean_oof_scores
+always       tests/test_emit_core_contrasts.py::test_linear_rows_agree_with_existing_registry
+always       tests/test_emit_core_contrasts.py::test_single_class_draws_are_discarded_and_counted
+always       tests/test_emit_core_contrasts.py::test_swegym_intervals_reproduce_paired_placement_variance
+always       tests/test_emit_core_contrasts.py::test_tau_bootstrap_matches_independent_task_weight_calculation
 always       tests/test_emit_live_prefix_table.py::test_a_matching_paper_passes_with_crlf_and_unrelated_text
 always       tests/test_emit_live_prefix_table.py::test_a_missing_appendix_fails
 always       tests/test_emit_live_prefix_table.py::test_a_missing_random_row_fails
@@ -498,6 +521,7 @@ always       tests/test_tools_are_not_stdlib_shadows.py::test_tool_name_does_not
 always       tests/test_tools_are_not_stdlib_shadows.py::test_tool_name_does_not_shadow_a_stdlib_module[emit_addendum_sidecars]
 always       tests/test_tools_are_not_stdlib_shadows.py::test_tool_name_does_not_shadow_a_stdlib_module[emit_asset_manifest]
 always       tests/test_tools_are_not_stdlib_shadows.py::test_tool_name_does_not_shadow_a_stdlib_module[emit_boards_table]
+always       tests/test_tools_are_not_stdlib_shadows.py::test_tool_name_does_not_shadow_a_stdlib_module[emit_core_contrasts]
 always       tests/test_tools_are_not_stdlib_shadows.py::test_tool_name_does_not_shadow_a_stdlib_module[emit_detection_audit]
 always       tests/test_tools_are_not_stdlib_shadows.py::test_tool_name_does_not_shadow_a_stdlib_module[emit_live_prefix_table]
 always       tests/test_tools_are_not_stdlib_shadows.py::test_tool_name_does_not_shadow_a_stdlib_module[emit_pre_tables]
