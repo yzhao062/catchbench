@@ -112,6 +112,34 @@ always       tests/test_ci_report_check.py::test_the_manifest_declares_exactly_t
 always       tests/test_ci_report_check.py::test_the_regression_on_its_own_is_caught
 always       tests/test_ci_report_check.py::test_the_workflow_checks_every_pytest_run_it_makes
 always       tests/test_ci_report_check.py::test_trading_a_contract_for_trivial_tests_no_longer_balances
+always       tests/test_cli_reporting.py::test_cli_reporting_guard_allows_measurements_and_outcome_labels[Can a method separate failing from resolved runs?]
+always       tests/test_cli_reporting.py::test_cli_reporting_guard_allows_measurements_and_outcome_labels[SWE-Gym outcomes are labeled "resolved" and "unresolved".]
+always       tests/test_cli_reporting.py::test_cli_reporting_guard_allows_measurements_and_outcome_labels[SWE-Gym: 188 unresolved runs and 188 resolved runs.]
+always       tests/test_cli_reporting.py::test_cli_reporting_guard_allows_measurements_and_outcome_labels[The baseline separates two fault kinds.]
+always       tests/test_cli_reporting.py::test_cli_reporting_guard_allows_measurements_and_outcome_labels[The difference is +0.046 (95% CI [-0.005, 0.098]).]
+always       tests/test_cli_reporting.py::test_cli_reporting_guard_allows_measurements_and_outcome_labels[The released record retains every p-value.]
+always       tests/test_cli_reporting.py::test_cli_reporting_guard_allows_measurements_and_outcome_labels[The structure separates the two causes, each feature keyed to one mechanism.]
+always       tests/test_cli_reporting.py::test_cli_reporting_guard_rejects_verdicts[126 runs do not separate the models.]
+always       tests/test_cli_reporting.py::test_cli_reporting_guard_rejects_verdicts[Auditable and the rest are unresolved.]
+always       tests/test_cli_reporting.py::test_cli_reporting_guard_rejects_verdicts[Both fail to separate.]
+always       tests/test_cli_reporting.py::test_cli_reporting_guard_rejects_verdicts[Failing to separate is not evidence that they are equal.]
+always       tests/test_cli_reporting.py::test_cli_reporting_guard_rejects_verdicts[GRADE's method separates from position on Top-3.]
+always       tests/test_cli_reporting.py::test_cli_reporting_guard_rejects_verdicts[Holm-adjusted p-values]
+always       tests/test_cli_reporting.py::test_cli_reporting_guard_rejects_verdicts[The Top-1 comparison remains unresolved.]
+always       tests/test_cli_reporting.py::test_cli_reporting_guard_rejects_verdicts[The family establishes all entrants below the bar.]
+always       tests/test_cli_reporting.py::test_cli_reporting_guard_rejects_verdicts[The full and auditable cells are unresolved.]
+always       tests/test_cli_reporting.py::test_cli_reporting_guard_rejects_verdicts[The method wins because p=.01.]
+always       tests/test_cli_reporting.py::test_cli_reporting_guard_rejects_verdicts[The method wins because p=0.01.]
+always       tests/test_cli_reporting.py::test_cli_reporting_guard_rejects_verdicts[The ordering within that band is unresolved.]
+always       tests/test_cli_reporting.py::test_cli_reporting_guard_rejects_verdicts[The p-value of 0.01 supports this comparison.]
+always       tests/test_cli_reporting.py::test_cli_reporting_guard_rejects_verdicts[The paired test leaves that pair unresolved.]
+always       tests/test_cli_reporting.py::test_cli_reporting_guard_rejects_verdicts[The registered contrast separates on SWE-Gym.]
+always       tests/test_cli_reporting.py::test_cli_reporting_guard_rejects_verdicts[The registered test supports the ranking.]
+always       tests/test_cli_reporting.py::test_cli_reporting_guard_rejects_verdicts[The registered tests support the ranking.]
+always       tests/test_cli_reporting.py::test_cli_reporting_guard_rejects_verdicts[The result follows from p-value 0.01.]
+always       tests/test_cli_reporting.py::test_cli_reporting_guard_rejects_verdicts[The result holds since p < 0.05.]
+always       tests/test_cli_reporting.py::test_cli_reporting_guard_rejects_verdicts[The tests leave both comparisons unresolved.]
+always       tests/test_cli_reporting.py::test_cli_reporting_has_no_adjudication
 always       tests/test_distribution.py::test_a_fresh_wheel_install_scores_all_pre_rows
 always       tests/test_distribution.py::test_wheel_contains_every_committed_pre_file
 always       tests/test_distribution.py::test_wheel_excludes_the_downloaded_corpora

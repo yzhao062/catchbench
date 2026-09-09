@@ -10,19 +10,22 @@ run, a growing prefix while it runs, and the finished trace after it ends.
 [![arXiv](https://img.shields.io/badge/status-arXiv%202608.22808-blue.svg)](https://arxiv.org/abs/2608.22808)
 [![Code license](https://img.shields.io/badge/code%20license-MIT-blue.svg)](LICENSE)
 [![Python](https://img.shields.io/badge/python-3.10%20%7C%203.12-blue.svg)](pyproject.toml)
-[![Tests](https://img.shields.io/badge/tests-549-brightgreen.svg)](tests/expected_tests.txt)
+[![Tests](https://img.shields.io/badge/tests-577-brightgreen.svg)](tests/expected_tests.txt)
 [![Boards](https://img.shields.io/badge/boards-PRE%20%7C%20LIVE%20%7C%20POST-orange.svg)](#the-boards)
 
 [Quickstart](#quickstart) · [The Boards](#the-boards) · [Task List](#the-full-task-list) · [Add a Method](#how-a-method-plugs-in) · [Full Install](#the-full-board)
 
 </div>
 
-An audit is limited by the record more often than by the method. CatchBench holds the run fixed and
-varies what the auditor may read: before it runs you have only the plan and harness (is it
+An audit is limited by the record more often than by the method. CatchBench puts that question to
+each point in a run's life: before it runs you have only the plan and harness (is it
 over-privileged?); while it runs you have a growing prefix (is it about to fail?); after it runs you
 have the whole trace (which step broke it, did it fail, what kind of fault was it). Six audit
 scenarios produce seven task contracts (localization has two instantiations, human-labeled and
-injected), scored as nine boards, all sharing one `Task` and `Method` interface.
+injected), scored as nine boards, all sharing one `Task` and `Method` interface. Each board brings
+its own labels, metric, and entrants, so the arrangement fixes what a score means within a state
+rather than isolating the evidence across states; the LIVE prefix sweep, which holds corpus, labels,
+metric, and entrants fixed, is where evidence alone varies.
 
 <img src="assets/catchbench_data_at_a_glance.png" alt="Declared agent configurations across source corpora and recorded agent runs across trace corpora converge into the scored boards, evaluated by entrants that include LLM judges, rule scanners, structural and graph detectors, and anomaly detectors." width="100%">
 
@@ -663,11 +666,13 @@ currently fail when the paper falls behind the board. That comparison is run loc
 submission. Plain `-q` reports the seven as a bare skip count and never names them, which is the one
 way this suite can look complete while the paper-side checks are not running.
 
-The full board comparison is not exact everywhere. Three row prefixes (`guardian (`, `g-safeguard (`,
-`pygod`) reconcile within 0.005, because the golden was generated on Windows and ubuntu CI reproduces
-two of their values one digit apart from the float kernels underneath torch. Every other row stays
-byte-exact, and `tests/test_board_tolerance.py` fails if the tolerance widens past the seed variance
-the paper publishes.
+The full board comparison is not exact everywhere. Two rows, `g-safeguard (sup GNN)` and
+`pygod-anomalydae`, reconcile within 0.005, because the golden was generated on Windows and ubuntu CI
+reproduces their values a digit or two apart from the float kernels underneath torch. Those are the
+only two rows any produced board has been observed to move; a scheduled run that changed a single
+board line left every other one byte-exact. `tests/test_board_tolerance.py`
+fails if the tolerance widens past the seed variance the paper publishes, if a row never seen to move
+is tolerated, or if the list stops matching the two cells the paper names.
 
 </details>
 
