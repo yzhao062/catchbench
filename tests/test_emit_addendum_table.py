@@ -401,3 +401,25 @@ def test_the_above_column_is_derivable_from_the_printed_intervals():
         assert implied == arm["above"], (
             f"{arm['label']}: the table prints above={arm['above']}, but its printed interval "
             f"[{arm['top1_lo']:.3f}, {arm['top1_hi']:.3f}] implies {implied}")
+
+
+def test_no_caption_percent_starts_a_latex_comment(generated):
+    r"""A bare % in the caption comments out the rest of its line, silently and invisibly.
+
+    This is not hypothetical. A shortened caption kept ``95\%%`` from a string that had used %
+    interpolation; the rewrite had no % operator, so both signs reached LaTeX and the second one
+    ate ``Procedure BIN intervals, and the references' Top-1 cells repeat Table 6``. The build
+    reported zero warnings, --check passed because source and output shared the error, and every
+    test here passed because they all read source strings rather than rendered text.
+
+    The generated block is post-interpolation, so any % outside the provenance comment lines must
+    be escaped to print. Checking the emitted bytes is what closes the gap.
+    """
+    offenders = []
+    for number, line in enumerate(generated.splitlines(), 1):
+        if line.startswith("%"):
+            continue  # a provenance comment line, which is meant to be a comment
+        for index, char in enumerate(line):
+            if char == "%" and (index == 0 or line[index - 1] != "\\"):
+                offenders.append(f"line {number} col {index + 1}: {line[max(0, index - 40):index + 20]}")
+    assert offenders == [], "unescaped % in the generated block:\n  " + "\n  ".join(offenders)

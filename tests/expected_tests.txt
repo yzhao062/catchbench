@@ -159,6 +159,7 @@ always       tests/test_emit_addendum_table.py::test_check_requires_paper_path
 always       tests/test_emit_addendum_table.py::test_cli_prints_deterministic_lf_bytes
 always       tests/test_emit_addendum_table.py::test_every_arm_matches_the_scorer_report_row_for_row
 always       tests/test_emit_addendum_table.py::test_hit_counts_reconstruct_every_printed_proportion
+always       tests/test_emit_addendum_table.py::test_no_caption_percent_starts_a_latex_comment
 always       tests/test_emit_addendum_table.py::test_printed_cells_are_the_full_precision_values_rounded
 always       tests/test_emit_addendum_table.py::test_the_above_column_is_derivable_from_the_printed_intervals
 needs-paper  tests/test_emit_addendum_table.py::test_the_arena_counts_match_the_paper
