@@ -124,6 +124,24 @@ _DEFAULT_ALSO = ("llama-3.3-70b",)
 # Current adapter routing does not establish how a published cache was generated.
 _RECORDED_PUBLISHED_CHANNELS = {"gpt-5.5": "codex-cli"}
 
+# The declared model that carries no score. Erratum 2 of the frozen declaration requires its
+# declaration, its non-run status, and the reason to appear wherever gpt-6-astra is reported, so both
+# this report and tools/emit_addendum_table.py read the disclosure from here rather than each
+# carrying its own copy. One sentence group per printed console line; joining the lines with single
+# spaces yields the same prose for a LaTeX caption, so the two surfaces cannot state different
+# reasons. Source: research/catchbench-m4-declaration-v3.md, Erratum 2, lines 727 to 735 and 787
+# to 792.
+NOT_RUN_LABEL = "gpt-5.6-sol"
+NOT_RUN_CHANNEL = "not-run"
+NOT_RUN_SOURCE = "addendum"
+NOT_RUN_DISCLOSURE = (
+    "gpt-5.6-sol was declared but not run. No subscription CLI served it, and its only",
+    "route was the NAIRR gateway, whose remote plain HTTP endpoint the adapter refuses.",
+    "The required SSH forward was not set up, because gpt-6-astra was preferred as the",
+    "more advanced model in the same vendor family, before either OpenAI score existed.",
+    "This was a configuration decision, not model unavailability. No score exists for it.",
+)
+
 
 def generation_channel(label: str, source: str) -> str:
     """Read the recorded channel, retaining the sidecars' declared-configuration scope."""
@@ -246,20 +264,26 @@ def collect(label: str, preds: dict, runs, task, source: str) -> dict:
         "label": label,
         "source": source,
         "channel": generation_channel(label, source),
+        "n": n, "top1_hits": top1_hits, "top3_hits": top3_hits,
         "top1": metrics["top1"], "top1_lo": top1_lo, "top1_hi": top1_hi,
         "top3": metrics["top3"], "top3_lo": top3_lo, "top3_hi": top3_hi,
         "mrr": metrics["mrr"],
     }
 
 
-def main() -> int:
-    ap = argparse.ArgumentParser(description="Rank the judge addendum with per-arm uncertainty.")
-    ap.add_argument("--reference", default="gpt-5.5",
-                    help="published label the addendum is ranked beside; read only, never written")
-    ap.add_argument("--also", nargs="*", default=list(_DEFAULT_ALSO),
-                    help="further published labels to include in the ranking")
-    args = ap.parse_args()
+def rank_arms(reference: str = "gpt-5.5",
+              also: tuple[str, ...] = _DEFAULT_ALSO) -> tuple[list[dict], int]:
+    """Load every arm, score it, and return the arms in printed order with the run count.
 
+    Split out of ``main`` so that a second consumer, currently ``tools/emit_addendum_table.py``,
+    reaches these numbers by import rather than by parsing this report's console output or by
+    computing Top-1 a second time. A second implementation of Top-1 in this repository is the defect
+    the split exists to prevent: the declaration's definition disagrees with the obvious one on 20 of
+    the 126 runs, and a reimplementation would be wrong in a way that still looks plausible.
+
+    The ordering is the printed one: descending Top-1, with ties left in load order by the stable
+    sort, so the two published arms precede an addendum arm holding the same score.
+    """
     if not ADDENDUM_DIR.is_dir():
         raise SystemExit("no %s; nothing to score" % ADDENDUM_DIR)
     # Sidecars share the cache prefix and would otherwise be globbed as caches, then fail on their
@@ -276,7 +300,7 @@ def main() -> int:
 
     arms = []
     # load_cache, not a raw read: these are published caches and their keys need the map.
-    for label in [args.reference] + [a for a in args.also if a != args.reference]:
+    for label in [reference] + [a for a in also if a != reference]:
         cache = load_cache("all_at_once", label)
         if cache is None:
             raise SystemExit("no published cache for %r" % label)
@@ -288,9 +312,21 @@ def main() -> int:
     arms.sort(key=lambda a: -a["top1"])
     position_by_score(arms, "top1")
     endpoint_rank(arms, "top1")
+    return arms, len(runs)
+
+
+def main() -> int:
+    ap = argparse.ArgumentParser(description="Rank the judge addendum with per-arm uncertainty.")
+    ap.add_argument("--reference", default="gpt-5.5",
+                    help="published label the addendum is ranked beside; read only, never written")
+    ap.add_argument("--also", nargs="*", default=list(_DEFAULT_ALSO),
+                    help="further published labels to include in the ranking")
+    args = ap.parse_args()
+
+    arms, n_runs = rank_arms(args.reference, tuple(args.also))
 
     print("Judge addendum over %d runs, ordered by Top-1. Intervals are Wilson at 95 percent on"
-          % len(runs))
+          % n_runs)
     print("each arm's own score, marginal and not simultaneous across arms.")
     print("  `#`     position by Top-1 point estimate; equal scores share a position.")
     print("  `above` 1 + the number of arms whose whole interval lies above this arm's. A count,")
@@ -304,15 +340,12 @@ def main() -> int:
                  arm["top1"], arm["top1_lo"], arm["top1_hi"],
                  arm["top3"], arm["top3_lo"], arm["top3_hi"], arm["mrr"]))
     print("  %-3s %-6s %-18s %-16s %-10s %8s %-18s %8s %-18s %8s"
-          % ("-", "-", "gpt-5.6-sol", "not-run", "addendum", "-", "-", "-", "-", "-"))
+          % ("-", "-", NOT_RUN_LABEL, NOT_RUN_CHANNEL, NOT_RUN_SOURCE, "-", "-", "-", "-", "-"))
 
-    # Frozen declaration, research/catchbench-m4-declaration-v3.md, Erratum 2,
-    # lines 727 to 735 and 787 to 792. This was a choice, not model unavailability.
-    print("\n  gpt-5.6-sol was declared but not run. No subscription CLI served it, and its only")
-    print("  route was the NAIRR gateway, whose remote plain HTTP endpoint the adapter refuses.")
-    print("  The required SSH forward was not set up, because gpt-6-astra was preferred as the")
-    print("  more advanced model in the same vendor family, before either OpenAI score existed.")
-    print("  This was a configuration decision, not model unavailability. No score exists for it.")
+    # NOT_RUN_DISCLOSURE holds these five lines. This was a choice, not model unavailability.
+    print("")
+    for line in NOT_RUN_DISCLOSURE:
+        print("  " + line)
 
     print("\n  Channel records: addendum channels come from provider_declared_configuration in")
     print("  data/llm_judge_addendum/*.sidecar.json. These are reconstructed configurations;")

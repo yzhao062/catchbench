@@ -1,0 +1,403 @@
+r"""Hold the judge-addendum block to the scorer's numbers and to the claims it may not make.
+
+Two failures are worth failing loudly for, and both are invisible to a reader of the LaTeX.
+
+The first is a second implementation of Top-1. The declared outcome is ``rank == 1`` after a stable
+sort of the per-step score vector, which is not the reading the generation script prints; the two can
+disagree on the 20 runs whose gold mistake is step 0. A table that recomputed the number would look
+right and be wrong, in the manuscript rather than in a console line. So the emitter owns no score,
+and the printed cells are checked against the public report's own rows rather than against the
+emitter's private view of them.
+
+It owns exactly one calculation, the Procedure BIN interval, and that is deliberate: two of these six
+arms already print in ``tab:protocol`` under BIN, so borrowing the scorer's Wilson bounds would put
+one score under two constructions in one appendix. The guard therefore narrows rather than
+disappears. numpy may be reached from ``_bin_interval`` and nowhere else, the only float constants
+allowed are the two percentile bounds, and the ``above`` column is checked against the intervals the
+table actually prints.
+
+The second is a claim the addendum is not entitled to make. Six marginal intervals over shared runs
+support no verdict about any pair of arms, and the block's own caption has to say so, because that
+sentence is the last unmet clause of the M4 completion test. A forbidden-word scan is a blunt guard,
+and blunt is what is wanted: the failure mode is a later edit reaching for a comparative word because
+the ordering invites one.
+"""
+from __future__ import annotations
+
+import ast
+import os
+import re
+import subprocess
+import sys
+from pathlib import Path
+
+import pytest
+
+TOOLS = Path(__file__).resolve().parents[1] / "tools"
+sys.path.insert(0, str(TOOLS))
+import emit_addendum_table as eat  # noqa: E402
+import score_judge_addendum as sja  # noqa: E402
+
+SCORER = TOOLS / "score_judge_addendum.py"
+
+# A row of the public report: position, above-count, label, channel, source, then Top-1 and Top-3
+# each followed by a bracketed interval, then MRR.
+_REPORT_ROW = re.compile(
+    r"^\s+(\d+)\s+(\d+)\s+(\S+)\s+(\S+)\s+(\S+)"
+    r"\s+([\d.]+)\s+\[([\d.]+), ([\d.]+)\]"
+    r"\s+([\d.]+)\s+\[([\d.]+), ([\d.]+)\]\s+([\d.]+)\s*$")
+
+# The same arm as the generated block prints it.
+_BLOCK_ROW = re.compile(
+    r"^(\d+) & (\d+) & \\texttt\{(\S+)\} & \\texttt\{(\S+)\} & (\S+)"
+    r" & ([\d.]+) \{\\scriptsize \$\[([\d.]+), ([\d.]+)\]\$\}"
+    r" & ([\d.]+) \{\\scriptsize \$\[([\d.]+), ([\d.]+)\]\$\} \\\\$")
+
+# The full-precision comment lines the block carries beside every printed cell.
+_TOP1_COMMENT = re.compile(r"^% (\S+): top1=(\d+)/(\d+)=([\d.]+); interval=\[([\d.]+), ([\d.]+)\]$")
+_TOP3_COMMENT = re.compile(
+    r"^% (\S+): top3=(\d+)/(\d+)=([\d.]+); interval=\[([\d.]+), ([\d.]+)\]; mrr=([\d.]+)$")
+
+# Every word that would turn a ranking into a verdict. "registered contrast" is handled apart: the
+# caption is required to carry it, in the negated form and only there.
+FORBIDDEN = ("significant", "separates", "outperforms", "best", "holm", "p =",
+             "statistically", "wins", "beats", "superior")
+
+
+@pytest.fixture(scope="module")
+def ranked():
+    return sja.rank_arms()
+
+
+@pytest.fixture(scope="module")
+def generated(ranked):
+    return eat.build()
+
+
+@pytest.fixture(scope="module")
+def report():
+    """The public report's own stdout, so the block is compared against what the tool publishes."""
+    result = subprocess.run([sys.executable, str(SCORER)], capture_output=True, text=True,
+                            encoding="utf-8", timeout=600)
+    assert result.returncode == 0, result.stderr[-2000:]
+    return result.stdout
+
+
+def _report_rows(report: str) -> list[tuple]:
+    return [match.groups() for match in map(_REPORT_ROW.match, report.splitlines()) if match]
+
+
+def _block_rows(generated: str) -> list[tuple]:
+    return [match.groups() for match in map(_BLOCK_ROW.match, generated.splitlines()) if match]
+
+
+def _comments(generated: str, pattern: re.Pattern) -> dict[str, tuple]:
+    found = {}
+    for line in generated.splitlines():
+        match = pattern.match(line)
+        if match:
+            found[match.group(1)] = match.groups()[1:]
+    return found
+
+
+def _cli(*args, paper_env=None):
+    env = os.environ.copy()
+    env.pop("CATCHBENCH_PAPER_DIR", None)
+    env["PYTHONDONTWRITEBYTECODE"] = "1"
+    if paper_env is not None:
+        env["CATCHBENCH_PAPER_DIR"] = str(paper_env)
+    return subprocess.run([sys.executable, str(Path(eat.__file__)), *map(str, args)],
+                          capture_output=True, env=env, timeout=600)
+
+
+def test_every_arm_matches_the_scorer_report_row_for_row(generated, report):
+    """Same arms, same order, same identity fields, same numbers as the published report.
+
+    The comparison runs against the report's printed rows rather than against ``rank_arms``, so a
+    block that silently dropped, reordered or relabelled an arm fails here even though it would agree
+    with the function it called.
+    """
+    printed, block = _report_rows(report), _block_rows(generated)
+    assert len(printed) == len(block) == 6, "six scored arms"
+    top1 = _comments(generated, _TOP1_COMMENT)
+    top3 = _comments(generated, _TOP3_COMMENT)
+    for console, row in zip(printed, block):
+        assert console[:5] == row[:5], "position, above-count, label, channel and source"
+        label = console[2]
+        assert label in top1 and label in top3, f"{label} carries no full-precision comment"
+        # The report prints four decimals and the comment lines twelve, so agreement to within half
+        # a unit in the report's last place is the strongest statement the two formats support.
+        # Order: Top-1 with its interval, Top-3 with its interval, then MRR.
+        # Scores must agree with the console. Intervals must not: the console reports Wilson and
+        # the block draws Procedure BIN, so that tab:protocol and this table print one cell rather
+        # than one score under two constructions. Comparing them here is what used to hide that.
+        scores = [(console[5], top1[label][2]), (console[8], top3[label][2]),
+                  (console[11], top3[label][5])]
+        for value, exact in scores:
+            assert float(value) == pytest.approx(float(exact), rel=0, abs=5e-5)
+        console_bounds = [float(console[6]), float(console[7]),
+                          float(console[9]), float(console[10])]
+        block_bounds = [float(top1[label][3]), float(top1[label][4]),
+                        float(top3[label][3]), float(top3[label][4])]
+        assert console_bounds != block_bounds, (
+            f"{label}: the block's interval equals the console's, so it is not Procedure BIN")
+
+
+def test_the_published_arms_print_the_same_cell_as_the_protocol_table():
+    """The reason the interval is drawn here: one score may not carry two intervals in one appendix.
+
+    tab:protocol already prints these two arms' Top-1. If this block used a different construction,
+    a reader working through Appendix D meets the same number twice with different bounds about six
+    hundred source lines apart.
+    """
+    published = {"gpt-5.5": (0.365, 0.540), "llama-3.3-70b": (0.246, 0.413)}
+    arms, _ = sja.rank_arms()
+    by_label = {a["label"]: a for a in eat._with_bin_intervals(arms)}
+    for label, (low, high) in published.items():
+        arm = by_label[label]
+        assert (round(arm["top1_lo"], 3), round(arm["top1_hi"], 3)) == (low, high), (
+            f"{label}: BIN gives [{arm['top1_lo']:.3f}, {arm['top1_hi']:.3f}], tab:protocol prints "
+            f"[{low}, {high}]")
+
+
+def test_printed_cells_are_the_full_precision_values_rounded(generated):
+    """Each three-decimal cell is its own comment line rounded, not a separately derived number."""
+    top1 = _comments(generated, _TOP1_COMMENT)
+    top3 = _comments(generated, _TOP3_COMMENT)
+    rows = _block_rows(generated)
+    assert rows, "no rows parsed"
+    for row in rows:
+        label = row[2]
+        for cell, exact in zip(row[5:8], top1[label][2:]):
+            assert cell == "%.3f" % float(exact)
+        for cell, exact in zip(row[8:11], top3[label][2:5]):
+            assert cell == "%.3f" % float(exact)
+
+
+def test_hit_counts_reconstruct_every_printed_proportion(generated):
+    """k/n must return the proportion, so a reader can rebuild any interval from the block alone."""
+    for pattern in (_TOP1_COMMENT, _TOP3_COMMENT):
+        found = _comments(generated, pattern)
+        assert len(found) == 6
+        for label, fields in found.items():
+            hits, n, point = int(fields[0]), int(fields[1]), float(fields[2])
+            assert n == 126, f"{label} is scored on {n} runs"
+            assert hits / n == pytest.approx(point, rel=0, abs=1e-12)
+            low, high = float(fields[3]), float(fields[4])
+            assert low < point < high
+
+
+def test_the_block_claims_no_test_no_separation_and_no_winner(generated):
+    """A ranking with marginal intervals licenses none of these words.
+
+    ``registered contrast`` is the exception that proves the rule. The caption has to carry the
+    phrase, because declaring that the block registers none of them is the last unmet clause of the
+    M4 completion test, so it is checked for the negated form instead of banned.
+    """
+    lowered = generated.lower()
+    for word in FORBIDDEN:
+        assert word not in lowered, f"the block claims {word!r}"
+    assert lowered.count("registered contrast") == 1
+    assert lowered.count("no registered contrast") == 1
+    assert "tests no difference between any two arms" in lowered
+    assert "not transitive" in lowered, "the above-count needs its warning in place"
+
+
+def test_the_declared_but_unrun_model_is_disclosed_with_its_reason(generated):
+    """Erratum 2 asks for the model, its non-run status, and the reason on the same page.
+
+    Omitting the row would leave a reader who sees one OpenAI model unaware that a second was
+    declared first, which is the reading the carve-out exists to prevent.
+    """
+    assert sja.NOT_RUN_LABEL == "gpt-5.6-sol"
+    assert r"\texttt{gpt-5.6-sol} & \texttt{not-run} & addendum" in generated
+    assert r"\multicolumn{2}{c}{declared, never run}" in generated
+    assert "declared non-measurement" in generated
+    prose = eat.caption_disclosure()
+    assert prose in generated
+    assert "configuration decision, not model unavailability" in prose
+    assert "No score exists for it." in prose
+    # Strip the caption's markup back off and the console's own five lines must come back, word for
+    # word and in order. Neither surface can lose a sentence or gain one without failing here.
+    assert (prose.replace(r"\texttt{", "").replace("}", "")
+            == " ".join(sja.NOT_RUN_DISCLOSURE))
+
+
+def test_the_caption_disclosure_refuses_latex_specials():
+    """A later edit that puts markup in the console constant must fail here, not in a build log."""
+    with pytest.raises(ValueError, match="LaTeX special characters"):
+        eat.caption_disclosure(("100% of runs were skipped",))
+    assert eat.caption_disclosure(("one line", "two line")) == "one line two line"
+
+
+def test_the_caption_refuses_a_roster_its_prose_does_not_fit(ranked):
+    """Both guards carry a formatted message, so both are exercised rather than assumed.
+
+    The counts in the caption are derived from the arms in hand. A roster this prose cannot describe
+    has to stop the run: a caption that says four arms over a table of five is worse than no table.
+    """
+    arms, n_runs = ranked
+    with pytest.raises(ValueError, match="caption names two published arms"):
+        eat._caption(n_runs, [dict(arm, source="addendum") for arm in arms])
+    with pytest.raises(ValueError, match="outgrown the prose"):
+        eat._word(len(arms) * 13)
+    assert eat._word(len(arms)) == "six"
+    assert eat._word(0) == "no"
+
+
+def test_the_emitter_owns_no_arithmetic_of_its_own():
+    """The whole reason this tool exists rather than a hand-typed table.
+
+    A second Top-1 in this repository would be wrong on the runs whose gold mistake is step 0 and
+    would look correct everywhere a reviewer checked.
+    """
+    assert eat.rank_arms is sja.rank_arms
+    for banned in ("math", "wilson", "per_run_ranks", "score_cache",
+                   "_score_vector", "_rank_metrics", "collect"):
+        assert not hasattr(eat, banned), f"emit_addendum_table reaches {banned}"
+    # numpy is reachable, because the BIN draw happens here on purpose. It may be reached from
+    # exactly one function, so a later edit cannot use it to compute a score.
+    tree = ast.parse(Path(eat.__file__).read_text("utf-8"))
+    users = sorted({node.name for node in ast.walk(tree)
+                    if isinstance(node, ast.FunctionDef)
+                    and any(isinstance(inner, ast.Name) and inner.id == "np"
+                            for inner in ast.walk(node))})
+    assert users == ["_bin_interval"], f"numpy is reached from {users}, not only the interval draw"
+    numbers = {node.value for node in ast.walk(ast.parse(Path(eat.__file__).read_text("utf-8")))
+               if isinstance(node, ast.Constant)
+               and isinstance(node.value, (int, float)) and not isinstance(node.value, bool)}
+    assert 126 not in numbers, "the run count is imported, never typed"
+    # The only floats allowed are the two percentile bounds Procedure BIN takes. A score written
+    # down here would be a number the records do not govern, which is the whole failure mode.
+    floats = {value for value in numbers if isinstance(value, float)}
+    assert floats <= {2.5, 97.5}, f"no score is written down here; found {sorted(floats)}"
+
+
+def test_cli_prints_deterministic_lf_bytes(generated):
+    first, second = _cli(), _cli()
+    assert first.returncode == second.returncode == 0
+    assert first.stderr == second.stderr == b""
+    assert first.stdout == second.stdout == (generated + "\n").encode("utf-8")
+    assert b"\r" not in first.stdout
+
+
+@pytest.mark.parametrize("use_env", [False, True])
+def test_check_accepts_exact_block(tmp_path, generated, use_env):
+    (tmp_path / "09_appendix.tex").write_bytes((generated + "\n").encode("utf-8"))
+    result = (_cli("--check", paper_env=tmp_path) if use_env
+              else _cli("--check", "--paper", tmp_path))
+    assert result.returncode == 0, result.stdout + result.stderr
+    assert b"paper is current: tab:judge-addendum" in result.stdout
+
+
+@pytest.mark.parametrize("corruption, message", [
+    ("no_block", b"appears 0 times"), ("no_appendix", b"cannot read appendix"),
+    ("cell", b"table differs"), ("caption", b"table differs"),
+    ("missing_begin", b"appears 0 times"), ("missing_end", b"appears 0 times"),
+    ("duplicate", b"appears 2 times"), ("reversed", b"precedes its begin marker"),
+    ("whitespace", b"table differs"), ("crlf", b"table differs"),
+])
+def test_check_rejects_a_paper_that_does_not_carry_the_block(tmp_path, generated, corruption,
+                                                             message):
+    """The red direction. A checker that cannot fail proves nothing about the paper it passes.
+
+    ``no_block`` and ``no_appendix`` are the state of the manuscript before anything is spliced, so
+    they pin the exit code this tool must return today.
+    """
+    text = generated
+    if corruption == "no_block":
+        text = r"\section{An appendix that has never seen this table}"
+    elif corruption == "cell":
+        text = text.replace(r"& 0.476 {\scriptsize", r"& 0.999 {\scriptsize", 1)
+    elif corruption == "caption":
+        text = text.replace("declares no registered contrast", "declares a registered contrast", 1)
+    elif corruption == "missing_begin":
+        text = text.replace(eat._BEGIN, "")
+    elif corruption == "missing_end":
+        text = text.replace(eat._END, "")
+    elif corruption == "duplicate":
+        text += "\n" + eat._BEGIN
+    elif corruption == "reversed":
+        text = eat._END + "\n" + eat._BEGIN
+    elif corruption == "whitespace":
+        text = text.replace(r"\centering", r"\centering ", 1)
+    elif corruption == "crlf":
+        text = text.replace("\n", "\r\n")
+    if corruption != "no_appendix":
+        (tmp_path / "09_appendix.tex").write_bytes(text.encode("utf-8"))
+    result = _cli("--check", "--paper", tmp_path)
+    assert result.returncode == 1, result.stdout + result.stderr
+    assert message in result.stdout
+    if corruption == "cell":
+        assert b"--- paper/09_appendix.tex" in result.stdout
+        assert b"0.999" in result.stdout and b"0.476" in result.stdout
+
+
+def test_check_requires_paper_path():
+    result = _cli("--check")
+    assert result.returncode == 2
+    assert b"--check needs --paper <dir> or CATCHBENCH_PAPER_DIR" in result.stderr
+
+
+# The four tests below exist because a review pass broke this suite four ways and it stayed green.
+# It appended "claude-opus-5 leads the ranking and is the strongest judge here" to the caption, moved
+# 72 entrants to 76, eleven published judges to fourteen, and the 20-run null-top floor to 3. Each
+# corruption is a claim about something outside this block, so a guard has to reach outside it too.
+
+COMPARATIVE = ("leads", "leading", "strongest", "weakest", "ahead of", "behind",
+               "better than", "worse than", "top performer", "winner", "loses to")
+
+
+def test_the_block_makes_no_comparative_claim_even_in_unlisted_vocabulary(generated):
+    """FORBIDDEN caught only the statistical words; a sorted table invites the ranking words too."""
+    prose = " ".join(generated.split()).lower()
+    hits = [word for word in COMPARATIVE if word in prose]
+    assert hits == [], f"the block ranks arms but may not describe the ranking: {hits}"
+
+
+def test_the_published_judge_count_matches_the_cache_directory():
+    """PUBLISHED_JUDGES is prose in the caption; bind it to the caches it describes."""
+    root = Path(sja.__file__).resolve().parents[1]
+    caches = sorted((root / "data" / "llm_judge").glob("whoandwhen__all_at_once__*.json"))
+    assert len(caches) == eat.PUBLISHED_JUDGES, (
+        f"caption says {eat.PUBLISHED_JUDGES} published judges, data/llm_judge/ holds {len(caches)}")
+
+
+def test_the_arena_counts_match_the_paper():
+    """72 entrants and 138 recorded comparisons are claims about the manuscript, not about us."""
+    paper_dir = os.environ.get("CATCHBENCH_PAPER_DIR")
+    if not paper_dir:
+        pytest.skip("no CATCHBENCH_PAPER_DIR")
+    sources = " ".join(p.read_text(encoding="utf-8")
+                       for p in sorted(Path(paper_dir).glob("*.tex")))
+    assert f"{eat.ARENA_ENTRANTS} entrants" in sources, (
+        f"caption says {eat.ARENA_ENTRANTS} entrants; the paper does not")
+    assert str(eat.RECORDED_COMPARISONS) in sources, (
+        f"caption says {eat.RECORDED_COMPARISONS} recorded comparisons; the paper does not")
+
+
+def test_the_null_top_floor_is_the_one_the_caches_actually_carry():
+    """The 20-run figure warns the reader that the console reading is a different quantity."""
+    from catchbench.llm_judge import load_judge_runs
+    runs = load_judge_runs()
+    at_step_zero = sum(1 for r in runs if r["mistake"] == 0)
+    assert at_step_zero == eat.NULL_TOP_FLOOR, (
+        f"caption says {eat.NULL_TOP_FLOOR} runs with the gold mistake at step 0; the corpus has "
+        f"{at_step_zero}")
+
+
+def test_the_above_column_is_derivable_from_the_printed_intervals():
+    """The column and the intervals must tell the same story, and they have separate sources.
+
+    ``above`` is computed by the scorer from its own Wilson bounds; the table prints Procedure BIN.
+    The two agree on today's caches, which is luck rather than structure: nothing recomputes the
+    column when the interval construction changes. A reader can check this column against the
+    printed bounds by eye, so a disagreement would be visible and unexplainable.
+    """
+    arms, _ = sja.rank_arms()
+    binned = eat._with_bin_intervals(arms)
+    for arm in binned:
+        implied = 1 + sum(1 for other in binned if other["top1_lo"] > arm["top1_hi"])
+        assert implied == arm["above"], (
+            f"{arm['label']}: the table prints above={arm['above']}, but its printed interval "
+            f"[{arm['top1_lo']:.3f}, {arm['top1_hi']:.3f}] implies {implied}")
