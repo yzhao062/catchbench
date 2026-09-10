@@ -17,8 +17,8 @@ run, a growing prefix while it runs, and the finished trace after it ends.
 
 </div>
 
-An audit is limited by the record more often than by the method. CatchBench puts that question to
-each point in a run's life: before it runs you have only the plan and harness (is it
+What an audit can catch depends on which record it is allowed to read. CatchBench puts that question
+to each point in a run's life: before it runs you have only the plan and harness (is it
 over-privileged?); while it runs you have a growing prefix (is it about to fail?); after it runs you
 have the whole trace (which step broke it, did it fail, what kind of fault was it). Six audit
 scenarios produce seven task contracts (localization has two instantiations, human-labeled and
@@ -114,10 +114,10 @@ method implementation; this repository provides the benchmark tasks and comparis
 
 The pillars are not three convenient buckets; they are the three information states a run passes
 through, and the evidence available at each fixes which audit is possible. A method built for one
-state cannot read another's evidence, so the pillars are separate tracks, not interchangeable views of
-one dataset.
+state cannot read another's evidence. The LIVE sweep at 100% is the exception: it reads the
+finished trace and reproduces the shared entrants' POST detection scores.
 
-<img src="assets/hero-lifecycle.png" alt="One fixed agent run seen through three lifecycle evidence masks in the paper palette. PRE reads only the declaration, LIVE adds a growing trace prefix, and POST reads the complete trace and outcome. The rows contain one, three, and five scored blocks, respectively." width="100%">
+<img src="assets/hero-lifecycle.png" alt="Schematic of three information states, each carrying its own record, in the paper palette. PRE reads only the declaration, LIVE adds a growing trace prefix, and POST reads the complete trace and outcome. The rows contain one, three, and five scored blocks, respectively." width="100%">
 
 The scored block identities are the ones `run.py` prints and `tests/golden/board.txt` records. A
 reader can go from an audit question to its scored block without a lookup table.

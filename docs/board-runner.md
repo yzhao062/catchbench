@@ -2,8 +2,11 @@
 
 `verify.yml` finishes in about ninety seconds because it never runs the scoring board. `board.yml`
 runs the whole board and compares it against `tests/golden/board.txt`, which takes roughly nine
-minutes and fetches about 320 MB of corpora. That is too slow for a hosted runner on every push and
-cheap on a lab machine, where the Hugging Face cache persists between jobs.
+minutes and fetches about 320 MB of corpora. That nine-minute figure is a local one, on a machine
+where the Hugging Face cache persists between jobs. `board.yml` itself no longer runs on a
+self-hosted machine: it runs on `ubuntu-latest`, on every push to `main` that touches the scored
+paths, plus a weekly cron and manual dispatch. The corpora are fetched on every run rather than
+cached, and the hosted job takes tens of minutes.
 
 ## Read this before registering a runner on a public repository
 
@@ -35,8 +38,9 @@ the graph-AD path works there.
 
 From the repository's **Settings, Actions, Runners, New self-hosted runner**, follow the commands
 GitHub shows for Linux ARM64. When it asks for labels, accept the defaults so the runner carries
-`self-hosted`, `linux`, and `ARM64`, which is what `board.yml` targets. Then install it as a service
-so it survives a reboot:
+`self-hosted`, `linux`, and `ARM64`. `board.yml` selects `ubuntu-latest` today, so a runner
+registered this way stays idle until its `runs-on` is pointed at those labels. Then install it as a
+service so it survives a reboot:
 
 ```bash
 ./config.sh --url https://github.com/<owner>/<repo> --token <token> --labels self-hosted,linux,ARM64
@@ -44,21 +48,18 @@ sudo ./svc.sh install
 sudo ./svc.sh start
 ```
 
-## The golden is platform-specific, and that is not yet settled
+## The golden reconciles across platforms, within a two-row tolerance
 
-`tests/golden/board.txt` is currently generated on the maintainer's Windows workstation with a CUDA
-build of PyTorch. Whether a Linux ARM64 runner reproduces it exactly at three decimals is an open
-question: the PyGOD rows go through torch and a compiled sampler, and those can differ across BLAS
-implementations and builds.
+`tests/golden/board.txt` is generated on the maintainer's Windows workstation with a CUDA build of
+PyTorch, and ubuntu CI reproduces it. Three CI runs settled how far: two torch-backed rows reconcile
+within a 0.005 tolerance, and every other value on the board is compared exactly. The paragraphs
+below carry that history and the reasoning behind the bound.
 
-The first runner job answers it. Two outcomes:
-
-- **The board matches.** Nothing to do; the golden is portable and a local `check_board.py` run is
-  as authoritative as CI.
-- **Only the PyGOD rows differ.** Regenerate the golden on the runner with
-  `python tools/check_board.py --update`, commit it with the diff in the message, and record here
-  that the runner is the authority. A local run will then show that same difference, which is
-  expected rather than drift.
+Linux ARM64 is the platform still untested, because no runner has ever been registered there. The
+PyGOD rows go through torch and a compiled sampler, and those can differ across BLAS implementations
+and builds. If an ARM64 job differs, retain its produced board and diagnose the difference against the pinned
+code, corpus, and dependency revisions. Update the golden only after a deliberate scoring change,
+using the regeneration procedure below and explaining the numerical diff.
 
 Do not respond by widening `check_board.py`'s tolerance. Exact comparison is what makes the check
 worth having; a tolerance hides the small real movements it exists to catch. One narrow exception is

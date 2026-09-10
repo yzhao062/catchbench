@@ -71,7 +71,7 @@ def fact_check(board_path: Path, readme_path: Path) -> dict[str, int]:
         raise ValueError("tests/golden/board.txt no longer declares the four displayed prefixes")
 
     readme_facts = (
-        "CatchBench holds the run fixed and varies what the auditor may read",
+        "the arrangement fixes what a score means within a state",
         "only the plan and harness",
         "a growing prefix is visible, the outcome is not",
         "the complete trace and outcome are in hand",
@@ -138,12 +138,12 @@ def draw(counts: dict[str, int]) -> plt.Figure:
     ax.axis("off")
 
     _label(ax, 0.047, 0.905, "CATCHBENCH", size=17, color=CORAL, weight="bold")
-    _label(ax, 0.047, 0.830, "ONE RUN. THREE INFORMATION STATES.", size=22, weight="bold")
+    _label(ax, 0.047, 0.830, "THREE INFORMATION STATES.", size=19, weight="bold")
     _label(
         ax,
         0.047,
         0.765,
-        "The run stays fixed. PRE, LIVE, and POST change what the auditor may read.",
+        "PRE uses configurations; LIVE and POST use traces under distinct task contracts.",
         size=11,
         color=SUBTITLE,
     )
@@ -163,7 +163,7 @@ def draw(counts: dict[str, int]) -> plt.Figure:
     _label(ax, outcome_x + outcome_w / 2, 0.704, "OUTCOME", size=10, color=SUBTITLE, ha="center")
 
     run_y = 0.594
-    _label(ax, label_x, run_y + cell_h / 2, "ONE RUN", size=16, weight="bold")
+    _label(ax, label_x, run_y + cell_h / 2, "SCHEMATIC", size=14, weight="bold")
     arrow_y = run_y + cell_h + 0.015
     ax.annotate(
         "",
