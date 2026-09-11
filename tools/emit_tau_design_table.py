@@ -314,6 +314,24 @@ def _needed(row: dict, key: str) -> str:
     return str(needed["clusters"]) + marker
 
 
+def _recorded_basename(value: str) -> str:
+    r"""The last segment of a path the record stored, read the same way on every platform.
+
+    The records keep absolute paths and every caller here wants only the file name. ``Path`` is the
+    obvious way to take it and the wrong one: it binds to the host flavour, so a Windows path read
+    on Linux carries no separator ``PosixPath`` recognises and ``.name`` hands back the whole
+    string. That is not hypothetical. ``Path(...).name`` here printed the file name on the author's
+    Windows box and the full ``C:\Users\...\statistical_tests_results.json`` on CI, so the generated
+    block and the committed fragment stopped matching on Linux alone, and the shipped artifact was
+    the one that could not be reproduced. Splitting on both separators reads a recorded path
+    identically wherever the emitter runs.
+    """
+    text = str(value).replace("\\", "/").rstrip("/")
+    if not text:
+        raise ValueError("the record stored an empty path where a file name was expected")
+    return text.rsplit("/", 1)[-1]
+
+
 def _provenance(record: dict, rows: list[dict], sample: dict, ladder: dict) -> list[str]:
     """Comment lines binding each printed cell to the record's own full-precision value.
 
@@ -333,7 +351,8 @@ def _provenance(record: dict, rows: list[dict], sample: dict, ladder: dict) -> l
         f"% Declaration: {record['declaration']['file']} Part {record['declaration']['part']}, "
         f"sha256 {inputs['declaration']['sha256']}.",
         f"% Registry: the twenty committed live.tau.bar cells of tools/"
-        f"{Path(inputs['registry']['path']).name}, sha256 {inputs['registry']['sha256']}.",
+        f"{_recorded_basename(inputs['registry']['path'])}, sha256 "
+        f"{inputs['registry']['sha256']}.",
         f"% Question: {record['question']}",
         f"% Corpus: {inputs['corpus']}",
         f"% Present sample: {sample['clusters']} task clusters, {sample['runs']} runs, "

@@ -338,6 +338,7 @@ always       tests/test_emit_live_size_audit_table.py::test_the_long_notes_that_
 always       tests/test_emit_live_size_audit_table.py::test_the_preflight_sentence_is_read_from_the_flag_and_not_written_down
 always       tests/test_emit_live_size_audit_table.py::test_the_primary_cell_is_the_one_a5_nominated_and_the_branch_is_its_own
 always       tests/test_emit_live_size_audit_table.py::test_the_printed_effect_is_the_difference_of_the_two_printed_arm_columns
+always       tests/test_emit_live_size_audit_table.py::test_the_provenance_line_names_no_absolute_path
 always       tests/test_emit_live_size_audit_table.py::test_the_shipped_fragment_is_what_the_emitter_prints
 always       tests/test_emit_live_size_audit_table.py::test_the_temporal_contrast_is_identified_separately_and_named_as_secondary
 always       tests/test_emit_live_size_audit_table.py::test_the_two_endpoint_cells_are_labelled_reproduction_controls_in_the_table
@@ -360,6 +361,7 @@ always       tests/test_emit_post_generalization_table.py::test_a_grouped_protoc
 always       tests/test_emit_post_generalization_table.py::test_a_point_outside_its_own_interval_is_refused
 always       tests/test_emit_post_generalization_table.py::test_a_population_that_is_not_the_declared_one_is_refused
 always       tests/test_emit_post_generalization_table.py::test_a_primary_cell_other_than_the_nominated_one_is_refused
+always       tests/test_emit_post_generalization_table.py::test_a_recorded_windows_path_prints_as_a_file_name_off_windows
 always       tests/test_emit_post_generalization_table.py::test_a_reproduction_quantity_that_has_been_given_an_interval_is_refused
 always       tests/test_emit_post_generalization_table.py::test_a_run_that_registered_a_board_entrant_is_refused
 always       tests/test_emit_post_generalization_table.py::test_a_spline_that_reached_the_dependency_columns_is_refused
@@ -416,6 +418,7 @@ always       tests/test_emit_post_generalization_table.py::test_the_population_s
 needs-paper  tests/test_emit_post_generalization_table.py::test_the_post_board_table_this_caption_points_at_exists
 always       tests/test_emit_post_generalization_table.py::test_the_printed_populations_are_the_declared_and_observed_ones
 always       tests/test_emit_post_generalization_table.py::test_the_printed_reading_is_the_flag_the_record_carries_for_that_corpus
+always       tests/test_emit_post_generalization_table.py::test_the_provenance_line_names_no_absolute_path
 always       tests/test_emit_post_generalization_table.py::test_the_shipped_fragment_is_what_the_emitter_prints
 always       tests/test_emit_post_generalization_table.py::test_the_six_cells_are_both_corpora_at_the_three_declared_estimands_in_order
 always       tests/test_emit_post_generalization_table.py::test_the_words_the_caption_must_carry_appear_only_in_the_sentences_that_account_for_them
@@ -526,6 +529,7 @@ always       tests/test_emit_tau_design_table.py::test_a_cell_that_does_not_name
 always       tests/test_emit_tau_design_table.py::test_a_ladder_on_a_cell_the_declaration_did_not_freeze_is_refused
 always       tests/test_emit_tau_design_table.py::test_a_ladder_that_is_not_the_declared_one_is_refused
 always       tests/test_emit_tau_design_table.py::test_a_pooled_exponent_without_the_agreement_that_licenses_it_is_refused
+always       tests/test_emit_tau_design_table.py::test_a_recorded_windows_path_prints_as_a_file_name_off_windows
 always       tests/test_emit_tau_design_table.py::test_a_row_claiming_an_exponent_its_ladder_did_not_fit_is_refused
 always       tests/test_emit_tau_design_table.py::test_a_row_set_that_is_not_the_live_prefix_entrants_in_order_is_refused
 always       tests/test_emit_tau_design_table.py::test_a_summary_that_disagrees_with_its_rows_is_refused
@@ -570,6 +574,7 @@ always       tests/test_emit_tau_design_table.py::test_the_ladder_and_its_frozen
 needs-paper  tests/test_emit_tau_design_table.py::test_the_live_prefix_table_both_captions_point_at_exists
 always       tests/test_emit_tau_design_table.py::test_the_long_notes_that_carry_markup_are_kept_in_the_comment_lines
 always       tests/test_emit_tau_design_table.py::test_the_pooled_branch_of_the_caption_prints_the_pooled_exponent
+always       tests/test_emit_tau_design_table.py::test_the_provenance_line_names_no_absolute_path
 always       tests/test_emit_tau_design_table.py::test_the_scaling_rows_are_the_four_ladders_the_record_carries
 always       tests/test_emit_tau_design_table.py::test_the_shipped_fragment_is_what_the_emitter_prints
 always       tests/test_emit_tau_design_table.py::test_the_two_refused_quantities_appear_only_as_refusals

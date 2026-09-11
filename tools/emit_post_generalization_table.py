@@ -720,6 +720,24 @@ def _failure_sentence(record: dict) -> str:
             + f"{_word(len(warnings))} warnings.")
 
 
+def _recorded_basename(value: str) -> str:
+    r"""The last segment of a path the record stored, read the same way on every platform.
+
+    The records keep absolute paths and every caller here wants only the file name. ``Path`` is the
+    obvious way to take it and the wrong one: it binds to the host flavour, so a Windows path read
+    on Linux carries no separator ``PosixPath`` recognises and ``.name`` hands back the whole
+    string. That is not hypothetical. ``Path(...).name`` here printed the file name on the author's
+    Windows box and the full ``C:\Users\...\post_generalization_preflight.json`` on CI, so the
+    generated block and the committed fragment stopped matching on Linux alone, and the shipped
+    artifact was the one that could not be reproduced. Splitting on both separators reads a
+    recorded path identically wherever the emitter runs.
+    """
+    text = str(value).replace("\\", "/").rstrip("/")
+    if not text:
+        raise ValueError("the record stored an empty path where a file name was expected")
+    return text.rsplit("/", 1)[-1]
+
+
 def _provenance(record: dict, rows: list[dict], branch: dict, overlap: dict, gate: dict,
                 observed: dict) -> list[str]:
     """Comment lines binding each printed cell to the record's own full-precision value.
@@ -777,7 +795,7 @@ def _provenance(record: dict, rows: list[dict], branch: dict, overlap: dict, gat
         f"% Preflight: cleared={record['preflight']['cleared']}; "
         f"admits_the_batch={gate['admits_the_batch']}; findings={len(gate['findings'])}; "
         f"declared fits spent={gate['fits_of_the_declared_batch']}; record "
-        f"{Path(record['preflight']['record']).name}, sha256 "
+        f"{_recorded_basename(record['preflight']['record'])}, sha256 "
         f"{inputs['preflight_record']['sha256']}.",
         f"% Preflight reading: {gate['reading']}",
     ]

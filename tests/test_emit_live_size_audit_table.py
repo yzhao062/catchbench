@@ -860,6 +860,19 @@ def test_the_shipped_fragment_is_what_the_emitter_prints(rendered):
     assert FRAGMENT.read_bytes() == rendered
 
 
+def test_the_provenance_line_names_no_absolute_path(generated):
+    """Whatever the record stored, the block a reader sees carries no one's home directory.
+
+    This emitter takes its file names from real ``Path`` objects it built, so it never had the
+    platform defect the other two blocks shipped. The guard is here because the invariant belongs to
+    every generated block rather than to the two that happened to break it, and because the next
+    field added to this block is as likely to come from a recorded string as from a Path.
+    """
+    for line in generated.splitlines():
+        assert not re.search(r"[A-Za-z]:[\\/]", line), f"an absolute path reached the block: {line}"
+        assert "/home/" not in line, f"an absolute path reached the block: {line}"
+
+
 @pytest.mark.parametrize("use_env", [False, True])
 def test_check_accepts_exact_block(tmp_path, generated, use_env):
     (tmp_path / "09_appendix.tex").write_bytes((generated + "\n").encode("utf-8"))

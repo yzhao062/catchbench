@@ -45,7 +45,7 @@ import os
 import re
 import subprocess
 import sys
-from pathlib import Path
+from pathlib import Path, PurePosixPath
 
 import pytest
 
@@ -926,6 +926,39 @@ def test_the_shipped_fragment_is_what_the_emitter_prints(rendered):
     """The .tex fragment in tools/ is a checked artifact, not a copy someone took once."""
     assert FRAGMENT.is_file(), f"{FRAGMENT.name} is missing; regenerate it from the emitter"
     assert FRAGMENT.read_bytes() == rendered
+
+
+def test_a_recorded_windows_path_prints_as_a_file_name_off_windows():
+    r"""The provenance line must name a file, on the platform CI runs as well as this one.
+
+    The record stores absolute paths and the block prints only the last segment. Taking it with
+    ``Path`` reads correctly here and fails on Linux, where a backslash is an ordinary character and
+    ``PosixPath(...).name`` returns the whole string. That shipped: the emitter printed
+    ``C:\Users\...\post_generalization_preflight.json`` into the generated block on CI while the
+    committed fragment carried the file name, so the two matched on Windows alone.
+
+    The first assertion pins the defect rather than the fix. If POSIX semantics ever changed, the
+    second assertion would pass whether or not the helper did anything, and this test would go
+    quietly useless.
+    """
+    recorded = r"C:\Users\somebody\PycharmProjects\auditablebench\tools\post_generalization_preflight.json"
+
+    assert PurePosixPath(recorded).name == recorded, (
+        "a Windows path no longer survives POSIX parsing intact, so this test no longer reproduces "
+        "the condition it was written for")
+    assert epg._recorded_basename(recorded) == "post_generalization_preflight.json"
+
+    assert epg._recorded_basename("/home/runner/work/catchbench/tools/x.json") == "x.json"
+    assert epg._recorded_basename("x.json") == "x.json"
+    with pytest.raises(ValueError):
+        epg._recorded_basename("")
+
+
+def test_the_provenance_line_names_no_absolute_path(generated):
+    """Whatever the record stored, the block a reader sees carries no one's home directory."""
+    for line in generated.splitlines():
+        assert not re.search(r"[A-Za-z]:[\\/]", line), f"an absolute path reached the block: {line}"
+        assert "/home/" not in line, f"an absolute path reached the block: {line}"
 
 
 @pytest.mark.parametrize("use_env", [False, True])
