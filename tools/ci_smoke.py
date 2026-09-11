@@ -18,9 +18,11 @@ SKIPPED = {
     "catchbench.detection": "requires the GRADE checkout bridge",
     "catchbench.gold": "requires the GRADE and auditable checkout bridges",
     "catchbench.live": "requires the GRADE checkout bridge",
+    "catchbench.live_size_audit": "requires the GRADE checkout bridge",
     "catchbench.llm_judge": "requires the GRADE checkout bridge",
     "catchbench.namedvalue": "requires the GRADE checkout bridge",
     "catchbench.post": "requires the GRADE and auditable checkout bridges",
+    "catchbench.post_generalization_audit": "requires the GRADE checkout bridge",
 }
 
 EXPECTED_COUNTS = {

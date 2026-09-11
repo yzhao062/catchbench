@@ -112,6 +112,30 @@ always       tests/test_ci_report_check.py::test_the_manifest_declares_exactly_t
 always       tests/test_ci_report_check.py::test_the_regression_on_its_own_is_caught
 always       tests/test_ci_report_check.py::test_the_workflow_checks_every_pytest_run_it_makes
 always       tests/test_ci_report_check.py::test_trading_a_contract_for_trivial_tests_no_longer_balances
+always       tests/test_ci_smoke.py::test_every_module_needing_the_grade_bridge_is_skipped_by_the_smoke_check[_paths]
+always       tests/test_ci_smoke.py::test_every_module_needing_the_grade_bridge_is_skipped_by_the_smoke_check[_reuse]
+always       tests/test_ci_smoke.py::test_every_module_needing_the_grade_bridge_is_skipped_by_the_smoke_check[agent_detectors]
+always       tests/test_ci_smoke.py::test_every_module_needing_the_grade_bridge_is_skipped_by_the_smoke_check[cli]
+always       tests/test_ci_smoke.py::test_every_module_needing_the_grade_bridge_is_skipped_by_the_smoke_check[core]
+always       tests/test_ci_smoke.py::test_every_module_needing_the_grade_bridge_is_skipped_by_the_smoke_check[corpora]
+always       tests/test_ci_smoke.py::test_every_module_needing_the_grade_bridge_is_skipped_by_the_smoke_check[detection]
+always       tests/test_ci_smoke.py::test_every_module_needing_the_grade_bridge_is_skipped_by_the_smoke_check[gold]
+always       tests/test_ci_smoke.py::test_every_module_needing_the_grade_bridge_is_skipped_by_the_smoke_check[graph_ad]
+always       tests/test_ci_smoke.py::test_every_module_needing_the_grade_bridge_is_skipped_by_the_smoke_check[live]
+always       tests/test_ci_smoke.py::test_every_module_needing_the_grade_bridge_is_skipped_by_the_smoke_check[live_size_audit]
+always       tests/test_ci_smoke.py::test_every_module_needing_the_grade_bridge_is_skipped_by_the_smoke_check[llm_judge]
+always       tests/test_ci_smoke.py::test_every_module_needing_the_grade_bridge_is_skipped_by_the_smoke_check[namedvalue]
+always       tests/test_ci_smoke.py::test_every_module_needing_the_grade_bridge_is_skipped_by_the_smoke_check[post]
+always       tests/test_ci_smoke.py::test_every_module_needing_the_grade_bridge_is_skipped_by_the_smoke_check[post_generalization_audit]
+always       tests/test_ci_smoke.py::test_every_module_needing_the_grade_bridge_is_skipped_by_the_smoke_check[pre]
+always       tests/test_ci_smoke.py::test_every_module_needing_the_grade_bridge_is_skipped_by_the_smoke_check[pre_baselines]
+always       tests/test_ci_smoke.py::test_every_module_needing_the_grade_bridge_is_skipped_by_the_smoke_check[pre_static_scanner]
+always       tests/test_ci_smoke.py::test_every_module_needing_the_grade_bridge_is_skipped_by_the_smoke_check[pygod_extra]
+always       tests/test_ci_smoke.py::test_every_module_needing_the_grade_bridge_is_skipped_by_the_smoke_check[pyod_extra]
+always       tests/test_ci_smoke.py::test_the_detector_reads_imports_rather_than_text
+always       tests/test_ci_smoke.py::test_the_package_is_where_this_test_thinks_it_is
+always       tests/test_ci_smoke.py::test_the_registry_names_no_module_that_does_not_need_the_bridge
+always       tests/test_ci_smoke.py::test_the_smoke_check_runs_offline
 always       tests/test_cli_reporting.py::test_cli_reporting_guard_allows_measurements_and_outcome_labels[Can a method separate failing from resolved runs?]
 always       tests/test_cli_reporting.py::test_cli_reporting_guard_allows_measurements_and_outcome_labels[SWE-Gym outcomes are labeled "resolved" and "unresolved".]
 always       tests/test_cli_reporting.py::test_cli_reporting_guard_allows_measurements_and_outcome_labels[SWE-Gym: 188 unresolved runs and 188 resolved runs.]
