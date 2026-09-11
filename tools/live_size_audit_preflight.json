@@ -1,0 +1,1154 @@
+{
+  "checks": {
+    "a10_1_column_boundary": "catchbench.live_size_audit.check_column_boundaries, through detection._MixedSplineAUC.columns at every prefix",
+    "a10_2_row_and_fold_alignment": "catchbench.live_size_audit.check_row_and_fold_alignment",
+    "a10_3_training_only_transforms": "emit_detection_audit._FoldLocality, at the 100% prefix on each spline arm",
+    "a10_4_linear_path_parity": "_check_route_is_the_board against GRADE's _cv (exact), then _check_published_prefix_numbers and _check_published_linear_contrast against the committed statistical record",
+    "a10_5_endpoint_matches_post": "_check_hundred_percent_matches_post"
+  },
+  "cleared": false,
+  "corpora": {
+    "swegym": {
+      "column_boundaries": {
+        "checked_by": "catchbench.detection._MixedSplineAUC.columns, per prefix",
+        "establishes": "at every prefix the splined block is exactly that prefix's flat matrix and the passthrough block is the remaining flatdep columns, so the dependency columns enter linearly and only the size columns are splined",
+        "per_prefix": {
+          "100": {
+            "flat_shape": [
+              376,
+              4
+            ],
+            "flatdep_shape": [
+              376,
+              8
+            ],
+            "passthrough_columns": [
+              4,
+              5,
+              6,
+              7
+            ],
+            "splined_columns": [
+              0,
+              1,
+              2,
+              3
+            ]
+          },
+          "25": {
+            "flat_shape": [
+              376,
+              4
+            ],
+            "flatdep_shape": [
+              376,
+              8
+            ],
+            "passthrough_columns": [
+              4,
+              5,
+              6,
+              7
+            ],
+            "splined_columns": [
+              0,
+              1,
+              2,
+              3
+            ]
+          },
+          "50": {
+            "flat_shape": [
+              376,
+              4
+            ],
+            "flatdep_shape": [
+              376,
+              8
+            ],
+            "passthrough_columns": [
+              4,
+              5,
+              6,
+              7
+            ],
+            "splined_columns": [
+              0,
+              1,
+              2,
+              3
+            ]
+          },
+          "75": {
+            "flat_shape": [
+              376,
+              4
+            ],
+            "flatdep_shape": [
+              376,
+              8
+            ],
+            "passthrough_columns": [
+              4,
+              5,
+              6,
+              7
+            ],
+            "splined_columns": [
+              0,
+              1,
+              2,
+              3
+            ]
+          }
+        }
+      },
+      "hundred_percent_matches_post": {
+        "establishes": "the 100% LIVE feature matrices and labels are the POST detection inputs cell for cell, and all four arms reproduce the committed POST audit scores on both estimands",
+        "layers_compared_exactly": [
+          "exec",
+          "flat",
+          "flatdens",
+          "flatdep",
+          "full"
+        ],
+        "max_absolute_difference": 0.0,
+        "n_failed": 188,
+        "n_runs": 376,
+        "per_arm": {
+          "auditable (size+deps)": {
+            "mean_fold_roc_auc": {
+              "difference": 0.0,
+              "observed": 0.8042535749045444,
+              "post_audit": 0.8042535749045444,
+              "within_tolerance": true
+            },
+            "seed_averaged_oof_roc_auc": {
+              "difference": 0.0,
+              "observed": 0.8025690357627885,
+              "post_audit": 0.8025690357627885,
+              "within_tolerance": true
+            }
+          },
+          "size (flat)": {
+            "mean_fold_roc_auc": {
+              "difference": 0.0,
+              "observed": 0.6626285842629334,
+              "post_audit": 0.6626285842629334,
+              "within_tolerance": true
+            },
+            "seed_averaged_oof_roc_auc": {
+              "difference": 0.0,
+              "observed": 0.6551324128564961,
+              "post_audit": 0.6551324128564961,
+              "within_tolerance": true
+            }
+          },
+          "size (spline)": {
+            "mean_fold_roc_auc": {
+              "difference": 0.0,
+              "observed": 0.8319787377405106,
+              "post_audit": 0.8319787377405106,
+              "within_tolerance": true
+            },
+            "seed_averaged_oof_roc_auc": {
+              "difference": 0.0,
+              "observed": 0.823590991398823,
+              "post_audit": 0.823590991398823,
+              "within_tolerance": true
+            }
+          },
+          "size-spline + linear-deps": {
+            "mean_fold_roc_auc": {
+              "difference": 0.0,
+              "observed": 0.8223160140750169,
+              "post_audit": 0.8223160140750169,
+              "within_tolerance": true
+            },
+            "seed_averaged_oof_roc_auc": {
+              "difference": 0.0,
+              "observed": 0.8181869624264372,
+              "post_audit": 0.8181869624264372,
+              "within_tolerance": true
+            }
+          }
+        },
+        "quantities_disagreeing": 0,
+        "source": "detection_audit_results.json",
+        "tolerance": 1e-12
+      },
+      "linear_arm_scores": {
+        "100": {
+          "auditable (size+deps)": {
+            "mean_fold_roc_auc": 0.8042535749045444,
+            "seed_averaged_oof_roc_auc": 0.8025690357627885
+          },
+          "size (flat)": {
+            "mean_fold_roc_auc": 0.6626285842629334,
+            "seed_averaged_oof_roc_auc": 0.6551324128564961
+          },
+          "size (spline)": {
+            "mean_fold_roc_auc": 0.8319787377405106,
+            "seed_averaged_oof_roc_auc": 0.823590991398823
+          },
+          "size-spline + linear-deps": {
+            "mean_fold_roc_auc": 0.8223160140750169,
+            "seed_averaged_oof_roc_auc": 0.8181869624264372
+          }
+        },
+        "25": {
+          "auditable (size+deps)": {
+            "mean_fold_roc_auc": 0.7418859025230218,
+            "seed_averaged_oof_roc_auc": 0.7380036215482119
+          },
+          "size (flat)": {
+            "mean_fold_roc_auc": 0.6294377479973048,
+            "seed_averaged_oof_roc_auc": 0.6367558850158442
+          }
+        },
+        "50": {
+          "auditable (size+deps)": {
+            "mean_fold_roc_auc": 0.7657516657932172,
+            "seed_averaged_oof_roc_auc": 0.7630432322317791
+          },
+          "size (flat)": {
+            "mean_fold_roc_auc": 0.6631227071947293,
+            "seed_averaged_oof_roc_auc": 0.6587681077410594
+          }
+        },
+        "75": {
+          "auditable (size+deps)": {
+            "mean_fold_roc_auc": 0.8038066182526016,
+            "seed_averaged_oof_roc_auc": 0.8003055681303757
+          },
+          "size (flat)": {
+            "mean_fold_roc_auc": 0.6734888073669236,
+            "seed_averaged_oof_roc_auc": 0.6712313263920324
+          }
+        }
+      },
+      "nonfinite_output": {},
+      "population": {
+        "corpus": "swegym",
+        "declared": 376,
+        "n_failed": 188,
+        "n_runs": 376
+      },
+      "prefix_set": {
+        "prefixes": [
+          0.25,
+          0.5,
+          0.75,
+          1.0
+        ],
+        "rule": "catchbench.live._prefix_steps: steps[: max(2, ceil(p * len(steps)))]"
+      },
+      "published_linear_contrast": {
+        "contrast": "auditable (size+deps) - size (flat)",
+        "per_prefix": {
+          "100": {
+            "mean_fold_roc_auc": {
+              "difference": 0.0,
+              "observed": 0.14162499064161105,
+              "published": 0.14162499064161105,
+              "within_tolerance": true
+            },
+            "seed_averaged_oof_roc_auc": {
+              "difference": -1.1102230246251565e-16,
+              "observed": 0.14743662290629234,
+              "published": 0.14743662290629245,
+              "within_tolerance": true
+            }
+          },
+          "25": {
+            "mean_fold_roc_auc": {
+              "difference": 2.844950213376496e-05,
+              "observed": 0.11244815452571699,
+              "published": 0.11241970502358323,
+              "within_tolerance": false
+            },
+            "seed_averaged_oof_roc_auc": {
+              "difference": 0.0,
+              "observed": 0.10124773653236763,
+              "published": 0.10124773653236763,
+              "within_tolerance": true
+            }
+          },
+          "50": {
+            "mean_fold_roc_auc": {
+              "difference": 0.0,
+              "observed": 0.10262895859848786,
+              "published": 0.10262895859848786,
+              "within_tolerance": true
+            },
+            "seed_averaged_oof_roc_auc": {
+              "difference": -1.1102230246251565e-16,
+              "observed": 0.10427512449071963,
+              "published": 0.10427512449071974,
+              "within_tolerance": true
+            }
+          },
+          "75": {
+            "mean_fold_roc_auc": {
+              "difference": 0.0,
+              "observed": 0.13031781088567795,
+              "published": 0.13031781088567795,
+              "within_tolerance": true
+            },
+            "seed_averaged_oof_roc_auc": {
+              "difference": 1.1102230246251565e-16,
+              "observed": 0.12907424173834325,
+              "published": 0.12907424173834314,
+              "within_tolerance": true
+            }
+          }
+        },
+        "tolerance": 1e-12
+      },
+      "published_prefix_numbers": {
+        "cells_compared": 8,
+        "max_absolute_difference": 2.844950213376496e-05,
+        "per_cell": {
+          "100/auditable (size+deps)": {
+            "claim_id": "live.swe.bar.100.auditable (size+deps)",
+            "mean_fold_roc_auc": {
+              "difference": 0.0,
+              "observed": 0.8042535749045444,
+              "published": 0.8042535749045444,
+              "within_tolerance": true
+            },
+            "seed_averaged_oof_roc_auc": {
+              "difference": -1.1102230246251565e-16,
+              "observed": 0.8025690357627885,
+              "published": 0.8025690357627886,
+              "within_tolerance": true
+            }
+          },
+          "100/size (flat)": {
+            "claim_id": "live.swe.bar.100.size (flat)",
+            "mean_fold_roc_auc": {
+              "difference": 0.0,
+              "observed": 0.6626285842629334,
+              "published": 0.6626285842629334,
+              "within_tolerance": true
+            },
+            "seed_averaged_oof_roc_auc": {
+              "difference": 0.0,
+              "observed": 0.6551324128564961,
+              "published": 0.6551324128564961,
+              "within_tolerance": true
+            }
+          },
+          "25/auditable (size+deps)": {
+            "claim_id": "live.swe.bar.25.auditable (size+deps)",
+            "mean_fold_roc_auc": {
+              "difference": 2.844950213376496e-05,
+              "observed": 0.7418859025230218,
+              "published": 0.741857453020888,
+              "within_tolerance": false
+            },
+            "seed_averaged_oof_roc_auc": {
+              "difference": 0.0,
+              "observed": 0.7380036215482119,
+              "published": 0.7380036215482119,
+              "within_tolerance": true
+            }
+          },
+          "25/size (flat)": {
+            "claim_id": "live.swe.bar.25.size (flat)",
+            "mean_fold_roc_auc": {
+              "difference": 0.0,
+              "observed": 0.6294377479973048,
+              "published": 0.6294377479973048,
+              "within_tolerance": true
+            },
+            "seed_averaged_oof_roc_auc": {
+              "difference": 0.0,
+              "observed": 0.6367558850158442,
+              "published": 0.6367558850158442,
+              "within_tolerance": true
+            }
+          },
+          "50/auditable (size+deps)": {
+            "claim_id": "live.swe.bar.50.auditable (size+deps)",
+            "mean_fold_roc_auc": {
+              "difference": 0.0,
+              "observed": 0.7657516657932172,
+              "published": 0.7657516657932172,
+              "within_tolerance": true
+            },
+            "seed_averaged_oof_roc_auc": {
+              "difference": 0.0,
+              "observed": 0.7630432322317791,
+              "published": 0.7630432322317791,
+              "within_tolerance": true
+            }
+          },
+          "50/size (flat)": {
+            "claim_id": "live.swe.bar.50.size (flat)",
+            "mean_fold_roc_auc": {
+              "difference": 0.0,
+              "observed": 0.6631227071947293,
+              "published": 0.6631227071947293,
+              "within_tolerance": true
+            },
+            "seed_averaged_oof_roc_auc": {
+              "difference": 1.1102230246251565e-16,
+              "observed": 0.6587681077410594,
+              "published": 0.6587681077410593,
+              "within_tolerance": true
+            }
+          },
+          "75/auditable (size+deps)": {
+            "claim_id": "live.swe.bar.75.auditable (size+deps)",
+            "mean_fold_roc_auc": {
+              "difference": 0.0,
+              "observed": 0.8038066182526016,
+              "published": 0.8038066182526016,
+              "within_tolerance": true
+            },
+            "seed_averaged_oof_roc_auc": {
+              "difference": -1.1102230246251565e-16,
+              "observed": 0.8003055681303757,
+              "published": 0.8003055681303758,
+              "within_tolerance": true
+            }
+          },
+          "75/size (flat)": {
+            "claim_id": "live.swe.bar.75.size (flat)",
+            "mean_fold_roc_auc": {
+              "difference": 0.0,
+              "observed": 0.6734888073669236,
+              "published": 0.6734888073669236,
+              "within_tolerance": true
+            },
+            "seed_averaged_oof_roc_auc": {
+              "difference": -2.220446049250313e-16,
+              "observed": 0.6712313263920324,
+              "published": 0.6712313263920326,
+              "within_tolerance": true
+            }
+          }
+        },
+        "quantities_compared": 16,
+        "quantities_disagreeing": 1,
+        "source": "statistical_tests_results.json",
+        "tolerance": 1e-12
+      },
+      "row_and_fold_alignment": {
+        "establishes": "row i is the same run at every prefix, and all four arms at all four prefixes are scored on one identical set of 25 splits",
+        "fold_sizes": [
+          [
+            76,
+            75,
+            75,
+            75,
+            75
+          ],
+          [
+            76,
+            75,
+            75,
+            75,
+            75
+          ],
+          [
+            76,
+            75,
+            75,
+            75,
+            75
+          ],
+          [
+            76,
+            75,
+            75,
+            75,
+            75
+          ],
+          [
+            76,
+            75,
+            75,
+            75,
+            75
+          ]
+        ],
+        "n_seeds": 5,
+        "per_prefix": {
+          "100": {
+            "max_prefix_steps": 100,
+            "min_prefix_steps": 6,
+            "n_rows": 376
+          },
+          "25": {
+            "max_prefix_steps": 25,
+            "min_prefix_steps": 2,
+            "n_rows": 376
+          },
+          "50": {
+            "max_prefix_steps": 50,
+            "min_prefix_steps": 3,
+            "n_rows": 376
+          },
+          "75": {
+            "max_prefix_steps": 75,
+            "min_prefix_steps": 5,
+            "n_rows": 376
+          }
+        },
+        "splits_compared": 200
+      },
+      "swapped_estimator_reproduces_grade_cv": {
+        "100": {
+          "flat": 0.6626285842629334,
+          "flatdep": 0.8042535749045444
+        },
+        "25": {
+          "flat": 0.6294377479973048,
+          "flatdep": 0.7418859025230218
+        },
+        "50": {
+          "flat": 0.6631227071947293,
+          "flatdep": 0.7657516657932172
+        },
+        "75": {
+          "flat": 0.6734888073669236,
+          "flatdep": 0.8038066182526016
+        }
+      },
+      "training_only_transforms": {
+        "arms_inspected": [
+          "size (spline)",
+          "size-spline + linear-deps"
+        ],
+        "declared_arm_mean_roc_auc": 0.8319787377405106,
+        "difference": -0.00039529834543672315,
+        "does_not_establish": "that a leak would be visible in the score. Refitting the basis on the complete matrix moves the mean fold AUC by less than a thousandth, and in opposite directions on the two corpora, so the score comparison below is descriptive and has no power as a leak test",
+        "establishes": "for every one of the 25 fits of every spline-bearing arm, the fitted knot vectors are exactly those of a transformer fitted on that fold's training rows, and the fitted scaler's moments are exactly those of the transformed training rows; and on at least one fit per arm those knots differ from the whole-matrix knots, so the comparison discriminates rather than passing vacuously",
+        "fits_inspected": 50,
+        "leaked_basis_mean_roc_auc": 0.8323740360859473,
+        "per_arm": {
+          "size (spline)": {
+            "fits": 25,
+            "fits_whose_knots_differ_from_the_whole_matrix": 25,
+            "layer": "flat",
+            "spline_blocks": 25
+          },
+          "size-spline + linear-deps": {
+            "fits": 25,
+            "fits_whose_knots_differ_from_the_whole_matrix": 25,
+            "layer": "flatdep",
+            "spline_blocks": 25
+          }
+        }
+      }
+    },
+    "tau": {
+      "column_boundaries": {
+        "checked_by": "catchbench.detection._MixedSplineAUC.columns, per prefix",
+        "establishes": "at every prefix the splined block is exactly that prefix's flat matrix and the passthrough block is the remaining flatdep columns, so the dependency columns enter linearly and only the size columns are splined",
+        "per_prefix": {
+          "100": {
+            "flat_shape": [
+              660,
+              4
+            ],
+            "flatdep_shape": [
+              660,
+              8
+            ],
+            "passthrough_columns": [
+              4,
+              5,
+              6,
+              7
+            ],
+            "splined_columns": [
+              0,
+              1,
+              2,
+              3
+            ]
+          },
+          "25": {
+            "flat_shape": [
+              660,
+              4
+            ],
+            "flatdep_shape": [
+              660,
+              8
+            ],
+            "passthrough_columns": [
+              4,
+              5,
+              6,
+              7
+            ],
+            "splined_columns": [
+              0,
+              1,
+              2,
+              3
+            ]
+          },
+          "50": {
+            "flat_shape": [
+              660,
+              4
+            ],
+            "flatdep_shape": [
+              660,
+              8
+            ],
+            "passthrough_columns": [
+              4,
+              5,
+              6,
+              7
+            ],
+            "splined_columns": [
+              0,
+              1,
+              2,
+              3
+            ]
+          },
+          "75": {
+            "flat_shape": [
+              660,
+              4
+            ],
+            "flatdep_shape": [
+              660,
+              8
+            ],
+            "passthrough_columns": [
+              4,
+              5,
+              6,
+              7
+            ],
+            "splined_columns": [
+              0,
+              1,
+              2,
+              3
+            ]
+          }
+        }
+      },
+      "hundred_percent_matches_post": {
+        "establishes": "the 100% LIVE feature matrices and labels are the POST detection inputs cell for cell, and all four arms reproduce the committed POST audit scores on both estimands",
+        "layers_compared_exactly": [
+          "exec",
+          "flat",
+          "flatdens",
+          "flatdep",
+          "full"
+        ],
+        "max_absolute_difference": 0.0,
+        "n_failed": 363,
+        "n_runs": 660,
+        "per_arm": {
+          "auditable (size+deps)": {
+            "mean_fold_roc_auc": {
+              "difference": 0.0,
+              "observed": 0.6653524849727833,
+              "post_audit": 0.6653524849727833,
+              "within_tolerance": true
+            },
+            "seed_averaged_oof_roc_auc": {
+              "difference": 0.0,
+              "observed": 0.6624463180937011,
+              "post_audit": 0.6624463180937011,
+              "within_tolerance": true
+            }
+          },
+          "size (flat)": {
+            "mean_fold_roc_auc": {
+              "difference": 0.0,
+              "observed": 0.6192307720420676,
+              "post_audit": 0.6192307720420676,
+              "within_tolerance": true
+            },
+            "seed_averaged_oof_roc_auc": {
+              "difference": 0.0,
+              "observed": 0.6161523406702469,
+              "post_audit": 0.6161523406702469,
+              "within_tolerance": true
+            }
+          },
+          "size (spline)": {
+            "mean_fold_roc_auc": {
+              "difference": 0.0,
+              "observed": 0.6305552481318096,
+              "post_audit": 0.6305552481318096,
+              "within_tolerance": true
+            },
+            "seed_averaged_oof_roc_auc": {
+              "difference": 0.0,
+              "observed": 0.6291658550611718,
+              "post_audit": 0.6291658550611718,
+              "within_tolerance": true
+            }
+          },
+          "size-spline + linear-deps": {
+            "mean_fold_roc_auc": {
+              "difference": 0.0,
+              "observed": 0.6757929350583461,
+              "post_audit": 0.6757929350583461,
+              "within_tolerance": true
+            },
+            "seed_averaged_oof_roc_auc": {
+              "difference": 0.0,
+              "observed": 0.6738737234605003,
+              "post_audit": 0.6738737234605003,
+              "within_tolerance": true
+            }
+          }
+        },
+        "quantities_disagreeing": 0,
+        "source": "detection_audit_results.json",
+        "tolerance": 1e-12
+      },
+      "linear_arm_scores": {
+        "100": {
+          "auditable (size+deps)": {
+            "mean_fold_roc_auc": 0.6653524849727833,
+            "seed_averaged_oof_roc_auc": 0.6624463180937011
+          },
+          "size (flat)": {
+            "mean_fold_roc_auc": 0.6192307720420676,
+            "seed_averaged_oof_roc_auc": 0.6161523406702469
+          },
+          "size (spline)": {
+            "mean_fold_roc_auc": 0.6305552481318096,
+            "seed_averaged_oof_roc_auc": 0.6291658550611718
+          },
+          "size-spline + linear-deps": {
+            "mean_fold_roc_auc": 0.6757929350583461,
+            "seed_averaged_oof_roc_auc": 0.6738737234605003
+          }
+        },
+        "25": {
+          "auditable (size+deps)": {
+            "mean_fold_roc_auc": 0.6316350697400442,
+            "seed_averaged_oof_roc_auc": 0.6254881227333018
+          },
+          "size (flat)": {
+            "mean_fold_roc_auc": 0.6316251956332928,
+            "seed_averaged_oof_roc_auc": 0.6256458060865775
+          }
+        },
+        "50": {
+          "auditable (size+deps)": {
+            "mean_fold_roc_auc": 0.6171925429318336,
+            "seed_averaged_oof_roc_auc": 0.6172468486518073
+          },
+          "size (flat)": {
+            "mean_fold_roc_auc": 0.6181185849478454,
+            "seed_averaged_oof_roc_auc": 0.61710771628127
+          }
+        },
+        "75": {
+          "auditable (size+deps)": {
+            "mean_fold_roc_auc": 0.6401510697486433,
+            "seed_averaged_oof_roc_auc": 0.6392946916362894
+          },
+          "size (flat)": {
+            "mean_fold_roc_auc": 0.6198483154038645,
+            "seed_averaged_oof_roc_auc": 0.6167598853549268
+          }
+        }
+      },
+      "nonfinite_output": {},
+      "population": {
+        "corpus": "tau",
+        "declared": 660,
+        "n_failed": 363,
+        "n_runs": 660
+      },
+      "prefix_set": {
+        "prefixes": [
+          0.25,
+          0.5,
+          0.75,
+          1.0
+        ],
+        "rule": "catchbench.live._prefix_steps: steps[: max(2, ceil(p * len(steps)))]"
+      },
+      "published_linear_contrast": {
+        "contrast": "auditable (size+deps) - size (flat)",
+        "per_prefix": {
+          "100": {
+            "mean_fold_roc_auc": {
+              "difference": 0.0,
+              "observed": 0.046121712930715764,
+              "published": 0.046121712930715764,
+              "within_tolerance": true
+            },
+            "seed_averaged_oof_roc_auc": {
+              "difference": 2.220446049250313e-16,
+              "observed": 0.0462939774234542,
+              "published": 0.04629397742345398,
+              "within_tolerance": true
+            }
+          },
+          "25": {
+            "mean_fold_roc_auc": {
+              "difference": 0.0,
+              "observed": 9.87410675146183e-06,
+              "published": 9.87410675146183e-06,
+              "within_tolerance": true
+            },
+            "seed_averaged_oof_roc_auc": {
+              "difference": -1.1102230246251565e-16,
+              "observed": -0.00015768335327570604,
+              "published": -0.00015768335327559502,
+              "within_tolerance": true
+            }
+          },
+          "50": {
+            "mean_fold_roc_auc": {
+              "difference": 0.0,
+              "observed": -0.0009260420160118743,
+              "published": -0.0009260420160118743,
+              "within_tolerance": true
+            },
+            "seed_averaged_oof_roc_auc": {
+              "difference": 0.0,
+              "observed": 0.0001391323705373093,
+              "published": 0.0001391323705373093,
+              "within_tolerance": true
+            }
+          },
+          "75": {
+            "mean_fold_roc_auc": {
+              "difference": 0.0,
+              "observed": 0.020302754344778795,
+              "published": 0.020302754344778795,
+              "within_tolerance": true
+            },
+            "seed_averaged_oof_roc_auc": {
+              "difference": -1.1102230246251565e-16,
+              "observed": 0.022534806281362618,
+              "published": 0.02253480628136273,
+              "within_tolerance": true
+            }
+          }
+        },
+        "tolerance": 1e-12
+      },
+      "published_prefix_numbers": {
+        "cells_compared": 8,
+        "max_absolute_difference": 1.1102230246251565e-16,
+        "per_cell": {
+          "100/auditable (size+deps)": {
+            "claim_id": "live.tau.bar.100.auditable (size+deps)",
+            "mean_fold_roc_auc": {
+              "difference": 0.0,
+              "observed": 0.6653524849727833,
+              "published": 0.6653524849727833,
+              "within_tolerance": true
+            },
+            "seed_averaged_oof_roc_auc": {
+              "difference": 1.1102230246251565e-16,
+              "observed": 0.6624463180937011,
+              "published": 0.662446318093701,
+              "within_tolerance": true
+            }
+          },
+          "100/size (flat)": {
+            "claim_id": "live.tau.bar.100.size (flat)",
+            "mean_fold_roc_auc": {
+              "difference": 0.0,
+              "observed": 0.6192307720420676,
+              "published": 0.6192307720420676,
+              "within_tolerance": true
+            },
+            "seed_averaged_oof_roc_auc": {
+              "difference": -1.1102230246251565e-16,
+              "observed": 0.6161523406702469,
+              "published": 0.616152340670247,
+              "within_tolerance": true
+            }
+          },
+          "25/auditable (size+deps)": {
+            "claim_id": "live.tau.bar.25.auditable (size+deps)",
+            "mean_fold_roc_auc": {
+              "difference": 0.0,
+              "observed": 0.6316350697400442,
+              "published": 0.6316350697400442,
+              "within_tolerance": true
+            },
+            "seed_averaged_oof_roc_auc": {
+              "difference": 0.0,
+              "observed": 0.6254881227333018,
+              "published": 0.6254881227333018,
+              "within_tolerance": true
+            }
+          },
+          "25/size (flat)": {
+            "claim_id": "live.tau.bar.25.size (flat)",
+            "mean_fold_roc_auc": {
+              "difference": 0.0,
+              "observed": 0.6316251956332928,
+              "published": 0.6316251956332928,
+              "within_tolerance": true
+            },
+            "seed_averaged_oof_roc_auc": {
+              "difference": 1.1102230246251565e-16,
+              "observed": 0.6256458060865775,
+              "published": 0.6256458060865774,
+              "within_tolerance": true
+            }
+          },
+          "50/auditable (size+deps)": {
+            "claim_id": "live.tau.bar.50.auditable (size+deps)",
+            "mean_fold_roc_auc": {
+              "difference": 0.0,
+              "observed": 0.6171925429318336,
+              "published": 0.6171925429318336,
+              "within_tolerance": true
+            },
+            "seed_averaged_oof_roc_auc": {
+              "difference": 0.0,
+              "observed": 0.6172468486518073,
+              "published": 0.6172468486518073,
+              "within_tolerance": true
+            }
+          },
+          "50/size (flat)": {
+            "claim_id": "live.tau.bar.50.size (flat)",
+            "mean_fold_roc_auc": {
+              "difference": 0.0,
+              "observed": 0.6181185849478454,
+              "published": 0.6181185849478454,
+              "within_tolerance": true
+            },
+            "seed_averaged_oof_roc_auc": {
+              "difference": 0.0,
+              "observed": 0.61710771628127,
+              "published": 0.61710771628127,
+              "within_tolerance": true
+            }
+          },
+          "75/auditable (size+deps)": {
+            "claim_id": "live.tau.bar.75.auditable (size+deps)",
+            "mean_fold_roc_auc": {
+              "difference": 0.0,
+              "observed": 0.6401510697486433,
+              "published": 0.6401510697486433,
+              "within_tolerance": true
+            },
+            "seed_averaged_oof_roc_auc": {
+              "difference": 0.0,
+              "observed": 0.6392946916362894,
+              "published": 0.6392946916362894,
+              "within_tolerance": true
+            }
+          },
+          "75/size (flat)": {
+            "claim_id": "live.tau.bar.75.size (flat)",
+            "mean_fold_roc_auc": {
+              "difference": 0.0,
+              "observed": 0.6198483154038645,
+              "published": 0.6198483154038645,
+              "within_tolerance": true
+            },
+            "seed_averaged_oof_roc_auc": {
+              "difference": 1.1102230246251565e-16,
+              "observed": 0.6167598853549268,
+              "published": 0.6167598853549267,
+              "within_tolerance": true
+            }
+          }
+        },
+        "quantities_compared": 16,
+        "quantities_disagreeing": 0,
+        "source": "statistical_tests_results.json",
+        "tolerance": 1e-12
+      },
+      "row_and_fold_alignment": {
+        "establishes": "row i is the same run at every prefix, and all four arms at all four prefixes are scored on one identical set of 25 splits",
+        "fold_sizes": [
+          [
+            132,
+            132,
+            132,
+            132,
+            132
+          ],
+          [
+            132,
+            132,
+            132,
+            132,
+            132
+          ],
+          [
+            132,
+            132,
+            132,
+            132,
+            132
+          ],
+          [
+            132,
+            132,
+            132,
+            132,
+            132
+          ],
+          [
+            132,
+            132,
+            132,
+            132,
+            132
+          ]
+        ],
+        "n_seeds": 5,
+        "per_prefix": {
+          "100": {
+            "max_prefix_steps": 86,
+            "min_prefix_steps": 5,
+            "n_rows": 660
+          },
+          "25": {
+            "max_prefix_steps": 22,
+            "min_prefix_steps": 2,
+            "n_rows": 660
+          },
+          "50": {
+            "max_prefix_steps": 43,
+            "min_prefix_steps": 3,
+            "n_rows": 660
+          },
+          "75": {
+            "max_prefix_steps": 65,
+            "min_prefix_steps": 4,
+            "n_rows": 660
+          }
+        },
+        "splits_compared": 200
+      },
+      "swapped_estimator_reproduces_grade_cv": {
+        "100": {
+          "flat": 0.6192307720420676,
+          "flatdep": 0.6653524849727833
+        },
+        "25": {
+          "flat": 0.6316251956332928,
+          "flatdep": 0.6316350697400442
+        },
+        "50": {
+          "flat": 0.6181185849478454,
+          "flatdep": 0.6171925429318336
+        },
+        "75": {
+          "flat": 0.6198483154038645,
+          "flatdep": 0.6401510697486433
+        }
+      },
+      "training_only_transforms": {
+        "arms_inspected": [
+          "size (spline)",
+          "size-spline + linear-deps"
+        ],
+        "declared_arm_mean_roc_auc": 0.6305552481318096,
+        "difference": 0.0004269320400038801,
+        "does_not_establish": "that a leak would be visible in the score. Refitting the basis on the complete matrix moves the mean fold AUC by less than a thousandth, and in opposite directions on the two corpora, so the score comparison below is descriptive and has no power as a leak test",
+        "establishes": "for every one of the 25 fits of every spline-bearing arm, the fitted knot vectors are exactly those of a transformer fitted on that fold's training rows, and the fitted scaler's moments are exactly those of the transformed training rows; and on at least one fit per arm those knots differ from the whole-matrix knots, so the comparison discriminates rather than passing vacuously",
+        "fits_inspected": 50,
+        "leaked_basis_mean_roc_auc": 0.6301283160918058,
+        "per_arm": {
+          "size (spline)": {
+            "fits": 25,
+            "fits_whose_knots_differ_from_the_whole_matrix": 25,
+            "layer": "flat",
+            "spline_blocks": 25
+          },
+          "size-spline + linear-deps": {
+            "fits": 25,
+            "fits_whose_knots_differ_from_the_whole_matrix": 25,
+            "layer": "flatdep",
+            "spline_blocks": 25
+          }
+        }
+      }
+    }
+  },
+  "findings": [
+    "swegym 25% auditable (size+deps) mean_fold_roc_auc: 0.7418859025230218 against published 0.741857453020888 (difference +2.845e-05)",
+    "swegym 25% auditable (size+deps) - size (flat) on mean_fold_roc_auc: 0.11244815452571699 against the published 0.11241970502358323"
+  ],
+  "metadata": {
+    "arm_roles": {
+      "auditable (size+deps)": "linear structural reference",
+      "size (flat)": "linear size reference",
+      "size (spline)": "fixed flexible size reference",
+      "size-spline + linear-deps": "matched structural control"
+    },
+    "board_entrants_added": [],
+    "corpora": [
+      "swegym",
+      "tau"
+    ],
+    "corpus_revisions": {
+      "SWE-Gym": "baf3a4e4bff514d48ddc08a93a2ade5c126212c7",
+      "tau-bench": "382e57d1784b55c5155f4ef394ef48f1c747a287"
+    },
+    "created_utc": "2026-09-10T23:32:26.296579+00:00",
+    "declaration": "research/catchbench-live-size-control-declaration-2026-09-10.md, Part A",
+    "declared_population": {
+      "swegym": 376,
+      "tau": 660
+    },
+    "note": "no arm here is a board entrant; live_streaming_methods() and the CLI roster are unchanged and the LIVE board reports what it reported",
+    "platform": "Windows-11-10.0.26200-SP0",
+    "prefixes": [
+      0.25,
+      0.5,
+      0.75,
+      1.0
+    ],
+    "primary_cell": {
+      "corpus": "swegym",
+      "prefix": 0.25
+    },
+    "python": "3.12.12 | packaged by conda-forge | (main, Jan 26 2026, 23:38:32) [MSC v.1944 64 bit (AMD64)]",
+    "rng_labels": {
+      "swegym.100": "live_size_audit.swegym.100.mixed_minus_spline",
+      "swegym.25": "live_size_audit.swegym.25.mixed_minus_spline",
+      "swegym.50": "live_size_audit.swegym.50.mixed_minus_spline",
+      "swegym.75": "live_size_audit.swegym.75.mixed_minus_spline",
+      "tau.100": "live_size_audit.tau.100.mixed_minus_spline",
+      "tau.25": "live_size_audit.tau.25.mixed_minus_spline",
+      "tau.50": "live_size_audit.tau.50.mixed_minus_spline",
+      "tau.75": "live_size_audit.tau.75.mixed_minus_spline"
+    },
+    "spline": {
+      "degree": 3,
+      "extrapolation": "constant",
+      "include_bias": false,
+      "knots": "quantile",
+      "n_knots": 5
+    },
+    "temporal_rng_label": "live_size_audit.swegym.25_minus_100"
+  },
+  "tolerance": {
+    "declared": "in catchbench.live_size_audit.PARITY_ATOL, before any prefix was fitted",
+    "exact_comparisons": [
+      "fold index arrays",
+      "the mixed arm's column boundary",
+      "the 100% LIVE feature matrices against the POST matrices",
+      "fitted knot vectors and scaler moments"
+    ],
+    "scope": "every ROC-AUC compared against a number a previous run recorded",
+    "value": 1e-12
+  },
+  "warnings": []
+}
