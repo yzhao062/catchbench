@@ -204,8 +204,22 @@ class _RefuseGrade:
 
 sys.meta_path.insert(0, _RefuseGrade())
 
-# Prove the block before trusting it. If the bridge still loads, every assertion after this would
-# pass for the wrong reason.
+# The walk has to start cold. Importing anything from the package first would satisfy a module's
+# import from sys.modules instead of executing it, and a module-level call-through planted in
+# whatever got imported would never run again. _reuse pulls in catchbench.corpora, so proving the
+# bridge up here hid exactly that regression.
+warm = sorted(n for n in sys.modules if n == "catchbench" or n.startswith("catchbench."))
+if warm:
+    raise SystemExit("the walk must start cold; already imported: " + ", ".join(warm))
+
+for name in %(offline)r:
+    module = importlib.import_module(name)
+    where = pathlib.Path(module.__file__).resolve()
+    if SRC not in [str(p) for p in where.parents]:
+        raise SystemExit("%%s resolved to %%s, outside the source under review" %% (name, where))
+
+# Now prove the block was real. Had the bridge been reachable all along, every import above would
+# have passed for the wrong reason, and this exits non-zero and says so.
 try:
     importlib.import_module("catchbench._reuse")
 except Exception as exc:
@@ -213,12 +227,6 @@ except Exception as exc:
         raise SystemExit("bridge failed for an unexpected reason: %%r" %% (exc,))
 else:
     raise SystemExit("the GRADE bridge loaded despite the block; this test proves nothing")
-
-for name in %(offline)r:
-    module = importlib.import_module(name)
-    where = pathlib.Path(module.__file__).resolve()
-    if SRC not in [str(p) for p in where.parents]:
-        raise SystemExit("%%s resolved to %%s, outside the source under review" %% (name, where))
 """
 
 
@@ -226,12 +234,13 @@ def test_every_registered_module_really_imports_offline(tmp_path):
     """Import each module the registry calls offline-safe, with GRADE blocked at the finder.
 
     The static screen cannot see an import reached through a module-level call, so this imports the
-    modules rather than reading them. Two things it must get right, both of which it got wrong
+    modules rather than reading them. Three things it must get right, and it got each one wrong
     first. An empty ``GRADE_DIR`` blocks nothing, because ``_resolve_grade`` returns on the installed
-    module locations before reading it, so the block is a meta-path finder and the child proves the
-    block works before testing anything with it. And the child must import the source under review
-    rather than whichever CatchBench happens to be installed, so it binds ``src`` and checks where
-    each module resolved.
+    module locations before reading it, so the block is a meta-path finder instead. The child must
+    import the source under review rather than whichever CatchBench happens to be installed, so it
+    binds ``src`` and checks where each module resolved. And the walk must run before the bridge
+    proof, not after it, because proving the bridge imports ``catchbench.corpora`` on the way and a
+    cached module is never executed twice.
     """
     offline = [f"catchbench.{p.stem}" for p in _package_modules()
                if f"catchbench.{p.stem}" not in ci_smoke.SKIPPED]
