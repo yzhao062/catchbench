@@ -3,6 +3,8 @@ message: "If you use this software, please cite the paper in preferred-citation 
 title: "CatchBench"
 abstract: "A benchmark for auditing agent failures across the full lifecycle."
 type: software
+version: "0.1.2"
+date-released: "2026-09-13"
 authors:
   - family-names: "Zhao"
     given-names: "Yue"

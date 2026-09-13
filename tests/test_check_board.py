@@ -328,7 +328,7 @@ def test_clean_fixture_passes():
     number_problems, seen, board_backed, allowed = cb.check_prose_numbers(
         real, blocks, cb.PROSE_NUMBER_ALLOWLIST)
     assert number_problems == []
-    assert (seen, board_backed, allowed) == (239, 110, 129)
+    assert (seen, board_backed, allowed) == (243, 110, 133)
     names = [allowance.name for allowance in cb.PROSE_NUMBER_ALLOWLIST]
     assert len(names) == len(set(names))
     assert all(allowance.values and allowance.reason.strip() and allowance.context_contains.strip()

@@ -45,12 +45,15 @@ checkout, and no torch. It is a real board, not a toy: these are the same number
 prints.
 
 ```bash
-python -m pip install "catchbench>=0.1.1"
+python -m pip install "catchbench>=0.1.2"
 catchbench --task pre        # about a second
 ```
 
 These are installed-package commands. Release 0.1.1 is the first wheel that includes the PRE
-records and the `catchbench` console command; the 0.1.0 wheel omitted both. `python run.py`,
+records and the `catchbench` console command; the 0.1.0 wheel omitted both. The floor is 0.1.2
+rather than 0.1.1 because 0.1.1 ends the plain `catchbench` command in an unhandled traceback when
+no GRADE checkout is present, and ships without the licence documents its own `NOTICE` cites. Both
+are fixed in 0.1.2. `python run.py`,
 `python tools/...`, and `pytest tests` are repository commands and require a clone. The complete
 board also requires the GRADE checkout and optional dependencies described in
 [The Full Board](#the-full-board).
