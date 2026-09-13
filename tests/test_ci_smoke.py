@@ -14,6 +14,7 @@ the registry has disappeared from the package.
 from __future__ import annotations
 
 import ast
+import pkgutil
 import subprocess
 import os
 import sys
@@ -183,6 +184,7 @@ _BLOCKED_BRIDGE_CHILD = """
 import importlib, os, pathlib, sys
 
 SRC = %(src)r
+PYC = %(pyc)r
 GRADE_TOP = %(grade)r
 
 # Bind the source under review. Without this the child can satisfy "import catchbench" from an
@@ -217,6 +219,14 @@ for name in %(offline)r:
     where = pathlib.Path(module.__file__).resolve()
     if SRC not in [str(p) for p in where.parents]:
         raise SystemExit("%%s resolved to %%s, outside the source under review" %% (name, where))
+    # __file__ names the source even when the bytecode beside it is stale and was used instead, so
+    # the source path alone does not establish that this source ran. A fresh pycache_prefix takes
+    # the source-adjacent __pycache__ out of the search; this is the proof it was in force.
+    cached = getattr(module, "__cached__", None)
+    if cached is not None:
+        holder = pathlib.Path(cached).resolve()
+        if PYC not in [str(p) for p in holder.parents]:
+            raise SystemExit("%%s used bytecode at %%s, outside the fresh cache" %% (name, holder))
 
 # Now prove the block was real. Had the bridge been reachable all along, every import above would
 # have passed for the wrong reason, and this exits non-zero and says so.
@@ -234,27 +244,58 @@ def test_every_registered_module_really_imports_offline(tmp_path):
     """Import each module the registry calls offline-safe, with GRADE blocked at the finder.
 
     The static screen cannot see an import reached through a module-level call, so this imports the
-    modules rather than reading them. Three things it must get right, and it got each one wrong
-    first. An empty ``GRADE_DIR`` blocks nothing, because ``_resolve_grade`` returns on the installed
-    module locations before reading it, so the block is a meta-path finder instead. The child must
-    import the source under review rather than whichever CatchBench happens to be installed, so it
-    binds ``src`` and checks where each module resolved. And the walk must run before the bridge
-    proof, not after it, because proving the bridge imports ``catchbench.corpora`` on the way and a
-    cached module is never executed twice.
+    modules rather than reading them. Five things it has to get right, and it got every one of them
+    wrong first, each time passing for a reason unrelated to what it claimed:
+
+    ``GRADE`` must actually be unreachable. An empty ``GRADE_DIR`` does not do that, because
+    ``_resolve_grade`` returns on the installed module locations before it reads the variable, so
+    the block is a meta-path finder and the child proves the block held.
+
+    The source under review must be the source imported, rather than whichever CatchBench happens to
+    be installed, so the child binds ``src`` and checks where each module resolved.
+
+    The walk must run before the bridge proof. Proving the bridge imports ``catchbench.corpora`` on
+    the way, and a cached module is never executed twice.
+
+    The inventory must match the one CI walks. ``pkgutil`` sees a subpackage and a top-level glob
+    does not, and a subpackage reaching the bridge broke CI while passing here.
+
+    The bytecode must be fresh. ``__file__`` names the source even when a stale ``.pyc`` beside it
+    was loaded instead, so a source edit that holds size and mtime second constant would never run.
     """
-    offline = [f"catchbench.{p.stem}" for p in _package_modules()
-               if f"catchbench.{p.stem}" not in ci_smoke.SKIPPED]
+    discovered = _ci_module_names()
+    offline = [name for name in discovered if name not in ci_smoke.SKIPPED]
     assert "catchbench.cli" in offline, "the CLI must stay in the offline import walk"
 
+    screened = {f"catchbench.{p.stem}" for p in _package_modules()}
+    assert screened <= set(discovered), (
+        "the runtime walk must never cover less than the static screen; missing: "
+        f"{sorted(screened - set(discovered))}")
+
+    bytecode = tmp_path / "pyc"
+    bytecode.mkdir()
     program = _BLOCKED_BRIDGE_CHILD % {
         "src": str((ROOT / "src").resolve()),
+        "pyc": str(bytecode.resolve()),
         "grade": tuple(_reuse_grade_names()),
         "offline": tuple(offline),
     }
-    done = subprocess.run([sys.executable, "-I", "-c", program], capture_output=True, text=True,
-                          cwd=str(tmp_path), timeout=300)
+    done = subprocess.run(
+        [sys.executable, "-I", "-X", f"pycache_prefix={bytecode}", "-c", program],
+        capture_output=True, text=True, cwd=str(tmp_path), timeout=300)
     assert done.returncode == 0, (
         "the offline import walk failed:\n" + (done.stderr or done.stdout)[-2000:])
+
+
+def _ci_module_names() -> tuple[str, ...]:
+    """Every module CI walks, discovered the way CI discovers them.
+
+    ``_package_modules`` globs top-level ``*.py`` and cannot see a package directory.
+    ``tools/ci_smoke.py`` uses ``pkgutil.iter_modules``, which yields both. A subpackage that
+    reached the bridge on import was therefore invisible here and still broke CI. Reading the source
+    directory rather than an imported package keeps this usable before anything is imported.
+    """
+    return tuple(sorted(m.name for m in pkgutil.iter_modules([str(PACKAGE)], "catchbench.")))
 
 
 def _reuse_grade_names() -> tuple[str, ...]:
