@@ -14,6 +14,7 @@ the registry has disappeared from the package.
 from __future__ import annotations
 
 import ast
+import subprocess
 import os
 import sys
 from pathlib import Path
@@ -38,7 +39,7 @@ def _imports_the_bridge(source: Path) -> bool:
     ``_reuse`` in any module would become a false positive. The tree carries only real imports.
     """
     tree = ast.parse(source.read_text(encoding="utf-8"), filename=str(source))
-    for node in ast.walk(tree):
+    for node in _import_time_nodes(tree):
         if isinstance(node, ast.ImportFrom):
             if node.module == "catchbench" and any(a.name == "_reuse" for a in node.names):
                 return True
@@ -48,6 +49,39 @@ def _imports_the_bridge(source: Path) -> bool:
             if any(a.name == BRIDGE for a in node.names):
                 return True
     return False
+
+
+def _import_time_nodes(tree: ast.AST):
+    """Yield the nodes that execute when the module is imported.
+
+    ``ast.walk`` descends into function bodies, so it cannot tell an import that runs on import from
+    one that runs when somebody calls a function. ``cli`` defers its bridge import into ``main``
+    inside a try that reports the missing checkout and exits, so importing it offline succeeds, and
+    a whole-tree walk reads that as a module-level dependency and is wrong.
+
+    Class bodies execute at import time and are therefore still followed. Function and lambda bodies
+    are not.
+
+    The contract is deliberately narrow and this rule has two known gaps, so it is a screen rather
+    than the evidence. It misses an import that a module-level call reaches::
+
+        def load():
+            import catchbench._reuse
+        load()
+
+    and it over-reports imports under ``if TYPE_CHECKING`` or ``if __name__ == "__main__"``, which
+    do not run on an ordinary import. The first gap has no syntactic fix: deciding whether a call
+    reaches a bridge import is the general problem. ``test_every_registered_module_really_imports_
+    offline`` is the authoritative check, because it imports the modules instead of reading them.
+    """
+    stack = [tree]
+    while stack:
+        node = stack.pop()
+        for child in ast.iter_child_nodes(node):
+            if isinstance(child, (ast.FunctionDef, ast.AsyncFunctionDef, ast.Lambda)):
+                continue
+            yield child
+            stack.append(child)
 
 
 def _package_modules() -> list[Path]:
@@ -125,3 +159,101 @@ def test_the_smoke_check_runs_offline(tmp_path):
         f"and fail, which is what the CI smoke job reports as "
         f"'CatchBench needs GRADE's experiment modules'.")
     assert os.path.isdir(PACKAGE)
+
+
+@pytest.mark.parametrize("body,expected", [
+    ("import catchbench._reuse", True),
+    ("class C:\n    import catchbench._reuse", True),
+    ("def f():\n    import catchbench._reuse", False),
+    ("if TYPE_CHECKING:\n    import catchbench._reuse", True),
+], ids=["module-level", "class-body", "function-body", "type-checking-block"])
+def test_the_import_time_rule_is_the_documented_one(body, expected, tmp_path):
+    """Pin the screen's rule, including the case it knowingly over-reports.
+
+    The type-checking case is asserted as True to record present behaviour rather than to endorse
+    it: that import does not run, and the docstring says so. Writing it down means a later change
+    to it is a decision rather than an accident.
+    """
+    source = tmp_path / "probe.py"
+    source.write_text(body + "\n", encoding="utf-8")
+    assert _imports_the_bridge(source) is expected
+
+
+_BLOCKED_BRIDGE_CHILD = """
+import importlib, os, pathlib, sys
+
+SRC = %(src)r
+GRADE_TOP = %(grade)r
+
+# Bind the source under review. Without this the child can satisfy "import catchbench" from an
+# installed wheel and report that a modified working tree is fine.
+sys.path.insert(0, SRC)
+os.environ.pop("PYTHONPATH", None)
+
+
+# Refuse the GRADE top-level names however they would otherwise be found. GRADE_DIR cannot do this
+# job: _resolve_grade checks the installed module locations first and returns before reading it, so
+# an empty GRADE_DIR leaves an installed GRADE fully reachable.
+class _RefuseGrade:
+
+    def find_spec(self, name, path=None, target=None):
+        if name.split(".")[0] in GRADE_TOP:
+            raise ImportError("blocked for this test: " + name)
+        return None
+
+
+sys.meta_path.insert(0, _RefuseGrade())
+
+# Prove the block before trusting it. If the bridge still loads, every assertion after this would
+# pass for the wrong reason.
+try:
+    importlib.import_module("catchbench._reuse")
+except Exception as exc:
+    if type(exc).__name__ != "MissingGradeBridge":
+        raise SystemExit("bridge failed for an unexpected reason: %%r" %% (exc,))
+else:
+    raise SystemExit("the GRADE bridge loaded despite the block; this test proves nothing")
+
+for name in %(offline)r:
+    module = importlib.import_module(name)
+    where = pathlib.Path(module.__file__).resolve()
+    if SRC not in [str(p) for p in where.parents]:
+        raise SystemExit("%%s resolved to %%s, outside the source under review" %% (name, where))
+"""
+
+
+def test_every_registered_module_really_imports_offline(tmp_path):
+    """Import each module the registry calls offline-safe, with GRADE blocked at the finder.
+
+    The static screen cannot see an import reached through a module-level call, so this imports the
+    modules rather than reading them. Two things it must get right, both of which it got wrong
+    first. An empty ``GRADE_DIR`` blocks nothing, because ``_resolve_grade`` returns on the installed
+    module locations before reading it, so the block is a meta-path finder and the child proves the
+    block works before testing anything with it. And the child must import the source under review
+    rather than whichever CatchBench happens to be installed, so it binds ``src`` and checks where
+    each module resolved.
+    """
+    offline = [f"catchbench.{p.stem}" for p in _package_modules()
+               if f"catchbench.{p.stem}" not in ci_smoke.SKIPPED]
+    assert "catchbench.cli" in offline, "the CLI must stay in the offline import walk"
+
+    program = _BLOCKED_BRIDGE_CHILD % {
+        "src": str((ROOT / "src").resolve()),
+        "grade": tuple(_reuse_grade_names()),
+        "offline": tuple(offline),
+    }
+    done = subprocess.run([sys.executable, "-I", "-c", program], capture_output=True, text=True,
+                          cwd=str(tmp_path), timeout=300)
+    assert done.returncode == 0, (
+        "the offline import walk failed:\n" + (done.stderr or done.stdout)[-2000:])
+
+
+def _reuse_grade_names() -> tuple[str, ...]:
+    """The GRADE top-level names, read from the resolver rather than restated here."""
+    source = (ROOT / "src" / "catchbench" / "_reuse.py").read_text(encoding="utf-8")
+    tree = ast.parse(source)
+    for node in tree.body:
+        if isinstance(node, ast.Assign) and any(
+                isinstance(t, ast.Name) and t.id == "_GRADE_MODULES" for t in node.targets):
+            return tuple(ast.literal_eval(node.value))
+    raise AssertionError("_GRADE_MODULES not found in _reuse.py")

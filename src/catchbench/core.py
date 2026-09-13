@@ -16,6 +16,16 @@ from dataclasses import dataclass
 from typing import Mapping, Protocol, Sequence, runtime_checkable
 
 
+class MissingGradeBridge(ImportError):
+    """The GRADE checkout is absent.
+
+    An expected state with a documented fix rather than a defect, so callers can report it as one
+    paragraph instead of a traceback. It lives here because importing ``catchbench._reuse`` resolves
+    the bridge as a module-level side effect: a caller that imported this name from there would
+    raise the error it wants to catch. This module imports only the standard library.
+    """
+
+
 @runtime_checkable
 class Task(Protocol):
     """One benchmark scenario: its data, its labels, and its metric.

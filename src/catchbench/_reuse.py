@@ -13,6 +13,7 @@ import os
 import sys
 from pathlib import Path
 
+from catchbench.core import MissingGradeBridge
 from catchbench.corpora import install_hub_revision_pins
 
 
@@ -56,22 +57,33 @@ def _resolve_grade() -> str:
         return source
 
     configured = os.environ.get("GRADE_DIR")
-    checkout = Path(configured).expanduser() if configured else _REPOSITORY_ROOT.parent / "grade"
-    paths = (checkout / "experiment", checkout / "src")
-    if all(path.is_dir() for path in paths):
-        _prepend(paths)
-        if all(_module_location(name) for name in _GRADE_MODULES):
-            source = f"checkout bridge ({checkout})"
-            _LOGGER.debug("Using GRADE from %s", source)
-            return source
+    if configured:
+        candidates = (Path(configured).expanduser(),)
+    else:
+        # The package parent is the checkout case. The working directory covers the installed case:
+        # someone who ran "pip install catchbench" has no repository for "../grade" to sit beside,
+        # and a checkout cloned where they are standing went unfound before this.
+        candidates = (_REPOSITORY_ROOT.parent / "grade", Path.cwd() / "grade", Path.cwd())
+    for checkout in candidates:
+        paths = (checkout / "experiment", checkout / "src")
+        if all(path.is_dir() for path in paths):
+            _prepend(paths)
+            if all(_module_location(name) for name in _GRADE_MODULES):
+                source = f"checkout bridge ({checkout})"
+                _LOGGER.debug("Using GRADE from %s", source)
+                return source
 
-    raise ImportError(
-        "CatchBench needs GRADE's experiment modules, which are not distributed in GRADE's "
-        "wheel. Clone GRADE next to this repository and install its experiment dependencies:\n"
-        "  git clone https://github.com/yzhao062/grade.git ../grade\n"
-        "  python -m pip install -e \"../grade[experiments]\"\n"
-        "Alternatively, set GRADE_DIR to the GRADE checkout. The checkout must contain "
-        "experiment/ and src/."
+    raise MissingGradeBridge(
+        "CatchBench needs GRADE's experiment modules for the POST, LIVE and Gold boards. GRADE's "
+        "wheel does not carry them, so they come from a checkout:\n"
+        "  git clone https://github.com/yzhao062/grade.git grade\n"
+        "  python -m pip install -e \"grade[experiments]\"\n"
+        "Then run CatchBench from the directory holding that checkout, or set GRADE_DIR to it. The "
+        "checkout must contain experiment/ and src/.\n"
+        "The full setup, including the pinned GRADE revision and the torch and backend pair the "
+        "graph detectors need, is in the README section 'The Full Board':\n"
+        "  https://github.com/yzhao062/catchbench#the-full-board\n"
+        "The PRE board needs none of this. 'catchbench --task pre' scores it offline."
     )
 
 

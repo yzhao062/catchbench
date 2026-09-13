@@ -132,7 +132,12 @@ always       tests/test_ci_smoke.py::test_every_module_needing_the_grade_bridge_
 always       tests/test_ci_smoke.py::test_every_module_needing_the_grade_bridge_is_skipped_by_the_smoke_check[pre_static_scanner]
 always       tests/test_ci_smoke.py::test_every_module_needing_the_grade_bridge_is_skipped_by_the_smoke_check[pygod_extra]
 always       tests/test_ci_smoke.py::test_every_module_needing_the_grade_bridge_is_skipped_by_the_smoke_check[pyod_extra]
+always       tests/test_ci_smoke.py::test_every_registered_module_really_imports_offline
 always       tests/test_ci_smoke.py::test_the_detector_reads_imports_rather_than_text
+always       tests/test_ci_smoke.py::test_the_import_time_rule_is_the_documented_one[class-body]
+always       tests/test_ci_smoke.py::test_the_import_time_rule_is_the_documented_one[function-body]
+always       tests/test_ci_smoke.py::test_the_import_time_rule_is_the_documented_one[module-level]
+always       tests/test_ci_smoke.py::test_the_import_time_rule_is_the_documented_one[type-checking-block]
 always       tests/test_ci_smoke.py::test_the_package_is_where_this_test_thinks_it_is
 always       tests/test_ci_smoke.py::test_the_registry_names_no_module_that_does_not_need_the_bridge
 always       tests/test_ci_smoke.py::test_the_smoke_check_runs_offline
@@ -165,6 +170,8 @@ always       tests/test_cli_reporting.py::test_cli_reporting_guard_rejects_verdi
 always       tests/test_cli_reporting.py::test_cli_reporting_guard_rejects_verdicts[The tests leave both comparisons unresolved.]
 always       tests/test_cli_reporting.py::test_cli_reporting_has_no_adjudication
 always       tests/test_distribution.py::test_a_fresh_wheel_install_scores_all_pre_rows
+always       tests/test_distribution.py::test_wheel_carries_the_documents_its_notice_cites
+always       tests/test_distribution.py::test_wheel_contains_every_committed_judge_cache
 always       tests/test_distribution.py::test_wheel_contains_every_committed_pre_file
 always       tests/test_distribution.py::test_wheel_excludes_the_downloaded_corpora
 always       tests/test_emit_addendum_table.py::test_a_roster_member_with_no_cache_stops_the_run

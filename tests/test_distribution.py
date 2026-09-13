@@ -105,6 +105,49 @@ def test_wheel_contains_every_committed_pre_file(catchbench_wheel: Path):
         assert not missing, "the wheel omitted committed PRE files:\n" + "\n".join(missing)
 
 
+def test_wheel_carries_the_documents_its_notice_cites(catchbench_wheel: Path):
+    """NOTICE names the terms the bundled records are released under; those files must ship.
+
+    The published 0.1.1 wheel carried LICENSE and NOTICE and omitted all three of these, while its
+    NOTICE told the reader that records marked NOASSERTION are governed by THIRD_PARTY_LICENSES.md
+    "not CatchBench's root LICENSE". Shipping records under terms the archive does not contain is
+    the defect; the size and PRE-presence checks above both passed while it was true.
+    """
+    required = ["THIRD_PARTY_LICENSES.md", "ASSET_MANIFEST.json"]
+    required += [path.relative_to(ROOT).as_posix()
+                 for path in (ROOT / "third_party" / "licenses").rglob("*") if path.is_file()]
+
+    with zipfile.ZipFile(catchbench_wheel) as archive:
+        names = [name for name in archive.namelist() if not name.endswith("/")]
+        missing = [relative for relative in required
+                   if not any(name == relative or name.endswith(f"/{relative}")
+                              or name.endswith("/" + relative.split("/")[-1])
+                              for name in names)]
+        assert not missing, (
+            "the wheel omitted licence documents its own NOTICE refers the reader to:\n"
+            + "\n".join(missing))
+
+
+def test_wheel_contains_every_committed_judge_cache(catchbench_wheel: Path):
+    """Every committed prediction cache, arena and addendum alike, is a released record.
+
+    The addendum directory did not exist when 0.1.1 was cut, so the published wheel carries none of
+    its twenty-four files. Reading the tree rather than a fixed count means a cache added later is
+    covered without editing this test.
+    """
+    required = [path.relative_to(ROOT).as_posix()
+                for folder in ("llm_judge", "llm_judge_addendum")
+                for path in (ROOT / "data" / folder).rglob("*") if path.is_file()]
+    assert required, "the source tree has no committed judge caches to package"
+
+    with zipfile.ZipFile(catchbench_wheel) as archive:
+        names = [name for name in archive.namelist() if not name.endswith("/")]
+        missing = [relative for relative in required
+                   if not any(name == relative or name.endswith(f"/{relative}") for name in names)]
+        assert not missing, ("the wheel omitted committed judge caches:\n"
+                             + "\n".join(missing[:12]))
+
+
 def test_wheel_excludes_the_downloaded_corpora(catchbench_wheel: Path):
     with zipfile.ZipFile(catchbench_wheel) as archive:
         uncompressed_bytes = sum(info.file_size for info in archive.infolist())

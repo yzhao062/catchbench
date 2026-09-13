@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "catchbench"
-version = "0.1.1"
+version = "0.1.2"
 description = "CatchBench: a benchmark for auditing agent failures across the full lifecycle."
 readme = "README.md"
 requires-python = ">=3.10"
@@ -39,8 +39,26 @@ dev = ["pytest"]
 # without either package. Only redrawing needs them.
 figures = ["matplotlib", "pillow"]
 
+[project.urls]
+Homepage = "https://github.com/yzhao062/catchbench"
+Repository = "https://github.com/yzhao062/catchbench"
+Paper = "https://arxiv.org/abs/2608.22808"
+Issues = "https://github.com/yzhao062/catchbench/issues"
+Changelog = "https://github.com/yzhao062/catchbench/blob/main/CHANGELOG.md"
+
 [project.scripts]
 catchbench = "catchbench.cli:main"
+
+# Local review files are excluded by .git/info/exclude, which keeps them out of git status and
+# out of the wheel, and does nothing about the sdist: hatchling packaged Review-Codex.md into
+# catchbench-0.1.2.tar.gz. A PyPI version cannot be replaced, so that would have been permanent.
+[tool.hatch.build.targets.sdist]
+exclude = [
+    "Review-*.md",
+    ".agent-config",
+    ".claude",
+    "AGENTS.md",
+]
 
 [tool.hatch.build.targets.wheel]
 packages = ["src/catchbench"]
@@ -54,6 +72,14 @@ packages = ["src/catchbench"]
 # The upstream corpora are deliberately absent: about 320 MB, fetched from pinned Hugging Face
 # revisions on first use. tests/test_distribution.py asserts both halves, that the records are in and
 # that the corpora are not.
+# The licence documents travel with the records they govern. The wheel already carried LICENSE and
+# NOTICE, but NOTICE refers the reader to THIRD_PARTY_LICENSES.md, ASSET_MANIFEST.json and
+# third_party/licenses/ for the terms on the bundled records, and none of the three shipped. A
+# reader of the installed package could not reach the terms the records are released under.
+# tests/test_distribution.py asserts their presence so a future build cannot drop them again.
 [tool.hatch.build.targets.wheel.force-include]
 "data" = "catchbench/data"
 "tests/golden/board.txt" = "catchbench/data/golden/board.txt"
+"THIRD_PARTY_LICENSES.md" = "catchbench/THIRD_PARTY_LICENSES.md"
+"ASSET_MANIFEST.json" = "catchbench/ASSET_MANIFEST.json"
+"third_party/licenses" = "catchbench/third_party/licenses"

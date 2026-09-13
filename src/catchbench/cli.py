@@ -14,8 +14,9 @@ Hugging Face Hub on first run; the PyGOD baseline needs torch + pygod + a pyg-li
 backend.
 """
 import argparse
+import sys
 
-from catchbench.core import RunPipeline  # noqa: E402
+from catchbench.core import MissingGradeBridge, RunPipeline  # noqa: E402
 from catchbench.corpora import (  # noqa: E402
     revision_header,
     verify_corpus_heads,
@@ -47,9 +48,12 @@ def _pre_board() -> None:
     print(
         "\nReading: flag_all is the floor a method must beat to earn its false alarms, and the "
         "per-source columns are the result. The pooled row mixes four label processes, so read it "
-        "last. Run 'catchbench' (or 'python run.py' from a checkout) for the POST, LIVE, and "
-        "Gold boards; those need the GRADE checkout bridge and download their corpora on first "
-        "use."
+        "last."
+        "\n\nNext: to score your own method on this board, see examples/add_a_method.py in the "
+        "repository, which runs offline in under a second. For the POST, LIVE and Gold boards run "
+        "'catchbench' (or 'python run.py' from a checkout). Those need the GRADE checkout and "
+        "download their corpora on first use, so set that up first:"
+        "\n  https://github.com/yzhao062/catchbench#the-full-board"
     )
 
 
@@ -86,6 +90,18 @@ def main() -> None:
     args = parser.parse_args()
     if args.task == "pre":
         return _pre_board()
+
+    # PRE is the only board that runs without the GRADE bridge, so every remaining path needs it and
+    # the guard belongs here rather than in front of one of them. An earlier revision guarded only
+    # the default path and left --task gold-v2 exiting 1 with a traceback. A missing checkout is the
+    # expected state for anyone who installed the wheel, so it prints its own instructions and exits
+    # 2. Only that exception is caught; any other ImportError is a real defect and still propagates.
+    try:
+        import catchbench._reuse  # noqa: F401
+    except MissingGradeBridge as missing:
+        print(missing, file=sys.stderr)
+        raise SystemExit(2)
+
     if args.task == "gold-v2":
         return _gold_v2_board()
 

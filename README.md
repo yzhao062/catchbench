@@ -10,7 +10,7 @@ run, a growing prefix while it runs, and the finished trace after it ends.
 [![arXiv](https://img.shields.io/badge/status-arXiv%202608.22808-blue.svg)](https://arxiv.org/abs/2608.22808)
 [![Code license](https://img.shields.io/badge/code%20license-MIT-blue.svg)](LICENSE)
 [![Python](https://img.shields.io/badge/python-3.10%20%7C%203.12-blue.svg)](pyproject.toml)
-[![Tests](https://img.shields.io/badge/tests-939-brightgreen.svg)](tests/expected_tests.txt)
+[![Tests](https://img.shields.io/badge/tests-946-brightgreen.svg)](tests/expected_tests.txt)
 [![Boards](https://img.shields.io/badge/boards-PRE%20%7C%20LIVE%20%7C%20POST-orange.svg)](#the-boards)
 
 [Quickstart](#quickstart) · [The Boards](#the-boards) · [Task List](#the-full-task-list) · [Add a Method](#how-a-method-plugs-in) · [Full Install](#the-full-board)
@@ -582,8 +582,20 @@ class MyDetector:
         return {"roc_auc": roc_auc(task.y, scores)}
 ```
 
-The same `Task` feeds every method, so the comparison is apples to apples and the dataset, not
-the method, is the fixed point. See `src/catchbench/core.py` for the contract and
+The class above shows the shape rather than a working entrant: `my_model` and `roc_auc` stand in
+for whatever you are scoring. For a version that runs,
+[`examples/add_a_method.py`](examples/add_a_method.py) scores a real method on the offline PRE board
+against the `flag_all` and `flag_none` floors, in under a second, with no key, no corpus download,
+no GRADE checkout and no torch:
+
+```bash
+python examples/add_a_method.py      # from a clone; also runs against an installed release
+```
+
+It lands below the floor, which is the honest outcome for a keyword rule and the reason to read that
+row first. The same `Task` feeds every method, so the comparison is apples to apples and the dataset,
+not the method, is the fixed point. See `src/catchbench/core.py` for the contract,
+[`CONTRIBUTING.md`](CONTRIBUTING.md) for task IDs, registration and held-out scoring, and
 `detection.py` / `post.py` for the implemented baselines.
 
 ## The Full Board
