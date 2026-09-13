@@ -1615,10 +1615,11 @@ PROSE_NUMBER_ALLOWLIST: tuple[ProseNumberAllowance, ...] = (
                          "Count of PRE configurations."),
     ProseNumberAllowance("full-board-download-size", "Every board, including POST", ("320",),
                          "Approximate corpus download size in megabytes."),
-    # Two counts now, because the release holds 35 Who&When caches: the 31 the arena scores and the
-    # 4 addendum caches, which ship for reproducibility but sit outside the globbed directory. The
+    # Two counts now, because the release holds 43 Who&When caches: the 31 the arena scores and the
+    # 12 addendum caches, which ship for reproducibility but sit outside the globbed directory. Ten
+    # of the twelve enter the addendum table and two are held-out same-channel repeats. The
     # unqualified "31" was true of the arena and false of the release.
-    ProseNumberAllowance("retained-cache-count", "31 published Who&When", ("31", "4"),
+    ProseNumberAllowance("retained-cache-count", "31 published Who&When", ("31", "12"),
                          "Counts of retained Who&When judge caches, published and addendum."),
 )
 

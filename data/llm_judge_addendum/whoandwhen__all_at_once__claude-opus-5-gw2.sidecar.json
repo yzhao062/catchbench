@@ -1,15 +1,15 @@
 {
   "schema_version": 1,
   "kind": "catchbench-addendum-sidecar",
-  "written_at_utc": "2026-09-13T04:29:30.179785+00:00",
+  "written_at_utc": "2026-09-13T04:29:30.172680+00:00",
   "written_by": "tools/emit_addendum_sidecars.py",
-  "label": "claude-opus-5",
+  "label": "claude-opus-5-gw2",
   "cache_provenance": {
     "benchmark": "CatchBench",
     "board": "post_localization",
     "corpus": "whoandwhen",
     "method": "all_at_once",
-    "model": "claude-opus-5",
+    "model": "claude-opus-5-gw2",
     "n_runs": 126,
     "prompt_sha": "35fe2d42f55b",
     "paper": "Zhang et al. 2025 (Who&When), arXiv:2505.00212"
@@ -17,7 +17,7 @@
   "reconstructed": true,
   "reconstruction_note": "Written after generation, not during it. Every field here is either a deterministic function of committed inputs or is null with a reason in not_recorded. No value was inferred from a file timestamp.",
   "provider_declared_configuration": {
-    "channel": "claude-code-cli",
+    "channel": "nairr-gateway",
     "model_id": "claude-opus-5"
   },
   "provider_from_invocation_record": null,
@@ -197,7 +197,7 @@
     },
     "raw_reply_chars": {
       "min": 38,
-      "max": 53,
+      "max": 54,
       "median": 53
     },
     "null_failure_classes": {},
@@ -230,7 +230,7 @@
       "sha256-f75d958eb5dc2631d6c31f54d0d21febaf9f86d2ad3d3fe8ae0fd0d104969c30": {
         "origin": "mistake_step_label",
         "top": 5,
-        "raw_chars": 53
+        "raw_chars": 54
       },
       "sha256-b63c256b18d15e7435195b9dabc07dc6ac35b797308bd8e8007d23a4d5a2e5ba": {
         "origin": "mistake_step_label",
@@ -244,7 +244,7 @@
       },
       "sha256-1e9ae13901707a74f9fe166a6290afdac092cddb7f6e0785fd50190a64ab865c": {
         "origin": "mistake_step_label",
-        "top": 0,
+        "top": 1,
         "raw_chars": 41
       },
       "sha256-d09b6cb73c798b51921c3827740ff7d2501adb6db1a51b4a285ad405e2ab6001": {
@@ -264,7 +264,7 @@
       },
       "sha256-c4472e45bd37d37e4d45ca08a042e9db1dfe15f9cabeb4b7036a0bacd5c5b65e": {
         "origin": "mistake_step_label",
-        "top": 4,
+        "top": 6,
         "raw_chars": 53
       },
       "sha256-75ca1a501d4a810449f22ed1719e9ca7a3f955d702fed7a44ddf693ba9313d39": {
@@ -279,7 +279,7 @@
       },
       "sha256-5749156f68174edd67c239984dfb0828c52b07e635b4362180ff9d3a0ba1ffe7": {
         "origin": "mistake_step_label",
-        "top": 4,
+        "top": 6,
         "raw_chars": 53
       },
       "sha256-4bc6226b62f70594f8a226b63bd7559728ad284b7cbbb85b5918062ab7feff98": {
@@ -295,7 +295,7 @@
       "sha256-adfcc435ff14e5c77ee74d6ca2b53e09068cb0e2d652b7934e431520c9af4792": {
         "origin": "mistake_step_label",
         "top": 1,
-        "raw_chars": 44
+        "raw_chars": 45
       },
       "sha256-9f9ac6e8ea80fb3addaa245038350522c0c15661482574d22f95a1679137623e": {
         "origin": "mistake_step_label",
@@ -365,12 +365,12 @@
       "sha256-63df8d368a452c45b56a270d11046933e604aecd79ff08e3a59eac65ac267e78": {
         "origin": "mistake_step_label",
         "top": 1,
-        "raw_chars": 53
+        "raw_chars": 54
       },
       "sha256-818c493fb0d9f260a7acd0e564d9af91c24af9c94ae128e93cec41d49b398dda": {
         "origin": "mistake_step_label",
         "top": 4,
-        "raw_chars": 53
+        "raw_chars": 54
       },
       "sha256-860d6ddcc6ad0faa3659212ca556a059ad8c2fcf6006290040a66a22c1e15778": {
         "origin": "mistake_step_label",
@@ -389,7 +389,7 @@
       },
       "sha256-cc086d0247f2b7fdf7db6007e5fc766315489e3b56e0cdfff7e774e94cb3a18a": {
         "origin": "mistake_step_label",
-        "top": 0,
+        "top": 1,
         "raw_chars": 53
       },
       "sha256-e23c03f9da28b0193ef3ddb6a9f459f13abb632547a60b994b2db7e07991b9fb": {
@@ -399,7 +399,7 @@
       },
       "sha256-d03af0eeb47539f7ba9d0487d22378d6558124340e153aab08929916e6923ca2": {
         "origin": "mistake_step_label",
-        "top": 1,
+        "top": 5,
         "raw_chars": 53
       },
       "sha256-744be662178c5d9159ee439cac010781759674a4dc8be2c8c2cfbc17f41778bd": {
@@ -424,7 +424,7 @@
       },
       "sha256-6ef1b3bf97fe32fc51f10a18474e4f3399fe36c21563cd132205cb73da28d949": {
         "origin": "mistake_step_label",
-        "top": 3,
+        "top": 1,
         "raw_chars": 53
       },
       "sha256-6e954c9882d491916555090ccdf816720dd6d42c3479cf098cdc916301589ca3": {
@@ -459,7 +459,7 @@
       },
       "sha256-e0352c664354845dde90cb2d452acd8e4964b38b356aa3e874bbc4529bd4c113": {
         "origin": "mistake_step_label",
-        "top": 0,
+        "top": 3,
         "raw_chars": 53
       },
       "sha256-37482e1a0fc83f7343646e3435c4c46e4a0376df345158c401ce1955519e9a27": {
@@ -470,7 +470,7 @@
       "sha256-d86676ee2d36d2b024d777fb36395b298ef6cb13f945d0a48df0de4564d47ef0": {
         "origin": "mistake_step_label",
         "top": 4,
-        "raw_chars": 53
+        "raw_chars": 54
       },
       "sha256-1080c1a7f79b2e4231cab89e6ec4615c0d807ce66247106b27799cc71ea60b9f": {
         "origin": "mistake_step_label",
@@ -485,7 +485,7 @@
       "sha256-27c6768bc1039bfd280bfffdedde71ccf4775d9e6cb0ad6a6360d76ec0559c85": {
         "origin": "mistake_step_label",
         "top": 2,
-        "raw_chars": 50
+        "raw_chars": 51
       },
       "sha256-ce03d3911841d68e500860d981669d89e8a2c113d6ba60757cc2b35c6940f3ed": {
         "origin": "mistake_step_label",
@@ -494,7 +494,7 @@
       },
       "sha256-540a180baf7d98a991ba2a0487cf4b3a38754be731a9caa94cf2c9bc678e7ea9": {
         "origin": "mistake_step_label",
-        "top": 2,
+        "top": 3,
         "raw_chars": 41
       },
       "sha256-dbbd84505ded6b60d0f8fa26cbcea34f4eb4962ba6615442a182bb7049a39e4e": {
@@ -575,7 +575,7 @@
       "sha256-31f3fb2331512e01db28fcc0cedc6392608d8c548af2dcd07d7cfc30ae2e0659": {
         "origin": "mistake_step_label",
         "top": 0,
-        "raw_chars": 53
+        "raw_chars": 54
       },
       "sha256-39e018d7b33a19d577a74b24b8897031ff0899342078ff9f70290795c0a5bc83": {
         "origin": "mistake_step_label",
@@ -585,7 +585,7 @@
       "sha256-377529b3778057fc5d9262db5a079b4785d586c140868aced2c1aaff73181ff0": {
         "origin": "mistake_step_label",
         "top": 5,
-        "raw_chars": 53
+        "raw_chars": 50
       },
       "sha256-036a8faa0d2127603bbc10819309360d61869d0f8108a17aac8e3c6bdfabc468": {
         "origin": "mistake_step_label",
@@ -610,7 +610,7 @@
       "sha256-a381e3a5573fbc8d558d7af6f383b1f2877d9d348fbde7f1c16eecead8cda31d": {
         "origin": "mistake_step_label",
         "top": 6,
-        "raw_chars": 53
+        "raw_chars": 38
       },
       "sha256-c894cc257199fd92830a8865da80c3675b80feafee2b79543fddb96993102b39": {
         "origin": "mistake_step_label",
@@ -629,7 +629,7 @@
       },
       "sha256-1c1fbe95b9ff20e885ccdd9cb67da6686e143ed8dc6996909f0f675a67541adc": {
         "origin": "mistake_step_label",
-        "top": 2,
+        "top": 3,
         "raw_chars": 44
       },
       "sha256-40f3b1bf4e8c3b5eebd990a0318ffa7085d9a405b9c857885c7d3a78b6925181": {
@@ -659,12 +659,12 @@
       },
       "sha256-41f1da58c218daf7cdcecad20c1c952b9b0429f0474fd60816ac40a6bbce6d51": {
         "origin": "mistake_step_label",
-        "top": 3,
+        "top": 1,
         "raw_chars": 44
       },
       "sha256-9fff75678f6c480d87823a4ef61936f81433b218f4722264cf126e09d77be63a": {
         "origin": "mistake_step_label",
-        "top": 7,
+        "top": 5,
         "raw_chars": 53
       },
       "sha256-ce290fd935f599c40873bfcbd2b4d865cc7db8820377b43b45170bd6fdf37451": {
@@ -704,8 +704,8 @@
       },
       "sha256-d2d1d902bd15b701f639e15ae05582f9dcd84ce8df9e9aaadb26299b759328ae": {
         "origin": "mistake_step_label",
-        "top": 1,
-        "raw_chars": 53
+        "top": 5,
+        "raw_chars": 54
       },
       "sha256-b776420667bdd1c5b446a8b3ecbbaa90603f9e45dbb9306e162407da40c50cf2": {
         "origin": "mistake_step_label",
@@ -725,7 +725,7 @@
       "sha256-ee955e2171b0c74ed49d939e6928dda06ee818c5e71760543a9089ffa66f0731": {
         "origin": "mistake_step_label",
         "top": 4,
-        "raw_chars": 53
+        "raw_chars": 41
       },
       "sha256-a6a6d37e3e6e287a2353e9e82cd2a05606ec09bd98409d095894b32e43a8c565": {
         "origin": "mistake_step_label",
@@ -745,12 +745,12 @@
       "sha256-f69d9c2abc141463adb8708770857041b39546a15f817d0c0fbb725c26e960e0": {
         "origin": "mistake_step_label",
         "top": 8,
-        "raw_chars": 53
+        "raw_chars": 41
       },
       "sha256-d6b92e43163ff0aec52792e0436b18387107177c42ea8e650caa84c4f035a89f": {
         "origin": "mistake_step_label",
         "top": 7,
-        "raw_chars": 50
+        "raw_chars": 51
       },
       "sha256-3f742d6062b9dfb4e44358aa715a02cc0bd4fde5c9cd2589784d714e0acd3368": {
         "origin": "mistake_step_label",
@@ -760,7 +760,7 @@
       "sha256-3d0f68b573d55200b22799f0a6fd93bdb7908add0aef6495fbf2a7d977d4a624": {
         "origin": "mistake_step_label",
         "top": 2,
-        "raw_chars": 44
+        "raw_chars": 45
       },
       "sha256-b373e42b91ecf427174c41e1e5717c4a7548b7d3423d543ff37ecee93ded19ad": {
         "origin": "mistake_step_label",
@@ -769,8 +769,8 @@
       },
       "sha256-ec5b820f432ab4c3023192bc302df2648da3b39a334a503d1a650df494546e10": {
         "origin": "mistake_step_label",
-        "top": 0,
-        "raw_chars": 53
+        "top": 2,
+        "raw_chars": 38
       },
       "sha256-6f1bbd09c9041bd20562512016dae8eb1ea7cd67282a51981622444c0fcb58f8": {
         "origin": "mistake_step_label",
@@ -785,7 +785,7 @@
       "sha256-10b3885260cd948131d980804c80f6dd6c677d7fe7a38e2338028c384a9b8b50": {
         "origin": "mistake_step_label",
         "top": 1,
-        "raw_chars": 53
+        "raw_chars": 54
       },
       "sha256-4dbb61a0395a9b40f66440c5344894ff599660def265a024f55a1d874f6efc1b": {
         "origin": "mistake_step_label",
@@ -814,7 +814,7 @@
       },
       "sha256-5e3663f5b25a348965e7d61b7ec1aa22a5e7bf385576f8b579858a1288b0b613": {
         "origin": "mistake_step_label",
-        "top": 7,
+        "top": 1,
         "raw_chars": 53
       },
       "sha256-c001261932b28b1feaa7bdc9e1e336c7d4c87ff7752357fe31801326bc732fe1": {
@@ -845,7 +845,7 @@
       "requirement": 5,
       "field": "replies_stopped_at_output_ceiling",
       "value": null,
-      "reason": "No stop reason was retained. Reply length alone cannot distinguish a reply that ended at an output ceiling (limit not recorded for the claude-code-cli channel) from one that ended on its own."
+      "reason": "No stop reason was retained. Reply length alone cannot distinguish a reply that ended at an output ceiling (limit not recorded for the nairr-gateway channel) from one that ended on its own."
     },
     {
       "requirement": 6,
@@ -870,24 +870,6 @@
       "field": "served_checkpoint_version",
       "value": null,
       "reason": "No served checkpoint version was retained in this cache or sidecar. A response model identifier may be only a model label and does not by itself establish an immutable checkpoint."
-    },
-    {
-      "requirement": "channel erratum",
-      "field": "reasoning_effort_at_generation",
-      "value": null,
-      "reason": "The erratum requires the reasoning-effort setting used. It was not retained per call. The current script sets Codex to high, which is evidence of present configuration rather than an invocation log."
-    },
-    {
-      "requirement": "channel erratum",
-      "field": "cli_version_at_generation",
-      "value": null,
-      "reason": "Not recorded for the claude-code-cli channel. A version observed today is not evidence of the version that ran, so none is asserted."
-    },
-    {
-      "requirement": "protocol",
-      "field": "effective_isolation_and_tool_use",
-      "value": null,
-      "reason": "The declaration's intent was an invocation close to a plain API call. The command does not establish isolation from user configuration, rules or tools, and no per-call record of effective settings or tool use was kept. This is a protocol deviation, separate from the six numbered categories, and no claim is made either way about whether any call used a tool."
     }
   ]
 }

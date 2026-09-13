@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "kind": "catchbench-addendum-sidecar",
-  "written_at_utc": "2026-09-07T01:36:33.476437+00:00",
+  "written_at_utc": "2026-09-13T04:29:30.231356+00:00",
   "written_by": "tools/emit_addendum_sidecars.py",
   "label": "gpt-6-astra",
   "cache_provenance": {
@@ -22,7 +22,7 @@
   },
   "provider_from_invocation_record": null,
   "code_manifest": {
-    "repository_commit": "874433dbd79243e5756d80ed2782617b34bc8ec1",
+    "repository_commit": "64c1506bd6c0ef1dbf8c8aa1f4216921b32cf1a1",
     "worktree_dirty": true,
     "llm_judge_py": {
       "sha256_worktree": "18cc155bf7f8456e107c02ea33af13a2a8f53d6baedc11683ca8b90eea200fcd",
@@ -32,9 +32,9 @@
       "note": "identical_to_head comes from git diff, which honours autocrlf. The raw worktree hash differs from the blob hash on a CRLF checkout even when the file is unmodified, so compare the _lf values across machines."
     },
     "run_llm_judge_panel_py": {
-      "sha256_worktree": "55576da11d5c2333f949c55a3a97106dec6371c8c9cdd2e2305f2e4a961fcd5c",
-      "sha256_worktree_lf": "8abe49d31cba11694adc8c78a6b49518e8cb16e0b6b35c466428ccfad2f0bb7a",
-      "sha256_head_lf": "b819d14a324a3013049c4a0497a5609c75d51906779e35a0cea9df9d5ee58731",
+      "sha256_worktree": "2af003fbdfa982ec2e98bdcab306b989c68c971e3a56b2ad7ee555980d7e852e",
+      "sha256_worktree_lf": "2af003fbdfa982ec2e98bdcab306b989c68c971e3a56b2ad7ee555980d7e852e",
+      "sha256_head_lf": "8abe49d31cba11694adc8c78a6b49518e8cb16e0b6b35c466428ccfad2f0bb7a",
       "identical_to_head": false,
       "note": "This file was edited after generation. Neither hash above is asserted to be its generation-time hash."
     },
@@ -47,7 +47,7 @@
     },
     "prompt_code_matches_reference_commit_at_write_time": true,
     "reference_commit": "874433dbd79243e5756d80ed2782617b34bc8ec1",
-    "reference_commit_is_head": true,
+    "reference_commit_is_head": false,
     "reconstruction_scope": "Prompt hashes are recomputed from the committed runs under the code present at write time. This is a reconstruction under a stated protocol, not a record of what was sent."
   },
   "prompt_manifest": {
@@ -869,7 +869,7 @@
       "requirement": 6,
       "field": "served_checkpoint_version",
       "value": null,
-      "reason": "Not captured and not capturable. Neither channel pins a checkpoint: the gateway deployments carry OnceNewDefaultVersionAvailable, and a subscription CLI serves whatever model it currently ships under a label that can be remapped without notice."
+      "reason": "No served checkpoint version was retained in this cache or sidecar. A response model identifier may be only a model label and does not by itself establish an immutable checkpoint."
     },
     {
       "requirement": "channel erratum",

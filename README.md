@@ -10,7 +10,7 @@ run, a growing prefix while it runs, and the finished trace after it ends.
 [![arXiv](https://img.shields.io/badge/status-arXiv%202608.22808-blue.svg)](https://arxiv.org/abs/2608.22808)
 [![Code license](https://img.shields.io/badge/code%20license-MIT-blue.svg)](LICENSE)
 [![Python](https://img.shields.io/badge/python-3.10%20%7C%203.12-blue.svg)](pyproject.toml)
-[![Tests](https://img.shields.io/badge/tests-935-brightgreen.svg)](tests/expected_tests.txt)
+[![Tests](https://img.shields.io/badge/tests-939-brightgreen.svg)](tests/expected_tests.txt)
 [![Boards](https://img.shields.io/badge/boards-PRE%20%7C%20LIVE%20%7C%20POST-orange.svg)](#the-boards)
 
 [Quickstart](#quickstart) · [The Boards](#the-boards) · [Task List](#the-full-task-list) · [Add a Method](#how-a-method-plugs-in) · [Full Install](#the-full-board)
@@ -651,19 +651,21 @@ at the precision the prose printed, or be claimed by a named `PROSE_NUMBER_ALLOW
 carries its reason. Emphasis is outside its scope: the comparison strips markup, so bolding a
 cell cannot be checked by it.
 
-Run the suite with `-ra` rather than plain `-q`. Seven contract tests are marked `needs-paper` in
+Run the suite with `-ra` rather than plain `-q`. Fifteen contract tests are marked `needs-paper` in
 [`tests/expected_tests.txt`](tests/expected_tests.txt) and skip unless `CATCHBENCH_PAPER_DIR` points
-at a checkout of the manuscript repository. Four of them hold the manuscript's tables equal to
-the committed records. The other three hold its figures equal: one compares the board copy the
+at a checkout of the manuscript repository. Eleven of them hold the manuscript's tables, table
+labels and the clauses its captions point at equal to the committed records. The other four hold its
+figures equal: one compares the board copy the
 manuscript's figure scripts read against `tests/golden/board.txt`, one runs both figure pipelines' board parsers
 over the same board and compares the numbers they extract, because each repository carries its own
-copy of that parser, and one holds a third parser, the one the manuscript's live panel carries, to
-the same board accessor the tables use. A figure is the one place in a paper where no checker reads
-the value.
+copy of that parser, one holds a third parser, the one the manuscript's live panel carries, to
+the same board accessor the tables use, and one binds the four outside-the-arena values the
+localization panel carries as literals to the addendum caches they were read from. Those four are
+the only checks that reach a drawn value, and a figure number outside their reach is unchecked.
 
 **No workflow sets that variable**, because the manuscript repository is not public, so CI does not
 currently fail when the paper falls behind the board. That comparison is run locally before a
-submission. Plain `-q` reports the seven as a bare skip count and never names them, which is the one
+submission. Plain `-q` reports the fifteen as a bare skip count and never names them, which is the one
 way this suite can look complete while the paper-side checks are not running.
 
 The full board comparison is not exact everywhere. Two rows, `g-safeguard (sup GNN)` and
@@ -730,7 +732,7 @@ The repository ships benchmark code, cached LLM-judge predictions, and a PRE der
 labels. It does not re-host the raw upstream trace corpora or the upstream PRE task and role prose.
 The loaders obtain Who&When, SWE-Gym, and tau-bench during setup or the first benchmark run. Raw PRE
 prose is excluded because its licences have not all been verified and it can contain personal data.
-The 31 published Who&When judge caches, the 4 addendum Who&When judge caches, and four PRE
+The 31 published Who&When judge caches, the 12 addendum Who&When judge caches, and four PRE
 judge-vote artifacts retain `raw` or `raw_response` model output. Some outputs quote or
 restate source traces, roles, workflows, or tool descriptions;
 see the generated asset manifest and third-party terms. Consequently, replay of boards that use

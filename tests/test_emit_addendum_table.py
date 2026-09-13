@@ -27,6 +27,7 @@ from __future__ import annotations
 import ast
 import os
 import re
+import shutil
 import subprocess
 import sys
 from pathlib import Path
@@ -49,9 +50,20 @@ _REPORT_ROW = re.compile(
 
 # The same arm as the generated block prints it.
 _BLOCK_ROW = re.compile(
-    r"^(\d+) & (\d+) & \\texttt\{(\S+)\} & \\texttt\{(\S+)\} & (\S+)"
+    r"^\\texttt\{(\S+)\} & \\texttt\{(\S+)\} & (\S+)"
     r" & ([\d.]+) \{\\scriptsize \$\[([\d.]+), ([\d.]+)\]\$\}"
     r" & ([\d.]+) \{\\scriptsize \$\[([\d.]+), ([\d.]+)\]\$\} \\\\$")
+
+# The per-arm position comment. It keeps the cache label, which the printed row no longer shows,
+# and it is emitted in the same order as the rows, so zipping the two joins a row to its cache.
+_POSITION_COMMENT = re.compile(
+    r"^% (\S+): source=(\S+); channel=(\S+); position=(\d+); above=(\d+); n=(\d+)$")
+
+
+def _ordered_labels(generated: str) -> list[str]:
+    """Cache labels in printed order, read from the position comments."""
+    return [m.group(1) for m in map(_POSITION_COMMENT.match, generated.splitlines()) if m]
+
 
 # The full-precision comment lines the block carries beside every printed cell.
 _TOP1_COMMENT = re.compile(r"^% (\S+): top1=(\d+)/(\d+)=([\d.]+); interval=\[([\d.]+), ([\d.]+)\]$")
@@ -118,11 +130,15 @@ def test_every_arm_matches_the_scorer_report_row_for_row(generated, report):
     with the function it called.
     """
     printed, block = _report_rows(report), _block_rows(generated)
-    assert len(printed) == len(block) == 6, "six scored arms"
+    labels = _ordered_labels(generated)
+    expected = len(sja.TABLE_COHORT) + 2  # roster plus the two published references
+    assert len(printed) == len(block) == len(labels) == expected, "every roster arm, once"
     top1 = _comments(generated, _TOP1_COMMENT)
     top3 = _comments(generated, _TOP3_COMMENT)
-    for console, row in zip(printed, block):
-        assert console[:5] == row[:5], "position, above-count, label, channel and source"
+    for console, row, label in zip(printed, block, labels):
+        assert console[2] == label, "the row joins the console line for the same cache"
+        assert row[0] == sja.TABLE_COHORT.get(label, label), "row prints the provider model name"
+        assert console[3:5] == row[1:3], "channel and source"
         label = console[2]
         assert label in top1 and label in top3, f"{label} carries no full-precision comment"
         # The report prints four decimals and the comment lines twelve, so agreement to within half
@@ -165,12 +181,13 @@ def test_printed_cells_are_the_full_precision_values_rounded(generated):
     top1 = _comments(generated, _TOP1_COMMENT)
     top3 = _comments(generated, _TOP3_COMMENT)
     rows = _block_rows(generated)
+    labels = _ordered_labels(generated)
     assert rows, "no rows parsed"
-    for row in rows:
-        label = row[2]
-        for cell, exact in zip(row[5:8], top1[label][2:]):
+    assert len(rows) == len(labels)
+    for row, label in zip(rows, labels):
+        for cell, exact in zip(row[3:6], top1[label][2:]):
             assert cell == "%.3f" % float(exact)
-        for cell, exact in zip(row[8:11], top3[label][2:5]):
+        for cell, exact in zip(row[6:9], top3[label][2:5]):
             assert cell == "%.3f" % float(exact)
 
 
@@ -178,7 +195,7 @@ def test_hit_counts_reconstruct_every_printed_proportion(generated):
     """k/n must return the proportion, so a reader can rebuild any interval from the block alone."""
     for pattern in (_TOP1_COMMENT, _TOP3_COMMENT):
         found = _comments(generated, pattern)
-        assert len(found) == 6
+        assert len(found) == len(sja.TABLE_COHORT) + 2
         for label, fields in found.items():
             hits, n, point = int(fields[0]), int(fields[1]), float(fields[2])
             assert n == 126, f"{label} is scored on {n} runs"
@@ -200,27 +217,39 @@ def test_the_block_claims_no_test_no_separation_and_no_winner(generated):
     assert lowered.count("registered contrast") == 1
     assert lowered.count("no registered contrast") == 1
     assert "tests no difference between any two arms" in lowered
-    assert "not transitive" in lowered, "the above-count needs its warning in place"
+    assert "carry no rank" in lowered, "the block must say it is not a ranking"
 
 
-def test_the_declared_but_unrun_model_is_disclosed_with_its_reason(generated):
-    """Erratum 2 asks for the model, its non-run status, and the reason on the same page.
+def test_the_late_run_model_carries_its_dated_history(generated):
+    """gpt-5.6-sol is scored now, and the block must date the gap rather than assert it persists.
 
-    Omitting the row would leave a reader who sees one OpenAI model unaware that a second was
-    declared first, which is the reading the carve-out exists to prevent.
+    Erratum 2 asked for the model, its non-run status, and the reason on the same page. The model
+    was run on 2026-09-12, so the status half of that requirement is spent: a block still printing
+    it as a non-measurement would be false, and a block silently dropping the history would leave a
+    reader unable to tell why the first addendum omitted an OpenAI model it had declared. What has
+    to survive is the dated account.
     """
-    assert sja.NOT_RUN_LABEL == "gpt-5.6-sol"
-    assert r"\texttt{gpt-5.6-sol} & \texttt{not-run} & addendum" in generated
-    assert r"\multicolumn{2}{c}{declared, never run}" in generated
-    assert "declared non-measurement" in generated
+    assert "gpt-5.6-sol" in sja.TABLE_COHORT
+    assert r"\texttt{gpt-5.6-sol} & \texttt{nairr-gateway} & addendum" in generated
+    assert r"\multicolumn{2}{c}{declared, never run}" not in generated
+    assert "declared non-measurement" not in generated
     prose = eat.caption_disclosure()
     assert prose in generated
+    assert "declared on 2026-09-06 and not run then" in prose
+    assert "run over that forward on 2026-09-12" in prose
+    # The dates alone are not the disclosure. Erratum 2 asks for the reason, and asks specifically
+    # that it read as a decision: "not setting it up was a choice rather than an obstacle ...
+    # Recording it as an unavailability would be false." A revision of this constant once said the
+    # forward "was not set up at the time", which is the forbidden reading, and the only assertion
+    # then standing was equality with the constant, which cannot see a change of meaning. These
+    # three are literals on purpose, so that editing the constant cannot also edit the test.
     assert "configuration decision, not model unavailability" in prose
-    assert "No score exists for it." in prose
+    assert "Before either OpenAI score existed" in prose
+    assert "the authors preferred " + TEXTTT_ASTRA in prose
     # Strip the caption's markup back off and the console's own five lines must come back, word for
     # word and in order. Neither surface can lose a sentence or gain one without failing here.
     assert (prose.replace(r"\texttt{", "").replace("}", "")
-            == " ".join(sja.NOT_RUN_DISCLOSURE))
+            == " ".join(sja.LATE_RUN_HISTORY))
 
 
 def test_the_caption_disclosure_refuses_latex_specials():
@@ -241,7 +270,10 @@ def test_the_caption_refuses_a_roster_its_prose_does_not_fit(ranked):
         eat._caption(n_runs, [dict(arm, source="addendum") for arm in arms])
     with pytest.raises(ValueError, match="outgrown the prose"):
         eat._word(len(arms) * 13)
-    assert eat._word(len(arms)) == "six"
+    # An independent literal on the right. Comparing _word(len(arms)) against
+    # _word(len(TABLE_COHORT) + 2) is the same number on both sides and can never fail.
+    assert len(arms) == 12, "roster of ten plus two published references"
+    assert eat._word(len(arms)) == "twelve"
     assert eat._word(0) == "no"
 
 
@@ -423,3 +455,101 @@ def test_no_caption_percent_starts_a_latex_comment(generated):
             if char == "%" and (index == 0 or line[index - 1] != "\\"):
                 offenders.append(f"line {number} col {index + 1}: {line[max(0, index - 40):index + 20]}")
     assert offenders == [], "unescaped % in the generated block:\n  " + "\n  ".join(offenders)
+
+
+TEXTTT_ASTRA = r"\texttt{gpt-6-astra}"
+
+
+def _staged_runs_and_task():
+    """The scorer's own inputs, so a held-out replicate is scored by the published code path."""
+    task = sja.PostLocalization()
+    task.setup()
+    return sja.load_judge_runs(), task
+
+
+def _roster_probe(tmp_path, monkeypatch, mutate):
+    """Copy the addendum directory, let `mutate` disturb it, and rank from there."""
+    staged = tmp_path / "llm_judge_addendum"
+    shutil.copytree(sja.ADDENDUM_DIR, staged)
+    mutate(staged)
+    monkeypatch.setattr(sja, "ADDENDUM_DIR", staged)
+    return sja.rank_arms()
+
+
+def test_a_roster_member_with_no_cache_stops_the_run(tmp_path, monkeypatch):
+    """A shorter self-consistent table is the failure this check exists to prevent."""
+    def drop(staged):
+        (staged / "whoandwhen__all_at_once__gpt-5.6-sol.json").unlink()
+
+    with pytest.raises(SystemExit, match="gpt-5.6-sol"):
+        _roster_probe(tmp_path, monkeypatch, drop)
+
+
+def test_another_protocol_cannot_stand_in_for_an_all_at_once_arm(tmp_path, monkeypatch):
+    """The roster names a protocol, so a same-label cache of a different one is a missing file.
+
+    Keying on the label alone accepted this substitution and then scored it as all-at-once against
+    an unchanged manuscript, which is worse than the missing-cache case it was written to catch: the
+    table keeps its twelve rows and one of them silently answers a different question.
+    """
+    def substitute(staged):
+        (staged / "whoandwhen__all_at_once__gpt-5.6-sol.json").rename(
+            staged / "whoandwhen__step_by_step__gpt-5.6-sol.json")
+
+    with pytest.raises(SystemExit, match="gpt-5.6-sol"):
+        _roster_probe(tmp_path, monkeypatch, substitute)
+
+
+def test_a_second_protocol_beside_a_complete_roster_is_ignored(tmp_path, monkeypatch):
+    """Globbing emitted the same model twice; addressing by path leaves the extra file unread."""
+    def add(staged):
+        shutil.copyfile(staged / "whoandwhen__all_at_once__gpt-5.6-sol.json",
+                        staged / "whoandwhen__step_by_step__gpt-5.6-sol.json")
+
+    arms, _ = _roster_probe(tmp_path, monkeypatch, add)
+    assert len(arms) == 12
+    assert [a["label"] for a in arms].count("gpt-5.6-sol") == 1
+
+
+def test_figure_fives_outside_the_arena_values_match_the_caches(ranked):
+    """Four literals in the manuscript's panel script, bound to the caches they were read from.
+
+    The panel cross-checks its 116 frozen values against the statistics registry, which does not
+    reach these four: the addendum caches live here rather than beside the manuscript, so the script
+    carries them as literals and the appendix says so. That disclosure is worth having only while
+    the numbers still agree, and nothing else compares them. The dots are the two same-channel
+    gateway runs per model, which is what the caption claims; the CLI cache of the same model is a
+    different channel and is not drawn.
+    """
+    paper_dir = os.environ.get("CATCHBENCH_PAPER_DIR")
+    if not paper_dir:
+        pytest.skip("no CATCHBENCH_PAPER_DIR")
+    script = Path(paper_dir) / "figure" / "make_localization_panel.py"
+    tree = ast.parse(script.read_text(encoding="utf-8"))
+    entries = None
+    for node in ast.walk(tree):
+        if isinstance(node, ast.Assign) and any(
+                isinstance(t, ast.Name) and t.id == "LATER_ARMS" for t in node.targets):
+            entries = ast.literal_eval(node.value)
+    assert entries is not None, "LATER_ARMS not found in %s" % script
+    # The roster is asserted, not merely iterated. Checking only the entries that happen to be
+    # present let the whole claude-opus-5 entry be deleted while the test still passed, which
+    # leaves the appendix promising four literals over a panel drawing two. The count is taken
+    # before the dictionary, so two entries sharing a name cannot collapse unseen.
+    assert len(entries) == 2, "the panel declares %d later arms; the appendix says two" % len(entries)
+    literals = {entry[0]: sorted(round(float(v), 4) for v in entry[2]) for entry in entries}
+    assert set(literals) == {"claude-opus-5", "gpt-6-astra"}, sorted(literals)
+    assert all(len(v) == 2 for v in literals.values()), literals
+    assert sum(len(v) for v in literals.values()) == 4, literals
+
+    arms, _ = ranked
+    scored = {a["label"]: a["top1"] for a in arms}
+    runs, task = _staged_runs_and_task()
+    for base, drawn in sorted(literals.items()):
+        gw2 = sja.ADDENDUM_DIR / ("whoandwhen__all_at_once__%s-gw2.json" % base)
+        measured = sorted(round(v, 4) for v in (
+            scored[base + "-gw"],
+            sja.score_cache(sja.addendum_predictions(gw2), runs, task, base + "-gw2")["top1"],
+        ))
+        assert drawn == measured, (
+            "%s: the panel draws %s and the gateway caches score %s" % (base, drawn, measured))

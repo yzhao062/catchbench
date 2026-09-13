@@ -53,12 +53,37 @@ GATEWAY_MODELS = {
     "claude-opus-4.8": "claude-opus-4.8",
     "gemini": "gemini",
     "gpt-5.4": "gpt-5.4",
-    # Addendum, declared and NOT run. Erratum 2 of the declaration records why: no subscription CLI
-    # serves it, its only route is this gateway, and _gateway_url refuses plain HTTP to a remote
-    # host, so it needs an SSH forward that was deliberately not set up. Its claim id is retired
-    # unused. The entry stays so the label resolves rather than looking like an oversight; running it
-    # would put the addendum back to five models and eight contrasts and is not a free choice.
+    # Declared 2026-09-06 and not run then, and Erratum 2 records the reason as a decision rather
+    # than an obstacle: before either OpenAI score existed, gpt-6-astra was preferred as the more
+    # advanced model in the family and the SSH forward this route needs was left unset. The
+    # declaration says recording that as unavailability would be false, so this comment does not.
+    # What the route costs is real enough: no subscription CLI serves this model and _gateway_url
+    # refuses plain HTTP to a remote host. The forward was established on 2026-09-12 and this label
+    # was run over it.
     "gpt-5.6-sol": "gpt-5.6-sol",
+    # Generation-ladder arms. Same provider models as the CLI addendum entries below, reached over
+    # the gateway instead, so channel is held fixed across these gateway caches. It is not held
+    # fixed against the published references, which is why each of those gets its own -gw arm here:
+    # gpt-5.5's recorded route is codex-cli, and claude-opus-4.8 and gpt-5.4 carry no recorded
+    # channel at all. Distinct labels on purpose: a published or already-generated label must never
+    # be named again, because _flush rewrites its cache even when it computes nothing.
+    "claude-opus-5-gw": "claude-opus-5",
+    "gpt-6-astra-gw": "gpt-6-astra",
+    # Same-channel repeats, added 2026-09-12 as exploratory follow-ups after the first three
+    # gateway arms had run. The September 12 declaration enumerates those three and says the
+    # published references are not rerun; it does not list these repeats, so they are a post-hoc
+    # addition and are labelled as one. They exist because the judge runs at the model's default
+    # temperature: without a same-channel floor, a cross-route disagreement count means nothing.
+    "claude-opus-5-gw2": "claude-opus-5",
+    "gpt-6-astra-gw2": "gpt-6-astra",
+    # Remaining ladder arms, so every rung is a cache generated here rather than a published
+    # cache whose route is inferred. The published gpt-5.5 is the exception that motivates this:
+    # its recorded route is codex-cli, not this gateway, so gpt-5.5-gw sits beside it and never
+    # replaces it. What the gateway records for the Azure arms turned out to be the deployment
+    # name rather than a dated version, so this recovers a route, not a checkpoint.
+    "gpt-5.5-gw": "gpt-5.5",
+    "gpt-5.4-gw": "gpt-5.4",
+    "claude-opus-4.8-gw": "claude-opus-4.8",
 }
 BEDROCK_MODELS = {
     "llama-3.3-70b": "us.meta.llama3-3-70b-instruct-v1:0",
@@ -78,6 +103,13 @@ BEDROCK_MODELS = {
 
 # Token accounting, summed across calls, so the run can report measured usage (cost transparency).
 _USAGE = {"in": 0, "out": 0}
+
+# Counts of the model identifier the provider returned, per label. This is what the response said,
+# which is not the same as what served the call: for the Azure deployments it came back as the
+# deployment name, so it fixes the generation and leaves the version inside it unfixed. Recorded
+# because it is the only thing the response says on the subject, rather than because it establishes
+# a checkpoint. The declaration expected more from it than it delivered.
+_SERVED: dict[str, int] = {}
 
 
 def _gateway_url() -> str:
@@ -112,19 +144,48 @@ def gateway_complete(model_id: str, max_tokens: int = 8000, timeout: int = 240):
 
     client = OpenAI(base_url=gateway_url, api_key=key)
 
+    # Which spelling of the output-token ceiling this deployment accepts. Newer reasoning
+    # deployments (gpt-6-astra) reject `max_tokens` and require `max_completion_tokens`; older ones
+    # accept only `max_tokens`. Negotiated on the first refusal and reused for the rest of the run,
+    # so the panel does not carry a model list that goes stale as deployments are added.
+    token_kwarg = {"name": "max_tokens"}
+
+    def _create(prompt: str):
+        kwargs = {token_kwarg["name"]: max_tokens}
+        # No explicit temperature: some gateway models (Azure GPT-5.5) reject temperature=0 and
+        # only accept their default. The committed cache, not a sampling setting, is what makes
+        # the board reproducible, so the judge runs at the model's default temperature.
+        return client.chat.completions.create(
+            model=model_id, messages=[{"role": "user", "content": prompt}],
+            timeout=timeout, **kwargs,
+        )
+
     def complete(prompt: str) -> str:
         try:
-            # No explicit temperature: some gateway models (Azure GPT-5.5) reject temperature=0 and
-            # only accept their default. The committed cache, not a sampling setting, is what makes
-            # the board reproducible, so the judge runs at the model's default temperature.
-            resp = client.chat.completions.create(
-                model=model_id, messages=[{"role": "user", "content": prompt}],
-                timeout=timeout, max_tokens=max_tokens,
-            )
+            try:
+                resp = _create(prompt)
+            except Exception as first:  # noqa: BLE001
+                message = str(first)
+                # Not gated on the current spelling: with concurrent workers, calls that built
+                # their kwargs before an earlier failure flipped the flag still arrive here holding
+                # the rejected spelling. Gating on the flag would refuse to retry exactly those and
+                # turn a solved problem into a cache full of nulls.
+                unsupported = ("max_tokens" in message and "max_completion_tokens" in message)
+                if not unsupported:
+                    raise
+                if token_kwarg["name"] == "max_tokens":
+                    token_kwarg["name"] = "max_completion_tokens"
+                    sys.stderr.write(
+                        f"[gateway {model_id}] deployment rejects max_tokens; "
+                        f"switching this run to max_completion_tokens\n")
+                resp = _create(prompt)
             usage = getattr(resp, "usage", None)
             if usage:
                 _USAGE["in"] += getattr(usage, "prompt_tokens", 0) or 0
                 _USAGE["out"] += getattr(usage, "completion_tokens", 0) or 0
+            served = getattr(resp, "model", None)
+            if served:
+                _SERVED[served] = _SERVED.get(served, 0) + 1
             return (resp.choices[0].message.content or "").strip()
         except Exception as err:  # noqa: BLE001  one bad call -> a miss, re-runnable on resume
             sys.stderr.write(f"[gateway {model_id} error] {type(err).__name__}: {str(err)[:160]}\n")
@@ -177,9 +238,15 @@ def bedrock_complete(model_id: str, max_tokens: int = 8000):
 # tools/llm_judge_codex.py drives `codex exec` because no OpenAI API key is configured here. The two
 # addendum models below reach their vendor the same way, which needs no key and puts nothing on the
 # network in plaintext. What it does not give is a pinned checkpoint, because a CLI serves whatever
-# its subscription currently ships. Neither does the gateway for these families, whose Azure
-# deployments carry versionUpgradeOption OnceNewDefaultVersionAvailable, so this trades one unpinned
-# route for another rather than giving up a pin. Erratum 1 of the declaration records that.
+# its subscription currently ships. Erratum 1 of the declaration called this an even trade with the
+# gateway. That holds for the GPT pair only: nairr-pilot/config.yaml carries versionUpgradeOption
+# OnceNewDefaultVersionAvailable on the gpt-6-astra and gpt-5.6-sol Azure deployments, so the gateway
+# fixes their generation while the version inside it can move. The declaration expected the served
+# version to come back in the response; what came back was the deployment identifier, so this
+# recovers a route and not a version. It does not hold for Claude. model-inventory.md marks exactly one
+# gateway Claude name floating, claude-sonnet, and claude-opus-5 is served by Vertex AI under a
+# pinned name, so routing it to a CLI gave up a pin that existed. The -gw labels below exist to take
+# it back; see research/catchbench-generation-ladder-declaration-2026-09-12.md.
 #
 # label -> (which CLI, model argument, extra argv)
 CLI_MODELS = {
@@ -294,7 +361,10 @@ def make_complete(label: str):
 # The labels whose caches must not land in the globbed directory. Declared here rather than left to
 # an operator, because the isolation is a property the shipped command has to have.
 ADDENDUM_LABELS = frozenset({"claude-opus-5", "gpt-6-astra", "gpt-5.6-sol",
-                             "llama-3-70b", "llama-3.1-70b"})
+                             "llama-3-70b", "llama-3.1-70b",
+                             "claude-opus-5-gw", "gpt-6-astra-gw",
+                             "claude-opus-5-gw2", "gpt-6-astra-gw2",
+                             "gpt-5.5-gw", "gpt-5.4-gw", "claude-opus-4.8-gw"})
 
 ADDENDUM_DIR = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))),
                             "data", "llm_judge_addendum")
@@ -376,6 +446,7 @@ def main() -> None:
         runs = runs[: args.limit]
     for label in args.models:
         _USAGE["in"] = _USAGE["out"] = 0
+        _SERVED.clear()
         complete = completes[label]
         with contextlib.ExitStack() as stack:
             if _is_addendum(label, args.addendum):
@@ -393,6 +464,9 @@ def main() -> None:
         print(f"\n== {label} :: {args.method} == wrote {path}")
         print(f"   runs={len(runs)} parsed={parsed} top_eq_mistake={top_eq_mistake} "
               f"tokens(in/out)={_USAGE['in']}/{_USAGE['out']}")
+        if _SERVED:
+            served_desc = ", ".join(f"{name} x{count}" for name, count in sorted(_SERVED.items()))
+            print(f"   model identifier(s) returned by the provider: {served_desc}")
         print("   top_eq_mistake is a plumbing signal, not the scored Top-1; score with "
               "tools/score_judge_addendum.py\n")
 

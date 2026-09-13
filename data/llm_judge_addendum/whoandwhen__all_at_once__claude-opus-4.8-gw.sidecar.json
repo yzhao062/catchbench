@@ -1,15 +1,15 @@
 {
   "schema_version": 1,
   "kind": "catchbench-addendum-sidecar",
-  "written_at_utc": "2026-09-13T04:29:30.179785+00:00",
+  "written_at_utc": "2026-09-13T04:29:30.155266+00:00",
   "written_by": "tools/emit_addendum_sidecars.py",
-  "label": "claude-opus-5",
+  "label": "claude-opus-4.8-gw",
   "cache_provenance": {
     "benchmark": "CatchBench",
     "board": "post_localization",
     "corpus": "whoandwhen",
     "method": "all_at_once",
-    "model": "claude-opus-5",
+    "model": "claude-opus-4.8-gw",
     "n_runs": 126,
     "prompt_sha": "35fe2d42f55b",
     "paper": "Zhang et al. 2025 (Who&When), arXiv:2505.00212"
@@ -17,8 +17,8 @@
   "reconstructed": true,
   "reconstruction_note": "Written after generation, not during it. Every field here is either a deterministic function of committed inputs or is null with a reason in not_recorded. No value was inferred from a file timestamp.",
   "provider_declared_configuration": {
-    "channel": "claude-code-cli",
-    "model_id": "claude-opus-5"
+    "channel": "nairr-gateway",
+    "model_id": "claude-opus-4.8"
   },
   "provider_from_invocation_record": null,
   "code_manifest": {
@@ -197,20 +197,20 @@
     },
     "raw_reply_chars": {
       "min": 38,
-      "max": 53,
+      "max": 1042,
       "median": 53
     },
     "null_failure_classes": {},
     "per_run": {
       "sha256-07a08de706a627db8390352b90fc507e959b5e70273d5c42997f330a64038780": {
         "origin": "mistake_step_label",
-        "top": 0,
+        "top": 2,
         "raw_chars": 41
       },
       "sha256-17b6000b713d1f958ea887d47526d7951c7983b09f8f938e92f7744921171ed8": {
         "origin": "mistake_step_label",
         "top": 0,
-        "raw_chars": 53
+        "raw_chars": 54
       },
       "sha256-0aadde3adf44141018635cdc899a20c2f587908c37ce963582f1889761a6d128": {
         "origin": "mistake_step_label",
@@ -230,7 +230,7 @@
       "sha256-f75d958eb5dc2631d6c31f54d0d21febaf9f86d2ad3d3fe8ae0fd0d104969c30": {
         "origin": "mistake_step_label",
         "top": 5,
-        "raw_chars": 53
+        "raw_chars": 54
       },
       "sha256-b63c256b18d15e7435195b9dabc07dc6ac35b797308bd8e8007d23a4d5a2e5ba": {
         "origin": "mistake_step_label",
@@ -244,7 +244,7 @@
       },
       "sha256-1e9ae13901707a74f9fe166a6290afdac092cddb7f6e0785fd50190a64ab865c": {
         "origin": "mistake_step_label",
-        "top": 0,
+        "top": 1,
         "raw_chars": 41
       },
       "sha256-d09b6cb73c798b51921c3827740ff7d2501adb6db1a51b4a285ad405e2ab6001": {
@@ -255,17 +255,17 @@
       "sha256-8195ba1dee020d2698a4edc136d083a06248237d26f9b8074833b4d0e99d78c5": {
         "origin": "mistake_step_label",
         "top": 2,
-        "raw_chars": 53
+        "raw_chars": 54
       },
       "sha256-8b46ed760af28d4edfed1cb6d17edbd9c453267def2d4e835a966090c161cb3c": {
         "origin": "mistake_step_label",
-        "top": 1,
-        "raw_chars": 53
+        "top": 2,
+        "raw_chars": 54
       },
       "sha256-c4472e45bd37d37e4d45ca08a042e9db1dfe15f9cabeb4b7036a0bacd5c5b65e": {
         "origin": "mistake_step_label",
-        "top": 4,
-        "raw_chars": 53
+        "top": 6,
+        "raw_chars": 54
       },
       "sha256-75ca1a501d4a810449f22ed1719e9ca7a3f955d702fed7a44ddf693ba9313d39": {
         "origin": "mistake_step_label",
@@ -274,12 +274,12 @@
       },
       "sha256-87c20ce673203e812ed0f656d8f3230fb84e558b42354ee4c8323d5efc3f43a0": {
         "origin": "mistake_step_label",
-        "top": 5,
+        "top": 7,
         "raw_chars": 53
       },
       "sha256-5749156f68174edd67c239984dfb0828c52b07e635b4362180ff9d3a0ba1ffe7": {
         "origin": "mistake_step_label",
-        "top": 4,
+        "top": 6,
         "raw_chars": 53
       },
       "sha256-4bc6226b62f70594f8a226b63bd7559728ad284b7cbbb85b5918062ab7feff98": {
@@ -334,7 +334,7 @@
       },
       "sha256-8947760b3a7d8a5babb5a6660c903b579588cb6a5304b8c7b45ebf0339f9bed3": {
         "origin": "mistake_step_label",
-        "top": 7,
+        "top": 0,
         "raw_chars": 53
       },
       "sha256-c59bf90df19f0d9eb5f546bd79c6e65915353d71ae70b312535fc808aad5a9fd": {
@@ -349,7 +349,7 @@
       },
       "sha256-a1cada1b70857c5722570fbf834c46fd893a8f9e2fc0298505803f71805f94ec": {
         "origin": "mistake_step_label",
-        "top": 3,
+        "top": 8,
         "raw_chars": 53
       },
       "sha256-7655b148e33554c1314f9e29461b3de6bb2fad7ee7267feb16622a54eeb02a54": {
@@ -359,13 +359,13 @@
       },
       "sha256-ff11c8b3e1e5187d9c81feba036c3b3e473558d930456e148a10743fd6f33b62": {
         "origin": "mistake_step_label",
-        "top": 5,
-        "raw_chars": 53
+        "top": 3,
+        "raw_chars": 54
       },
       "sha256-63df8d368a452c45b56a270d11046933e604aecd79ff08e3a59eac65ac267e78": {
         "origin": "mistake_step_label",
-        "top": 1,
-        "raw_chars": 53
+        "top": 0,
+        "raw_chars": 54
       },
       "sha256-818c493fb0d9f260a7acd0e564d9af91c24af9c94ae128e93cec41d49b398dda": {
         "origin": "mistake_step_label",
@@ -379,7 +379,7 @@
       },
       "sha256-b9d72563fbb25078eefeb8a8fc3a6b075394e0dbcce740a0e21d7e36cb0b98c9": {
         "origin": "mistake_step_label",
-        "top": 4,
+        "top": 0,
         "raw_chars": 53
       },
       "sha256-21b5ca036915aacdd39fb410daadab9f825afecf09140f31bcb9d2641fe44575": {
@@ -399,7 +399,7 @@
       },
       "sha256-d03af0eeb47539f7ba9d0487d22378d6558124340e153aab08929916e6923ca2": {
         "origin": "mistake_step_label",
-        "top": 1,
+        "top": 5,
         "raw_chars": 53
       },
       "sha256-744be662178c5d9159ee439cac010781759674a4dc8be2c8c2cfbc17f41778bd": {
@@ -414,7 +414,7 @@
       },
       "sha256-ddd57d5eb78c6ff1817519d7ce74d7165401783a7a1a8b85ef056c64aaf7d8ef": {
         "origin": "mistake_step_label",
-        "top": 1,
+        "top": 7,
         "raw_chars": 53
       },
       "sha256-f30a1985865fe5ab209eaf48939590c08560a8f7723a4381b729eb5dca0f0ed1": {
@@ -424,7 +424,7 @@
       },
       "sha256-6ef1b3bf97fe32fc51f10a18474e4f3399fe36c21563cd132205cb73da28d949": {
         "origin": "mistake_step_label",
-        "top": 3,
+        "top": 1,
         "raw_chars": 53
       },
       "sha256-6e954c9882d491916555090ccdf816720dd6d42c3479cf098cdc916301589ca3": {
@@ -444,7 +444,7 @@
       },
       "sha256-264d7bec0ce9498f4e92d2dad45dcc2e2f45a4564c5bb2441f6c52f5eafd81f1": {
         "origin": "mistake_step_label",
-        "top": 3,
+        "top": 6,
         "raw_chars": 53
       },
       "sha256-72abb325f846c3bc92242cd38693f2015bc1675ce1922e25a5708f581d9067e8": {
@@ -459,18 +459,18 @@
       },
       "sha256-e0352c664354845dde90cb2d452acd8e4964b38b356aa3e874bbc4529bd4c113": {
         "origin": "mistake_step_label",
-        "top": 0,
+        "top": 3,
         "raw_chars": 53
       },
       "sha256-37482e1a0fc83f7343646e3435c4c46e4a0376df345158c401ce1955519e9a27": {
         "origin": "mistake_step_label",
-        "top": 5,
-        "raw_chars": 53
+        "top": 6,
+        "raw_chars": 54
       },
       "sha256-d86676ee2d36d2b024d777fb36395b298ef6cb13f945d0a48df0de4564d47ef0": {
         "origin": "mistake_step_label",
         "top": 4,
-        "raw_chars": 53
+        "raw_chars": 54
       },
       "sha256-1080c1a7f79b2e4231cab89e6ec4615c0d807ce66247106b27799cc71ea60b9f": {
         "origin": "mistake_step_label",
@@ -509,8 +509,8 @@
       },
       "sha256-d1cc1e45a79998401c3f42379c3508a7525d641a494c2b6eb30f096217081efc": {
         "origin": "mistake_step_label",
-        "top": 1,
-        "raw_chars": 50
+        "top": 5,
+        "raw_chars": 51
       },
       "sha256-02f0c1e20092926db4500abe90a5b9d5693b24a36ed7ac5e725d314e93a9a4b3": {
         "origin": "mistake_step_label",
@@ -540,7 +540,7 @@
       "sha256-c644de3ce5b2879bfd6e3973617f1bf9b408c6c5abadf7667b587ce1b6e367e5": {
         "origin": "mistake_step_label",
         "top": 1,
-        "raw_chars": 44
+        "raw_chars": 1042
       },
       "sha256-80a911d9b96898a398c01b5d23cdfb584a077fb8ccef063f7c2c0d67db9df77c": {
         "origin": "mistake_step_label",
@@ -554,7 +554,7 @@
       },
       "sha256-1ad88ace691e6f0c4c27de9703c179a96cd8c70513b5010c88f42220d51c155e": {
         "origin": "mistake_step_label",
-        "top": 4,
+        "top": 8,
         "raw_chars": 53
       },
       "sha256-97540fae779ebe05981e753c3f1f2160effa05c127b257df61b03a14cf9543f7": {
@@ -614,7 +614,7 @@
       },
       "sha256-c894cc257199fd92830a8865da80c3675b80feafee2b79543fddb96993102b39": {
         "origin": "mistake_step_label",
-        "top": 1,
+        "top": 0,
         "raw_chars": 47
       },
       "sha256-edc65457ef9518102339d6425de43ab5261dd49d9c63bfb03c85694d626309f6": {
@@ -624,12 +624,12 @@
       },
       "sha256-150bbd0987be9c73cc5bdabc7e930e089abb20d5adb84dbeee2357fe5861d2ed": {
         "origin": "mistake_step_label",
-        "top": 2,
+        "top": 4,
         "raw_chars": 53
       },
       "sha256-1c1fbe95b9ff20e885ccdd9cb67da6686e143ed8dc6996909f0f675a67541adc": {
         "origin": "mistake_step_label",
-        "top": 2,
+        "top": 3,
         "raw_chars": 44
       },
       "sha256-40f3b1bf4e8c3b5eebd990a0318ffa7085d9a405b9c857885c7d3a78b6925181": {
@@ -639,7 +639,7 @@
       },
       "sha256-b4c594aa76a6035c12c371eaedd11c7ce29cf5999c0910583f1cdf685331f405": {
         "origin": "mistake_step_label",
-        "top": 5,
+        "top": 3,
         "raw_chars": 53
       },
       "sha256-e42fbd10c3e0bca4cd87a404a9627e60fb7fb5995ae651f370de7a25a5b47083": {
@@ -650,7 +650,7 @@
       "sha256-6967f8db93f279f3f35085836ad4778ef05774d9cfd4a857823b944a6948948a": {
         "origin": "mistake_step_label",
         "top": 1,
-        "raw_chars": 41
+        "raw_chars": 42
       },
       "sha256-b11c19785d58812d551e63b153cf69f47c7a65f0388a288cbd2e470d5eb390f2": {
         "origin": "mistake_step_label",
@@ -659,12 +659,12 @@
       },
       "sha256-41f1da58c218daf7cdcecad20c1c952b9b0429f0474fd60816ac40a6bbce6d51": {
         "origin": "mistake_step_label",
-        "top": 3,
+        "top": 1,
         "raw_chars": 44
       },
       "sha256-9fff75678f6c480d87823a4ef61936f81433b218f4722264cf126e09d77be63a": {
         "origin": "mistake_step_label",
-        "top": 7,
+        "top": 5,
         "raw_chars": 53
       },
       "sha256-ce290fd935f599c40873bfcbd2b4d865cc7db8820377b43b45170bd6fdf37451": {
@@ -684,7 +684,7 @@
       },
       "sha256-98ae8168b3cd0e815deeec615e74d772201ce25522af0dccaedb99898a65bf21": {
         "origin": "mistake_step_label",
-        "top": 2,
+        "top": 8,
         "raw_chars": 53
       },
       "sha256-2d2106ebbe28afd1fabb4f0250ebe4654cf18fc315b6b8cdb72ab02dd7a84d98": {
@@ -694,8 +694,8 @@
       },
       "sha256-588c7ae7c07b89d690a795a4900f8172531a8cebe787f38bf86fe8d26e476607": {
         "origin": "mistake_step_label",
-        "top": 8,
-        "raw_chars": 53
+        "top": 5,
+        "raw_chars": 54
       },
       "sha256-eb9d437c360d9fde50de8f3b23ee32a8ec80804e68b98d0fc586615ae877a18c": {
         "origin": "mistake_step_label",
@@ -704,7 +704,7 @@
       },
       "sha256-d2d1d902bd15b701f639e15ae05582f9dcd84ce8df9e9aaadb26299b759328ae": {
         "origin": "mistake_step_label",
-        "top": 1,
+        "top": 0,
         "raw_chars": 53
       },
       "sha256-b776420667bdd1c5b446a8b3ecbbaa90603f9e45dbb9306e162407da40c50cf2": {
@@ -724,12 +724,12 @@
       },
       "sha256-ee955e2171b0c74ed49d939e6928dda06ee818c5e71760543a9089ffa66f0731": {
         "origin": "mistake_step_label",
-        "top": 4,
+        "top": 2,
         "raw_chars": 53
       },
       "sha256-a6a6d37e3e6e287a2353e9e82cd2a05606ec09bd98409d095894b32e43a8c565": {
         "origin": "mistake_step_label",
-        "top": 2,
+        "top": 0,
         "raw_chars": 47
       },
       "sha256-870d36d3b9b816af6e938578e5612e83406a5ce33d086e674946aebd0234f2e7": {
@@ -769,7 +769,7 @@
       },
       "sha256-ec5b820f432ab4c3023192bc302df2648da3b39a334a503d1a650df494546e10": {
         "origin": "mistake_step_label",
-        "top": 0,
+        "top": 2,
         "raw_chars": 53
       },
       "sha256-6f1bbd09c9041bd20562512016dae8eb1ea7cd67282a51981622444c0fcb58f8": {
@@ -789,8 +789,8 @@
       },
       "sha256-4dbb61a0395a9b40f66440c5344894ff599660def265a024f55a1d874f6efc1b": {
         "origin": "mistake_step_label",
-        "top": 8,
-        "raw_chars": 53
+        "top": 6,
+        "raw_chars": 54
       },
       "sha256-02bc2fe842825bcd1973404f2cf1e44ade689c28b7d51ff50c5eeb42aaed9b8f": {
         "origin": "mistake_step_label",
@@ -804,7 +804,7 @@
       },
       "sha256-7fdde888fc58427ea87836c86f1155b03c437fd698907fba2937d77c5dcfb350": {
         "origin": "mistake_step_label",
-        "top": 6,
+        "top": 4,
         "raw_chars": 53
       },
       "sha256-8a326a0eb008e5c9c51cb1e678d0d432632c00cdece5109e3bf0d080744fd1b7": {
@@ -814,13 +814,13 @@
       },
       "sha256-5e3663f5b25a348965e7d61b7ec1aa22a5e7bf385576f8b579858a1288b0b613": {
         "origin": "mistake_step_label",
-        "top": 7,
+        "top": 1,
         "raw_chars": 53
       },
       "sha256-c001261932b28b1feaa7bdc9e1e336c7d4c87ff7752357fe31801326bc732fe1": {
         "origin": "mistake_step_label",
         "top": 7,
-        "raw_chars": 53
+        "raw_chars": 54
       },
       "sha256-80076465bb9f5ae7498d6b5ec575e27c4bae3d75f079bcb6ecd95f2282679628": {
         "origin": "mistake_step_label",
@@ -845,7 +845,7 @@
       "requirement": 5,
       "field": "replies_stopped_at_output_ceiling",
       "value": null,
-      "reason": "No stop reason was retained. Reply length alone cannot distinguish a reply that ended at an output ceiling (limit not recorded for the claude-code-cli channel) from one that ended on its own."
+      "reason": "No stop reason was retained. Reply length alone cannot distinguish a reply that ended at an output ceiling (limit not recorded for the nairr-gateway channel) from one that ended on its own."
     },
     {
       "requirement": 6,
@@ -870,24 +870,6 @@
       "field": "served_checkpoint_version",
       "value": null,
       "reason": "No served checkpoint version was retained in this cache or sidecar. A response model identifier may be only a model label and does not by itself establish an immutable checkpoint."
-    },
-    {
-      "requirement": "channel erratum",
-      "field": "reasoning_effort_at_generation",
-      "value": null,
-      "reason": "The erratum requires the reasoning-effort setting used. It was not retained per call. The current script sets Codex to high, which is evidence of present configuration rather than an invocation log."
-    },
-    {
-      "requirement": "channel erratum",
-      "field": "cli_version_at_generation",
-      "value": null,
-      "reason": "Not recorded for the claude-code-cli channel. A version observed today is not evidence of the version that ran, so none is asserted."
-    },
-    {
-      "requirement": "protocol",
-      "field": "effective_isolation_and_tool_use",
-      "value": null,
-      "reason": "The declaration's intent was an invocation close to a plain API call. The command does not establish isolation from user configuration, rules or tools, and no per-call record of effective settings or tool use was kept. This is a protocol deviation, separate from the six numbered categories, and no claim is made either way about whether any call used a tool."
     }
   ]
 }

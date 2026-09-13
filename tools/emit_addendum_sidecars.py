@@ -16,11 +16,14 @@ recorded at the time or it is gone, and a file modification time is not a substi
 So this tool reconstructs categories 2, 3, 4 and 5 and the model-identifier half of 6, and it refuses
 categories 1 and the pass-index half of 6. ``--verify-code-unchanged`` is the guard on the first
 claim: it fails unless ``src/catchbench/llm_judge.py`` in the working tree is byte-identical to the
-committed version, which is what makes re-rendering legitimate. Run it with that flag, or the sidecar
+committed version. That is present equality with HEAD and reaches no further back. It does not show
+that HEAD is the code that generated these caches, so re-rendering is legitimate exactly to the
+extent that the committed prompt code is the generating code. Run it with that flag, or the sidecar
 records the prompt hashes as unverified.
 
-``tools/run_llm_judge_panel.py`` is a separate matter. It was edited after generation, so its current
-hash is not its generation-time hash. Both are recorded, and the sidecar says which is which.
+``tools/run_llm_judge_panel.py`` is a separate matter. It was edited after generation. The sidecar
+records its worktree hash and its HEAD hash and says which is which. Neither is its generation-time
+hash, and that hash is unknown.
 
 Usage:
     python tools/emit_addendum_sidecars.py --verify-code-unchanged
@@ -64,6 +67,21 @@ PROVIDER_MODEL_IDS = {
     "llama-3.1-70b": {"channel": "aws-bedrock", "model_id": "us.meta.llama3-1-70b-instruct-v1:0"},
     "claude-opus-5": {"channel": "claude-code-cli", "model_id": "claude-opus-5"},
     "gpt-6-astra": {"channel": "codex-cli", "model_id": "gpt-6-astra"},
+    # Generation-ladder arms, run 2026-09-12 under
+    # research/catchbench-generation-ladder-declaration-2026-09-12.md. Same provider models as the
+    # two CLI rows above, reached over the NAIRR gateway so that channel is held fixed across these
+    # newly generated gateway caches. It is not held fixed against the published claude-opus-4.8 and
+    # gpt-5.4, whose own channels are recorded nowhere, which is why each gets its own gateway arm.
+    # The provider returned a model identifier on every call:
+    # claude-opus-5 and gpt-6-astra respectively, and gpt-5.6-sol on all 126 of its own.
+    "claude-opus-5-gw": {"channel": "nairr-gateway", "model_id": "claude-opus-5"},
+    "gpt-6-astra-gw": {"channel": "nairr-gateway", "model_id": "gpt-6-astra"},
+    "gpt-5.6-sol": {"channel": "nairr-gateway", "model_id": "gpt-5.6-sol"},
+    "claude-opus-5-gw2": {"channel": "nairr-gateway", "model_id": "claude-opus-5"},
+    "gpt-6-astra-gw2": {"channel": "nairr-gateway", "model_id": "gpt-6-astra"},
+    "gpt-5.5-gw": {"channel": "nairr-gateway", "model_id": "gpt-5.5"},
+    "gpt-5.4-gw": {"channel": "nairr-gateway", "model_id": "gpt-5.4"},
+    "claude-opus-4.8-gw": {"channel": "nairr-gateway", "model_id": "claude-opus-4.8"},
 }
 
 
@@ -266,10 +284,9 @@ def not_recorded(label: str) -> list:
                     "observation was made. The hashes in code_manifest were computed afterwards and "
                     "are evidence about the current code, not about the code that ran.")},
         {"requirement": 6, "field": "served_checkpoint_version", "value": None,
-         "reason": ("Not captured and not capturable. Neither channel pins a checkpoint: the "
-                    "gateway deployments carry OnceNewDefaultVersionAvailable, and a subscription "
-                    "CLI serves whatever model it currently ships under a label that can be "
-                    "remapped without notice.")},
+         "reason": ("No served checkpoint version was retained in this cache or sidecar. "
+                    "A response model identifier may be only a model label and does not by "
+                    "itself establish an immutable checkpoint.")},
     ]
     if is_cli:
         entries.append(

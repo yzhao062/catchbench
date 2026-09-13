@@ -5735,6 +5735,108 @@
       ]
     },
     {
+      "path": "data/llm_judge_addendum/whoandwhen__all_at_once__claude-opus-4.8-gw.json",
+      "description": "LLM localization predictions over Who&When traces, addendum",
+      "sources": [
+        "whoandwhen"
+      ],
+      "row_count": 126,
+      "declared_license_distribution": {
+        "whoandwhen": {
+          "UNRESOLVED": 126
+        }
+      },
+      "source_prose_survives": true,
+      "upstream_identifier_sets": [
+        "whoandwhen"
+      ]
+    },
+    {
+      "path": "data/llm_judge_addendum/whoandwhen__all_at_once__claude-opus-4.8-gw.sidecar.json",
+      "description": "addendum generation record: prompt, code and parser manifests",
+      "sources": [
+        "whoandwhen"
+      ],
+      "row_count": 126,
+      "declared_license_distribution": {
+        "whoandwhen": {
+          "UNRESOLVED": 126
+        }
+      },
+      "source_prose_survives": false,
+      "upstream_identifier_sets": [
+        "whoandwhen"
+      ]
+    },
+    {
+      "path": "data/llm_judge_addendum/whoandwhen__all_at_once__claude-opus-5-gw.json",
+      "description": "LLM localization predictions over Who&When traces, addendum",
+      "sources": [
+        "whoandwhen"
+      ],
+      "row_count": 126,
+      "declared_license_distribution": {
+        "whoandwhen": {
+          "UNRESOLVED": 126
+        }
+      },
+      "source_prose_survives": true,
+      "upstream_identifier_sets": [
+        "whoandwhen"
+      ]
+    },
+    {
+      "path": "data/llm_judge_addendum/whoandwhen__all_at_once__claude-opus-5-gw.sidecar.json",
+      "description": "addendum generation record: prompt, code and parser manifests",
+      "sources": [
+        "whoandwhen"
+      ],
+      "row_count": 126,
+      "declared_license_distribution": {
+        "whoandwhen": {
+          "UNRESOLVED": 126
+        }
+      },
+      "source_prose_survives": false,
+      "upstream_identifier_sets": [
+        "whoandwhen"
+      ]
+    },
+    {
+      "path": "data/llm_judge_addendum/whoandwhen__all_at_once__claude-opus-5-gw2.json",
+      "description": "LLM localization predictions over Who&When traces, addendum",
+      "sources": [
+        "whoandwhen"
+      ],
+      "row_count": 126,
+      "declared_license_distribution": {
+        "whoandwhen": {
+          "UNRESOLVED": 126
+        }
+      },
+      "source_prose_survives": true,
+      "upstream_identifier_sets": [
+        "whoandwhen"
+      ]
+    },
+    {
+      "path": "data/llm_judge_addendum/whoandwhen__all_at_once__claude-opus-5-gw2.sidecar.json",
+      "description": "addendum generation record: prompt, code and parser manifests",
+      "sources": [
+        "whoandwhen"
+      ],
+      "row_count": 126,
+      "declared_license_distribution": {
+        "whoandwhen": {
+          "UNRESOLVED": 126
+        }
+      },
+      "source_prose_survives": false,
+      "upstream_identifier_sets": [
+        "whoandwhen"
+      ]
+    },
+    {
       "path": "data/llm_judge_addendum/whoandwhen__all_at_once__claude-opus-5.json",
       "description": "LLM localization predictions over Who&When traces, addendum",
       "sources": [
@@ -5753,6 +5855,176 @@
     },
     {
       "path": "data/llm_judge_addendum/whoandwhen__all_at_once__claude-opus-5.sidecar.json",
+      "description": "addendum generation record: prompt, code and parser manifests",
+      "sources": [
+        "whoandwhen"
+      ],
+      "row_count": 126,
+      "declared_license_distribution": {
+        "whoandwhen": {
+          "UNRESOLVED": 126
+        }
+      },
+      "source_prose_survives": false,
+      "upstream_identifier_sets": [
+        "whoandwhen"
+      ]
+    },
+    {
+      "path": "data/llm_judge_addendum/whoandwhen__all_at_once__gpt-5.4-gw.json",
+      "description": "LLM localization predictions over Who&When traces, addendum",
+      "sources": [
+        "whoandwhen"
+      ],
+      "row_count": 126,
+      "declared_license_distribution": {
+        "whoandwhen": {
+          "UNRESOLVED": 126
+        }
+      },
+      "source_prose_survives": true,
+      "upstream_identifier_sets": [
+        "whoandwhen"
+      ]
+    },
+    {
+      "path": "data/llm_judge_addendum/whoandwhen__all_at_once__gpt-5.4-gw.sidecar.json",
+      "description": "addendum generation record: prompt, code and parser manifests",
+      "sources": [
+        "whoandwhen"
+      ],
+      "row_count": 126,
+      "declared_license_distribution": {
+        "whoandwhen": {
+          "UNRESOLVED": 126
+        }
+      },
+      "source_prose_survives": false,
+      "upstream_identifier_sets": [
+        "whoandwhen"
+      ]
+    },
+    {
+      "path": "data/llm_judge_addendum/whoandwhen__all_at_once__gpt-5.5-gw.json",
+      "description": "LLM localization predictions over Who&When traces, addendum",
+      "sources": [
+        "whoandwhen"
+      ],
+      "row_count": 126,
+      "declared_license_distribution": {
+        "whoandwhen": {
+          "UNRESOLVED": 126
+        }
+      },
+      "source_prose_survives": true,
+      "upstream_identifier_sets": [
+        "whoandwhen"
+      ]
+    },
+    {
+      "path": "data/llm_judge_addendum/whoandwhen__all_at_once__gpt-5.5-gw.sidecar.json",
+      "description": "addendum generation record: prompt, code and parser manifests",
+      "sources": [
+        "whoandwhen"
+      ],
+      "row_count": 126,
+      "declared_license_distribution": {
+        "whoandwhen": {
+          "UNRESOLVED": 126
+        }
+      },
+      "source_prose_survives": false,
+      "upstream_identifier_sets": [
+        "whoandwhen"
+      ]
+    },
+    {
+      "path": "data/llm_judge_addendum/whoandwhen__all_at_once__gpt-5.6-sol.json",
+      "description": "LLM localization predictions over Who&When traces, addendum",
+      "sources": [
+        "whoandwhen"
+      ],
+      "row_count": 126,
+      "declared_license_distribution": {
+        "whoandwhen": {
+          "UNRESOLVED": 126
+        }
+      },
+      "source_prose_survives": true,
+      "upstream_identifier_sets": [
+        "whoandwhen"
+      ]
+    },
+    {
+      "path": "data/llm_judge_addendum/whoandwhen__all_at_once__gpt-5.6-sol.sidecar.json",
+      "description": "addendum generation record: prompt, code and parser manifests",
+      "sources": [
+        "whoandwhen"
+      ],
+      "row_count": 126,
+      "declared_license_distribution": {
+        "whoandwhen": {
+          "UNRESOLVED": 126
+        }
+      },
+      "source_prose_survives": false,
+      "upstream_identifier_sets": [
+        "whoandwhen"
+      ]
+    },
+    {
+      "path": "data/llm_judge_addendum/whoandwhen__all_at_once__gpt-6-astra-gw.json",
+      "description": "LLM localization predictions over Who&When traces, addendum",
+      "sources": [
+        "whoandwhen"
+      ],
+      "row_count": 126,
+      "declared_license_distribution": {
+        "whoandwhen": {
+          "UNRESOLVED": 126
+        }
+      },
+      "source_prose_survives": true,
+      "upstream_identifier_sets": [
+        "whoandwhen"
+      ]
+    },
+    {
+      "path": "data/llm_judge_addendum/whoandwhen__all_at_once__gpt-6-astra-gw.sidecar.json",
+      "description": "addendum generation record: prompt, code and parser manifests",
+      "sources": [
+        "whoandwhen"
+      ],
+      "row_count": 126,
+      "declared_license_distribution": {
+        "whoandwhen": {
+          "UNRESOLVED": 126
+        }
+      },
+      "source_prose_survives": false,
+      "upstream_identifier_sets": [
+        "whoandwhen"
+      ]
+    },
+    {
+      "path": "data/llm_judge_addendum/whoandwhen__all_at_once__gpt-6-astra-gw2.json",
+      "description": "LLM localization predictions over Who&When traces, addendum",
+      "sources": [
+        "whoandwhen"
+      ],
+      "row_count": 126,
+      "declared_license_distribution": {
+        "whoandwhen": {
+          "UNRESOLVED": 126
+        }
+      },
+      "source_prose_survives": true,
+      "upstream_identifier_sets": [
+        "whoandwhen"
+      ]
+    },
+    {
+      "path": "data/llm_judge_addendum/whoandwhen__all_at_once__gpt-6-astra-gw2.sidecar.json",
       "description": "addendum generation record: prompt, code and parser manifests",
       "sources": [
         "whoandwhen"

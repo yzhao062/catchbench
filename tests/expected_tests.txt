@@ -167,6 +167,9 @@ always       tests/test_cli_reporting.py::test_cli_reporting_has_no_adjudication
 always       tests/test_distribution.py::test_a_fresh_wheel_install_scores_all_pre_rows
 always       tests/test_distribution.py::test_wheel_contains_every_committed_pre_file
 always       tests/test_distribution.py::test_wheel_excludes_the_downloaded_corpora
+always       tests/test_emit_addendum_table.py::test_a_roster_member_with_no_cache_stops_the_run
+always       tests/test_emit_addendum_table.py::test_a_second_protocol_beside_a_complete_roster_is_ignored
+always       tests/test_emit_addendum_table.py::test_another_protocol_cannot_stand_in_for_an_all_at_once_arm
 always       tests/test_emit_addendum_table.py::test_check_accepts_exact_block[False]
 always       tests/test_emit_addendum_table.py::test_check_accepts_exact_block[True]
 always       tests/test_emit_addendum_table.py::test_check_rejects_a_paper_that_does_not_carry_the_block[caption-table differs]
@@ -182,6 +185,7 @@ always       tests/test_emit_addendum_table.py::test_check_rejects_a_paper_that_
 always       tests/test_emit_addendum_table.py::test_check_requires_paper_path
 always       tests/test_emit_addendum_table.py::test_cli_prints_deterministic_lf_bytes
 always       tests/test_emit_addendum_table.py::test_every_arm_matches_the_scorer_report_row_for_row
+needs-paper  tests/test_emit_addendum_table.py::test_figure_fives_outside_the_arena_values_match_the_caches
 always       tests/test_emit_addendum_table.py::test_hit_counts_reconstruct_every_printed_proportion
 always       tests/test_emit_addendum_table.py::test_no_caption_percent_starts_a_latex_comment
 always       tests/test_emit_addendum_table.py::test_printed_cells_are_the_full_precision_values_rounded
@@ -191,8 +195,8 @@ always       tests/test_emit_addendum_table.py::test_the_block_claims_no_test_no
 always       tests/test_emit_addendum_table.py::test_the_block_makes_no_comparative_claim_even_in_unlisted_vocabulary
 always       tests/test_emit_addendum_table.py::test_the_caption_disclosure_refuses_latex_specials
 always       tests/test_emit_addendum_table.py::test_the_caption_refuses_a_roster_its_prose_does_not_fit
-always       tests/test_emit_addendum_table.py::test_the_declared_but_unrun_model_is_disclosed_with_its_reason
 always       tests/test_emit_addendum_table.py::test_the_emitter_owns_no_arithmetic_of_its_own
+always       tests/test_emit_addendum_table.py::test_the_late_run_model_carries_its_dated_history
 always       tests/test_emit_addendum_table.py::test_the_null_top_floor_is_the_one_the_caches_actually_carry
 always       tests/test_emit_addendum_table.py::test_the_published_arms_print_the_same_cell_as_the_protocol_table
 always       tests/test_emit_addendum_table.py::test_the_published_judge_count_matches_the_cache_directory

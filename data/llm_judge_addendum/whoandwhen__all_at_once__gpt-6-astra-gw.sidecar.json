@@ -1,15 +1,15 @@
 {
   "schema_version": 1,
   "kind": "catchbench-addendum-sidecar",
-  "written_at_utc": "2026-09-13T04:29:30.179785+00:00",
+  "written_at_utc": "2026-09-13T04:29:30.214822+00:00",
   "written_by": "tools/emit_addendum_sidecars.py",
-  "label": "claude-opus-5",
+  "label": "gpt-6-astra-gw",
   "cache_provenance": {
     "benchmark": "CatchBench",
     "board": "post_localization",
     "corpus": "whoandwhen",
     "method": "all_at_once",
-    "model": "claude-opus-5",
+    "model": "gpt-6-astra-gw",
     "n_runs": 126,
     "prompt_sha": "35fe2d42f55b",
     "paper": "Zhang et al. 2025 (Who&When), arXiv:2505.00212"
@@ -17,8 +17,8 @@
   "reconstructed": true,
   "reconstruction_note": "Written after generation, not during it. Every field here is either a deterministic function of committed inputs or is null with a reason in not_recorded. No value was inferred from a file timestamp.",
   "provider_declared_configuration": {
-    "channel": "claude-code-cli",
-    "model_id": "claude-opus-5"
+    "channel": "nairr-gateway",
+    "model_id": "gpt-6-astra"
   },
   "provider_from_invocation_record": null,
   "code_manifest": {
@@ -229,7 +229,7 @@
       },
       "sha256-f75d958eb5dc2631d6c31f54d0d21febaf9f86d2ad3d3fe8ae0fd0d104969c30": {
         "origin": "mistake_step_label",
-        "top": 5,
+        "top": 3,
         "raw_chars": 53
       },
       "sha256-b63c256b18d15e7435195b9dabc07dc6ac35b797308bd8e8007d23a4d5a2e5ba": {
@@ -244,7 +244,7 @@
       },
       "sha256-1e9ae13901707a74f9fe166a6290afdac092cddb7f6e0785fd50190a64ab865c": {
         "origin": "mistake_step_label",
-        "top": 0,
+        "top": 1,
         "raw_chars": 41
       },
       "sha256-d09b6cb73c798b51921c3827740ff7d2501adb6db1a51b4a285ad405e2ab6001": {
@@ -259,12 +259,12 @@
       },
       "sha256-8b46ed760af28d4edfed1cb6d17edbd9c453267def2d4e835a966090c161cb3c": {
         "origin": "mistake_step_label",
-        "top": 1,
+        "top": 9,
         "raw_chars": 53
       },
       "sha256-c4472e45bd37d37e4d45ca08a042e9db1dfe15f9cabeb4b7036a0bacd5c5b65e": {
         "origin": "mistake_step_label",
-        "top": 4,
+        "top": 6,
         "raw_chars": 53
       },
       "sha256-75ca1a501d4a810449f22ed1719e9ca7a3f955d702fed7a44ddf693ba9313d39": {
@@ -279,7 +279,7 @@
       },
       "sha256-5749156f68174edd67c239984dfb0828c52b07e635b4362180ff9d3a0ba1ffe7": {
         "origin": "mistake_step_label",
-        "top": 4,
+        "top": 6,
         "raw_chars": 53
       },
       "sha256-4bc6226b62f70594f8a226b63bd7559728ad284b7cbbb85b5918062ab7feff98": {
@@ -364,7 +364,7 @@
       },
       "sha256-63df8d368a452c45b56a270d11046933e604aecd79ff08e3a59eac65ac267e78": {
         "origin": "mistake_step_label",
-        "top": 1,
+        "top": 5,
         "raw_chars": 53
       },
       "sha256-818c493fb0d9f260a7acd0e564d9af91c24af9c94ae128e93cec41d49b398dda": {
@@ -399,12 +399,12 @@
       },
       "sha256-d03af0eeb47539f7ba9d0487d22378d6558124340e153aab08929916e6923ca2": {
         "origin": "mistake_step_label",
-        "top": 1,
+        "top": 5,
         "raw_chars": 53
       },
       "sha256-744be662178c5d9159ee439cac010781759674a4dc8be2c8c2cfbc17f41778bd": {
         "origin": "mistake_step_label",
-        "top": 1,
+        "top": 0,
         "raw_chars": 41
       },
       "sha256-075201a887684095a0d8b33efec7ac4540ddec44b2b644cd8abc843b2a894e0e": {
@@ -414,7 +414,7 @@
       },
       "sha256-ddd57d5eb78c6ff1817519d7ce74d7165401783a7a1a8b85ef056c64aaf7d8ef": {
         "origin": "mistake_step_label",
-        "top": 1,
+        "top": 3,
         "raw_chars": 53
       },
       "sha256-f30a1985865fe5ab209eaf48939590c08560a8f7723a4381b729eb5dca0f0ed1": {
@@ -424,7 +424,7 @@
       },
       "sha256-6ef1b3bf97fe32fc51f10a18474e4f3399fe36c21563cd132205cb73da28d949": {
         "origin": "mistake_step_label",
-        "top": 3,
+        "top": 1,
         "raw_chars": 53
       },
       "sha256-6e954c9882d491916555090ccdf816720dd6d42c3479cf098cdc916301589ca3": {
@@ -464,7 +464,7 @@
       },
       "sha256-37482e1a0fc83f7343646e3435c4c46e4a0376df345158c401ce1955519e9a27": {
         "origin": "mistake_step_label",
-        "top": 5,
+        "top": 6,
         "raw_chars": 53
       },
       "sha256-d86676ee2d36d2b024d777fb36395b298ef6cb13f945d0a48df0de4564d47ef0": {
@@ -479,7 +479,7 @@
       },
       "sha256-985304df0b4a65f05d2bba05f3b2a41d848f96c7f78d653ac223208472e1a067": {
         "origin": "mistake_step_label",
-        "top": 2,
+        "top": 3,
         "raw_chars": 53
       },
       "sha256-27c6768bc1039bfd280bfffdedde71ccf4775d9e6cb0ad6a6360d76ec0559c85": {
@@ -524,12 +524,12 @@
       },
       "sha256-fff9252498646126817e479bb5535f61b5353f799f42ecd264514dced4130b86": {
         "origin": "mistake_step_label",
-        "top": 3,
+        "top": 0,
         "raw_chars": 50
       },
       "sha256-195c1f94f9f933e949347c7fcd2cd642a55d5fe7ef8b6fe5e8737ba223e769c0": {
         "origin": "mistake_step_label",
-        "top": 9,
+        "top": 6,
         "raw_chars": 53
       },
       "sha256-0b310ddca493beb0d14f57cb3bf01be723074dc4a5571a7fbed1c9919a825a4c": {
@@ -554,7 +554,7 @@
       },
       "sha256-1ad88ace691e6f0c4c27de9703c179a96cd8c70513b5010c88f42220d51c155e": {
         "origin": "mistake_step_label",
-        "top": 4,
+        "top": 8,
         "raw_chars": 53
       },
       "sha256-97540fae779ebe05981e753c3f1f2160effa05c127b257df61b03a14cf9543f7": {
@@ -574,7 +574,7 @@
       },
       "sha256-31f3fb2331512e01db28fcc0cedc6392608d8c548af2dcd07d7cfc30ae2e0659": {
         "origin": "mistake_step_label",
-        "top": 0,
+        "top": 4,
         "raw_chars": 53
       },
       "sha256-39e018d7b33a19d577a74b24b8897031ff0899342078ff9f70290795c0a5bc83": {
@@ -614,7 +614,7 @@
       },
       "sha256-c894cc257199fd92830a8865da80c3675b80feafee2b79543fddb96993102b39": {
         "origin": "mistake_step_label",
-        "top": 1,
+        "top": 5,
         "raw_chars": 47
       },
       "sha256-edc65457ef9518102339d6425de43ab5261dd49d9c63bfb03c85694d626309f6": {
@@ -684,7 +684,7 @@
       },
       "sha256-98ae8168b3cd0e815deeec615e74d772201ce25522af0dccaedb99898a65bf21": {
         "origin": "mistake_step_label",
-        "top": 2,
+        "top": 0,
         "raw_chars": 53
       },
       "sha256-2d2106ebbe28afd1fabb4f0250ebe4654cf18fc315b6b8cdb72ab02dd7a84d98": {
@@ -704,7 +704,7 @@
       },
       "sha256-d2d1d902bd15b701f639e15ae05582f9dcd84ce8df9e9aaadb26299b759328ae": {
         "origin": "mistake_step_label",
-        "top": 1,
+        "top": 5,
         "raw_chars": 53
       },
       "sha256-b776420667bdd1c5b446a8b3ecbbaa90603f9e45dbb9306e162407da40c50cf2": {
@@ -714,7 +714,7 @@
       },
       "sha256-7d460cc58e87081b8acc886e28dfc58959504e8877a7e42ccef66c8e8b29f694": {
         "origin": "mistake_step_label",
-        "top": 7,
+        "top": 9,
         "raw_chars": 53
       },
       "sha256-2ae7fa25b413d1c5bc8d4ee1ab6bc4c8d1fe7300e4abf0a2982897c9cf8c5e89": {
@@ -749,7 +749,7 @@
       },
       "sha256-d6b92e43163ff0aec52792e0436b18387107177c42ea8e650caa84c4f035a89f": {
         "origin": "mistake_step_label",
-        "top": 7,
+        "top": 4,
         "raw_chars": 50
       },
       "sha256-3f742d6062b9dfb4e44358aa715a02cc0bd4fde5c9cd2589784d714e0acd3368": {
@@ -759,7 +759,7 @@
       },
       "sha256-3d0f68b573d55200b22799f0a6fd93bdb7908add0aef6495fbf2a7d977d4a624": {
         "origin": "mistake_step_label",
-        "top": 2,
+        "top": 6,
         "raw_chars": 44
       },
       "sha256-b373e42b91ecf427174c41e1e5717c4a7548b7d3423d543ff37ecee93ded19ad": {
@@ -789,7 +789,7 @@
       },
       "sha256-4dbb61a0395a9b40f66440c5344894ff599660def265a024f55a1d874f6efc1b": {
         "origin": "mistake_step_label",
-        "top": 8,
+        "top": 6,
         "raw_chars": 53
       },
       "sha256-02bc2fe842825bcd1973404f2cf1e44ade689c28b7d51ff50c5eeb42aaed9b8f": {
@@ -814,7 +814,7 @@
       },
       "sha256-5e3663f5b25a348965e7d61b7ec1aa22a5e7bf385576f8b579858a1288b0b613": {
         "origin": "mistake_step_label",
-        "top": 7,
+        "top": 9,
         "raw_chars": 53
       },
       "sha256-c001261932b28b1feaa7bdc9e1e336c7d4c87ff7752357fe31801326bc732fe1": {
@@ -845,7 +845,7 @@
       "requirement": 5,
       "field": "replies_stopped_at_output_ceiling",
       "value": null,
-      "reason": "No stop reason was retained. Reply length alone cannot distinguish a reply that ended at an output ceiling (limit not recorded for the claude-code-cli channel) from one that ended on its own."
+      "reason": "No stop reason was retained. Reply length alone cannot distinguish a reply that ended at an output ceiling (limit not recorded for the nairr-gateway channel) from one that ended on its own."
     },
     {
       "requirement": 6,
@@ -870,24 +870,6 @@
       "field": "served_checkpoint_version",
       "value": null,
       "reason": "No served checkpoint version was retained in this cache or sidecar. A response model identifier may be only a model label and does not by itself establish an immutable checkpoint."
-    },
-    {
-      "requirement": "channel erratum",
-      "field": "reasoning_effort_at_generation",
-      "value": null,
-      "reason": "The erratum requires the reasoning-effort setting used. It was not retained per call. The current script sets Codex to high, which is evidence of present configuration rather than an invocation log."
-    },
-    {
-      "requirement": "channel erratum",
-      "field": "cli_version_at_generation",
-      "value": null,
-      "reason": "Not recorded for the claude-code-cli channel. A version observed today is not evidence of the version that ran, so none is asserted."
-    },
-    {
-      "requirement": "protocol",
-      "field": "effective_isolation_and_tool_use",
-      "value": null,
-      "reason": "The declaration's intent was an invocation close to a plain API call. The command does not establish isolation from user configuration, rules or tools, and no per-call record of effective settings or tool use was kept. This is a protocol deviation, separate from the six numbered categories, and no claim is made either way about whether any call used a tool."
     }
   ]
 }

@@ -1,9 +1,14 @@
 r"""Emit the judge addendum as its own appendix block, scored by tools/score_judge_addendum.py.
 
-Six arms over the same 126 Who&When runs and the same ``all_at_once`` protocol as the eleven
-published judges: four addendum caches from ``data/llm_judge_addendum/`` and two published caches
-pulled in so the ranking reads in one place. Every number here is imported. ``rank_arms`` loads,
-scores, orders and ranks the arms, and this file formats what it returns.
+Every arm in ``score_judge_addendum.TABLE_COHORT`` over the same 126 Who&When runs and the same
+``all_at_once`` protocol as the eleven published judges, plus two published caches pulled in so the
+comparison reads in one place. The roster is explicit, and each member is read from the exact path
+its protocol and label name: a cache written later must not join the historical table without a
+decision, and a cache of another protocol must not stand in for one that is missing. Rows print the provider model
+name and carry the route in the Channel column, so one model reached two ways reads as two rows of
+one model. The two same-channel repeats are held out and reported in the caption as the
+disagreement floor. Every number here is imported; ``rank_arms`` loads, scores and orders the arms,
+and this file formats what it returns.
 
 Nothing in this file computes Top-1, Top-3, or a hit count. That is the point rather than a
 convenience. The declared outcome is ``rank == 1`` after ``np.argsort(-scores, kind="stable")`` over
@@ -13,7 +18,7 @@ still looks plausible, and it would be wrong in the paper rather than in a conso
 
 The interval is the one exception, and it is drawn here rather than taken from the scorer. The
 scorer reports a Wilson interval, which is its own documented choice for a console ranking. The
-appendix already prints two of these six arms in Table~\\ref{tab:protocol} under Procedure BIN, so
+appendix already prints two of these twelve arms in Table~\\ref{tab:protocol} under Procedure BIN, so
 taking the scorer's would have put one score under two interval constructions about 640 source lines
 apart. ``_bin_interval`` reuses ``emit_protocol_table.py``'s label rule and base seed, and the two
 published arms therefore reproduce the cells that table already prints.
@@ -56,7 +61,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 import numpy as np  # noqa: E402
 
 from score_judge_addendum import (  # noqa: E402
-    NOT_RUN_CHANNEL, NOT_RUN_DISCLOSURE, NOT_RUN_LABEL, NOT_RUN_SOURCE, rank_arms,
+    LATE_RUN_HISTORY, REPLICATE_LABELS, TABLE_COHORT, rank_arms,
 )
 from statistical_tests import _rng_for  # noqa: E402
 
@@ -103,7 +108,7 @@ _BEGIN = ("% BEGIN GENERATED tab:judge-addendum -- regenerate with: "
 _END = "% END GENERATED tab:judge-addendum"
 
 # Labels set in \texttt wherever they occur in the imported disclosure prose.
-_TEXTTT_LABELS = (NOT_RUN_LABEL, "gpt-6-astra")
+_TEXTTT_LABELS = ("gpt-5.6-sol", "gpt-6-astra")
 
 # Every character LaTeX would read as markup. The disclosure is prose written for a console, so it
 # carries none of them today; the guard exists so that a later edit to the constant fails here
@@ -111,7 +116,7 @@ _TEXTTT_LABELS = (NOT_RUN_LABEL, "gpt-6-astra")
 _LATEX_SPECIALS = frozenset("\\{}$&#^_~%")
 
 
-def caption_disclosure(lines: tuple[str, ...] = NOT_RUN_DISCLOSURE) -> str:
+def caption_disclosure(lines: tuple[str, ...] = LATE_RUN_HISTORY) -> str:
     r"""The scorer's console disclosure, rejoined as caption prose with its labels in \texttt.
 
     The console prints one line per element and every break falls at a word boundary, so a single
@@ -131,12 +136,14 @@ def caption_disclosure(lines: tuple[str, ...] = NOT_RUN_DISCLOSURE) -> str:
 
 def _provenance(arms: list[dict], n_runs: int) -> list[str]:
     """Comment lines binding each printed cell to the scorer's full-precision value."""
+    n_addendum = sum(1 for arm in arms if arm["source"] == "addendum")
+    n_published = sum(1 for arm in arms if arm["source"] == "published")
     lines = [
         _BEGIN,
-        "% Source: data/llm_judge_addendum/whoandwhen__all_at_once__<label>.json for the four "
-        "addendum arms, read by path;",
-        "% data/llm_judge/ through load_cache for the two published arms, whose keys need the "
-        "legacy map.",
+        "%% Source: data/llm_judge_addendum/whoandwhen__all_at_once__<label>.json for the %s "
+        "addendum arms, read by path;" % _word(n_addendum),
+        "%% data/llm_judge/ through load_cache for the %s published arms, whose keys need the "
+        "legacy map." % _word(n_published),
         "% Scored by tools/score_judge_addendum.py, which calls the _score_vector and "
         "_rank_metrics of src/catchbench/llm_judge.py,",
         "% the same two calls LLMJudgeLocalization.evaluate makes for the published board. This "
@@ -147,8 +154,8 @@ def _provenance(arms: list[dict], n_runs: int) -> list[str]:
         f"% Intervals: Procedure BIN on each arm's own proportion over n={n_runs}; "
         f"draws={DRAWS}; quantile=linear; RNG=PCG64; base_seed={BASE_SEED}; "
         "label=per-arm/bin/whoandwhen/all_at_once/<model>/<metric>; marginal, not simultaneous.",
-        f"% Declared and never run: {NOT_RUN_LABEL} (channel {NOT_RUN_CHANNEL}, source "
-        f"{NOT_RUN_SOURCE}); no score exists for it.",
+        f"% Roster: {len(TABLE_COHORT)} cohort labels; held-out same-channel repeats: "
+        f"{', '.join(REPLICATE_LABELS)}.",
     ]
     for arm in arms:
         lines.extend([
@@ -201,16 +208,17 @@ def _caption(n_runs: int, arms: list[dict]) -> list[str]:
         r"cells repeat Table~\ref{tab:protocol}.",
         r"This block declares no registered contrast and tests no difference between any two arms; "
         r"interval overlap establishes neither equivalence nor the absence of an improvement.",
-        r"\# orders Top-1 point estimates, ties sharing a position, and Above is one plus the "
-        r"number of arms whose whole Top-1 interval is higher. Overlap is not transitive, so that "
-        r"count is not a tie group.",
+        r"Rows run in descending Top-1 order and carry no rank: no contrast is declared here "
+        r"and no difference between arms is tested.",
         r"A Top-1 hit means the gold step ranks first after a stable sort of the per-step scores, "
         r"as on the published board; a null output takes the all-zero ranking and can still take "
         r"credit on the %d runs labelled at step 0." % NULL_TOP_FLOOR,
         r"The addendum is excluded from the nine boards, the %d entrants and the %d recorded "
         r"comparisons." % (ARENA_ENTRANTS, RECORDED_COMPARISONS),
+        r"Two arms were generated a second time on the same channel and are held out of this "
+        r"table; those repeats name a different step on 9 and 6 of the runs, which is the floor "
+        r"any reading across routes or generations has to clear.",
         caption_disclosure(),
-        r"That row is a declared non-measurement rather than a cell awaiting a rerun.",
         r"Addendum channels are reconstructed from declared configurations; "
         r"\texttt{not-recorded} marks an absent channel record.",
         r"Mean reciprocal rank is carried in this block's comment lines rather than printed, so "
@@ -233,7 +241,12 @@ def _cell(point: float, low: float, high: float) -> str:
 
 
 def table(arms: list[dict], n_runs: int) -> str:
-    """One appendix float: six scored arms, then the declared arm that carries no score."""
+    """One appendix float: every scored arm in the roster, each under its provider model name.
+
+    The same model appears once per route, distinguished by the Channel column rather than by the
+    cache label, and the two same-channel repeats are held out; the caption carries their
+    disagreement counts instead.
+    """
     lines = _provenance(arms, n_runs)
     lines += [
         r"\begin{table}[t]",
@@ -242,20 +255,18 @@ def table(arms: list[dict], n_runs: int) -> str:
         r"\setlength{\tabcolsep}{3pt}",
         *_caption(n_runs, arms),
         r"\label{tab:judge-addendum}",
-        r"\begin{tabular}{@{}rrlllcc@{}}",
+        r"\begin{tabular}{@{}lllcc@{}}",
         r"\toprule",
-        r"\# & Above & Model & Channel & Source & Top-1 & Top-3 \\",
+        r"Model & Channel & Source & Top-1 & Top-3 \\",
         r"\midrule",
     ]
     for arm in arms:
-        lines.append(r"%d & %d & \texttt{%s} & \texttt{%s} & %s & %s & %s \\"
-                     % (arm["seq"], arm["above"], arm["label"], arm["channel"], arm["source"],
+        display = TABLE_COHORT.get(arm["label"], arm["label"])
+        lines.append(r"\texttt{%s} & \texttt{%s} & %s & %s & %s \\"
+                     % (display, arm["channel"], arm["source"],
                         _cell(arm["top1"], arm["top1_lo"], arm["top1_hi"]),
                         _cell(arm["top3"], arm["top3_lo"], arm["top3_hi"])))
     lines += [
-        r"\midrule",
-        r" &  & \texttt{%s} & \texttt{%s} & %s & \multicolumn{2}{c}{declared, never run} \\"
-        % (NOT_RUN_LABEL, NOT_RUN_CHANNEL, NOT_RUN_SOURCE),
         r"\bottomrule",
         r"\end{tabular}",
         r"\end{table}",
@@ -307,7 +318,7 @@ def check(paper: Path, generated: str) -> int:
             fromfile=f"paper/{_APPENDIX}", tofile="generated/tab:judge-addendum", lineterm="")))
         print("Regenerate with: python tools/emit_addendum_table.py")
         return 1
-    print("paper is current: tab:judge-addendum (six scored arms, one declared non-measurement)")
+    print("paper is current: tab:judge-addendum (%d scored arms in the roster)" % len(TABLE_COHORT))
     return 0
 
 

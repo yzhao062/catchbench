@@ -124,22 +124,46 @@ _DEFAULT_ALSO = ("llama-3.3-70b",)
 # Current adapter routing does not establish how a published cache was generated.
 _RECORDED_PUBLISHED_CHANNELS = {"gpt-5.5": "codex-cli"}
 
-# The declared model that carries no score. Erratum 2 of the frozen declaration requires its
-# declaration, its non-run status, and the reason to appear wherever gpt-6-astra is reported, so both
-# this report and tools/emit_addendum_table.py read the disclosure from here rather than each
-# carrying its own copy. One sentence group per printed console line; joining the lines with single
-# spaces yields the same prose for a LaTeX caption, so the two surfaces cannot state different
-# reasons. Source: research/catchbench-m4-declaration-v3.md, Erratum 2, lines 727 to 735 and 787
-# to 792.
-NOT_RUN_LABEL = "gpt-5.6-sol"
-NOT_RUN_CHANNEL = "not-run"
-NOT_RUN_SOURCE = "addendum"
-NOT_RUN_DISCLOSURE = (
-    "gpt-5.6-sol was declared but not run. No subscription CLI served it, and its only",
-    "route was the NAIRR gateway, whose remote plain HTTP endpoint the adapter refuses.",
-    "The required SSH forward was not set up, because gpt-6-astra was preferred as the",
-    "more advanced model in the same vendor family, before either OpenAI score existed.",
-    "This was a configuration decision, not model unavailability. No score exists for it.",
+# The table's roster, in cache-label order, mapping each cache to the provider model it ran. Named
+# explicitly because rank_arms used to glob this directory: a cache written after publication then
+# joined the historical table without anyone deciding that it should, which is exactly how the
+# emitter came to disagree with an unchanged manuscript. A label absent here is not scored into the
+# table even when its cache is present.
+TABLE_COHORT = {
+    "claude-opus-5": "claude-opus-5",
+    "claude-opus-5-gw": "claude-opus-5",
+    "claude-opus-4.8-gw": "claude-opus-4.8",
+    "gpt-6-astra": "gpt-6-astra",
+    "gpt-6-astra-gw": "gpt-6-astra",
+    "gpt-5.6-sol": "gpt-5.6-sol",
+    "gpt-5.5-gw": "gpt-5.5",
+    "gpt-5.4-gw": "gpt-5.4",
+    "llama-3-70b": "llama-3-70b",
+    "llama-3.1-70b": "llama-3.1-70b",
+}
+
+# Same model, same channel, generated a second time. Held out of the table on purpose: their job is
+# to say how much two runs disagree when nothing changes, which is the floor any route or generation
+# reading has to clear. Reported in the caption instead, as a count rather than as a rank.
+REPLICATE_LABELS = ("claude-opus-5-gw2", "gpt-6-astra-gw2")
+
+# gpt-5.6-sol's history, and the only place either surface states it: Erratum 2 requires the
+# declaration, the non-run status and the reason wherever gpt-6-astra is reported, so this report and
+# tools/emit_addendum_table.py both read it from here and cannot state different reasons. One
+# sentence group per printed console line; joining the lines with single spaces gives the caption.
+#
+# The reason is a decision, and saying anything else is a known falsehood rather than a loose
+# paraphrase. Erratum 2 at lines 731 to 735: "That forward was not set up, and not setting it up was
+# a choice rather than an obstacle ... Recording it as an unavailability would be false." An earlier
+# revision of this constant said the forward "was not set up at the time", which reads as the
+# obstacle the declaration forbids. Source: research/catchbench-m4-declaration-v3.md, Erratum 2,
+# lines 727 to 735 and 787 to 792.
+LATE_RUN_HISTORY = (
+    "gpt-5.6-sol was declared on 2026-09-06 and not run then.",
+    "Before either OpenAI score existed, the authors preferred gpt-6-astra as the more advanced",
+    "model in the family and left the required SSH forward unset: a configuration decision,",
+    "not model unavailability. gpt-5.6-sol was run over that forward on 2026-09-12",
+    "and its row here carries that measurement.",
 )
 
 
@@ -286,13 +310,30 @@ def rank_arms(reference: str = "gpt-5.5",
     """
     if not ADDENDUM_DIR.is_dir():
         raise SystemExit("no %s; nothing to score" % ADDENDUM_DIR)
-    # Sidecars share the cache prefix and would otherwise be globbed as caches, then fail on their
-    # missing "predictions" member. Filtered before the emptiness check so a directory holding only
-    # sidecars reports "no caches" rather than a KeyError.
-    caches = sorted(p for p in ADDENDUM_DIR.glob("whoandwhen__*__*.json")
-                    if not p.name.endswith(SIDECAR_SUFFIX))
-    if not caches:
-        raise SystemExit("no addendum prediction caches in %s" % ADDENDUM_DIR)
+    # Each roster member is addressed by its exact path. A glob keyed on the suffix after the last
+    # "__" answered the wrong question twice over: whoandwhen__step_by_step__<label>.json satisfied
+    # an all_at_once slot and was then scored as one, and keeping both protocols of a label emitted
+    # that label twice. Naming the protocol in the path makes a substitution a missing file, and an
+    # extra protocol beside it simply unread. It also excludes the sidecars by construction, since
+    # their names carry SIDECAR_SUFFIX and no constructed path does.
+    #
+    # sorted() over the Path objects, not over the labels, because that is the ordering the glob
+    # produced and the committed table was generated under. Sorting by label emits a byte-identical
+    # block today, so this is a choice to keep a known load order rather than a repair: filename
+    # order puts "-gw.json" before ".json" and label order does the reverse, but each CLI label and
+    # its own gateway label differ in score, so the stable score sort below restores the same rows
+    # either way. Three groups do tie, at 60, 57 and 54 hits, which is why the load order is worth
+    # holding fixed rather than left to whichever spelling a later edit happens to use.
+    caches = sorted(ADDENDUM_DIR / ("whoandwhen__all_at_once__%s.json" % label)
+                    for label in TABLE_COHORT)
+    # The roster is a promise about what the table contains, so a missing member is a failure rather
+    # than a shorter table. Without this, deleting one cache produced a self-consistent block of
+    # eleven rows whose caption still described twelve, and every downstream check passed: the
+    # emitter compares its own output to the paper, and both would have moved together.
+    missing = [p.name for p in caches if not p.is_file()]
+    if missing:
+        raise SystemExit("TABLE_COHORT names %d label(s) with no all-at-once cache in %s: %s"
+                         % (len(missing), ADDENDUM_DIR, ", ".join(missing)))
 
     task = PostLocalization()
     task.setup()
@@ -340,11 +381,11 @@ def main() -> int:
                  arm["top1"], arm["top1_lo"], arm["top1_hi"],
                  arm["top3"], arm["top3_lo"], arm["top3_hi"], arm["mrr"]))
     print("  %-3s %-6s %-18s %-16s %-10s %8s %-18s %8s %-18s %8s"
-          % ("-", "-", NOT_RUN_LABEL, NOT_RUN_CHANNEL, NOT_RUN_SOURCE, "-", "-", "-", "-", "-"))
+          % ("-", "-", "(see history below)", "-", "-", "-", "-", "-", "-", "-"))
 
-    # NOT_RUN_DISCLOSURE holds these five lines. This was a choice, not model unavailability.
+    # LATE_RUN_HISTORY holds these lines. It dates the gap rather than asserting it persists.
     print("")
-    for line in NOT_RUN_DISCLOSURE:
+    for line in LATE_RUN_HISTORY:
         print("  " + line)
 
     print("\n  Channel records: addendum channels come from provider_declared_configuration in")
