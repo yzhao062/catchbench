@@ -3,7 +3,7 @@
 Notable changes to CatchBench. Board numbers are called out explicitly whenever they move, because
 a benchmark that changes a score without saying so is not usable as a reference point.
 
-## 0.1.2 (unreleased)
+## 0.1.2 (2026-09-13)
 
 No board number changes. Every score reported in the paper and printed by `catchbench --task pre`
 is identical to 0.1.1.

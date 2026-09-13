@@ -11,11 +11,11 @@ the network. That is a real rule of the kind the board already scores, and it la
 floors rather than beating them, which is the honest outcome for four lines of matching.
 
 No model key, no corpus download, no GRADE checkout, and no torch. The records ship with the
-package, so this runs the same way from a clone or from ``pip install catchbench``.
+package, so this runs the same way from a clone or from ``pip install "catchbench>=0.1.2"``.
 
 CatchBench must be importable first, so install it before running this from a clone:
 
-    python -m pip install -e .        # from a checkout, or: python -m pip install catchbench
+    python -m pip install -e .        # from a checkout, or: pip install "catchbench>=0.1.2"
 
 Run it:
 
