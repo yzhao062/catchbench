@@ -191,12 +191,20 @@ jobs:
           import pathlib, sys
           golden = set(l.rstrip() for l in
                        pathlib.Path("tests/golden/board.txt").read_text(encoding="utf-8").split("\n"))
+          # An indented line carrying a digit was a board line until the 0.1.2 footer added an
+          # indented link, whose host name carries digits, and this read it as a board row that had
+          # gone missing. Hyperlinks are excluded by name rather than by tightening the numeric
+          # test, because three of the lines this pins are prose carrying counts, and a stricter
+          # rule would quietly stop checking them.
           scored = [l.rstrip() for l in pathlib.Path("pre.txt").read_text(encoding="utf-8").split("\n")
-                    if l.startswith("  ") and any(c.isdigit() for c in l)]
+                    if l.startswith("  ") and any(c.isdigit() for c in l) and "://" not in l]
           missing = [l for l in scored if l not in golden]
           print(f"{len(scored)} scored line(s); {len(missing)} absent from the golden board")
-          if not scored:
-              sys.exit("the PRE command scored nothing, so this check proved nothing")
+          # A floor rather than a bare emptiness check: an exclusion that grew too broad, or a board
+          # that lost rows, both leave this passing on a handful of lines otherwise.
+          if len(scored) < 27:
+              sys.exit(f"only {len(scored)} scored line(s); the PRE board prints 27, so either this "
+                       "check stopped recognising rows or the board lost some")
           for line in missing:
               print("MISSING:", line)
           sys.exit(1 if missing else 0)
